@@ -1,0 +1,45 @@
+{% load static from staticfiles %}
+<!doctype html>
+<html lang="en">
+    <head>
+
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="{% static 'theme/css/property_grid.css' %}" rel="stylesheet" type="text/css" media="all" />
+        <link href="{% static 'theme/css/property_shortcuts.css' %}" rel="stylesheet" type="text/css" media="all" />
+        <link href="{% static 'theme/css/property_theme.css' %}" rel="stylesheet" type="text/css" media="all" />
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"></script>
+
+        <!-- scoped css -->
+        {% block scoped_css %}{% endblock %}
+        <!-- end scoped css -->
+
+        <!-- favicon -->
+        <link rel="icon" href="{% static 'theme/img/property-fav.png' %}" type="image/png">
+        <!-- end favicon -->
+
+        <!-- meta tags -->
+        {{ metas|safe }}
+        <!-- end meta tags -->
+
+    </head>
+    <body>
+
+        {% block content %}
+
+        {% endblock %}
+
+
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.2.0/js.cookie.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-growl/1.0.0/jquery.bootstrap-growl.min.js"></script>
+        <script src ="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.9.1/underscore-min.js"></script>
+        <script src="{% static 'theme/js/base.js' %}"></script>
+
+        {% block page_level_scripts %}
+        {% endblock %}
+
+    </body>
+</html>
