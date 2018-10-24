@@ -1,0 +1,33 @@
+{% extends 'dashboard/base.html' %}
+{% load static from staticfiles %}
+
+{% block content %}
+    <div class="container-fluid">
+        <div class="row" style="margin-top: 100px"></div>
+        <div class="row">
+            <div class="col-4"></div>
+            <div class="col-4">
+                <div class="card card-default">
+                    <div class="card-body">
+                        <form class="form" action="" method="POST">
+                            <div class="form-group">
+                                <label class="label">username</label>
+                                <input class="form-control" placeholder="username" id="id_username" name="username">
+                            </div>
+                            <div class="form-group">
+                                <label class="label">password</label>
+                                <input class="form-control" placeholder="password" id="id_password" name="password" type="password">
+                            </div>
+                            <div class="form-group">
+                                <button class="btn btn-xs btn-primary" type="submit">Login</button>
+                            </div>
+                        </form>
+                        <a class="btn btn-xs btn-secondary" href="/control/superadmin/">Visit Super Admin</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+<script src="{% static 'theme/js/login.js' %}"></script>
