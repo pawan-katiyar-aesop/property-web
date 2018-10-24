@@ -5,6 +5,7 @@ from __future__ import unicode_literals
 
 from django.db import models
 from datetime import datetime
+from django.contrib.postgres.fields import JSONField
 
 
 class Address(models.Model):
@@ -27,10 +28,22 @@ class Landmark(models.Model):
 
 class Property(models.Model):
     name = models.CharField(blank=True, max_length=250)
-    type = models.CharField(max_length=5)
-    category = models.CharField( null=True, blank=True, max_length=10)
+    type = models.CharField(default='Rent', max_length=4)
+    description = models.CharField(null=True, blank=True)
+    area = models.FloatField(null=True, blank=True)
+    category = models.CharField(null=True, blank=True, max_length=10)
     nearest_landmarks = models.ManyToManyField(Landmark)
     address = models.ForeignKey(Address)
+    feature_properties = models.JSONField(null=True, blank=True)
+    bedroom = models.IntegerField(default=1, blank=True, null=True)
+    bathroom = models.IntegerField(default=1, blank=True, null=True)
+    balcony = models.IntegerField(default=1, blank=True, null=True)
+
+
+class FloorPlan(models.Model):
+    FLOOR_CHOICES = [(x, x) for x in range(0, 4)]
+    number_of_floors = models.IntegerField(default=1)
+    base_floor = models.IntegerField(choices=FLOOR_CHOICES)
 
 
 class Leads(models.Model):
