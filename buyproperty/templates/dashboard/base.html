@@ -1,0 +1,53 @@
+{% load static from staticfiles %}
+<html>
+    <head>
+        <!-- bootstrap 4 -->
+        <link href="https://bootswatch.com/4/pulse/bootstrap.min.css" rel="stylesheet" type="text/css">
+        <link href="{% static 'theme/css/base.css' %}" rel="stylesheet" type="text/css">
+    </head>
+    <body>
+
+    <div class="navbar navbar-expand-lg fixed-top navbar-dark bg-primary">
+		<div class="container-fluid">
+			<a class="navbar-brand" href="/control/home/">Company Name</a> <button aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler" data-target="#navbarResponsive" data-toggle="collapse" type="button"><span class="navbar-toggler-icon"></span></button>
+			<div class="collapse navbar-collapse" id="navbarResponsive">
+				<ul class="navbar-nav">
+					<li class="nav-item {% if view.active_tab == "home" %}active{% endif %}">
+						<a class="nav-link" href="/control/dash/home/">Home</a>
+					</li>
+                    <li class="nav-item {% if view.active_tab == "customer-leads" %}active{% endif %}">
+						<a class="nav-link" href="/control/dash/customer-leads/">Customer Leads</a>
+					</li>
+                    <li class="nav-item {% if view.active_tab == "agent-leads" %}active{% endif %}">
+						<a class="nav-link" href="/control/dash/agent-leads/">Agent Leads</a>
+					</li>
+                    <li class="nav-item {% if view.active_tab == "properties" %}active{% endif %}">
+						<a class="nav-link" href="/control/dash/properties/">Properties</a>
+					</li>
+				</ul>
+				<ul class="nav navbar-nav ml-auto">
+                    <li class="nav-item">
+                        {% if request.user.is_anonymous %}
+						    <a class="nav-link" href="/_/dash/logout/" id="logout-is">Log Out</a>
+                        {% else %}
+                            <a class="nav-link" href="/_/dash/login/" id="logout-is">Log in</a>
+                        {% endif %}
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+
+    {% block content %}{% endblock %}
+    <script src="{% static 'theme/js/dash-base.js' %}"></script>
+    </body>
+    <footer>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        <script src="{% static 'theme/js/dash-base.js' %}"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-growl/1.0.0/jquery.bootstrap-growl.min.js" async></script>
+    </footer>
+
+    {% block page_level_scripts %}{% endblock %}
+</html>

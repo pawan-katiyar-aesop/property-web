@@ -1,0 +1,19 @@
+.is-line-height{
+    line-height: 1.2!important;
+    border-radius: 1px!important;
+}
+
+.disabled{
+    cursor: not-allowed!important;
+}
+
+@media (min-width: 576px){
+    .is-modal-dialog{
+        max-width: inherit!important;
+        margin: 7vh!important;
+    }
+}
+
+.min-th-width{
+    min-width: 250px!important;
+}
