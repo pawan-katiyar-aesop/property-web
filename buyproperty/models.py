@@ -1,7 +1,6 @@
-# -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 from django.db import models
-from datetime import datetime
+from choices import country_choices
 from django import forms
 from django.contrib.postgres.fields import JSONField
 
@@ -29,8 +28,8 @@ class Nearest(models.Model):
         ('school', 'School'),
         ('mall', 'Shopping Mall'),
         ('hospital', 'Hospital'),
-        ('bank','Bank'),
-        ('atm','ATM'),
+        ('bank', 'Bank'),
+        ('atm', 'ATM'),
         ('restaurant', 'Restaurant'),
         ('metro', 'Metro Station'),
         ('train', 'Train Station'),
@@ -151,20 +150,23 @@ class FloorPlan(models.Model):
     base_floor = models.IntegerField(choices=FLOOR_CHOICES)
 
 
-class Leads(models.Model):
-    property = models.ForeignKey(Property)
-    hits = models.IntegerField()
-
-
-class Users(models.Model):
-    ROLE_CHOICES = [(1, "Owner"), (2, "Agent"), (3, "Customer")]
-    username = models.CharField(max_length=250)
+class CustomerLead(models.Model):
+    name = models.CharField(max_length=250)
     email = models.EmailField(blank=True, null=True)
-    password = models.CharField(max_length=100)
-    last_login = models.DateTimeField(auto_now_add=True, blank=True)
-    address = models.ForeignKey(Address)
     contact = models.CharField(max_length=10, blank=True, null=True)
-    role = models.CharField(max_length=1, choices=ROLE_CHOICES, default=1)
+    country_code = models.CharField(choices=country_choices, max_length=3, null=True, blank=True)
+    for_property = models.ForeignKey(Property, blank=True, null=True)
 
     def __str__(self):
-        return self.username
+        return self.email
+
+
+class AgentLead(models.Model):
+    name = models.CharField(max_length=250)
+    email = models.EmailField(blank=True, null=True)
+    contact = models.CharField(max_length=10, blank=True, null=True)
+    country_code = models.CharField(choices=country_choices, max_length=3, null=True, blank=True)
+    message = models.TextField(blank=True, null=True)
+
+    def __str__(self):
+        return self.email
