@@ -145,6 +145,9 @@ class Property(models.Model):
     lease_term = models.FloatField(null=True, blank=True)
     nearest = models.ManyToManyField(Nearest, blank=True)
 
+    def __str__(self):
+        return self.property_id+" "+self.property_name
+
 
 class FloorPlan(models.Model):
     FLOOR_CHOICES = [(x, x) for x in range(0, 4)]
