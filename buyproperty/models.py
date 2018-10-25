@@ -6,14 +6,14 @@ from django.contrib.postgres.fields import JSONField
 
 
 class Address(models.Model):
-    first_name = models.CharField(max_length=200, blank=False, null=False)
-    last_name = models.CharField(max_length=200)
-    line_1 = models.CharField(max_length=100)
-    line_2 = models.CharField(max_length=100)
-    city = models.CharField(max_length=50)
-    state = models.CharField(max_length=50)
-    country = models.CharField(max_length=50)
-    zip = models.IntegerField()
+    first_name = models.CharField(max_length=200, blank=True, null=True)
+    last_name = models.CharField(max_length=200, blank=True, null=True)
+    line_1 = models.CharField(max_length=100, blank=True, null=True)
+    line_2 = models.CharField(max_length=100, blank=True, null=True)
+    city = models.CharField(max_length=50, blank=True, null=True)
+    state = models.CharField(max_length=50, blank=True, null=True)
+    country = models.CharField(max_length=50, blank=True, null=True)
+    zip = models.IntegerField(blank=True, null=True)
 
 
 class Landmark(models.Model):
@@ -92,17 +92,17 @@ class Property(models.Model):
         ('sqmt', 'Square Mt.'),
         ('sqft', 'Square Ft.')
     ]
-    property_id = models.CharField(max_length=20)
+    property_id = models.CharField(max_length=20, null=True)
     property_name = models.CharField(blank=True, max_length=250)
     furnishing_status = models.CharField(choices=FURNISHING_CHOICE, blank=True, null=True, max_length=30)
     buildup_area = models.FloatField(null=True, blank=True)
     carpet_area = models.FloatField(null=True, blank=True)
-    rental_value = models.DecimalField(max_digits=6, decimal_places=2)
-    monthly_maintenance = models.DecimalField(max_digits=6, decimal_places=2)
-    security_deposit = models.DecimalField(max_digits=6, decimal_places=2)
+    rental_value = models.DecimalField(max_digits=6, decimal_places=2, null=True)
+    monthly_maintenance = models.DecimalField(max_digits=6, decimal_places=2, null=True)
+    security_deposit = models.DecimalField(max_digits=6, decimal_places=2, null=True)
     pantry = models.BooleanField(default=False)
     washroom = models.BooleanField(default=False)
-    washroom_details = JSONField()
+    washroom_details = JSONField(null=True, blank=True)
     number_of_floors = models.IntegerField(blank=True, null=True)
     number_of_basements = models.IntegerField(blank=True, null=True)
     total_number_of_floors = models.IntegerField(blank=True, null=True)
@@ -152,7 +152,7 @@ class Users(models.Model):
     username = models.CharField(max_length=250)
     email = models.EmailField(blank=True, null=True)
     password = models.CharField(max_length=100)
-    last_login = models.DateTimeField(default=datetime.now, blank=True)
+    last_login = models.DateTimeField(auto_now_add=True, blank=True)
     address = models.ForeignKey(Address)
     contact = models.IntegerField()
     role = models.CharField(max_length=1, choices=ROLE_CHOICES, default=1)
