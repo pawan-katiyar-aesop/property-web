@@ -2,18 +2,18 @@
 from __future__ import unicode_literals
 from django.db import models
 from datetime import datetime
+from django import forms
 from django.contrib.postgres.fields import JSONField
 
 
 class Address(models.Model):
-    first_name = models.CharField(max_length=200, blank=True, null=True)
-    last_name = models.CharField(max_length=200, blank=True, null=True)
+    name = models.CharField(max_length=200, blank=True, null=True)
     line_1 = models.CharField(max_length=100, blank=True, null=True)
     line_2 = models.CharField(max_length=100, blank=True, null=True)
     city = models.CharField(max_length=50, blank=True, null=True)
     state = models.CharField(max_length=50, blank=True, null=True)
     country = models.CharField(max_length=50, blank=True, null=True)
-    zip = models.IntegerField(blank=True, null=True)
+    zip = forms.CharField(max_length=6, min_length=6)
 
 
 class Landmark(models.Model):
@@ -39,6 +39,9 @@ class Nearest(models.Model):
     title = models.CharField(null=True, blank=True, max_length=20)
     distance = models.TextField(null=True, blank=True)
 
+    def __str__(self):
+        return self.title
+
 
 class Media(models.Model):
     TYPE_CHOICE = [
@@ -57,10 +60,16 @@ class Media(models.Model):
 class Overlooking(models.Model):
     name = models.CharField(max_length=50, blank=True, null=True)
 
+    def __str__(self):
+        return self.name
+
 
 class OtherCharges(models.Model):
     charge_desc = models.CharField(blank=True, null=True, max_length=100)
-    amount = models.DecimalField(max_digits=6, decimal_places=2)
+    amount = models.DecimalField(max_digits=12, decimal_places=2)
+
+    def __str__(self):
+        return self.charge_desc
 
 
 class Property(models.Model):
@@ -95,18 +104,19 @@ class Property(models.Model):
     property_id = models.CharField(max_length=20, null=True)
     property_name = models.CharField(blank=True, max_length=250)
     furnishing_status = models.CharField(choices=FURNISHING_CHOICE, blank=True, null=True, max_length=30)
+    unit_of_area = models.CharField(choices=UNIT_CHOICES, null=True, blank=True, max_length=20)
     buildup_area = models.FloatField(null=True, blank=True)
     carpet_area = models.FloatField(null=True, blank=True)
-    rental_value = models.DecimalField(max_digits=6, decimal_places=2, null=True)
-    monthly_maintenance = models.DecimalField(max_digits=6, decimal_places=2, null=True)
-    security_deposit = models.DecimalField(max_digits=6, decimal_places=2, null=True)
+    rental_value = models.DecimalField(max_digits=12, decimal_places=2, null=True)
+    monthly_maintenance = models.DecimalField(max_digits=12, decimal_places=2, null=True)
+    security_deposit = models.DecimalField(max_digits=12, decimal_places=2, blank=True, null=True)
     pantry = models.BooleanField(default=False)
     washroom = models.BooleanField(default=False)
     washroom_details = JSONField(null=True, blank=True)
-    number_of_floors = models.IntegerField(blank=True, null=True)
-    number_of_basements = models.IntegerField(blank=True, null=True)
+    number_of_floors = models.PositiveIntegerField(blank=True, null=True)
+    number_of_basements = models.PositiveIntegerField(blank=True, null=True)
     total_number_of_floors = models.IntegerField(blank=True, null=True)
-    units_on_floor = models.IntegerField(blank=True, null=True)
+    units_on_floor = models.PositiveIntegerField(blank=True, null=True)
     power_backup = models.BooleanField(default=False)
     parking = models.CharField(choices=PARKING_CHOICE, blank=True, null=True, max_length=6)
     lift_availability = models.BooleanField(default=False)
@@ -129,10 +139,9 @@ class Property(models.Model):
     ceiling_details = models.TextField(default=True, null=True)
     media = models.ManyToManyField(Media, blank=True)
     address = models.ForeignKey(Address)
-    contact = models.IntegerField(null=True, blank=True)
+    contact = models.CharField(max_length=10, blank=True, null=True)
     other_charges = models.ManyToManyField(OtherCharges, blank=True)
     lease_term = models.TextField(null=True, blank=True)
-    unit_of_area = models.CharField(choices=UNIT_CHOICES, null=True, blank=True, max_length=20)
     nearest = models.ManyToManyField(Nearest, blank=True)
 
 
@@ -154,5 +163,8 @@ class Users(models.Model):
     password = models.CharField(max_length=100)
     last_login = models.DateTimeField(auto_now_add=True, blank=True)
     address = models.ForeignKey(Address)
-    contact = models.IntegerField()
+    contact = models.CharField(max_length=10, blank=True, null=True)
     role = models.CharField(max_length=1, choices=ROLE_CHOICES, default=1)
+
+    def __str__(self):
+        return self.username
