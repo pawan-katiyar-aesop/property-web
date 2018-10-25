@@ -5,8 +5,584 @@
     <div class="container-fluid">
         <div class="row" style="margin-top: 100px"></div>
         <div class="row">
-
+            <div class="col-md-4">
+                <div class="card card-default">
+                    <div class="card-header">
+                        On Boarding Form
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Key</th>
+                                    <th>Value</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Insurance Company</td>
+                                    {% if view.customer_project_detail %}
+                                    <td>{{ view.customer_project_detail.name }}</td>
+                                    {% else %}
+                                    <td>-</td>
+                                    {% endif %}
+                                </tr>
+                                <tr>
+                                    <td>Policy Number</td>
+                                    {% if view.customer_project_detail %}
+                                    <td>{{ view.customer_project_detail.policy_number}}</td>
+                                    {% else %}
+                                    <td>-</td>
+                                    {% endif %}
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <a href="" class="float-right" data-target="#onboarding-modal" data-toggle="modal">view complete form</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card card-default">
+                    <div class="card-header">
+                        Contact Details
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Key</th>
+                                    <th>Value</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Email</td>
+                                    <td>{{ view.customer.email }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Phone</td>
+                                    <td>{{ view.customer.mobile }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <span href="" class="float-right disabled"> </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card card-default">
+                    <div class="card-header">
+                        Automatic Updates
+                    </div>
+                    <div class="card-body">
+                        <p>The last update was sent on: {{ view.get_email_history.first.sent_on }} Updates are sent via sms and email.<br></p>
+                        <div class="form-group">
+                            <textarea class="form-control" name="update" id="id_update" required></textarea>
+                        </div>
+                        {% if view.customer_project_detail.is_active %}
+                            <button class="btn btn-xs btn-success automatic-update">Send Update</button>
+                        {% else %}
+                            <button class="btn btn-xs btn-success automatic-update" disabled>Send Update</button>
+                        {% endif %}
+                        <div class="float-right">
+                            <a href="" data-target="#automatic-update-logs-modal" data-toggle="modal">view complete log</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
+        <div class="row" style="margin-top: 20px"></div>
+        <div class="row" style="margin-bottom: 20px;">
+            <div class="col-md-4">
+                <div class="card card-default">
+                    <div class="card-header">
+                        Customer Contract and Cover Letter
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Stage</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% if view.customer_project_detail.authentication_letter_download_link %}
+                                <tr>
+                                    <td>Contract Generated</td>
+                                    <td> Done</td>
+                                </tr>
+                                <tr>
+                                    <td>Documents Emailed</td>
+                                    <td>Done</td>
+                                </tr>
+                                {% else %}
+                                <tr>
+                                    <td>Contract Generated</td>
+                                    <td>Done</td>
+                                </tr>
+                                <tr>
+                                    <td>Documents Emailed</td>
+                                    <td>Done</td>
+                                </tr>
+                                {% endif %}
+                                <tr>
+                                    <td>Documents Signed</td>
+                                    <td>{% if view.customer_project_detail.signed_document %} Done {% else %} Pending {% endif %}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card card-default">
+                    <div class="card-header">
+                        Complaint Reference Number
+                    </div>
+                    <div class="card-body">
+                        <p>Updates will be sent via sms and email.</p>
+                        <span style="color:green">Last sent token:-
+                            {% if view.get_complaint_ref_number.first %}{{ view.get_complaint_ref_number.first.reference_number }}
+                            {% else %} Unknown
+                            {% endif %}
+                        </span><br>
+                        <br>
+                        <div class="form-group">
+                            <label for="id_update">Update Complaint Reference Number</label>
+                            <textarea class="form-control" name="update_irdai" id="input-complaint-reference-number"></textarea>
+                        </div>
+                        {% if view.customer_project_detail.is_active %}
+                            <button class="btn btn-xs btn-success complaint-reference-number">Update Complaint Reference Number</button>
+                        {% else %}
+                            <button class="btn btn-xs btn-success complaint-reference-number" disabled>Update Complaint Reference Number</button>
+                        {% endif %}
+                        <div class="float-right">
+                            <a href="" data-target="#complaint-number-modal" data-toggle="modal">view history</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card card-default">
+                    <div class="card-header">
+                        IRDAI Reference Number
+                    </div>
+                    <div class="card-body">
+                        <p>Updates will be sent via sms and email.</p>
+                        <span style="color:green">Last sent token:-
+                            {% if view.get_irdai_ref_number.first %}{{ view.get_irdai_ref_number.first.reference_number }}
+                            {% else %} Unknown
+                            {% endif %}
+                        </span><br>
+                        <br>
+                        <div class="form-group">
+                            <label for="id_update">Update IRDAI Reference Number</label>
+                            <textarea class="form-control" name="update_irdai" id="input-irdai-reference-number"></textarea>
+                        </div>
+                        {% if view.customer_project_detail.is_active %}
+                            <button class="btn btn-xs btn-success irdai-reference-number">Update IRDAI Reference Number</button>
+                        {% else %}
+                            <button class="btn btn-xs btn-success automatic-update" disabled>Send Update</button>
+                        {% endif %}
+                        <div class="float-right">
+                            <a href="" data-target="#irdai-number-modal" data-toggle="modal">view history</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card card-default">
+                    <div class="card-header">
+                        Payments
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Payment Stage</th>
+                                    <th>Payment Amount</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Advance</td>
+                                    <td>₹ {% if view.get_collected_first_amount %} {{ view.get_collected_first_amount }}
+                                        {% else %} 500
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {% if view.customer.extra_bool_1 %} Done
+                                        {% else %}
+                                        Pending
+                                        {% endif %}
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Delivery Payment</td>
+                                    <td>
+                                        {% if view.customer.extra_bool_3 %}
+                                            ₹ {{ view.get_collected_last_amount }}
+                                        {% else %}
+                                            Unknown
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {% if view.customer.extra_bool_3 %}
+                                            Done
+                                        {% else %}
+                                            Unknown
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <button class="btn btn-xs btn-success" data-target="#collect-payment-modal" data-toggle="modal">Collect Payment</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card card-default">
+                    <div class="card-header">
+                        Project Status
+                    </div>
+                    <div class="card-body">
+                        {% if view.customer_project_detail %}
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Project ID</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        {{ view.customer_project_detail.id }}
+                                    </td>
+                                    <td>
+                                        {{ view.customer_project_detail.status_description }}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <button class="btn btn-xs btn-success" data-target="#project-status-modal" data-toggle="modal">Update product status</button>
+                        {% else %}
+                        <div class="alert alert-danger">
+                            The customer has not completed the on boarding process yet.
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card card-default">
+                    <div class="card-header">
+                        Customer Documents
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-bordered">
+                           <thead>
+                                <tr>
+                                    <th>Stage</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Policy pack</td>
+                                    <td>{% if view.customer_project_detail.policy_pack %}
+                                        <a href="{{ view.customer_project_detail.policy_pack.url }}" target="_blank">Download</a>
+                                        {% else %}
+                                        Not uploaded
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Correspondence 1</td>
+                                    <td>{% if view.customer_project_detail.correspondence_1 %}
+                                        <a href="{{ view.customer_project_detail.correspondence_1.url }}" target="_blank">Download</a>
+                                        {% else %}
+                                        Not uploaded
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Correspondence 2</td>
+                                    <td>
+                                        {% if view.customer_project_detail.correspondence_2 %}
+                                        <a href="{{ view.customer_project_detail.correspondence_2.url }}" target="_blank">Download</a>
+                                        {% else %}
+                                        Not uploaded
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Correspondence 3</td>
+                                    <td>
+                                        {% if view.customer_project_detail.correspondence_3 %}
+                                        <a href="{{ view.customer_project_detail.correspondence_3.url }}" target="_blank">Download</a>
+                                        {% else %}
+                                        Not uploaded
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="margin-top: 40px"></div>
+        <!-- onboarding modal -->
+        <div class="modal" tabindex="-1" role="dialog" id="onboarding-modal">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Onboarding Form</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <div class="card-body">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Key</th>
+                                <th>Value</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Insurance Company</td>
+                                <td>{% if view.customer_project_detail.name %}{{ view.customer_project_detail.name }}{% else %}Unknown{% endif %}</td>
+                            </tr>
+                            <tr>
+                                <td>Policy Number</td>
+                                <td>{% if view.customer_project_detail.policy_number %}{{ view.customer_project_detail.policy_number }}{% else %}Unknown{% endif %}</td>
+                            </tr>
+                            <tr>
+                                <td>Policy Type</td>
+                                <td>{% if view.customer_project_detail.policy_type %}{{ view.customer_project_detail.policy_type }}{% else %}Unknown{% endif %}</td>
+                            </tr>
+                            <tr>
+                                <td>Insurance Company Branch</td>
+                                <td>{% if view.customer_project_detail.insurance_company_branch %}{{ view.customer_project_detail.insurance_company_branch }}{% else %}Unknown{% endif %}</td>
+                            </tr>
+                            <tr>
+                                <td>Complaint Statement</td>
+                                <td>{% if view.customer_project_detail.complaint_statement %}{{ view.customer_project_detail.complaint_statement }}{% else %}Unknown{% endif %}</td>
+                            </tr>
+                            <tr>
+                                <td>Address</td>
+                                <td>{% if view.customer_project_detail.address %}{{ view.customer_project_detail.address }}{% else %}Unknown{% endif %}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- end onboarding modal -->
+
+        <!-- onboarding modal -->
+        <div class="modal" tabindex="-1" role="dialog" id="automatic-update-logs-modal">
+          <div class="modal-dialog is-modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">History</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <div class="card-body">
+                    {% if not view.get_email_history %}
+                        No Logs Found
+                    {% else %}
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th class="min-th-width">Date & Time</th>
+                                    <th>Message</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {% for email in view.get_email_history %}
+                                <tr>
+                                    <td>{{ email.sent_on }}</td>
+                                    <td>{{ email.message|safe }} </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    {% endif %}
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- IRDAI modal -->
+        <div class="modal" tabindex="-1" role="dialog" id="irdai-number-modal">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">History</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body scroll-col">
+                <div class="card-body">
+                {% if not view.customer_project_detail %}
+                    No History Found
+                {% else %}
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Sent on</th>
+                                <th>IRDAI Reference Number</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for irdai in view.get_irdai_ref_number %}
+                            <tr>
+                                <td>{{ irdai.created_on }}</td>
+                                <td>{{ irdai.reference_number }} </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                {% endif %}
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--end IRDAI modal -->
+
+         <!-- Complaint ref number modal -->
+        <div class="modal" tabindex="-1" role="dialog" id="complaint-number-modal">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">History</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body scroll-col">
+                <div class="card-body">
+                    {% if not view.customer_project_detail %}
+                        No History Found
+                    {% else %}
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Sent on</th>
+                                    <th>Complaint Reference Number</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {% for complaint in view.get_complaint_ref_number %}
+                                <tr>
+                                    <td>{{ complaint.created_on }}</td>
+                                    <td>{{ complaint.reference_number }} </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    {% endif %}
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--end IRDAI modal -->
+
+        <!-- Collect payment modal -->
+        <div class="modal" tabindex="-1" role="dialog" id="collect-payment-modal">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Collect Payment</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <div class="form-group">
+                    <label for="new-email">Enter Amount</label>
+                    <input class="form-control" id="new-amount" required type="email">
+                </div>
+                <div class="modal-footer">
+                      <button type="button" class="btn btn-primary collect-payment">Collect</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--end collect payment modal -->
+
+        <!-- Collect payment modal -->
+        <div class="modal" tabindex="-1" role="dialog" id="project-status-modal">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Change status</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <div class="form-group">
+                    <label for="new-email">Choose customer project status:</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <select name="project-status" id="project-status-id">
+                        <option value="in-progress">In Progress</option>
+                        <option value="completed">Completed</option>
+                        <option value="not-resolved">Not Resolved</option>
+                    </select><br><br>
+                    <div class="customer-project-status"  hidden>
+                        <label for="new-email">Reason:</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <textarea id="not-resolved-reason"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                      <button type="button" class="btn btn-primary project-status">Submit</button>
+                  </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--end collect payment modal -->
     </div>
 {% endblock %}
 
