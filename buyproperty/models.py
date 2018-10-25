@@ -14,6 +14,8 @@ class Address(models.Model):
     country = models.CharField(max_length=50, blank=True, null=True)
     zip = forms.CharField(max_length=6, min_length=6)
 
+    def __str__(self):
+        return self.name + " " + self.line_1
 
 class Landmark(models.Model):
     name = models.CharField(max_length=250)
@@ -35,7 +37,7 @@ class Nearest(models.Model):
         ('train', 'Train Station'),
         ('pharmacy', 'Pharmacy')
     ]
-    title = models.CharField(null=True, blank=True, max_length=20)
+    title = models.CharField(choices=LOCALITY_CHOICES, null=True, blank=True, max_length=20)
     distance = models.TextField(null=True, blank=True)
 
     def __str__(self):
@@ -129,18 +131,18 @@ class Property(models.Model):
     cctv = models.BooleanField(default=False)
     cafeteria = models.BooleanField(default=False)
     fire_sprinklers = models.BooleanField(default=False)
-    description = models.CharField(null=True, blank=True, max_length=250)
+    description = models.TextField(null=True, blank=True)
     ceiling_height = models.FloatField(blank=True, null=True)
     beam_height = models.FloatField(blank=True, null=True)
     earthing = models.BooleanField(default=True)
     electrical_con = models.BooleanField(default=False)
-    flooring_details = models.TextField(default=True, null=True)
-    ceiling_details = models.TextField(default=True, null=True)
+    flooring_details = models.TextField(blank=True, null=True)
+    ceiling_details = models.TextField(blank=True, null=True)
     media = models.ManyToManyField(Media, blank=True)
     address = models.ForeignKey(Address)
     contact = models.CharField(max_length=10, blank=True, null=True)
     other_charges = models.ManyToManyField(OtherCharges, blank=True)
-    lease_term = models.TextField(null=True, blank=True)
+    lease_term = models.FloatField(null=True, blank=True)
     nearest = models.ManyToManyField(Nearest, blank=True)
 
 
