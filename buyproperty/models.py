@@ -1,8 +1,5 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-
-from __future__ import unicode_literals
-
 from django.db import models
 from datetime import datetime
 from django.contrib.postgres.fields import JSONField
@@ -26,18 +23,117 @@ class Landmark(models.Model):
         return self.name
 
 
+class Nearest(models.Model):
+    LOCALITY_CHOICES = [
+        ('bus', 'Bus Stop'),
+        ('school', 'School'),
+        ('mall', 'Shopping Mall'),
+        ('hospital', 'Hospital'),
+        ('bank','Bank'),
+        ('atm','ATM'),
+        ('restaurant', 'Restaurant'),
+        ('metro', 'Metro Station'),
+        ('train', 'Train Station'),
+        ('pharmacy', 'Pharmacy')
+    ]
+    title = models.CharField(null=True, blank=True, max_length=20)
+    distance = models.TextField(null=True, blank=True)
+
+
+class Media(models.Model):
+    TYPE_CHOICE = [
+        ('img', 'Image'),
+        ('vid', 'Video')
+    ]
+    title = models.CharField(max_length=220, null=True, blank=True)
+    type = models.CharField(choices=TYPE_CHOICE, null=True, blank=True, max_length=3)
+    description = models.TextField(null=True, blank=True)
+    file = models.FileField(null=True)
+
+    def __str__(self):
+        return "Media " + str(self.id) + " : " + str(self.title)
+
+
+class Overlooking(models.Model):
+    name = models.CharField(max_length=50, blank=True, null=True)
+
+
+class OtherCharges(models.Model):
+    charge_desc = models.CharField(blank=True, null=True, max_length=100)
+    amount = models.DecimalField(max_digits=6, decimal_places=2)
+
+
 class Property(models.Model):
-    name = models.CharField(blank=True, max_length=250)
-    type = models.CharField(default='Rent', max_length=4)
+    FURNISHING_CHOICE = [
+        ('semi', 'Semi Furnished'),
+        ('bare', 'Bareshell')
+    ]
+    PARKING_CHOICE = [
+        ('cover', 'Covered'),
+        ('expose', 'Exposed')
+    ]
+    FACING_CHOICE = [
+        ('n', 'North'),
+        ('ne', 'North East'),
+        ('nw', 'North West'),
+        ('s', 'South'),
+        ('se', 'South East'),
+        ('sw', 'South west'),
+        ('e', 'East'),
+        ('w', 'West'),
+    ]
+    FLOORING_CHOICE = [
+        ('tile', 'Tiles'),
+        ('wood', 'Wooden'),
+        ('carpet', 'Carpet'),
+        ('bare', 'Bare'),
+    ]
+    UNIT_CHOICES = [
+        ('sqmt', 'Square Mt.'),
+        ('sqft', 'Square Ft.')
+    ]
+    property_id = models.CharField(max_length=20)
+    property_name = models.CharField(blank=True, max_length=250)
+    furnishing_status = models.CharField(choices=FURNISHING_CHOICE, blank=True, null=True, max_length=30)
+    buildup_area = models.FloatField(null=True, blank=True)
+    carpet_area = models.FloatField(null=True, blank=True)
+    rental_value = models.DecimalField(max_digits=6, decimal_places=2)
+    monthly_maintenance = models.DecimalField(max_digits=6, decimal_places=2)
+    security_deposit = models.DecimalField(max_digits=6, decimal_places=2)
+    pantry = models.BooleanField(default=False)
+    washroom = models.BooleanField(default=False)
+    washroom_details = JSONField()
+    number_of_floors = models.IntegerField(blank=True, null=True)
+    number_of_basements = models.IntegerField(blank=True, null=True)
+    total_number_of_floors = models.IntegerField(blank=True, null=True)
+    units_on_floor = models.IntegerField(blank=True, null=True)
+    power_backup = models.BooleanField(default=False)
+    parking = models.CharField(choices=PARKING_CHOICE, blank=True, null=True, max_length=6)
+    lift_availability = models.BooleanField(default=False)
+    landmark = models.ManyToManyField(Landmark, blank=True, )
+    parking_area = models.FloatField(blank=True, null=True)
+    overlooking = models.ManyToManyField(Overlooking, blank=True)
+    age = models.FloatField(null=True, blank=True)
+    facing = models.CharField(choices=FACING_CHOICE, null=True, blank=True, max_length=2)
+    flooring = models.CharField(choices=FLOORING_CHOICE, null=True, blank=True, max_length=6)
+    a_c = models.BooleanField(default=False)
+    cctv = models.BooleanField(default=False)
+    cafeteria = models.BooleanField(default=False)
+    fire_sprinklers = models.BooleanField(default=False)
     description = models.CharField(null=True, blank=True, max_length=250)
-    area = models.FloatField(null=True, blank=True)
-    category = models.CharField(null=True, blank=True, max_length=10)
-    nearest_landmarks = models.ManyToManyField(Landmark)
+    ceiling_height = models.FloatField(blank=True, null=True)
+    beam_height = models.FloatField(blank=True, null=True)
+    earthing = models.BooleanField(default=True)
+    electrical_con = models.BooleanField(default=False)
+    flooring_details = models.TextField(default=True, null=True)
+    ceiling_details = models.TextField(default=True, null=True)
+    media = models.ManyToManyField(Media, blank=True)
     address = models.ForeignKey(Address)
-    feature_properties = JSONField(null=True, blank=True)
-    bedroom = models.IntegerField(default=1, blank=True, null=True)
-    bathroom = models.IntegerField(default=1, blank=True, null=True)
-    balcony = models.IntegerField(default=1, blank=True, null=True)
+    contact = models.IntegerField(null=True, blank=True)
+    other_charges = models.ManyToManyField(OtherCharges, blank=True)
+    lease_term = models.TextField(null=True, blank=True)
+    unit_of_area = models.CharField(choices=UNIT_CHOICES, null=True, blank=True, max_length=20)
+    nearest = models.ManyToManyField(Nearest, blank=True)
 
 
 class FloorPlan(models.Model):
@@ -60,4 +156,3 @@ class Users(models.Model):
     address = models.ForeignKey(Address)
     contact = models.IntegerField()
     role = models.CharField(max_length=1, choices=ROLE_CHOICES, default=1)
-
