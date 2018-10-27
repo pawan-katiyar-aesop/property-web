@@ -2,6 +2,26 @@ from __future__ import unicode_literals
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.views.generic import TemplateView
+from models import CustomerLead, AgentLead
+from django.views import generic
+from rest_framework.generics import ListCreateAPIView
+from serializers import CustomerLeadSerializer, AgentLeadSerializer
+
+
+class CustomerLeadsAPIView(ListCreateAPIView):
+
+    from buyproperty.models import CustomerLead
+
+    serializer_class = CustomerLeadSerializer
+    queryset = CustomerLead.objects.all()
+
+
+class AgentLeadsAPIView(ListCreateAPIView):
+
+    from buyproperty.models import AgentLead
+
+    serializer_class = AgentLeadSerializer
+    queryset = AgentLead.objects.all()
 
 
 class HomePageView(TemplateView):
@@ -15,15 +35,23 @@ class DashboardView(TemplateView):
         return "home"
 
 
-class CustomerLeadView(TemplateView):
+class CustomerLeadView(generic.ListView):
     template_name = "../templates/dashboard/customer-leads.html"
+    context_object_name = 'leads'
+
+    def get_queryset(self):
+        return CustomerLead.objects.all()
 
     def active_tab(self):
         return "customer-leads"
 
 
-class AgentLeadView(TemplateView):
+class AgentLeadView(generic.ListView):
     template_name = "../templates/dashboard/agent-leads.html"
+    context_object_name = 'agent_leads'
+
+    def get_queryset(self):
+        return AgentLead.objects.all()
 
     def active_tab(self):
         return "agent-leads"
