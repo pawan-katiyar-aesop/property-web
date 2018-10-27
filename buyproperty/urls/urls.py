@@ -11,6 +11,7 @@ urlpatterns = [
     url(r'^dash/agent-leads/get-agent-leads/$', views.AgentLeadsAPIView.as_view(), name="property-agent-lead"),
     url(r'^dash/login/$', views.LoginView.as_view(), name="property-login"),
     url(r'^dash/properties/$', views.PropertyListView.as_view(), name="property-property-list"),
+    url(r'^dash/property-create/$', views.PropertyCreateView.as_view(), name="property-property-create"),
     url(r'^dash/property-details/$', views.PropertyDetailsView.as_view(), name="property-property-details"),
 
 

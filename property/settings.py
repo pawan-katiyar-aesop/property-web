@@ -113,7 +113,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Django Rest Framework
 REST_FRAMEWORK = {
     'DATETIME_FORMAT': '%Y-%m-%d %H:%M:%S',
@@ -131,6 +130,7 @@ REST_FRAMEWORK = {
         'rest_framework.filters.OrderingFilter',
     )
 }
+
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
 

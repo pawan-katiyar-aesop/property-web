@@ -17,6 +17,7 @@ class Address(models.Model):
     def __str__(self):
         return self.name + " " + self.line_1
 
+
 class Landmark(models.Model):
     name = models.CharField(max_length=250)
 
@@ -121,7 +122,7 @@ class Property(models.Model):
     power_backup = models.BooleanField(default=False)
     parking = models.CharField(choices=PARKING_CHOICE, blank=True, null=True, max_length=6)
     lift_availability = models.BooleanField(default=False)
-    landmark = models.ManyToManyField(Landmark, blank=True, )
+    landmark = models.ManyToManyField(Landmark, blank=True, null=True)
     parking_area = models.FloatField(blank=True, null=True)
     overlooking = models.ManyToManyField(Overlooking, blank=True)
     age = models.FloatField(null=True, blank=True)
@@ -140,6 +141,7 @@ class Property(models.Model):
     ceiling_details = models.TextField(blank=True, null=True)
     media = models.ManyToManyField(Media, blank=True)
     address = models.ForeignKey(Address)
+    country_code = models.CharField(choices=country_choices, max_length=3, null=True, blank=True)
     contact = models.CharField(max_length=10, blank=True, null=True)
     other_charges = models.ManyToManyField(OtherCharges, blank=True)
     lease_term = models.FloatField(null=True, blank=True)
