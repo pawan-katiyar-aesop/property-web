@@ -16,7 +16,10 @@ Including another URLconf
 from django.contrib import admin
 from django.conf.urls import url, include
 
+
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^control/', include('buyproperty.urls'), name="page")
+    url(r'^control/', include('buyproperty.urls.urls'), name="page"),
+    url(r'^api/', include('buyproperty.urls.api'), name="api")
+
 ]

@@ -2,12 +2,12 @@
 {% load static from staticfiles %}
 
 {% block content %}
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
-    <div class="container-fluid">
+   <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+    <div class="container-fluid" id="agent-leads-app">
         <div class="row" style="margin-top: 100px"></div>
         <div class="row">
             <div class="col-md-12">
-                {% if view.get_leads %}
+                {% if agent_leads %}
                     <table class="table table-responsive-lg table-bordered leads">
                     <thead>
                         <tr>
@@ -15,96 +15,46 @@
                             <th>Name</th>
                             <th>Email</th>
                             <th>Mobile</th>
-                            <th>Lead Accepted</th>
-                            <th>Source | Medium | Campaign</th>
-                            <th>Actions</th>
+                            <th>Inquiry</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {% for lead in view.get_leads %}
-                            <tr class="{% if lead.accepted %}table-success{% elif lead.rejected %}table-warning{% endif %}">
-                                <td><a>#{{ lead.lead_id }}</a> </td>
-                                <td>{{ lead.full_name }}</td>
+                        {% for lead in agent_leads %}
+                            <tr class="table-info odd">
+                                <td><a>#{{ lead.id }}</a> </td>
+                                <td>{{ lead.name }}</td>
                                 <td><a href="mailto:{{ lead.email }}">{{ lead.email }}</a> </td>
-                                <td><a href="tel:+91{{ lead.mobile }}">+91 {{ lead.mobile }}</a> </td>
-                                <td>{{ lead.accepted }}</td>
-                                <td>{{ lead.source }} | {{ lead.medium }} | {{ lead.campaign }}</td>
-                                <td>
-                                {% if not lead.accepted and not lead.rejected %}
-                                    <a class="btn btn-xs btn-info init-call is-line-height" data-call-to="{{ lead.mobile }}" data-lead-id="{{ lead.id }}">Call</a>&nbsp;<a class="btn btn-xs btn-success is-line-height" href="/_/dash/leads/?action=mark-accepted&lead_id={{ lead.id }}">Accept</a>&nbsp;<a class="btn btn-xs btn-danger is-line-height" href="/_/dash/leads/?action=mark-rejected&lead_id={{ lead.id }}">Reject</a>
-                                {% elif lead.accepted %}
-                                    Lead accepted and moved to customers.
-                                {% endif %}
-                                {% if lead.rejected %}
-                                    Lead Rejected
-                                {% endif %}
-                                </td>
+                                <td>{{ lead.contact }}</td>
+                                <td>{{ lead.message }}</td>
                             </tr>
                         {% endfor %}
                     </tbody>
                 </table>
-        
-    
+
+
                 {% else %}
                     <div class="alert alert-info">
                         There are currently no leads available.
                     </div>
+                    <!--
                     <div class="row" style="margin-top: 30px">
                         <div class="col-md-12">
                             <button class="btn btn-xs btn-info is-line-height {% if view.get_lead_from == "0" %}disabled{% endif %}" onclick="previousRecord()" id="previous-customer-lead" {% if view.get_lead_from == "0" %}disabled{% endif %}>Previous</button>
                             <button class="btn btn-xs btn-info is-line-height disabled" style="margin-left: 20px" id="next-customer-lead" disabled>Next</button>
                         </div>
                     </div>
+                    -->
                 {% endif %}
             </div>
         </div>
     </div>
 
-    <!-- calling modal -->
-    {% for lead in view.get_leads %}
-        <div class="modal" tabindex="-1" role="dialog" id="calling-modal-{{ lead.id }}">
-          <div class="modal-dialog" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title">Calling Lead #{{ lead.lead_id }}</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body">
-                  <p>We are currently connecting you to <b>{{ lead.full_name }}</b> at <b>{{ lead.mobile }}</b>. <br><br>
-                Calling only works for Indian numbers. <br><br>
-                If your call does not get connected, please ensure you have enough balance available. <br>
-                  </p>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" type="button" class="close" data-dismiss="modal" aria-label="Close">Call Completed</button>
-              </div>
-            </div>
-          </div>
-        </div>
-    {% endfor %}
-    <!-- end calling modal -->
 
 {% endblock %}
 
 {% block page_level_scripts %}
     <script>
-        $(".init-call").on("click", function () {
-            let lead_id = $(this).data("lead-id");
-            let lead_phone = $(this).data("call-to");
-            $("#calling-modal-"+lead_id).modal('show');
-            $.ajax({
-               method: "GET",
-               url: '/_/dash/leads/?action=make-call&to_number=+91'+lead_phone,
-               success: function () {
-
-               },
-                error: function () {
-
-                }
-            });
-        });
+/*
         $("#next-customer-lead").on("click", function () {
             window.location =
                 "/_/dash/leads/?item_from=" + (parseInt(getUrlParameter("item_from")) + 9) +
@@ -115,12 +65,14 @@
                 "/_/dash/leads/?item_from=" + (parseInt(getUrlParameter("item_from")) - 9) +
                 "&item_to=" + (parseInt(getUrlParameter("item_to")) - 9);
         });
+
+*/
     </script>
     <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
-    <script src="{% static 'theme/js/agent-leads.js' %}"></script>
     <script>
         $(".leads").DataTable({
-            "order": [[ 0, "desc" ]]
+            "order": [[ 0, "asc" ]]
         });
     </script>
+    <script src="{%  static 'theme/js/agent-leads.js' %}"></script>
 {% endblock %}
