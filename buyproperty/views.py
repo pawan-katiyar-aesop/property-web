@@ -48,3 +48,10 @@ class PropertyDetailsView(TemplateView):
 
     def active_tab(self):
         return "properties"
+
+
+class PropertyCreateView(TemplateView):
+    template_name = "../templates/dashboard/property-create.html"
+
+    def active_tab(self):
+        return "properties"
