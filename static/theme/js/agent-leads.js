@@ -5,7 +5,7 @@ let agents_leads_app = new Vue({
    } ,
     methods:{
         get_data:function () {
-            axios.get('/api/get-agent-leads/')
+            axios.get('/api/agent_leads/')
                 .then(function (response) {
                     this.leads = response.data;
                     console.log(this.leads);

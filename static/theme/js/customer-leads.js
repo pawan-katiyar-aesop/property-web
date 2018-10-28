@@ -8,7 +8,7 @@ let list_customer_leads_app = new Vue({
     methods:{
         get_data:function () {
             this.processing = true;
-            let url = "/api/get-customer-leads/";
+            let url = "/api/customer_leads/";
             axios.get(url)
                 .then(function (response){
                 this.leads = response.data;
