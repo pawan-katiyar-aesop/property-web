@@ -6,7 +6,7 @@ from django.views.generic import TemplateView
 from models import CustomerLead, AgentLead, Property, Address
 from django.views import generic
 from rest_framework.response import Response
-from rest_framework.generics import ListCreateAPIView, CreateAPIView
+from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView, CreateAPIView
 from django.http import HttpResponseRedirect, JsonResponse
 from serializers import CustomerLeadSerializer, AgentLeadSerializer, PropertySerializer, AddressSerializer
 
@@ -46,6 +46,14 @@ class ListCreatePropertyAPIView(ListCreateAPIView):
         properti = Property.create_property(self.request.data)
 
         return Response(PropertySerializer(properti).data, status=status.HTTP_201_CREATED)
+
+
+class RetrieveUpdateDestroyPropertyAPIView(RetrieveUpdateDestroyAPIView):
+    queryset = Property.objects.all()
+    serializer_class = PropertySerializer
+
+    def get_object(self):
+        return Property.objects.get(id=self.kwargs['pk'])
 
 
 class HomePageView(TemplateView):

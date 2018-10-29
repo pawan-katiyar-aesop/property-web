@@ -6,5 +6,6 @@ urlpatterns = [
     url(r'^agent_leads/$', views.AgentLeadsAPIView.as_view(), name="list-create-agent-lead"),
     url(r'^property/$', views.ListCreatePropertyAPIView.as_view(), name="list-create-property"),
     url(r'^address/$', views.ListCreateAddressAPIView.as_view(), name="list-create-property")
+    url(r'^property/(?P<pk>\d+)/$', views.RetrieveUpdateDestroyPropertyAPIView.as_view(), name="retreive-update-property")
 
 ]
