@@ -12,17 +12,17 @@ class Address(models.Model):
     city = models.CharField(max_length=50, blank=True, null=True)
     state = models.CharField(max_length=50, blank=True, null=True)
     country = models.CharField(max_length=50, blank=True, null=True)
-    zip = forms.CharField(max_length=6, min_length=6)
+    zip = models.CharField(max_length=6, null=True, blank=True)
 
     def __str__(self):
-        return self.name + " " + self.line_1
+        return self.name + " " + self.line_1 if self.name and self.line_1 else None
 
 
 class Landmark(models.Model):
     name = models.CharField(max_length=250)
 
     def __str__(self):
-        return self.name
+        return self.name if self.name else None
 
 
 class Nearest(models.Model):
@@ -42,7 +42,7 @@ class Nearest(models.Model):
     distance = models.TextField(null=True, blank=True)
 
     def __str__(self):
-        return self.title
+        return self.title if self.title else None
 
 
 class Media(models.Model):
@@ -56,14 +56,14 @@ class Media(models.Model):
     file = models.FileField(null=True)
 
     def __str__(self):
-        return "Media " + str(self.id) + " : " + str(self.title)
+        return "Media " + str(self.id) + " : " + str(self.title) if self.id and self.title else None
 
 
 class Overlooking(models.Model):
     name = models.CharField(max_length=50, blank=True, null=True)
 
     def __str__(self):
-        return self.name
+        return self.name if self.name else None
 
 
 class OtherCharges(models.Model):
@@ -71,7 +71,7 @@ class OtherCharges(models.Model):
     amount = models.DecimalField(max_digits=12, decimal_places=2)
 
     def __str__(self):
-        return self.charge_desc
+        return self.charge_desc if self.charge_desc else None
 
 
 class Property(models.Model):
@@ -148,8 +148,69 @@ class Property(models.Model):
     nearest = models.ManyToManyField(Nearest, blank=True)
 
     def __str__(self):
-        return self.property_id+" "+self.property_name
+        return self.property_id + " " + self.property_name if self.property_id and self.property_name else None
 
+    @classmethod
+    def create_property(cls, data):
+        import pdb
+        pdb.set_trace()
+        address = Address.objects.create(
+            name=data.get("name"),
+            line_1=data.get("street_line1"),
+            line_2=data.get("street_line2"),
+            city=data.get("city"),
+            state=data.get("state"),
+            country=data.get("country"),
+            zip=data.get("zip")
+        )
+        pdb.set_trace()
+        property = cls.objects.create(
+            property_name=data.get("property_name"),
+            furnishing_status=data.get("furnishing_status"),
+            unit_of_area=data.get("unit_of_area"),
+            property_id=data.get("property_id"),
+            carpet_area=data.get("carpet_area"),
+            rental_value=data.get("rental_value"),
+            address=address,
+            monthly_maintenance=data.get("monthly_maintenance"),
+            security_deposit=data.get("security_deposit"),
+            pantry=data.get("pantry"),
+            washroom=data.get("washroom"),
+            washroom_details=data.get("washroom_details"),
+            number_of_floors=data.get("number_of_floors"),
+            number_of_basements=data.get("number_of_basements"),
+            total_number_of_floors=data.get("total_number_of_floors"),
+            units_on_floor=data.get("units_on_floor"),
+            power_backup=data.get("power_backup"),
+            parking=data.get("parking"),
+            lift_availability=data.get("lift_availability"),
+            # landmark=data.get("landmark"),
+            parking_area=data.get("parking_area"),
+            # overlooking=data.get("overlooking"),
+            age=data.get("age"),
+            facing=data.get("facing"),
+            flooring=data.get("flooring"),
+            a_c=data.get("a_c"),
+            cctv=data.get("cctv"),
+            cafeteria=data.get("cafeteria"),
+            fire_sprinklers=data.get("fire_sprinklers"),
+            description=data.get("description"),
+            ceiling_height=data.get("ceiling_height"),
+            beam_height=data.get("beam_height"),
+            earthing=data.get("earthing"),
+            electrical_con=data.get("electrical_con"),
+            flooring_details=data.get("flooring_details"),
+            ceiling_details=data.get("ceiling_details"),
+            # media=data.get("media"),
+            country_code=data.get("country_code"),
+            contact=data.get("contact"),
+            # other_charges=data.get("other_charges"),
+            lease_term=data.get("lease_term"),
+            # nearest=data.get("nearest"),
+            buildup_area=data.get("buildup_area"),
+        )
+        pdb.set_trace()
+        return property
 
 class FloorPlan(models.Model):
     FLOOR_CHOICES = [(x, x) for x in range(0, 4)]
@@ -165,7 +226,7 @@ class CustomerLead(models.Model):
     for_property = models.ForeignKey(Property, blank=True, null=True)
 
     def __str__(self):
-        return self.email
+        return self.email if self.email else None
 
 
 class AgentLead(models.Model):
@@ -176,4 +237,4 @@ class AgentLead(models.Model):
     message = models.TextField(blank=True, null=True)
 
     def __str__(self):
-        return self.email
+        return self.email if self.email else None

@@ -8,16 +8,11 @@ let property_create_app = new Vue({
             propertyAge: '',
             countryCode: '',
             contactNumber: '',
-            contactName: '',
-            streetLine1: '',
-            streetLine2: '',
-            city: '',
-            state: '',
-            zip: '',
+            address: '',
             rentCharge: 0,
             monthlyMaintenance: 0,
             securityDeposits: 0,
-            otherCharges: '',
+            otherCharges: [],
             floorDetails: '',
             ceilingDetails: '',
             washroomDetails: {
@@ -50,67 +45,118 @@ let property_create_app = new Vue({
             parkingArea: 0,
             ceilingHeight: 0,
             beamHeight: 0,
-            leaseTerm: 0
-        }
+            leaseTerm: 0,
+            carpetArea: 0,
+            buildupArea: 0
+        },
+        newAddress:{
+            contactName: '',
+            streetLine1: '',
+            streetLine2: '',
+            city: '',
+            state: '',
+            country: '',
+            zip: ''
+        },
+        otherId: 0,
+        landmarkId: 0,
+        nearestId: 0
     },
     methods: {
         createProperty: function(){
             let that = this;
-            let body = {
+            let property_body = {
                 "property_name": that.newProperty.propertyName,
-                "property_desc": that.newProperty.propertyDesc,
+                "description": that.newProperty.propertyDesc,
                 "property_id": that.newProperty.propertyID,
-                "propertyAge": that.newProperty.propertyAge,
+                "age": that.newProperty.propertyAge,
                 "country_code": that.newProperty.countryCode,
-                "contact_number": that.newProperty.contactNumber,
-                "contact_name": that.newProperty.contactName,
-                "street_line1": that.newProperty.streetLine1,
-                "street_line2": that.newProperty.streetLine2,
-                "city": that.newProperty.city,
-                "state": that.newProperty.state,
-                "zip": that.newProperty.zip,
-                "rent_charge": that.newProperty.rentCharge,
+                "contact": that.newProperty.contactNumber,
+                "name": that.newAddress.contactName,
+                "line_1": that.newAddress.streetLine1,
+                "line_2": that.newAddress.streetLine2,
+                "city": that.newAddress.city,
+                "state": that.newAddress.state,
+                "country": that.newAddress.country,
+                "zip": that.newAddress.zip,
+                "rental_value": that.newProperty.rentCharge,
                 "monthly_maintenance": that.newProperty.monthlyMaintenance,
-                "security_deposits": that.newProperty.securityDeposits,
-                "otherCharges": that.newProperty.otherCharges,
-                "floor_details": that.newProperty.floorDetails,
+                "security_deposit": that.newProperty.securityDeposits,
+                "other_charges": that.newProperty.otherCharges,
+                "flooring_details": that.newProperty.floorDetails,
                 "ceiling_details": that.newProperty.ceilingDetails,
                 "washroom_details": that.newProperty.washroomDetails,
-                "landmarks": that.newProperty.landmarkList,
+                "landmark": that.newProperty.landmarkList,
                 "overlooking": that.newProperty.overlookingList,
-                "medias": that.newProperty.mediaList,
+                "media": that.newProperty.mediaList,
                 "nearest": that.newProperty.nearestList,
                 "pantry": that.newProperty.pantry,
-                "powerbackup": that.newProperty.powerBackup,
-                "lift": that.newProperty.liftAvailability,
-                "airconditioner": that.newProperty.airConditioner,
+                "washroom": that.newProperty.washroom,
+                "power_backup": that.newProperty.powerBackup,
+                "lift_availability": that.newProperty.liftAvailability,
+                "a_c": that.newProperty.airConditioner,
                 "cctv": that.newProperty.cctv,
                 "cafeteria": that.newProperty.cafeteria,
                 "fire_sprinklers": that.newProperty.fireSprinklers,
                 "earthing": that.newProperty.earthing,
-                "e_con": that.newProperty.electricalConnection,
+                "electrical_con": that.newProperty.electricalConnection,
                 "furnishing_status": that.newProperty.furnishingStatus,
                 "parking": that.newProperty.parking,
                 "facing": that.newProperty.facing,
                 "flooring": that.newProperty.flooring,
                 "unit_of_area": that.newProperty.unitOfArea,
-                "no_of_floors": that.newProperty.noOfFloors,
-                "no_of_basements": that.newProperty.numberOfBasements,
+                "number_of_floors": that.newProperty.noOfFloors,
+                "total_number_of_floors": that.newProperty.totalNoOfFloors,
+                "number_of_basements": that.newProperty.numberOfBasements,
                 "units_on_floor": that.newProperty.units_on_floor,
                 "parking_area": that.newProperty.parkingArea,
                 "ceiling_height": that.newProperty.ceilingHeight,
                 "beam_height": that.newProperty.beamHeight,
-                "lease_term": that.newProperty.leaseTerm
+                "lease_term": that.newProperty.leaseTerm,
+                "carpet_area": that.newProperty.carpetArea,
+                "buildup_area": that.newProperty.buildupArea
             };
-            axios.post('/api/v1/product/', body)
+            axios.post('/api/property/', property_body)
             .then(function (response) {
-                show_notification("success", "Product Successfully Created.");
-                window.location.href =  "/control/v1/products/detail/?product_pk="+ response.data.id;
+                // show_notification("success", "Property Successfully Created.");
+                window.location.href =  "/control/properties/";
             })
             .catch(function (response) {
-                show_notification("danger", "A fatal error occurred, and this page might not function correctly.")
+                // show_notification("danger", "A fatal error occurred, and this page might not function correctly.")
             })
+        },
+        addOtherCharge: function () {
+            let that = this;
+            $("#other-charge-parent").append('<div class="col-md-8">\n' +
+                '                                            <div class="form-group">\n' +
+                '                                                <input id="charge-'+that.otherId+'" class="form-control" v-model="newProperty.otherCharges-'+that.otherId+'" type="number" required>\n' +
+                '                                            </div>\n' +
+                '                                        </div>\n' +
+                '                                        <div class="col-md-4">\n' +
+                '                                            <div class="form-group">\n' +
+                '                                                <input id="value-'+that.otherId+'" class="form-control" v-model="newProperty.otherCharges-'+that.otherId+'" type="number" required>\n' +
+                '                                            </div>\n' +
+                '                                        </div>');
+
+            that.otherId += 1;
+
+        },
+        addLandmark: function () {
+            let that = this;
+            $("#add-landmark").append('<div class="col-md-6">\n' +
+                '                                            <input type="text" class="form-control mt-15" v-model="newProperty.landmarkList-'+that.landmarkId+'" required/>\n' +
+                '                                        </div>');
+            that.landmarkId += 1;
+        },
+        addNearest: function () {
+            let that = this;
+            $("#nearest-building").append('<div class="col-md-6">\n' +
+                '                                            <input type="text" v-model="newProperty.nearestList-'+that.nearestId+'" class="form-control mt-15" required/>\n' +
+                '                                        </div>');
+            that.nearestId += 1;
         }
+
+
     },
     mounted() {
 

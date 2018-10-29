@@ -1,11 +1,14 @@
 from __future__ import unicode_literals
 from django.http import HttpResponse
 from django.shortcuts import render
+from rest_framework import status
 from django.views.generic import TemplateView
-from models import CustomerLead, AgentLead, Property
+from models import CustomerLead, AgentLead, Property, Address
 from django.views import generic
-from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
-from serializers import CustomerLeadSerializer, AgentLeadSerializer, PropertySerializer
+from rest_framework.response import Response
+from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView, CreateAPIView
+from django.http import HttpResponseRedirect, JsonResponse
+from serializers import CustomerLeadSerializer, AgentLeadSerializer, PropertySerializer, AddressSerializer
 
 
 class CustomerLeadsAPIView(ListCreateAPIView):
@@ -24,11 +27,25 @@ class AgentLeadsAPIView(ListCreateAPIView):
     queryset = AgentLead.objects.all()
 
 
+class ListCreateAddressAPIView(ListCreateAPIView):
+    '''
+    List all Address objects, or create one.
+    '''
+    serializer_class = AddressSerializer
+    queryset = Address.objects.all()
+    ordering_fields = "__all__"
+
+
 class ListCreatePropertyAPIView(ListCreateAPIView):
     from buyproperty.models import Property
 
     serializer_class = PropertySerializer
     queryset = Property.objects.all()
+
+    def create(self, request, *args, **kwargs):
+        properti = Property.create_property(self.request.data)
+
+        return Response(PropertySerializer(properti).data, status=status.HTTP_201_CREATED)
 
 
 class RetrieveUpdateDestroyPropertyAPIView(RetrieveUpdateDestroyAPIView):
@@ -97,7 +114,7 @@ class PropertyDetailsView(TemplateView):
         return "properties"
 
 
-class PropertyCreateView(TemplateView):
+class PropertyCreateView(TemplateView, CreateAPIView):
     template_name = "../templates/dashboard/property-create.html"
 
     def active_tab(self):
