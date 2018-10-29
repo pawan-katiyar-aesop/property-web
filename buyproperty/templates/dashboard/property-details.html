@@ -2,562 +2,518 @@
 {% load static from staticfiles %}
 
 {% block content %}
-    <div class="container-fluid pt-10" style="background-color:#DFE4E7;">
-        <div class="row" style="margin-top: 100px"></div>
-        <div class="row">
-            <div class="col-md-8 scroll-col">
-                <div class="card card-default">
-                    <div class="card-header">
-                        <b>Basic Details</b>
-                    </div>
-                    <div class="card-body">
-                        <div class="form-group">
-                            <label for="new-email">Property Name</label>
-                            <input class="form-control" id="new-amount" size="250" required type="text">
+    <div id="product-details-app">
+        <div class="container-fluid pt-10" style="background-color:#DFE4E7;" v-if="!processing">
+            <div class="row" style="margin-top: 100px"></div>
+            <div class="row">
+                <div class="col-md-8 scroll-col">
+                    <div class="card card-default">
+                        <div class="card-header">
+                            <b>Basic Details</b>
                         </div>
-                        <div class="form-group">
-                            <label for="new-email">Property Description</label>
-                            <textarea class="form-control" name="update" id="id_update" required></textarea>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="property-name">Property Name</label>
+                                <input class="form-control" id="property-name" size="250" required type="text" v-model="property.property_name">
+                            </div>
+                            <div class="form-group">
+                                <label for="property-description">Property Description</label>
+                                <textarea class="form-control" name="update" id="property-description" required v-model="property.description"></textarea>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="property-property_id">Property ID</label>
+                                        <input class="form-control" size="20" id="property-property_id" required type="text" v-model="property.property_id" disabled>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="property-age">Property Age</label>
+                                        <input class="form-control" size="3" id="property-age" required type="number" v-model="property.age">( in years )
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="new-email">Country Code</label>
+                                        <select name="project-status" id="project-status-id" class="form-control">
+                                            <option disabled selected>Choose Any Option</option>
+                                            <option value="semi">Semi Furnished</option>
+                                            <option value="bare">Bareshell</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="property-contact">Contact Number</label>
+                                        <input class="form-control" size="10" id="property-contact" required type="number" v-model="property.contact">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card card-default mt-30">
+                        <div class="card-header">
+                            <b>Address Details</b>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="new-email">Select Address</label>
+                                <select name="project-status" id="project-status-id" class="form-control">
+                                    <option disabled selected>Choose Any Option</option>
+                                    <option value="semi">Semi Furnished</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <a href="#" class="mt-15 mb-20 d-block" data-target="#address-modal" data-toggle="modal">Add New Address</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card card-default mt-30">
+                        <div class="card-header">
+                            <b>Charge Details</b>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="property-rental-charge">Rental charge</label>
+                                        (&#8377;)<input class="form-control" id="property-rental-charge" type="number" v-model="property.rental_value" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="property-monthly-maintenance">Monthly Maintenance</label>
+                                        (&#8377;)<input class="form-control" id="property-monthly-maintenance" type="number" v-model="property.monthly_maintenance" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="property-security-deposit">Security Deposit</label>
+                                        (&#8377;)<input class="form-control" id="property-security-deposit" type="number" v-model="property.security_deposit" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <p class="mt-15"><b>Other Charges</b></p>
+                                    <div class="col-md-4 pl-0">
+                                        <div class="form-group">
+                                            <label for="new-email">Charges Name</label>
+                                            <input class="form-control" id="new-amount" type="number" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 pl-0">
+                                        <div class="form-group">
+                                            <a href="#" class="mt-15 mb-20 d-block">Add Another Charges</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card card-default mt-30">
+                        <div class="card-header">
+                            <b>More Details</b>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="flooring-details">Flooring Details</label>
+                                <textarea class="form-control" id="flooring-details" v-model="property.flooring_details"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="ceiling-details">Ceiling Details</label>
+                                <textarea class="form-control" id="ceiling-details" v-model="property.ceiling_details"></textarea>
+                            </div>
+                            <label>Washroom Details</label>
+
+                            <div class="col-md-12">
+                                <div class="col-md-4">
+                                    <div class="form-group ">
+                                        <label for="urinals">Urinal</label>
+                                        <input type="number" class="form-control" id="urinals" v-model="property.washroom_details.Urinals" />
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="wc" >WC</label>
+                                        <input type="number" class="form-control" id="wc" v-model="property.washroom_details.WC" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label for="new-email">Landmark</label>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <input type="text" class="form-control" id="new-amount" required/>
+                                        </div>
+                                    </div>
+                                    <a href="#" class="mt-15 mb-20 d-block">Add New Landmark</a>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label for="new-email">Overlooking</label>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <input type="text" class="form-control" id="new-amount" required/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label for="new-email">Media</label>
+    {#                                <div class="row">#}
+    {#                                    <div class="col-md-6">#}
+    {#                                        <div class="row">#}
+    {#                                            <input type="file" name="images" multiple style="visibility: hidden" @change="uploadProductImage" id="select-image-hidden">#}
+    {#                                            <span class="help-block"></span>#}
+    {#                                        </div>#}
+    {#                                        <div v-if="!product.productImages.imageList.length">#}
+    {#                                                <span>No image selected! ☹️ Please upload images.</span>#}
+    {#                                        </div>#}
+    {#                                        <div class="row col-md-6 insert-preview-images-here">#}
+    {#                                            <div class="preview-image-template" v-if="product.productImages.imageList" v-for="(image, index) in product.productImages.imageList">#}
+    {#                                                <div class="col-md-5 pointer">#}
+    {#                                                    <div class="pull-right" id="removed-image">#}
+    {#                                                        <a href="#" class="product-delete_image" v-on:click="removeImage(index)">x</a>#}
+    {#                                                    </div>#}
+    {#                                                    <div class="product-images--preview-image">#}
+    {#                                                        <a href="#" class="open-image-edit-modal">#}
+    {#                                                            <i class="fa fa-pencil fa-lg"></i>#}
+    {#                                                        </a>#}
+    {#                                                    </div>#}
+    {#                                                    <img :src="image['image']" class="preview-image"  data-toggle="modal" :data-target="`#edit-image-info-modal-${index}`" v-on:click="imageSlider.currentIndex=index">#}
+    {#                                                </div>#}
+    {#                                            </div>#}
+    {#                                        </div>#}
+    {#                                    </div>#}
+    {#                                </div>#}
+    {#                                <a href="javascript:;" v-on:click="selectProductImage" class="mt-15 mb-20 d-block">Select Image</a>#}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label for="new-email">Nearest Buildings</label>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <input type="text" class="form-control" id="new-amount" required/>
+                                        </div>
+                                    </div>
+                                    <a href="#" class="mt-15 mb-20 d-block">Add New Nearest Buildings</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 scroll-col">
+                    <div class="card card-default">
+                        <div class="card-header">
+                            <b>Property Features</b>
                         </div>
                         <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="new-email">Property ID</label>
-                                    <input class="form-control" size="20" id="new-amount" required type="text">
+                            <div class="col-md-12">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <input type="checkbox" class="mr-10" id="property-pantry" v-model="property.pantry" />
+                                                <label for="new-email">Pantry</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <input type="checkbox" class="mr-10" id="property-washroom" v-model="property.washroom" />
+                                                <label for="new-email">Washroom</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <input type="checkbox" class="mr-10" id="property-power_backup" v-model="property.power_backup" />
+                                                <label for="new-email">Power Backup</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <input type="checkbox" class="mr-10" id="property-lift_availability" v-model="property.lift_availability"/>
+                                                <label for="new-email">Lift Availability</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <input type="checkbox" class="mr-10" id="property-a_c" v-model="property.a_c"/>
+                                                <label for="new-email">Air Conditioner</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <input type="checkbox" class="mr-10" id="property-cctv" v-model="property.cctv"/>
+                                                <label for="new-email">CCTV</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <input type="checkbox" class="mr-10"  id="property-cafeteria" v-model="property.cafeteria"/>
+                                                <label for="new-email">Cafeteria</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <input type="checkbox" class="mr-10" id="property-fire_sprinlers" v-model="property.fire_sprinklers"/>
+                                                <label for="new-email">Fire Sprinklers</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <input type="checkbox" class="mr-10" id="property-earthing" v-model="property.earthing"/>
+                                                <label for="new-email">Earthing</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <input type="checkbox" class="mr-10" id="property-electrical_con" v-model="property.electrical_con"/>
+                                                <label for="new-email">Electrical Connection</label>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="new-email">Property Age</label>
-                                    <input class="form-control" size="3" id="new-amount" required type="number">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="new-email">Country Code</label>
-                                    <select name="project-status" id="project-status-id" class="form-control">
-                                        <option disabled selected>Choose Any Option</option>
+                        </div>
+                    </div>
+                    <div class="card card-default mt-30">
+                        <div class="card-header">
+                            <b>More Features</b>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="card-body">
+                                    <label for="new-email" class="mr-10">Furnishing Status</label>
+                                    <select  class="form-control" id="property-furnishing_status" v-model="property.furnishing_status"  v-if="!processing">
+                                        <option value="">Choose Any Option</option>
                                         <option value="semi">Semi Furnished</option>
                                         <option value="bare">Bareshell</option>
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="new-email">Contact Number</label>
-                                    <input class="form-control" size="10" id="new-amount" required type="number">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="card card-default mt-30">
-                    <div class="card-header">
-                        <b>Address Details</b>
-                    </div>
-                    <div class="card-body">
-                        <div class="form-group">
-                            <label for="new-email">Name</label>
-                            <input class="form-control" id="new-amount" required type="text">
-                        </div>
-                        <div class="form-group">
-                            <label for="new-email">Line 1</label>
-                            <input class="form-control" id="new-amount" required type="text">
-                        </div>
-                        <div class="form-group">
-                            <label for="new-email">Line 2</label>
-                            <input class="form-control" id="new-amount" required type="text">
-                        </div>
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="new-email">City</label>
-                                    <input class="form-control" id="new-amount" required type="text">
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="new-email">State</label>
-                                    <input class="form-control" id="new-amount" required type="text">
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="new-email">Zip</label>
-                                    <input class="form-control" id="new-amount" required type="number">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="card card-default mt-30">
-                    <div class="card-header">
-                        <b>Charge Details</b>
-                    </div>
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="new-email">Rent charge</label>
-                                    <input class="form-control" id="new-amount" type="number" required>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="new-email">Monthly Maintenance</label>
-                                    <input class="form-control" id="new-amount" type="number" required>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="new-email">Security Deposits</label>
-                                    <input class="form-control" id="new-amount" type="number" required>
+                            <div class="col-md-12">
+                                <div class="card-body">
+                                    <label for="new-email" class="mr-10">Parking</label>
+                                    <select name="project-status" class="form-control" id="property-parking" v-model="property.parking"  v-if="!processing">
+                                        <option disabled  value="">Choose Any Option</option>
+                                        <option value="cover">Covered</option>
+                                        <option value="expose">Exposed</option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="col-md-12">
-                                <p class="mt-15"><b>Other Charges</b></p>
-                                <div class="col-md-4 pl-0">
+                                <div class="card-body">
+                                    <label for="new-email" class="mr-10">Facing</label>
+                                    <select name="project-status" class="form-control" id="property-facing" v-model="property.facing"  v-if="!processing">
+                                        <option disabled  value="">Choose Any Option</option>
+                                        <option value="n">North</option>
+                                        <option value="ne">North East</option>
+                                        <option value="nw">North West</option>
+                                        <option value="s">South</option>
+                                        <option value="se">South East</option>
+                                        <option value="sw">South West</option>
+                                        <option value="e">East</option>
+                                        <option value="w">West</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="card-body">
+                                    <label for="new-email" class="mr-10">Flooring</label>
+                                    <select name="project-status" id="property-flooring" class="form-control" v-model="property.flooring"  v-if="!processing">
+                                        <option disabled  value="">Choose Any Option</option>
+                                        <option value="tile">Tiles</option>
+                                        <option value="wood">Wooden</option>
+                                        <option value="carpet">Carpet</option>
+                                        <option value="bare">Bare</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="card-body">
+                                    <label for="new-email" class="mr-10">Unit of Area</label>
+                                    <select name="project-status" class="form-control" id="property-unit-of-area" v-model="property.unit_of_area"  v-if="!processing">
+                                        <option disabled  value="">Choose Any Option</option>
+                                        <option value="sqmt">Square Mt.</option>
+                                        <option value="sqft">Square Ft.</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card card-default mt-30">
+                        <div class="card-header">
+                            <b>Property Details</b>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="card-body">
                                     <div class="form-group">
-                                        <label for="new-email">Charges Name</label>
-                                        <input class="form-control" id="new-amount" type="number" required>
+                                        <label for="property-no_of_floors">Number of Floors</label>
+                                        <input type="number" class="form-control mr-10" id="property-no_of_floors" v-model="property.number_of_floors"/>
                                     </div>
-                                </div>
-                                <div class="col-md-4 pl-0">
                                     <div class="form-group">
-                                        <a href="#" class="mt-15 mb-20 d-block">Add Another Charges</a>
+                                        <label for="property-total_no_of_floors">Total Numbers of Floors</label>
+                                        <input type="number" class="form-control mr-10" id="property-total_no_of_floors" v-model="property.total_number_of_floors"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="property-no_of_basements">Number of Basements</label>
+                                        <input type="number" class="form-control mr-10" id="property-no_of_basements" v-model="property.number_of_basements"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="property-units_on_floor">Units on Floors</label>
+                                        <input type="number" class="form-control mr-10" id="property-units_on_floor" v-model="property.units_on_floor"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="property-parking-area">Parking Area</label>
+                                        <input type="number" class="form-control mr-10" id="property-parking-area" v-model="property.parking_area"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="property-ceiling-height">Ceiling Height</label>
+                                        <input type="number" class="form-control mr-10" id="property-ceiling-height" v-model="property.ceiling_height"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="property-beam-height">Beam Height</label>
+                                        <input type="number" class="form-control mr-10" id="property-beam-height" v-model="property.beam_height"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="property-lease-term">Lease Term</label>
+                                        <input type="number" class="form-control mr-10" id="property-lease-term" v-model="property.lease_term"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="property-carpet-area">Carpet Area</label>
+                                        <input type="number" class="form-control mr-10" id="property-carpet-area" v-model="property.carpet_area"/>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="card card-default mt-30">
-                    <div class="card-header">
-                        <b>More Details</b>
-                    </div>
+            </div>
+            <div class="row" style="margin-top: 30px"></div>
+            <button type="button" class="btn btn-success" @click="updateProperty" data-dismiss="modal">Update Property</button>
+            <button type="button" class="btn btn-secondary ml-20" data-dismiss="modal"><a href="../properties">View Property List</a></button>
+            <div class="row" style="margin-top: 40px"></div>
+
+
+            <!-- address modal -->
+            <div class="modal" tabindex="-1" role="dialog" id="address-modal">
+              <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title">Create New Address</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
                     <div class="card-body">
                         <div class="form-group">
-                            <label for="new-email">Flooring Details</label>
-                            <textarea class="form-control" id="new-amount" required></textarea>
+                            <label for="address-name">Name</label>
+                            <input class="form-control" id="address-name" required type="text" v-model="newAddress.name">
                         </div>
                         <div class="form-group">
-                            <label for="new-email">Ceiling Details</label>
-                            <textarea class="form-control" id="new-amount" required></textarea>
+                            <label for="address-line1">Line 1</label>
+                            <input class="form-control" id="address-name1" required type="text" v-model="newAddress.line1">
                         </div>
                         <div class="form-group">
-                            <label for="new-email">Washroom Details</label>
-                            <textarea class="form-control" id="new-amount" required></textarea>
+                            <label for="address-name2">Line 2</label>
+                            <input class="form-control" id="address-name2" required type="text" v-model="newAddress.line2">
                         </div>
                         <div class="row">
-                            <div class="col-md-12">
-                                <label for="new-email">Landmark</label>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <input type="text" class="form-control" id="new-amount" required/>
-                                    </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="address-city">City</label>
+                                    <input class="form-control" id="address-city" required type="text" v-model="newAddress.city">
                                 </div>
-                                <a href="#" class="mt-15 mb-20 d-block">Add New Landmark</a>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <label for="new-email">Overlooking</label>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <input type="text" class="form-control" id="new-amount" required/>
-                                    </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="address-state">State</label>
+                                    <input class="form-control" id="address-state" required type="text" v-model="newAddress.state">
                                 </div>
-                                <a href="#" class="mt-15 mb-20 d-block">Add New Overlooking</a>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <label for="new-email">Media</label>
-{#                                <div class="row">#}
-{#                                    <div class="col-md-6">#}
-{#                                        <div class="row">#}
-{#                                            <input type="file" name="images" multiple style="visibility: hidden" @change="uploadProductImage" id="select-image-hidden">#}
-{#                                            <span class="help-block"></span>#}
-{#                                        </div>#}
-{#                                        <div v-if="!product.productImages.imageList.length">#}
-{#                                                <span>No image selected! ☹️ Please upload images.</span>#}
-{#                                        </div>#}
-{#                                        <div class="row col-md-6 insert-preview-images-here">#}
-{#                                            <div class="preview-image-template" v-if="product.productImages.imageList" v-for="(image, index) in product.productImages.imageList">#}
-{#                                                <div class="col-md-5 pointer">#}
-{#                                                    <div class="pull-right" id="removed-image">#}
-{#                                                        <a href="#" class="product-delete_image" v-on:click="removeImage(index)">x</a>#}
-{#                                                    </div>#}
-{#                                                    <div class="product-images--preview-image">#}
-{#                                                        <a href="#" class="open-image-edit-modal">#}
-{#                                                            <i class="fa fa-pencil fa-lg"></i>#}
-{#                                                        </a>#}
-{#                                                    </div>#}
-{#                                                    <img :src="image['image']" class="preview-image"  data-toggle="modal" :data-target="`#edit-image-info-modal-${index}`" v-on:click="imageSlider.currentIndex=index">#}
-{#                                                </div>#}
-{#                                            </div>#}
-{#                                        </div>#}
-{#                                    </div>#}
-{#                                </div>#}
-{#                                <a href="javascript:;" v-on:click="selectProductImage" class="mt-15 mb-20 d-block">Select Image</a>#}
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <label for="new-email">Nearest Buildings</label>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <input type="text" class="form-control" id="new-amount" required/>
-                                    </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="address-country">Country</label>
+                                    <input class="form-control" id="address-country" required type="text" v-model="newAddress.country">
                                 </div>
-                                <a href="#" class="mt-15 mb-20 d-block">Add New Nearest Buildings</a>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="address-zip">Zip</label>
+                                    <input class="form-control" id="address-zip" required type="number" v-model="newAddress.zip">
+                                </div>
                             </div>
                         </div>
                     </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                  </div>
                 </div>
-            </div>
-            <div class="col-md-4 scroll-col">
-                <div class="card card-default">
-                    <div class="card-header">
-                        <b>Property Features</b>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <input type="checkbox" class="mr-10" id="new-amount" required/>
-                                            <label for="new-email">Pantry</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <input type="checkbox" class="mr-10" id="new-amount" required/>
-                                            <label for="new-email">Washroom</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <input type="checkbox" class="mr-10" id="new-amount" required/>
-                                            <label for="new-email">Power Backup</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <input type="checkbox" class="mr-10" id="new-amount" required/>
-                                            <label for="new-email">Lift Availability</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <input type="checkbox" class="mr-10" id="new-amount" required/>
-                                            <label for="new-email">Air Conditioner</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <input type="checkbox" class="mr-10" id="new-amount" required/>
-                                            <label for="new-email">CCTV</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <input type="checkbox" class="mr-10" id="new-amount" required/>
-                                            <label for="new-email">Cafeteria</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <input type="checkbox" class="mr-10" id="new-amount" required/>
-                                            <label for="new-email">Fire Sprinklers</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <input type="checkbox" class="mr-10" id="new-amount" required/>
-                                            <label for="new-email">Earthing</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <input type="checkbox" class="mr-10" id="new-amount" required/>
-                                            <label for="new-email">Electrical Connection</label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="card card-default mt-30">
-                    <div class="card-header">
-                        <b>More Features</b>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="card-body">
-                                <label for="new-email" class="mr-10">Furnishing Status</label>
-                                <select name="project-status" class="form-control" id="project-status-id">
-                                    <option disabled selected>Choose Any Option</option>
-                                    <option value="semi">Semi Furnished</option>
-                                    <option value="bare">Bareshell</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-12">
-                            <div class="card-body">
-                                <label for="new-email" class="mr-10">Parking</label>
-                                <select name="project-status" class="form-control" id="project-status-id">
-                                    <option disabled selected>Choose Any Option</option>
-                                    <option value="cover">Covered</option>
-                                    <option value="expose">Exposed</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-12">
-                            <div class="card-body">
-                                <label for="new-email" class="mr-10">Facing</label>
-                                <select name="project-status" class="form-control" id="project-status-id">
-                                    <option disabled selected>Choose Any Option</option>
-                                    <option value="n">North</option>
-                                    <option value="ne">North East</option>
-                                    <option value="nw">North West</option>
-                                    <option value="s">South</option>
-                                    <option value="se">South East</option>
-                                    <option value="sw">South West</option>
-                                    <option value="e">East</option>
-                                    <option value="w">West</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-12">
-                            <div class="card-body">
-                                <label for="new-email" class="mr-10">Flooring</label>
-                                <select name="project-status" id="project-status-id" class="form-control">
-                                    <option disabled selected>Choose Any Option</option>
-                                    <option value="in-progress">Tiles</option>
-                                    <option value="completed">Wooden</option>
-                                    <option value="completed">Carpet</option>
-                                    <option value="completed">Bare</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-12">
-                            <div class="card-body">
-                                <label for="new-email" class="mr-10">Unit of Area</label>
-                                <select name="project-status" class="form-control" id="project-status-id">
-                                    <option disabled selected>Choose Any Option</option>
-                                    <option value="sqmt">Square Mt.</option>
-                                    <option value="sqft">Square Ft.</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="card card-default mt-30">
-                    <div class="card-header">
-                        <b>Property Details</b>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="card-body">
-                                <div class="form-group">
-                                    <label for="new-email">Number of Floors</label>
-                                    <input type="number" class="form-control mr-10" id="new-amount" required/>
-                                </div>
-                                <div class="form-group">
-                                    <label for="new-email">Total Numbers of Floors</label>
-                                    <input type="number" class="form-control mr-10" id="new-amount" required/>
-                                </div>
-                                <div class="form-group">
-                                    <label for="new-email">Number of Basements</label>
-                                    <input type="number" class="form-control mr-10" id="new-amount" required/>
-                                </div>
-                                <div class="form-group">
-                                    <label for="new-email">Units on Floors</label>
-                                    <input type="number" class="form-control mr-10" id="new-amount" required/>
-                                </div>
-                                <div class="form-group">
-                                    <label for="new-email">Parking Area</label>
-                                    <input type="number" class="form-control mr-10" id="new-amount" required/>
-                                </div>
-                                <div class="form-group">
-                                    <label for="new-email">Ceiling Height</label>
-                                    <input type="number" class="form-control mr-10" id="new-amount" required/>
-                                </div>
-                                <div class="form-group">
-                                    <label for="new-email">Beam Height</label>
-                                    <input type="number" class="form-control mr-10" id="new-amount" required/>
-                                </div>
-                                <div class="form-group">
-                                    <label for="new-email">Lease Term</label>
-                                    <input type="number" class="form-control mr-10" id="new-amount" required/>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row" style="margin-top: 30px"></div>
-        <button type="button" class="btn btn-success" data-dismiss="modal">Update Property</button>
-        <button type="button" class="btn btn-secondary ml-20" data-dismiss="modal"><a href="../properties">View Property List</a></button>
-        <div class="row" style="margin-top: 40px"></div>
-
-
-        <!-- onboarding modal -->
-        <div class="modal" tabindex="-1" role="dialog" id="onboarding-modal">
-          <div class="modal-dialog" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title">Onboarding Form</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body">
-                <div class="card-body">
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th>Key</th>
-                                <th>Value</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Insurance Company</td>
-                                <td>{% if view.customer_project_detail.name %}{{ view.customer_project_detail.name }}{% else %}Unknown{% endif %}</td>
-                            </tr>
-                            <tr>
-                                <td>Policy Number</td>
-                                <td>{% if view.customer_project_detail.policy_number %}{{ view.customer_project_detail.policy_number }}{% else %}Unknown{% endif %}</td>
-                            </tr>
-                            <tr>
-                                <td>Policy Type</td>
-                                <td>{% if view.customer_project_detail.policy_type %}{{ view.customer_project_detail.policy_type }}{% else %}Unknown{% endif %}</td>
-                            </tr>
-                            <tr>
-                                <td>Insurance Company Branch</td>
-                                <td>{% if view.customer_project_detail.insurance_company_branch %}{{ view.customer_project_detail.insurance_company_branch }}{% else %}Unknown{% endif %}</td>
-                            </tr>
-                            <tr>
-                                <td>Complaint Statement</td>
-                                <td>{% if view.customer_project_detail.complaint_statement %}{{ view.customer_project_detail.complaint_statement }}{% else %}Unknown{% endif %}</td>
-                            </tr>
-                            <tr>
-                                <td>Address</td>
-                                <td>{% if view.customer_project_detail.address %}{{ view.customer_project_detail.address }}{% else %}Unknown{% endif %}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
               </div>
             </div>
-          </div>
-        </div>
 
-        <!-- end onboarding modal -->
+            <!-- end onboarding modal -->
 
-        <!-- onboarding modal -->
-        <div class="modal" tabindex="-1" role="dialog" id="automatic-update-logs-modal">
-          <div class="modal-dialog is-modal-dialog" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title">History</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body">
-                <div class="card-body">
-                    {% if not view.get_email_history %}
-                        No Logs Found
-                    {% else %}
-                        <table class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th class="min-th-width">Date & Time</th>
-                                    <th>Message</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            {% for email in view.get_email_history %}
-                                <tr>
-                                    <td>{{ email.sent_on }}</td>
-                                    <td>{{ email.message|safe }} </td>
-                                </tr>
-                            {% endfor %}
-                            </tbody>
-                        </table>
-                    {% endif %}
+            <!-- onboarding modal -->
+            <div class="modal" tabindex="-1" role="dialog" id="automatic-update-logs-modal">
+              <div class="modal-dialog is-modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title">History</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <div class="card-body">
+                        {% if not view.get_email_history %}
+                            No Logs Found
+                        {% else %}
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th class="min-th-width">Date & Time</th>
+                                        <th>Message</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                {% for email in view.get_email_history %}
+                                    <tr>
+                                        <td>{{ email.sent_on }}</td>
+                                        <td>{{ email.message|safe }} </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        {% endif %}
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                  </div>
                 </div>
               </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-              </div>
             </div>
-          </div>
-        </div>
 
-        <!-- IRDAI modal -->
-        <div class="modal" tabindex="-1" role="dialog" id="irdai-number-modal">
-          <div class="modal-dialog" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title">History</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body scroll-col">
-                <div class="card-body">
-                {% if not view.customer_project_detail %}
-                    No History Found
-                {% else %}
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th>Sent on</th>
-                                <th>IRDAI Reference Number</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        {% for irdai in view.get_irdai_ref_number %}
-                            <tr>
-                                <td>{{ irdai.created_on }}</td>
-                                <td>{{ irdai.reference_number }} </td>
-                            </tr>
-                        {% endfor %}
-                        </tbody>
-                    </table>
-                {% endif %}
-                </div>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!--end IRDAI modal -->
-
-         <!-- Complaint ref number modal -->
-        <div class="modal" tabindex="-1" role="dialog" id="complaint-number-modal">
-          <div class="modal-dialog" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title">History</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body scroll-col">
-                <div class="card-body">
+            <!-- IRDAI modal -->
+            <div class="modal" tabindex="-1" role="dialog" id="irdai-number-modal">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title">History</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body scroll-col">
+                    <div class="card-body">
                     {% if not view.customer_project_detail %}
                         No History Found
                     {% else %}
@@ -565,85 +521,129 @@
                             <thead>
                                 <tr>
                                     <th>Sent on</th>
-                                    <th>Complaint Reference Number</th>
+                                    <th>IRDAI Reference Number</th>
                                 </tr>
                             </thead>
                             <tbody>
-                            {% for complaint in view.get_complaint_ref_number %}
+                            {% for irdai in view.get_irdai_ref_number %}
                                 <tr>
-                                    <td>{{ complaint.created_on }}</td>
-                                    <td>{{ complaint.reference_number }} </td>
+                                    <td>{{ irdai.created_on }}</td>
+                                    <td>{{ irdai.reference_number }} </td>
                                 </tr>
                             {% endfor %}
                             </tbody>
                         </table>
                     {% endif %}
-                </div>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!--end IRDAI modal -->
-
-        <!-- Collect payment modal -->
-        <div class="modal" tabindex="-1" role="dialog" id="collect-payment-modal">
-          <div class="modal-dialog" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title">Collect Payment</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body">
-                <div class="form-group">
-                    <label for="new-email">Enter Amount</label>
-                    <input class="form-control" id="new-amount" required type="email">
-                </div>
-                <div class="modal-footer">
-                      <button type="button" class="btn btn-primary collect-payment">Collect</button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!--end collect payment modal -->
-
-        <!-- Collect payment modal -->
-        <div class="modal" tabindex="-1" role="dialog" id="project-status-modal">
-          <div class="modal-dialog" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title">Change status</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body">
-                <div class="form-group">
-                    <label for="new-email">Choose customer project status:</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <select name="project-status" id="project-status-id">
-                        <option value="in-progress">In Progress</option>
-                        <option value="completed">Completed</option>
-                        <option value="not-resolved">Not Resolved</option>
-                    </select><br><br>
-                    <div class="customer-project-status"  hidden>
-                        <label for="new-email">Reason:</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <textarea id="not-resolved-reason"></textarea>
                     </div>
-                </div>
-                <div class="modal-footer">
-                      <button type="button" class="btn btn-primary project-status">Submit</button>
                   </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
+            <!--end IRDAI modal -->
+
+             <!-- Complaint ref number modal -->
+            <div class="modal" tabindex="-1" role="dialog" id="complaint-number-modal">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title">History</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body scroll-col">
+                    <div class="card-body">
+                        {% if not view.customer_project_detail %}
+                            No History Found
+                        {% else %}
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Sent on</th>
+                                        <th>Complaint Reference Number</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                {% for complaint in view.get_complaint_ref_number %}
+                                    <tr>
+                                        <td>{{ complaint.created_on }}</td>
+                                        <td>{{ complaint.reference_number }} </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        {% endif %}
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!--end IRDAI modal -->
+
+            <!-- Collect payment modal -->
+            <div class="modal" tabindex="-1" role="dialog" id="collect-payment-modal">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title">Collect Payment</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <div class="form-group">
+                        <label for="new-email">Enter Amount</label>
+                        <input class="form-control" id="new-amount" required type="email">
+                    </div>
+                    <div class="modal-footer">
+                          <button type="button" class="btn btn-primary collect-payment">Collect</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!--end collect payment modal -->
+
+            <!-- Collect payment modal -->
+            <div class="modal" tabindex="-1" role="dialog" id="project-status-modal">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title">Change status</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <div class="form-group">
+                        <label for="new-email">Choose customer project status:</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <select name="project-status" id="project-status-id">
+                            <option value="in-progress">In Progress</option>
+                            <option value="completed">Completed</option>
+                            <option value="not-resolved">Not Resolved</option>
+                        </select><br><br>
+                        <div class="customer-project-status"  hidden>
+                            <label for="new-email">Reason:</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <textarea id="not-resolved-reason"></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                          <button type="button" class="btn btn-primary project-status">Submit</button>
+                      </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!--end collect payment modal -->
         </div>
-        <!--end collect payment modal -->
     </div>
 {% endblock %}
-
-<script src="{% static 'theme/js/property-details.js' %}"></script>
+{% block page_level_scripts %}
+    <script src="{% static 'theme/js/property-details.js' %}"></script>
+{% endblock %}

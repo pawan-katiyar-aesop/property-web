@@ -4,7 +4,7 @@ from django.shortcuts import render
 from django.views.generic import TemplateView
 from models import CustomerLead, AgentLead, Property
 from django.views import generic
-from rest_framework.generics import ListCreateAPIView
+from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from serializers import CustomerLeadSerializer, AgentLeadSerializer, PropertySerializer
 
 
@@ -29,6 +29,14 @@ class ListCreatePropertyAPIView(ListCreateAPIView):
 
     serializer_class = PropertySerializer
     queryset = Property.objects.all()
+
+
+class RetrieveUpdateDestroyPropertyAPIView(RetrieveUpdateDestroyAPIView):
+    queryset = Property.objects.all()
+    serializer_class = PropertySerializer
+
+    def get_object(self):
+        return Property.objects.get(id=self.kwargs['pk'])
 
 
 class HomePageView(TemplateView):
