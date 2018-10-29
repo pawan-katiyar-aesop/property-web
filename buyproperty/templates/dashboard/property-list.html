@@ -23,7 +23,7 @@
                     <tbody>
                         {% for property in property_list %}
                             <tr class="table-info">
-                                <td><a>#{{ property.property_id }}</a> </td>
+                                <td><a href="../property-details/?p={{ property.pk }}">#{{ property.property_id }}</a> </td>
                                 <td>{{ property.property_name }}</td>
                                 <td>{{ property.address }} </td>
                                 <td>{{ property.landmark }}</td>
