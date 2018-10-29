@@ -1,11 +1,18 @@
 from rest_framework import serializers
-from buyproperty.models import CustomerLead, AgentLead, Property
+from buyproperty.models import CustomerLead, AgentLead, Property, Address
 
 
 class CustomerLeadSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = CustomerLead
+        fields = "__all__"
+
+
+class AddressSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Address
         fields = "__all__"
 
 
