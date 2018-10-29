@@ -116,15 +116,12 @@ let property_create_app = new Vue({
                 "carpet_area": that.newProperty.carpetArea,
                 "buildup_area": that.newProperty.buildupArea
             };
-            debugger;
             axios.post('/api/property/', property_body)
             .then(function (response) {
-                debugger;
                 // show_notification("success", "Property Successfully Created.");
                 window.location.href =  "/control/properties/";
             })
             .catch(function (response) {
-                debugger;
                 // show_notification("danger", "A fatal error occurred, and this page might not function correctly.")
             })
         },
@@ -157,30 +154,8 @@ let property_create_app = new Vue({
                 '                                            <input type="text" v-model="newProperty.nearestList-'+that.nearestId+'" class="form-control mt-15" required/>\n' +
                 '                                        </div>');
             that.nearestId += 1;
-        },
-        createAddress: function () {
-            let that = this;
-            let address_body = {
-                "name": that.newAddress.contactName,
-                "line_1": that.newAddress.streetLine1,
-                "line_2": that.newAddress.streetLine2,
-                "city": that.newAddress.city,
-                "state": that.newAddress.state,
-                "country": that.newAddress.country,
-                "zip": that.newAddress.zip,
-            };
-            debugger;
-            axios.post('/api/address/', address_body)
-            .then(function (response) {
-                that.newProperty.address = response.data;
-                that.createProperty();
-                debugger;
-                // show_notification("success", "Property Successfully Created.");
-            })
-            .catch(function (response) {
-                // show_notification("danger", "A fatal error occurred, and this page might not function correctly.")
-            })
-        },
+        }
+
 
     },
     mounted() {
