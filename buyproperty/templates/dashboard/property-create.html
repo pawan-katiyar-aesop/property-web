@@ -1,6 +1,11 @@
 {% extends 'dashboard/base.html' %}
 {% load static from staticfiles %}
 
+{% block scoped_css %}
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/css/select2.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/js/select2.min.js"></script>
+{% endblock %}
+
 {% block content %}
     <div id="vue-property-create-app">
         <div class="container-fluid pt-10" style="background-color:#DFE4E7;height: 100%">
@@ -36,10 +41,8 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="new-email">Country Code</label>
-                                        <select name="project-status" class="form-control" v-model="newProperty.countryCode">
-                                            <option disabled selected>Choose Any Option</option>
-                                            <option value="+91">+91</option>
-                                            <option value="+93">+93</option>
+                                        <select name="country-code" id="select-country-code" class="form-control">
+
                                         </select>
                                     </div>
                                 </div>
@@ -208,10 +211,11 @@
                                     <label for="new-email">Overlooking</label>
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <select name="project-status" class="form-control" v-model="newProperty.overlookingList">
-                                                <option disabled selected>Choose Any Option</option>
-                                                <option value="semi">Semi Furnished</option>
-                                                <option value="bare">Bareshell</option>
+                                            <select name="overlooking" id="property-overlooking" class="form-control" v-model="newProperty.overlookingList" multiple="multiple">
+                                                <option disabled selected><---Choose Any Option---></option>
+                                                <option value="w">Water Body</option>
+                                                <option value="r">Road</option>
+                                                <option value="g">Garden</option>
                                             </select>
                                         </div>
                                     </div>
@@ -455,67 +459,6 @@
             </div>
             <button class="btn btn-success mt-20 mb-20" v-on:click="createProperty">Create Property</button>
             <a href="/properties/" class="btn btn-primary ml-20 mt-30 mb-30" data-dismiss="modal">View Property List</a>
-
-            <!-- address modal -->
-            <div class="modal" tabindex="-1" role="dialog" id="address-modal">
-              <div class="modal-dialog modal-lg" role="document">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h5 class="modal-title">Create New Address</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                      <span aria-hidden="true">&times;</span>
-                    </button>
-                  </div>
-                  <div class="modal-body">
-                    <div class="card-body">
-                        <div class="form-group">
-                            <label for="contact-name">Name</label>
-                            <input class="form-control" required type="text" v-model="newAddress.contactName">
-                        </div>
-                        <div class="form-group">
-                            <label for="street-line-1">Line 1</label>
-                            <input class="form-control" required type="text" v-model="newAddress.streetLine1">
-                        </div>
-                        <div class="form-group">
-                            <label for="street-line-2">Line 2</label>
-                            <input class="form-control" required type="text" v-model="newAddress.streetLine2">
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="city">City</label>
-                                    <input class="form-control" required type="text" v-model="newAddress.city">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="state">State</label>
-                                    <input class="form-control" required type="text" v-model="newAddress.state">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="country">Country</label>
-                                    <input class="form-control" required type="text" v-model="newAddress.country">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="zip">Zip</label>
-                                    <input class="form-control" required type="number" v-model="newAddress.zip">
-                                </div>
-                            </div>
-                        </div>
-                        <button class="btn btn-success mt-20" v-on:click="createAddress">Create Address</button>
-                    </div>
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <!-- end address modal -->
 
         </div>
     </div>
