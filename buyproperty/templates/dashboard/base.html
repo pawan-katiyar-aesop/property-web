@@ -9,6 +9,8 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"></script>
+        {%  block scoped_css %}
+        {% endblock %}
     </head>
     <body>
 
@@ -31,6 +33,9 @@
 					</li>
 				</ul>
 				<ul class="nav navbar-nav ml-auto">
+                    <li class="nav-item {% if view.active_tab == "property-create" %}active{% endif %}">
+                        <a class="nav-link" href="../property-create">Add Property</a>
+                    </li>
                     <li class="nav-item">
                         {% if request.user.is_anonymous %}
 						    <a class="nav-link" href="/_/dash/logout/" id="logout-is">Log Out</a>

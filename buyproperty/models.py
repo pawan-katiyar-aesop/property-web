@@ -1,7 +1,6 @@
 from __future__ import unicode_literals
 from django.db import models
 from choices import country_choices
-from django import forms
 from django.contrib.postgres.fields import JSONField
 
 
@@ -122,7 +121,7 @@ class Property(models.Model):
     power_backup = models.BooleanField(default=False)
     parking = models.CharField(choices=PARKING_CHOICE, blank=True, null=True, max_length=6)
     lift_availability = models.BooleanField(default=False)
-    landmark = models.ManyToManyField(Landmark, blank=True, null=True)
+    landmark = models.ManyToManyField(Landmark, blank=True)
     parking_area = models.FloatField(blank=True, null=True)
     overlooking = models.ManyToManyField(Overlooking, blank=True)
     age = models.FloatField(null=True, blank=True)
@@ -140,12 +139,12 @@ class Property(models.Model):
     flooring_details = models.TextField(blank=True, null=True)
     ceiling_details = models.TextField(blank=True, null=True)
     media = models.ManyToManyField(Media, blank=True)
-    address = models.ForeignKey(Address)
-    country_code = models.CharField(choices=country_choices, max_length=3, null=True, blank=True)
+    address = models.ForeignKey(Address, on_delete=models.CASCADE)
     contact = models.CharField(max_length=10, blank=True, null=True)
     other_charges = models.ManyToManyField(OtherCharges, blank=True)
     lease_term = models.FloatField(null=True, blank=True)
     nearest = models.ManyToManyField(Nearest, blank=True)
+    country_code = models.CharField(choices=country_choices, max_length=3, null=True, blank=True)
 
     def __str__(self):
         return self.property_id + " " + self.property_name if self.property_id and self.property_name else None
@@ -212,6 +211,7 @@ class Property(models.Model):
         pdb.set_trace()
         return property
 
+
 class FloorPlan(models.Model):
     FLOOR_CHOICES = [(x, x) for x in range(0, 4)]
     number_of_floors = models.IntegerField(default=1)
@@ -223,7 +223,7 @@ class CustomerLead(models.Model):
     email = models.EmailField(blank=True, null=True)
     contact = models.CharField(max_length=10, blank=True, null=True)
     country_code = models.CharField(choices=country_choices, max_length=3, null=True, blank=True)
-    for_property = models.ForeignKey(Property, blank=True, null=True)
+    for_property = models.ForeignKey(Property, on_delete=models.CASCADE, blank=True, null=True)
 
     def __str__(self):
         return self.email if self.email else None

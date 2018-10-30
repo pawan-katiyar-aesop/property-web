@@ -1,6 +1,10 @@
 {% extends 'dashboard/base.html' %}
 {% load static from staticfiles %}
 
+{% block scoped_css %}
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/css/select2.min.css" rel="stylesheet">
+{% endblock %}
+
 {% block content %}
     <div id="product-details-app">
         <div class="container-fluid pt-10" style="background-color:#DFE4E7;" v-if="!processing">
@@ -36,17 +40,14 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="new-email">Country Code</label>
-                                        <select name="project-status" id="project-status-id" class="form-control">
-                                            <option disabled selected>Choose Any Option</option>
-                                            <option value="semi">Semi Furnished</option>
-                                            <option value="bare">Bareshell</option>
+                                        <select class="form-control form-select select-country_code" id="property-country_code" v-model="property.country_code" name="property_country_code" required>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="property-contact">Contact Number</label>
-                                        <input class="form-control" size="10" id="property-contact" required type="number" v-model="property.contact">
+                                        <input class="form-control" size="10" id="property-contact" required type="number" v-model="property.contact" required>
                                     </div>
                                 </div>
                             </div>
@@ -56,18 +57,48 @@
                         <div class="card-header">
                             <b>Address Details</b>
                         </div>
-                        <div class="card-body">
-                            <div class="form-group">
-                                <label for="new-email">Select Address</label>
-                                <select name="project-status" id="project-status-id" class="form-control">
-                                    <option disabled selected>Choose Any Option</option>
-                                    <option value="semi">Semi Furnished</option>
-                                </select>
+
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="address-name">Name</label>
+                            <input class="form-control" id="address-name" required type="text" v-model="property.address.name">
+                        </div>
+                        <div class="form-group">
+                            <label for="address-line1">Line 1</label>
+                            <input class="form-control" id="address-line1" required type="text" v-model="property.address.line_1">
+                        </div>
+                        <div class="form-group">
+                            <label for="address-line2">Line 2</label>
+                            <input class="form-control" id="address-line2" required type="text" v-model="property.address.line_2">
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="address-city">City</label>
+                                    <input class="form-control" id="address-city" required type="text" v-model="property.address.city">
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <a href="#" class="mt-15 mb-20 d-block" data-target="#address-modal" data-toggle="modal">Add New Address</a>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="address-state">State</label>
+                                    <input class="form-control" id="address-state" required type="text" v-model="property.address.state">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="address-country">Country</label>
+                                    <input class="form-control" id="address-country" required type="text" v-model="property.address.country">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="address-zip">Zip</label>
+                                    <input class="form-control" id="address-zip" required type="number" v-model="property.address.zip">
+                                </div>
                             </div>
                         </div>
+                        <button type="button" class="btn btn-success" @click="updateAddress" data-dismiss="modal">Update Address</button>
+                    </div>
                     </div>
                     <div class="card card-default mt-30">
                         <div class="card-header">
@@ -94,16 +125,27 @@
                                     </div>
                                 </div>
                                 <div class="col-md-12">
-                                    <p class="mt-15"><b>Other Charges</b></p>
-                                    <div class="col-md-4 pl-0">
-                                        <div class="form-group">
-                                            <label for="new-email">Charges Name</label>
-                                            <input class="form-control" id="new-amount" type="number" required>
+                                    <p class="mt-15" v-if="otherId!==-1"><b>Other Charges</b></p>
+                                    <div class="row" id="other-charge-heading" v-if="otherId!==-1">
+                                        <div class="col-md-8">
+                                            <div class="form-group">
+                                                <label for="new-email">Charges Description</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="new-email">Charges Amount (&#8377;)</label>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-4 pl-0">
-                                        <div class="form-group">
-                                            <a href="#" class="mt-15 mb-20 d-block">Add Another Charges</a>
+                                    <div class="row" id="other-charge-parent">
+
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <a href="#" class="mt-15 mb-20 d-block" v-on:click="addOtherCharge">Add Other Charges</a>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -646,4 +688,6 @@
 {% endblock %}
 {% block page_level_scripts %}
     <script src="{% static 'theme/js/property-details.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/js/select2.full.min.js"></script>
+
 {% endblock %}
