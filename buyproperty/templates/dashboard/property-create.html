@@ -22,25 +22,25 @@
                                 <input class="form-control" size="250" required type="text" v-model="newProperty.propertyName">
                             </div>
                             <div class="form-group">
-                                <label for="new-email">Property Description</label>
+                                <label for="property-description">Property Description</label>
                                 <textarea class="form-control" v-model="newProperty.propertyDesc" name="update" required></textarea>
                             </div>
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="new-email">Property ID</label>
+                                        <label for="property-id">Property ID</label>
                                         <input class="form-control" size="20" required type="text" v-model="newProperty.propertyID">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="new-email">Property Age</label>
-                                        <input class="form-control" size="3" required type="number" v-model="newProperty.propertyAge">
+                                        <label for="property-age">Property Age</label>
+                                        <input class="form-control" onKeyPress="if(this.value.length===2) return false;" type="number" v-model="newProperty.propertyAge">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="new-email">Country Code</label>
+                                        <label for="country-code">Country Code</label>
                                         <select name="country-code" id="select-country-code" class="form-control">
 
                                         </select>
@@ -48,8 +48,8 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="new-email">Contact Number</label>
-                                        <input class="form-control" size="10" required type="number" v-model="newProperty.contactNumber">
+                                        <label for="contact-number">Contact Number</label>
+                                        <input class="form-control" onKeyPress="if(this.value.length===10) return false;" size="10" required type="number" v-model="newProperty.contactNumber">
                                     </div>
                                 </div>
                             </div>
@@ -94,7 +94,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="zip">Zip</label>
-                                        <input class="form-control" required type="number" v-model="newAddress.zip">
+                                        <input class="form-control" onKeyPress="if(this.value.length===6) return false;" required type="number" v-model="newAddress.zip">
                                     </div>
                                 </div>
                             </div>
@@ -121,20 +121,20 @@
                             <div class="row">
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label for="new-email">Rental charge</label>
-                                        <input class="form-control" type="number" required v-model="newProperty.rentCharge">
+                                        <label for="rental-charge">Rental charge</label>
+                                        <input class="form-control" onKeyPress="if(this.value.length===12) return false;" type="number" required v-model="newProperty.rentCharge">
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label for="new-email">Monthly Maintenance</label>
-                                        <input class="form-control" type="number" required v-model="newProperty.monthlyMaintenance">
+                                        <label for="monthly-maintenance">Monthly Maintenance</label>
+                                        <input class="form-control" onKeyPress="if(this.value.length===12) return false;" type="number" required v-model="newProperty.monthlyMaintenance">
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label for="new-email">Security Deposits</label>
-                                        <input class="form-control" v-model="newProperty.securityDeposits" type="number" required>
+                                        <label for="security-deposits">Security Deposits</label>
+                                        <input class="form-control" onKeyPress="if(this.value.length===12) return false;" v-model="newProperty.securityDeposits" type="number" required>
                                     </div>
                                 </div>
                                 <div class="col-md-12">
@@ -142,12 +142,12 @@
                                     <div class="row" id="other-charge-heading">
                                         <div class="col-md-8">
                                             <div class="form-group">
-                                                <label for="new-email">Charges Description</label>
+                                                <label for="charge-description">Charges Description</label>
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label for="new-email">Charges Amount</label>
+                                                <label for="charge-amount">Charges Amount</label>
                                             </div>
                                         </div>
                                     </div>
@@ -171,11 +171,11 @@
                         </div>
                         <div class="card-body">
                             <div class="form-group">
-                                <label for="new-email">Flooring Details</label>
+                                <label for="flooring-details">Flooring Details</label>
                                 <textarea class="form-control" v-model="newProperty.floorDetails" required></textarea>
                             </div>
                             <div class="form-group">
-                                <label for="new-email">Ceiling Details</label>
+                                <label for="ceiling-details">Ceiling Details</label>
                                 <textarea class="form-control" v-model="newProperty.ceilingDetails" required></textarea>
                             </div>
                             <p class="mt-15"><b>Washroom Details</b></p>
@@ -184,14 +184,14 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label for="new-email">Urinal</label>
-                                                <input class="form-control" v-model="newProperty.washroomDetails.urinal" required/>
+                                                <label for="urinal">Urinal</label>
+                                                <input class="form-control" onKeyPress="if(this.value.length===2) return false;" v-model="newProperty.washroomDetails.urinal" required/>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label for="new-email">WC</label>
-                                                <input class="form-control" v-model="newProperty.washroomDetails.wC" required/>
+                                                <label for="wc">WC</label>
+                                                <input class="form-control" onKeyPress="if(this.value.length===2) return false;" v-model="newProperty.washroomDetails.wC" required/>
                                             </div>
                                         </div>
                                     </div>
@@ -199,32 +199,29 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
-                                    <label for="new-email">Landmark</label>
+                                    <label for="landmark">Landmark</label>
                                     <div class="row" id="add-landmark">
                                         <div class="col-md-6">
-                                            <input type="text" class="form-control mt-15" v-model="newProperty.landmarkList" required/>
+                                            <input type="text" class="form-control mt-15" v-model="newProperty.landmark" required/>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
+                            <div class="row mt-15">
                                 <div class="col-md-12">
-                                    <label for="new-email">Overlooking</label>
+                                    <label for="overlooking">Overlooking</label>
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <select name="overlooking" id="select-overlooking" class="form-control" v-model="newProperty.overlookingList" multiple="multiple">
-                                                <option disabled selected><---Choose Any Option---></option>
-                                                <option value="w">Water Body</option>
-                                                <option value="r">Road</option>
-                                                <option value="g">Garden</option>
+                                            <select name="overlooking" id="select-overlooking" class="form-control"  multiple="multiple">
+
                                             </select>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
+                            <div class="row mt-15">
                                 <div class="col-md-12">
-                                    <label for="new-email">Media</label>
+                                    <label for="media">Media</label>
     {#                                <div class="row">#}
     {#                                    <div class="col-md-6">#}
     {#                                        <div class="row">#}
@@ -256,11 +253,23 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
-                                    <label for="new-email">Nearest Buildings</label>
+                                    <label for="nearest-building"><b>Nearest Buildings</b></label>
+                                    <div class="row">
+                                        <div class="col-md-8">
+                                            <div class="form-group">
+                                                <label for="select-title">Nearest Title</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="nearest-distance">Nearest Distance(Km)</label>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div class="row" id="nearest-building">
 
                                     </div>
-                                    <a href="#" class="mt-15 mb-20 d-block" v-on:click="addNearest">Add New Nearest Buildings</a>
+                                    <a href="#" class="mt-15 d-block" v-on:click="addNearest">Add New Nearest Buildings</a>
                                 </div>
                             </div>
                         </div>
@@ -278,61 +287,61 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <input type="checkbox" v-model="newProperty.pantry" class="mr-10" required/>
-                                                <label for="new-email">Pantry</label>
+                                                <label for="pantry">Pantry</label>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <input type="checkbox" class="mr-10" v-model="newProperty.washroom" required/>
-                                                <label for="new-email">Washroom</label>
+                                                <label for="washroom">Washroom</label>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <input type="checkbox" class="mr-10" v-model="newProperty.powerBackup" required/>
-                                                <label for="new-email">Power Backup</label>
+                                                <label for="power-backup">Power Backup</label>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <input type="checkbox" class="mr-10" v-model="newProperty.liftAvailability" required/>
-                                                <label for="new-email">Lift Availability</label>
+                                                <label for="lift-available">Lift Availability</label>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <input type="checkbox" class="mr-10" v-model="newProperty.airConditioner" required/>
-                                                <label for="new-email">Air Conditioner</label>
+                                                <label for="air-conditioner">Air Conditioner</label>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <input type="checkbox" class="mr-10" v-model="newProperty.cctv" required/>
-                                                <label for="new-email">CCTV</label>
+                                                <label for="cctv">CCTV</label>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <input type="checkbox" class="mr-10" v-model="newProperty.cafeteria" required/>
-                                                <label for="new-email">Cafeteria</label>
+                                                <label for="cafeteria">Cafeteria</label>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <input type="checkbox" class="mr-10" v-model="newProperty.fireSprinklers" required/>
-                                                <label for="new-email">Fire Sprinklers</label>
+                                                <label for="fire-sprinklers">Fire Sprinklers</label>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <input type="checkbox" class="mr-10" v-model="newProperty.earthing" required/>
-                                                <label for="new-email">Earthing</label>
+                                                <label for="earthing">Earthing</label>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <input type="checkbox" class="mr-10" v-model="newProperty.electricalConnection" required/>
-                                                <label for="new-email">Electrical Connection</label>
+                                                <label for="electrical-connection">Electrical Connection</label>
                                             </div>
                                         </div>
                                     </div>
@@ -347,8 +356,8 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="card-body">
-                                    <label for="new-email" class="mr-10">Furnishing Status</label>
-                                    <select name="project-status" class="form-control" v-model="newProperty.furnishingStatus">
+                                    <label for="furnishing-status" class="mr-10">Furnishing Status</label>
+                                    <select name="furnishing-status" class="form-control" v-model="newProperty.furnishingStatus">
                                         <option disabled selected>Choose Any Option</option>
                                         <option value="semi">Semi Furnished</option>
                                         <option value="bare">Bareshell</option>
@@ -357,8 +366,8 @@
                             </div>
                             <div class="col-md-12">
                                 <div class="card-body">
-                                    <label for="new-email" class="mr-10">Parking</label>
-                                    <select name="project-status" class="form-control" v-model="newProperty.parking">
+                                    <label for="parking" class="mr-10">Parking</label>
+                                    <select name="parking" class="form-control" v-model="newProperty.parking">
                                         <option disabled selected>Choose Any Option</option>
                                         <option value="cover">Covered</option>
                                         <option value="expose">Exposed</option>
@@ -367,8 +376,8 @@
                             </div>
                             <div class="col-md-12">
                                 <div class="card-body">
-                                    <label for="new-email" class="mr-10">Facing</label>
-                                    <select name="project-status" class="form-control" v-model="newProperty.facing">
+                                    <label for="facing" class="mr-10">Facing</label>
+                                    <select name="facing" class="form-control" v-model="newProperty.facing">
                                         <option disabled selected>Choose Any Option</option>
                                         <option value="n">North</option>
                                         <option value="ne">North East</option>
@@ -383,8 +392,8 @@
                             </div>
                             <div class="col-md-12">
                                 <div class="card-body">
-                                    <label for="new-email" class="mr-10">Flooring</label>
-                                    <select name="project-status" v-model="newProperty.flooring" class="form-control">
+                                    <label for="flooring" class="mr-10">Flooring</label>
+                                    <select name="flooring" v-model="newProperty.flooring" class="form-control">
                                         <option disabled selected>Choose Any Option</option>
                                         <option value="tile">Tiles</option>
                                         <option value="wood">Wooden</option>
@@ -395,8 +404,8 @@
                             </div>
                             <div class="col-md-12">
                                 <div class="card-body">
-                                    <label for="new-email" class="mr-10">Unit of Area</label>
-                                    <select name="project-status" class="form-control" v-model="newProperty.unitOfArea">
+                                    <label for="unit-of-area" class="mr-10">Unit of Area</label>
+                                    <select name="unit-of-area" class="form-control" v-model="newProperty.unitOfArea">
                                         <option disabled selected>Choose Any Option</option>
                                         <option value="sqmt">Square Mt.</option>
                                         <option value="sqft">Square Ft.</option>
@@ -413,44 +422,44 @@
                             <div class="col-md-12">
                                 <div class="card-body">
                                     <div class="form-group">
-                                        <label for="new-email">Number of Floors</label>
-                                        <input type="number" class="form-control mr-10" v-model="newProperty.noOfFloors" required/>
+                                        <label for="number-of-floors">Number of Floors</label>
+                                        <input type="number" onKeyPress="if(this.value.length===2) return false;" class="form-control mr-10" v-model="newProperty.noOfFloors" required/>
                                     </div>
                                     <div class="form-group">
-                                        <label for="new-email">Total Numbers of Floors</label>
-                                        <input type="number" class="form-control mr-10" v-model="newProperty.totalNoOfFloors" required/>
+                                        <label for="total-number-of-floors">Total Numbers of Floors</label>
+                                        <input type="number" onKeyPress="if(this.value.length===2) return false;" class="form-control mr-10" v-model="newProperty.totalNoOfFloors" required/>
                                     </div>
                                     <div class="form-group">
-                                        <label for="new-email">Number of Basements</label>
-                                        <input type="number" class="form-control mr-10" v-model="newProperty.numberOfBasements" required/>
+                                        <label for="number-of-basements">Number of Basements</label>
+                                        <input type="number" onKeyPress="if(this.value.length===2) return false;" class="form-control mr-10" v-model="newProperty.numberOfBasements" required/>
                                     </div>
                                     <div class="form-group">
-                                        <label for="new-email">Units on Floors</label>
-                                        <input type="number" class="form-control mr-10" v-model="newProperty.unitsOnFloors" required/>
+                                        <label for="units-on-floors">Units on Floors</label>
+                                        <input type="number" onKeyPress="if(this.value.length===7) return false;" class="form-control mr-10" v-model="newProperty.unitsOnFloors" required/>
                                     </div>
                                     <div class="form-group">
-                                        <label for="new-email">Parking Area</label>
-                                        <input type="number" class="form-control mr-10" v-model="newProperty.parkingArea" required/>
+                                        <label for="parking-area">Parking Area</label>
+                                        <input type="number" onKeyPress="if(this.value.length===7) return false;" class="form-control mr-10" v-model="newProperty.parkingArea" required/>
                                     </div>
                                     <div class="form-group">
-                                        <label for="new-email">Ceiling Height</label>
-                                        <input type="number" class="form-control mr-10" v-model="newProperty.ceilingHeight" required/>
+                                        <label for="ceiling-height">Ceiling Height</label>
+                                        <input type="number" onKeyPress="if(this.value.length===3) return false;" class="form-control mr-10" v-model="newProperty.ceilingHeight" required/>
                                     </div>
                                     <div class="form-group">
-                                        <label for="new-email">Beam Height</label>
-                                        <input type="number" class="form-control mr-10" v-model="newProperty.beamHeight" required/>
+                                        <label for="beam-height">Beam Height</label>
+                                        <input type="number" onKeyPress="if(this.value.length===2) return false;" class="form-control mr-10" v-model="newProperty.beamHeight" required/>
                                     </div>
                                     <div class="form-group">
-                                        <label for="new-email">Lease Term</label>
-                                        <input type="number" class="form-control mr-10" v-model="newProperty.leaseTerm" required/>
+                                        <label for="lease-term">Lease Term</label>
+                                        <input type="number" onKeyPress="if(this.value.length===3) return false;" class="form-control mr-10" v-model="newProperty.leaseTerm" required/>
                                     </div>
                                     <div class="form-group">
-                                        <label for="new-email">Carpet Area</label>
-                                        <input type="number" class="form-control mr-10" v-model="newProperty.carpetArea" required/>
+                                        <label for="carpet-area">Carpet Area</label>
+                                        <input type="number" onKeyPress="if(this.value.length===7) return false;" class="form-control mr-10" v-model="newProperty.carpetArea" required/>
                                     </div>
                                     <div class="form-group">
-                                        <label for="new-email">Buildup Area</label>
-                                        <input type="number" class="form-control mr-10" v-model="newProperty.buildupArea" required/>
+                                        <label for="builtup-area">Buildup Area</label>
+                                        <input type="number" onKeyPress="if(this.value.length===7) return false;" class="form-control mr-10" v-model="newProperty.buildupArea" required/>
                                     </div>
                                 </div>
                             </div>
