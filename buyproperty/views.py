@@ -1,14 +1,12 @@
 from __future__ import unicode_literals
-from django.http import HttpResponse
-from django.shortcuts import render
 from rest_framework import status
 from django.views.generic import TemplateView
 from models import CustomerLead, AgentLead, Property, Address
 from django.views import generic
 from rest_framework.response import Response
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView, CreateAPIView
-from django.http import HttpResponseRedirect, JsonResponse
 from serializers import CustomerLeadSerializer, AgentLeadSerializer, PropertySerializer, AddressSerializer
+from rest_framework.views import APIView
 
 
 class CustomerLeadsAPIView(ListCreateAPIView):
@@ -54,6 +52,28 @@ class RetrieveUpdateDestroyPropertyAPIView(RetrieveUpdateDestroyAPIView):
 
     def get_object(self):
         return Property.objects.get(id=self.kwargs['pk'])
+
+
+class RetrieveUpdateDestroyAddressAPIView(RetrieveUpdateDestroyAPIView):
+
+    queryset = Address.objects.all()
+    serializer_class = AddressSerializer
+
+    def get_object(self):
+        return Address.objects.get(id=self.kwargs['pk'])
+
+
+class CountryCodeListView(APIView):
+    """
+    Returns country code list.
+    """
+    from country_code import country_code_data
+
+    def format_country_code_data(self):
+        return [{"code": country_code["code"], "id": country_code["code"]} for country_code in self.country_code_data]
+
+    def get(self, request):
+        return Response(self.format_country_code_data(), status=status.HTTP_200_OK)
 
 
 class HomePageView(TemplateView):
@@ -118,4 +138,4 @@ class PropertyCreateView(TemplateView, CreateAPIView):
     template_name = "../templates/dashboard/property-create.html"
 
     def active_tab(self):
-        return "properties"
+        return "property-create"

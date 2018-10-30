@@ -12,8 +12,9 @@ let property_detail_app = new Vue({
             country : undefined,
             zip : undefined
         },
-        otherCharges:{},
-        pk:''
+        newOtherCharges:{},
+        pk:'',
+        otherId :-1
     }
     ,
     methods:{
@@ -39,6 +40,7 @@ let property_detail_app = new Vue({
          .then(function (response) {
              that.property = response.data;
              console.log(that.property);
+             that.loadCountryCodes();
              that.processing = false;
 
          })
@@ -103,7 +105,62 @@ let property_detail_app = new Vue({
                 //window.location.href = "http://localhost:8000/control/dash/properties/";
             });
         },
+        updateAddress:function(){
+          let that = this;
+          axios.put('/api/address/'+that.property.address.id+'/', that.property.address)
+              .then(function (response) {
+                  alert("Address has been updated for prop : "+that.property.property_id);
+                  window.location.reload(true);
+              })
+            .catch(function (response) {
+                alert("A fatal error occurred, and this page might not function correctly.")
+                //window.location.href = "http://localhost:8000/control/dash/properties/";
+            });
+        },
+        addOtherCharge: function () {
+            let that = this;
+            that.otherId += 1;
+            $("#other-charge-parent").append('<div class="col-md-8">\n' +
+                '                                            <div class="form-group">\n' +
+                '                                                <input id="charge-'+that.otherId+'" class="form-control" v-model="newOtherCharges-'+that.otherId+'" type="text" required>\n' +
+                '                                            </div>\n' +
+                '                                        </div>\n' +
+                '                                        <div class="col-md-4">\n' +
+                '                                            <div class="form-group">\n' +
+                '                                                <input id="value-'+that.otherId+'" class="form-control" v-model="newOtherCharges-'+that.otherId+'" type="number" required>\n' +
+                '                                            </div>\n' +
+                '                                        </div>');
 
+
+
+        },
+         loadCountryCodes: function(){
+            let that = this;
+            $('.select-country_code').select2({
+                ajax: {
+                    url: "/api/country_codes/",
+                    data: function (params) {
+                        return {
+                            code: btoa(params.term)
+                        }
+                    },
+                    processResults: function (data) {
+                        let processed_data = $.map(data, function (obj) {
+                            obj.text = obj.text || obj.code;
+                            return obj;
+                        });
+                        return {
+                            results: processed_data
+                        };
+                    }
+                },
+                placeholder: "Country code",
+                theme: "classic",
+                allowClear: true
+            }).on('change', function () {
+                that.property.country_code = this.value;
+            });
+        }
 
 
 
