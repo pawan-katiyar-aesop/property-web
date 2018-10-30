@@ -17,13 +17,6 @@ class Address(models.Model):
         return self.name + " " + self.line_1 if self.name and self.line_1 else None
 
 
-class Landmark(models.Model):
-    name = models.CharField(max_length=250)
-
-    def __str__(self):
-        return self.name if self.name else None
-
-
 class Nearest(models.Model):
     LOCALITY_CHOICES = [
         ('bus', 'Bus Stop'),
@@ -56,13 +49,6 @@ class Media(models.Model):
 
     def __str__(self):
         return "Media " + str(self.id) + " : " + str(self.title) if self.id and self.title else None
-
-
-class Overlooking(models.Model):
-    name = models.CharField(max_length=50, blank=True, null=True)
-
-    def __str__(self):
-        return self.name if self.name else None
 
 
 class OtherCharges(models.Model):
@@ -102,6 +88,11 @@ class Property(models.Model):
         ('sqmt', 'Square Mt.'),
         ('sqft', 'Square Ft.')
     ]
+    OVERLOOKING_CHOICES = [
+        ('w', 'Water Body'),
+        ('g', 'Garden'),
+        ('r', 'Road'),
+    ]
     property_id = models.CharField(max_length=20, null=True)
     property_name = models.CharField(blank=True, max_length=250)
     furnishing_status = models.CharField(choices=FURNISHING_CHOICE, blank=True, null=True, max_length=30)
@@ -121,9 +112,9 @@ class Property(models.Model):
     power_backup = models.BooleanField(default=False)
     parking = models.CharField(choices=PARKING_CHOICE, blank=True, null=True, max_length=6)
     lift_availability = models.BooleanField(default=False)
-    landmark = models.ManyToManyField(Landmark, blank=True)
+    landmark = models.CharField(max_length=200, null=True, blank=True)
     parking_area = models.FloatField(blank=True, null=True)
-    overlooking = models.ManyToManyField(Overlooking, blank=True)
+    overlooking = models.CharField(choices=OVERLOOKING_CHOICES, max_length=1, null=True, blank=True)
     age = models.FloatField(null=True, blank=True)
     facing = models.CharField(choices=FACING_CHOICE, null=True, blank=True, max_length=2)
     flooring = models.CharField(choices=FLOORING_CHOICE, null=True, blank=True, max_length=6)
@@ -141,7 +132,7 @@ class Property(models.Model):
     media = models.ManyToManyField(Media, blank=True)
     address = models.ForeignKey(Address, on_delete=models.CASCADE)
     contact = models.CharField(max_length=10, blank=True, null=True)
-    other_charges = models.ManyToManyField(OtherCharges, blank=True)
+    other_charges = JSONField(null=True, blank=True)
     lease_term = models.FloatField(null=True, blank=True)
     nearest = models.ManyToManyField(Nearest, blank=True)
     country_code = models.CharField(choices=country_choices, max_length=3, null=True, blank=True)

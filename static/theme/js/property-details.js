@@ -136,30 +136,20 @@ let property_detail_app = new Vue({
         },
          loadCountryCodes: function(){
             let that = this;
-            $('.select-country_code').select2({
-                ajax: {
-                    url: "/api/country_codes/",
-                    data: function (params) {
-                        return {
-                            code: btoa(params.term)
-                        }
-                    },
-                    processResults: function (data) {
-                        let processed_data = $.map(data, function (obj) {
-                            obj.text = obj.text || obj.code;
-                            return obj;
-                        });
-                        return {
-                            results: processed_data
-                        };
-                    }
-                },
-                placeholder: "Country code",
-                theme: "classic",
-                allowClear: true
-            }).on('change', function () {
-                that.property.country_code = this.value;
+            let country_codes = $('#property-country_code');
+            country_codes.empty();
+            country_codes.append('<option selected="true" disabled>Choose Country Code</option>');
+            country_codes.prop('selectedIndex', 0);
+
+            const url = '/api/country_codes/';
+
+            // Populate dropdown with list of country codes
+            $.getJSON(url, function (data) {
+              $.each(data, function (key, entry) {
+                country_codes.append($('<option></option>').attr('value', entry.id).text(entry.code));
+              })
             });
+
         }
 
 
