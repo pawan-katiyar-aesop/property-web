@@ -154,14 +154,33 @@ let property_create_app = new Vue({
                 '                                            <input type="text" v-model="newProperty.nearestList-'+that.nearestId+'" class="form-control mt-15" required/>\n' +
                 '                                        </div>');
             that.nearestId += 1;
-        }
+        },
+        get_country_codes: function(){
+            let that = this;
+            let country_codes = $('#select-country-code');
+            country_codes.empty();
+            country_codes.append('<option selected="true" disabled>Choose Country Code</option>');
+            country_codes.prop('selectedIndex', 0);
 
+            const url = '/api/country_codes/';
+
+            // Populate dropdown with list of country codes
+            $.getJSON(url, function (data) {
+              $.each(data, function (key, entry) {
+                country_codes.append($('<option></option>').attr('value', entry.id).text(entry.code));
+              })
+            });
+        }
 
     },
     mounted() {
-
+        this.get_country_codes();
     },
     computed: {
 
   }
+});
+
+$(document).ready(function() {
+    $('#property-overlooking').select2();
 });
