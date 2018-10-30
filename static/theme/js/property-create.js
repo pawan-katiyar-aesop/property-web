@@ -19,7 +19,7 @@ let property_create_app = new Vue({
                 urinal: undefined,
                 wC: undefined
             },
-            landmarkList: [],
+            landmark: '',
             overlookingList: [],
             mediaList: [],
             nearestList: [],
@@ -59,7 +59,6 @@ let property_create_app = new Vue({
             zip: ''
         },
         otherId: 0,
-        landmarkId: 0,
         nearestId: 0
     },
     methods: {
@@ -86,7 +85,7 @@ let property_create_app = new Vue({
                 "flooring_details": that.newProperty.floorDetails,
                 "ceiling_details": that.newProperty.ceilingDetails,
                 "washroom_details": that.newProperty.washroomDetails,
-                "landmark": that.newProperty.landmarkList,
+                "landmark": that.newProperty.landmark,
                 "overlooking": that.newProperty.overlookingList,
                 "media": that.newProperty.mediaList,
                 "nearest": that.newProperty.nearestList,
@@ -129,12 +128,12 @@ let property_create_app = new Vue({
             let that = this;
             $("#other-charge-parent").append('<div class="col-md-8">\n' +
                 '                                            <div class="form-group">\n' +
-                '                                                <input id="charge-'+that.otherId+'" class="form-control" v-model="newProperty.otherCharges-'+that.otherId+'" type="number" required>\n' +
+                '                                                <input id="charge-'+that.otherId+'" class="form-control" v-model="newProperty.otherCharges-charge-'+that.otherId+'" type="number" required>\n' +
                 '                                            </div>\n' +
                 '                                        </div>\n' +
                 '                                        <div class="col-md-4">\n' +
                 '                                            <div class="form-group">\n' +
-                '                                                <input id="value-'+that.otherId+'" class="form-control" v-model="newProperty.otherCharges-'+that.otherId+'" type="number" required>\n' +
+                '                                                <input id="value-'+that.otherId+'" class="form-control" onKeyPress="if(this.value.length===7) return false;" v-model="newProperty.otherCharges-value-'+that.otherId+'" type="number" required>\n' +
                 '                                            </div>\n' +
                 '                                        </div>');
 
@@ -143,9 +142,25 @@ let property_create_app = new Vue({
         },
         addNearest: function () {
             let that = this;
-            $("#nearest-building").append('<div class="col-md-6">\n' +
-                '                                            <input type="text" v-model="newProperty.nearestList-'+that.nearestId+'" class="form-control mt-15" required/>\n' +
+            $("#nearest-building").append('<div class="col-md-8">\n' +
+                '                                            <select name="parking" class="form-control mb-20" v-model="newProperty.nearestList-title-\'+that.nearestId+\'" required>\n' +
+                '                                                <option disabled selected>Choose Any Option</option>\n' +
+                '                                                <option value="bus">Bus Stop</option>\n' +
+                '                                                <option value="school">School</option>\n' +
+                '                                                <option value="mall">Shopping Mall</option>\n' +
+                '                                                <option value="hospital">Hospital</option>\n' +
+                '                                                <option value="bank">Bank</option>\n' +
+                '                                                <option value="atm">ATM</option>\n' +
+                '                                                <option value="restaurant">Restaurant</option>\n' +
+                '                                                <option value="metro">Metro Station</option>\n' +
+                '                                                <option value="train">Train Station</option>\n' +
+                '                                                <option value="pharmacy">Pharmacy</option>\n' +
+                '                                            </select>\n' +
+                '                                        </div>\n' +
+                '                                        <div class="col-md-4">\n' +
+                '                                            <input type="number" onKeyPress="if(this.value.length===2) return false;" v-model="newProperty.nearestList-distance-\'+that.nearestId+\'" class="form-control mb-20" required/>\n' +
                 '                                        </div>');
+
             that.nearestId += 1;
         },
         get_country_codes: function(){
@@ -168,7 +183,7 @@ let property_create_app = new Vue({
             let that = this;
             let overlooking = $('#select-overlooking');
             overlooking.empty();
-            // overlooking.append('<option selected="true" disabled>Choose Overlooking</option>');
+            // overlooking.append('<option selected="true" id="overlooking-choose" disabled>Choose Any Option</option>');
             // overlooking.prop('selectedIndex', 0);
 
             const url = '/api/overlooking/';
@@ -176,10 +191,17 @@ let property_create_app = new Vue({
             // Populate dropdown with list of overlooking
             $.getJSON(url, function (data) {
               $.each(data, function (key, entry) {
-                overlooking.append($('<option></option>').attr('value', entry.id).text(entry.name)).select2();
+                overlooking.append($('<option></option>').attr('value', entry.id).text(entry.name)).select2().on('change', function () {
+                    if($(".select2-selection__choice").text() === "×Choose Any Option"){
+                        $(".select2-selection__choice").remove();
+                    }
+                });
               })
             });
         }
+
+    },
+    watch: {
 
     },
     mounted() {
@@ -190,7 +212,3 @@ let property_create_app = new Vue({
 
   }
 });
-//
-// $(document).ready(function() {
-//     $('#property-overlooking').select2();
-// });
