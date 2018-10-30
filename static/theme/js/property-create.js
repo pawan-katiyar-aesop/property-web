@@ -141,13 +141,6 @@ let property_create_app = new Vue({
             that.otherId += 1;
 
         },
-        addLandmark: function () {
-            let that = this;
-            $("#add-landmark").append('<div class="col-md-6">\n' +
-                '                                            <input type="text" class="form-control mt-15" v-model="newProperty.landmarkList-'+that.landmarkId+'" required/>\n' +
-                '                                        </div>');
-            that.landmarkId += 1;
-        },
         addNearest: function () {
             let that = this;
             $("#nearest-building").append('<div class="col-md-6">\n' +
@@ -170,17 +163,34 @@ let property_create_app = new Vue({
                 country_codes.append($('<option></option>').attr('value', entry.id).text(entry.code));
               })
             });
+        },
+        get_overlooking: function(){
+            let that = this;
+            let overlooking = $('#select-overlooking');
+            overlooking.empty();
+            // overlooking.append('<option selected="true" disabled>Choose Overlooking</option>');
+            // overlooking.prop('selectedIndex', 0);
+
+            const url = '/api/overlooking/';
+
+            // Populate dropdown with list of overlooking
+            $.getJSON(url, function (data) {
+              $.each(data, function (key, entry) {
+                overlooking.append($('<option></option>').attr('value', entry.id).text(entry.name)).select2();
+              })
+            });
         }
 
     },
     mounted() {
         this.get_country_codes();
+        this.get_overlooking();
     },
     computed: {
 
   }
 });
-
-$(document).ready(function() {
-    $('#property-overlooking').select2();
-});
+//
+// $(document).ready(function() {
+//     $('#property-overlooking').select2();
+// });

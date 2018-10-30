@@ -51,6 +51,13 @@ class Media(models.Model):
         return "Media " + str(self.id) + " : " + str(self.title) if self.id and self.title else None
 
 
+class Overlooking(models.Model):
+    name = models.CharField(max_length=50, blank=True, null=True)
+
+    def __str__(self):
+        return self.name if self.name else None
+
+
 class OtherCharges(models.Model):
     charge_desc = models.CharField(blank=True, null=True, max_length=100)
     amount = models.DecimalField(max_digits=12, decimal_places=2)
@@ -88,11 +95,6 @@ class Property(models.Model):
         ('sqmt', 'Square Mt.'),
         ('sqft', 'Square Ft.')
     ]
-    OVERLOOKING_CHOICES = [
-        ('w', 'Water Body'),
-        ('g', 'Garden'),
-        ('r', 'Road'),
-    ]
     property_id = models.CharField(max_length=20, null=True)
     property_name = models.CharField(blank=True, max_length=250)
     furnishing_status = models.CharField(choices=FURNISHING_CHOICE, blank=True, null=True, max_length=30)
@@ -114,7 +116,7 @@ class Property(models.Model):
     lift_availability = models.BooleanField(default=False)
     landmark = models.CharField(max_length=200, null=True, blank=True)
     parking_area = models.FloatField(blank=True, null=True)
-    overlooking = models.CharField(choices=OVERLOOKING_CHOICES, max_length=1, null=True, blank=True)
+    overlooking = models.ManyToManyField(Overlooking, blank=True)
     age = models.FloatField(null=True, blank=True)
     facing = models.CharField(choices=FACING_CHOICE, null=True, blank=True, max_length=2)
     flooring = models.CharField(choices=FLOORING_CHOICE, null=True, blank=True, max_length=6)

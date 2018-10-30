@@ -4,8 +4,8 @@ from django.views.generic import TemplateView
 from models import CustomerLead, AgentLead, Property, Address
 from django.views import generic
 from rest_framework.response import Response
-from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView, CreateAPIView
-from serializers import CustomerLeadSerializer, AgentLeadSerializer, PropertySerializer, AddressSerializer
+from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView, ListAPIView
+from serializers import CustomerLeadSerializer, AgentLeadSerializer, PropertySerializer, AddressSerializer, OverlookingSerializer
 from rest_framework.views import APIView
 
 
@@ -44,6 +44,13 @@ class ListCreatePropertyAPIView(ListCreateAPIView):
         properti = Property.create_property(self.request.data)
 
         return Response(PropertySerializer(properti).data, status=status.HTTP_201_CREATED)
+
+
+class ListOverlookingAPIView(ListAPIView):
+    from buyproperty.models import Overlooking
+
+    serializer_class = OverlookingSerializer
+    queryset = Overlooking.objects.all()
 
 
 class RetrieveUpdateDestroyPropertyAPIView(RetrieveUpdateDestroyAPIView):
@@ -134,7 +141,7 @@ class PropertyDetailsView(TemplateView):
         return "properties"
 
 
-class PropertyCreateView(TemplateView, CreateAPIView):
+class PropertyCreateView(TemplateView):
     template_name = "../templates/dashboard/property-create.html"
 
     def active_tab(self):

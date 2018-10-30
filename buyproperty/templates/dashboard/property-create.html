@@ -201,9 +201,10 @@
                                 <div class="col-md-12">
                                     <label for="new-email">Landmark</label>
                                     <div class="row" id="add-landmark">
-
+                                        <div class="col-md-6">
+                                            <input type="text" class="form-control mt-15" v-model="newProperty.landmarkList" required/>
+                                        </div>
                                     </div>
-                                    <a href="#" class="mt-15 mb-20 d-block" v-on:click="addLandmark">Add New Landmark</a>
                                 </div>
                             </div>
                             <div class="row">
@@ -211,7 +212,7 @@
                                     <label for="new-email">Overlooking</label>
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <select name="overlooking" id="property-overlooking" class="form-control" v-model="newProperty.overlookingList" multiple="multiple">
+                                            <select name="overlooking" id="select-overlooking" class="form-control" v-model="newProperty.overlookingList" multiple="multiple">
                                                 <option disabled selected><---Choose Any Option---></option>
                                                 <option value="w">Water Body</option>
                                                 <option value="r">Road</option>

@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from buyproperty.models import CustomerLead, AgentLead, Property, Address
+from buyproperty.models import CustomerLead, AgentLead, Property, Address, Overlooking
 
 
 class CustomerLeadSerializer(serializers.ModelSerializer):
@@ -29,3 +29,10 @@ class PropertySerializer(serializers.ModelSerializer):
         model = Property
         fields = "__all__"
         depth = 1
+
+
+class OverlookingSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Overlooking
+        fields = "__all__"
