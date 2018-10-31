@@ -14,7 +14,10 @@ class Address(models.Model):
     zip = models.CharField(max_length=6, null=True, blank=True)
 
     def __str__(self):
-        return self.name + " " + self.line_1 if self.name and self.line_1 else None
+        if self.line_1 and self.name:
+            return self.name + " " + self.line_1
+        else:
+            return self.name
 
 
 class Nearest(models.Model):

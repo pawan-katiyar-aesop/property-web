@@ -3,6 +3,7 @@
 
 {% block scoped_css %}
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/css/select2.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.9.1/underscore-min.js"></script>
 {% endblock %}
 
 {% block content %}
@@ -39,8 +40,9 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="new-email">Country Code</label>
-                                        <select class="form-control form-select select-country_code" id="property-country_code" v-model="property.country_code" name="property_country_code" required>
+                                        <label for="property-country_code">Country Code</label>
+                                        <select class="form-control form-select select-country_code" id="property-country_code"  v-model="property.country_code" name="property_country_code" required>
+                                            <option v-for="code in countryCodes">{% verbatim %}{{ code.code }}{% endverbatim %}</option>
                                         </select>
                                     </div>
                                 </div>
@@ -139,7 +141,6 @@
                                         </div>
                                     </div>
                                     <div class="row" id="other-charge-parent">
-
                                     </div>
                                     <div class="row">
                                         <div class="col-md-4">
@@ -183,21 +184,22 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
-                                    <label for="new-email">Landmark</label>
+                                    <label for="property-landmark">Landmark</label>
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <input type="text" class="form-control" id="new-amount" required/>
+                                            <input type="text" class="form-control" id="property-landmark" v-model="property.landmark" />
                                         </div>
                                     </div>
-                                    <a href="#" class="mt-15 mb-20 d-block">Add New Landmark</a>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
-                                    <label for="new-email">Overlooking</label>
+                                    <label for="property-overlooking">Overlooking</label>
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <input type="text" class="form-control" id="new-amount" required/>
+                                            <select name="overlooking" id="select-overlooking" class="form-control" multiple="multiple">
+                                                <option v-for="option in overlookingOptions" :value="option.id" >{% verbatim %} {{ option.name }}{% endverbatim %}</option>
+                                            </select>
                                         </div>
                                     </div>
                                 </div>
@@ -429,6 +431,10 @@
                                     <div class="form-group">
                                         <label for="property-carpet-area">Carpet Area</label>
                                         <input type="number" class="form-control mr-10" id="property-carpet-area" v-model="property.carpet_area"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="property-buildupArea">Buildup Area</label>
+                                        <input type="number" class="form-control mr-10" id="property-buildupArea" v-model="property.buildup_area" required/>
                                     </div>
                                 </div>
                             </div>
@@ -688,6 +694,7 @@
 {% endblock %}
 {% block page_level_scripts %}
     <script src="{% static 'theme/js/property-details.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/js/select2.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/js/select2.full.min.js"></script>
 
 {% endblock %}
