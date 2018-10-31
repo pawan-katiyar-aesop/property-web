@@ -14,7 +14,7 @@
                             <th>Property ID</th>
                             <th>Title</th>
                             <th>Address</th>
-                            <th>Landmark(s)</th>
+                            <th>Landmark</th>
                             <th>Buildup Area</th>
                             <th>No. Of FLoors | Total Floors</th>
                             <th>Contact</th>
@@ -26,7 +26,11 @@
                                 <td><a href="../property-details/?p={{ property.pk }}">#{{ property.property_id }}</a> </td>
                                 <td>{{ property.property_name }}</td>
                                 <td>{{ property.address }} </td>
-                                <td>{{ property.landmark }}</td>
+                                {% if property.landmark %}
+                                    <td>{{ property.landmark }}</td>
+                                {% else %}
+                                    <td>--------</td>
+                                {% endif %}
                                 <td>{{ property.buildup_area}} {{ property.unit_of_area }}</td>
                                 <td>{{ property.number_of_floors }} | {{ property.total_number_of_floors }} </td>
                                 <td>{{ property.country_code }} &nbsp;{{ property.contact }}</td>

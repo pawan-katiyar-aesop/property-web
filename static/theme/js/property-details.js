@@ -14,7 +14,10 @@ let property_detail_app = new Vue({
         },
         newOtherCharges:{},
         pk:'',
-        otherId :-1
+        otherId :-1,
+        overlookingOptions:[],
+        countryCodes:[],
+        selectedOverlookingIds:[]
     }
     ,
     methods:{
@@ -41,7 +44,10 @@ let property_detail_app = new Vue({
              that.property = response.data;
              console.log(that.property);
              that.loadCountryCodes();
+             that.get_overlooking();
              that.processing = false;
+             that.loadOtherCharges();
+
 
          })
          .catch(function (response) {
@@ -92,7 +98,12 @@ let property_detail_app = new Vue({
                 "ceiling_height": that.property.ceiling_height,
                 "beam_height": that.property.beam_height,
                 "lease_term": that.property.lease_term,
-                "carpet_area": that.property.carpet_area
+                "carpet_area": that.property.carpet_area,
+                "landmark": that.property.landmark,
+                "overlooking": that.property.overlooking,
+                "buildup_area":that.property.buildup_area,
+                "country_code":that.property.country_code
+
             };
             axios.put("/api/property/"+parseInt(that.pk)+"/" ,data)
             .then(function (response) {
@@ -131,34 +142,56 @@ let property_detail_app = new Vue({
                 '                                            </div>\n' +
                 '                                        </div>');
 
-
-
         },
-         loadCountryCodes: function(){
+        loadOtherCharges : function () {
             let that = this;
-            let country_codes = $('#property-country_code');
-            country_codes.empty();
-            country_codes.append('<option selected="true" disabled>Choose Country Code</option>');
-            country_codes.prop('selectedIndex', 0);
+            for (var key in that.property.other_charges){
+                let val =  that.property.other_charges[key];
+                that.newOtherCharges[key] = val;
+            }
+        },
+         loadCountryCodes: function() {
+             let that = this;
+             let country_codes = $('#property-country_code');
+             country_codes.empty();
+             country_codes.append('<option selected="true" disabled>Choose Country Code</option>');
+             country_codes.prop('selectedIndex', 0);
 
-            const url = '/api/country_codes/';
+             const url = '/api/country_codes/';
+             // Populate dropdown with list of country codes
+             $.getJSON(url, function (data) {
+                 that.countryCodes = data;
+             });
 
-            // Populate dropdown with list of country codes
-            $.getJSON(url, function (data) {
-              $.each(data, function (key, entry) {
-                country_codes.append($('<option></option>').attr('value', entry.id).text(entry.code));
-              })
+         },
+        get_overlooking: function(){
+            let that = this;
+            let overlooking = $("#select-overlooking");
+            const url = '/api/overlooking/';
+            axios.get(url)
+                .then(function (response) {
+                    that.overlookingOptions = response.data;
+                })
+                .catch(function (response) {
+                    alert("Could not fetch the options for overlooking")
+                });
+
+            overlooking.select2({
+                placeholder: "Overlooking",
+                theme: "classic",
+                allowClear: true
+            }).on('select2:selecting select2:unselecting', function (e) {
+                if(e.params.name === 'select'){
+                    that.property.overlooking.push(e.params.args.data);
+                }
+                else if(e.params.name === 'unselect'){
+                    that.property.overlooking.splice(_.indexOf(that.property.overlooking,e.params.args.data),1);
+                }
             });
-
         }
-
-
-
-
     },
     mounted(){
         this.getPropertyDetails();
-
 
     }
 });

@@ -14,7 +14,10 @@ class Address(models.Model):
     zip = models.CharField(max_length=6, null=True, blank=True)
 
     def __str__(self):
-        return self.name + " " + self.line_1 if self.name and self.line_1 else None
+        if self.line_1 and self.name:
+            return self.name + " " + self.line_1
+        else:
+            return self.name
 
 
 class Nearest(models.Model):
@@ -144,8 +147,6 @@ class Property(models.Model):
 
     @classmethod
     def create_property(cls, data):
-        import pdb
-        pdb.set_trace()
         address = Address.objects.create(
             name=data.get("name"),
             line_1=data.get("street_line1"),
@@ -155,7 +156,6 @@ class Property(models.Model):
             country=data.get("country"),
             zip=data.get("zip")
         )
-        pdb.set_trace()
         property = cls.objects.create(
             property_name=data.get("property_name"),
             furnishing_status=data.get("furnishing_status"),
@@ -201,7 +201,6 @@ class Property(models.Model):
             # nearest=data.get("nearest"),
             buildup_area=data.get("buildup_area"),
         )
-        pdb.set_trace()
         return property
 
 
