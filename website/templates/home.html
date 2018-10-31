@@ -4,44 +4,41 @@
 {% block scoped_css %}
 
 {% endblock scoped_css %}
+{% block homeBanner %}
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="rle_banner_text style_2">
+                    <h1>Trusted Place to Find a Home</h1>
+                    <p>A modern look, new enhanced search features, more buying opportunities!</p>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 col-lg-offset-3 col-md-offset-3">
+                    <div class="row">
+                        <div class="rle_searchform_tabs style_2">
+                            <!-- Tab panes -->
+                            <div class="tab-content">
+                                <div role="tabpanel" class="tab-pane active" id="buy">
+                                    <div class="rle_searchform_box">
+                                        <input type="serch" placeholder="Street, town & landmark">
+                                        <button class="rle_btn"><i class="fa fa-search" aria-hidden="true"></i> search</button>
+                                    </div>
+                                </div>
+                                <div role="tabpanel" class="tab-pane " id="rent">
+                                    <div class="rle_searchform_box">
+                                        <input type="serch" placeholder="Street, town & landmark">
+                                        <button class="rle_btn"><i class="fa fa-search" aria-hidden="true"></i> search</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
 
 {% block content %}
-    <div class="container">
-		<div class="row">
-			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-				<div class="rle_banner_text style_2">
-					<h1>Trusted Place to Find a Home</h1>
-					<p>A modern look, new enhanced search features, more buying opportunities!</p>
-				</div>
-				<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 col-lg-offset-3 col-md-offset-3">
-					<div class="row">
-						<div class="rle_searchform_tabs style_2">
-							<!-- Nav tabs -->
-							<ul class="nav nav-tabs" role="tablist">
-								<li role="presentation" class="active"><a href="#buy" aria-controls="buy" role="tab" data-toggle="tab">buy</a></li>
-								<li role="presentation"><a href="#rent" aria-controls="rent" role="tab" data-toggle="tab">rent</a></li>
-							</ul>
-							<!-- Tab panes -->
-							<div class="tab-content">
-								<div role="tabpanel" class="tab-pane active" id="buy">
-									<div class="rle_searchform_box">
-										<input type="serch" placeholder="Street, town & landmark">
-										<button class="rle_btn"><i class="fa fa-search" aria-hidden="true"></i> search</button>
-									</div>
-								</div>
-								<div role="tabpanel" class="tab-pane " id="rent">
-									<div class="rle_searchform_box">
-										<input type="serch" placeholder="Street, town & landmark">
-										<button class="rle_btn"><i class="fa fa-search" aria-hidden="true"></i> search</button>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
     <!-- Property Wrapper start -->
     <div class="rle_property_wrapper rle_toppadder100 rle_bottompadder70">
         <div class="container">
