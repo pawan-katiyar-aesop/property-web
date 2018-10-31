@@ -19,7 +19,7 @@ let property_create_app = new Vue({
                 urinal: undefined,
                 wC: undefined
             },
-            landmarkList: [],
+            landmark:'',
             overlookingList: [],
             mediaList: [],
             nearestList: [],
@@ -86,7 +86,7 @@ let property_create_app = new Vue({
                 "flooring_details": that.newProperty.floorDetails,
                 "ceiling_details": that.newProperty.ceilingDetails,
                 "washroom_details": that.newProperty.washroomDetails,
-                "landmark": that.newProperty.landmarkList,
+                "landmark": that.newProperty.landmark,
                 "overlooking": that.newProperty.overlookingList,
                 "media": that.newProperty.mediaList,
                 "nearest": that.newProperty.nearestList,
@@ -119,7 +119,7 @@ let property_create_app = new Vue({
             axios.post('/api/property/', property_body)
             .then(function (response) {
                 // show_notification("success", "Property Successfully Created.");
-                window.location.href =  "/control/properties/";
+                window.location.href =  "/dash/properties/";
             })
             .catch(function (response) {
                 // show_notification("danger", "A fatal error occurred, and this page might not function correctly.")

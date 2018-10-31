@@ -10,6 +10,7 @@
     <div id="vue-property-create-app">
         <div class="container-fluid pt-10" style="background-color:#DFE4E7;height: 100%">
             <div class="row" style="margin-top: 100px"></div>
+            <div class="row" style="margin-top: 100px"></div>
             <div class="row">
                 <div class="col-md-8 scroll-col">
                     <div class="card card-default">
@@ -191,7 +192,7 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label for="new-email">WC</label>
-                                                <input class="form-control" v-model="newProperty.washroomDetails.wC" required/>
+                                                <input class="form-control" v-model="newProperty.washroomDetails.WC" required/>
                                             </div>
                                         </div>
                                     </div>
@@ -213,10 +214,6 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <select name="overlooking" id="select-overlooking" class="form-control" v-model="newProperty.overlookingList" multiple="multiple">
-                                                <option disabled selected><---Choose Any Option---></option>
-                                                <option value="w">Water Body</option>
-                                                <option value="r">Road</option>
-                                                <option value="g">Garden</option>
                                             </select>
                                         </div>
                                     </div>
