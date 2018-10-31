@@ -12,7 +12,7 @@ let property_detail_app = new Vue({
             country : undefined,
             zip : undefined
         },
-        newOtherCharges:{},
+        otherCharges:{},
         pk:'',
         otherId :-1,
         overlookingOptions:[],
@@ -45,8 +45,9 @@ let property_detail_app = new Vue({
              console.log(that.property);
              that.loadCountryCodes();
              that.get_overlooking();
-             that.processing = false;
              that.loadOtherCharges();
+
+             that.processing = false;
 
 
          })
@@ -55,14 +56,24 @@ let property_detail_app = new Vue({
             that.processing = false;
          });
         },
-        
+        validateMandatoryFields:function(){
+          let that = this;
+          if(!that.property.property_name || !that.property.contact ||!that.property.country_code || !that.property.address.name || !that.property.address.line_1){
+              return false;
+          }
+          return true;
+        },
         updateProperty : function () {
             let that = this;
             let wahsroomDet = {
                 "Urinals": that.property.washroom_details.Urinals,
                 "WC": that.property.washroom_details.WC,
             };
-
+            if (!that.validateMandatoryFields()){
+                alert("Please fill fields marked mandatory with a red asterisk");
+                return
+            }
+            that.populateCharges();
             const data  = {
                 "property_name": that.property.property_name,
                 "description": that.property.description,
@@ -102,7 +113,9 @@ let property_detail_app = new Vue({
                 "landmark": that.property.landmark,
                 "overlooking": that.property.overlooking,
                 "buildup_area":that.property.buildup_area,
-                "country_code":that.property.country_code
+                "country_code":that.property.country_code,
+                "other_charges":that.otherCharges,
+                "is_top": that.property.is_top
 
             };
             axios.put("/api/property/"+parseInt(that.pk)+"/" ,data)
@@ -113,12 +126,18 @@ let property_detail_app = new Vue({
             })
             .catch(function (response) {
                 alert("A fatal error occurred, and this page might not function correctly.")
+                console.log(response);
                 //window.location.href = "http://localhost:8000/control/dash/properties/";
             });
         },
         updateAddress:function(){
           let that = this;
-          axios.put('/api/address/'+that.property.address.id+'/', that.property.address)
+
+            if (!that.validateMandatoryFields()){
+                alert("Please fill fields marked mandatory with a red asterisk");
+                return
+            }
+            axios.put('/api/address/'+that.property.address.id+'/', that.property.address)
               .then(function (response) {
                   alert("Address has been updated for prop : "+that.property.property_id);
                   window.location.reload(true);
@@ -133,21 +152,42 @@ let property_detail_app = new Vue({
             that.otherId += 1;
             $("#other-charge-parent").append('<div class="col-md-8">\n' +
                 '                                            <div class="form-group">\n' +
-                '                                                <input id="charge-'+that.otherId+'" class="form-control" v-model="newOtherCharges-'+that.otherId+'" type="text" required>\n' +
+                '                                                <input id="charge-'+that.otherId+'" class="form-control" type="text" required>\n' +
                 '                                            </div>\n' +
                 '                                        </div>\n' +
                 '                                        <div class="col-md-4">\n' +
                 '                                            <div class="form-group">\n' +
-                '                                                <input id="value-'+that.otherId+'" class="form-control" v-model="newOtherCharges-'+that.otherId+'" type="number" required>\n' +
+                '                                                <input id="value-'+that.otherId+'" class="form-control"  type="number"  required>\n' +
                 '                                            </div>\n' +
                 '                                        </div>');
 
         },
+        populateCharges :function(){
+            let that=this;
+            let listOfKey = [];
+            let listOfVal = [];
+            $('#other-charge-parent > div > div').children('input').each(function () {
+                if(this.id.toString()[0]==='c')
+                {
+                    listOfKey.push(this.value);
+                }
+                else {
+                    listOfVal.push(parseInt(this.value));
+                }
+                });
+            for(let i=0; i<listOfKey.length;i++){
+                that.otherCharges[listOfKey[i]] = listOfVal[i];
+            }
+            console.log(that.otherCharges);
+        },
         loadOtherCharges : function () {
             let that = this;
-            for (var key in that.property.other_charges){
+            for (let key in that.property.other_charges){
                 let val =  that.property.other_charges[key];
-                that.newOtherCharges[key] = val;
+                that.otherCharges[key] = val;
+                that.addOtherCharge();
+                $("#charge-"+that.otherId).val(key);
+                $("#value-"+that.otherId).val(val);
             }
         },
          loadCountryCodes: function() {

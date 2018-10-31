@@ -10,7 +10,6 @@
     <div id="vue-property-create-app">
         <div class="container-fluid pt-10" style="background-color:#DFE4E7;height: 100%">
             <div class="row" style="margin-top: 100px"></div>
-            <div class="row" style="margin-top: 100px"></div>
             <div class="row">
                 <div class="col-md-8 scroll-col">
                     <div class="card card-default">
@@ -460,6 +459,20 @@
                                     <div class="form-group">
                                         <label for="builtup-area">Buildup Area</label>
                                         <input type="number" onKeyPress="if(this.value.length===7) return false;" class="form-control mr-10" v-model="newProperty.buildupArea" required/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card card-default mt-30">
+                        <div class="card-header">
+                            <b>Show on Homepage</b>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="property-top"><input type="checkbox" class="mr-10" id="property-top" v-model="newProperty.isTop" />Is Top Property?</label>
                                     </div>
                                 </div>
                             </div>
