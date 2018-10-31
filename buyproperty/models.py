@@ -36,6 +36,14 @@ class Nearest(models.Model):
     def __str__(self):
         return self.title if self.title else None
 
+    @classmethod
+    def create_nearest(cls, key, value):
+        nearest_i = Nearest.objects.create(
+            title=key,
+            distance=value
+        )
+        return nearest_i
+
 
 class Media(models.Model):
     TYPE_CHOICE = [
@@ -144,8 +152,11 @@ class Property(models.Model):
 
     @classmethod
     def create_property(cls, data):
-        import pdb
-        pdb.set_trace()
+        nearest = data.get("nearest")
+        property_nearest = []
+        for key, value in nearest.items():
+            property_nearest.append(Nearest.create_nearest(key, value))
+
         address = Address.objects.create(
             name=data.get("name"),
             line_1=data.get("street_line1"),
@@ -155,7 +166,6 @@ class Property(models.Model):
             country=data.get("country"),
             zip=data.get("zip")
         )
-        pdb.set_trace()
         property = cls.objects.create(
             property_name=data.get("property_name"),
             furnishing_status=data.get("furnishing_status"),
@@ -176,9 +186,9 @@ class Property(models.Model):
             power_backup=data.get("power_backup"),
             parking=data.get("parking"),
             lift_availability=data.get("lift_availability"),
-            # landmark=data.get("landmark"),
+            landmark=data.get("landmark"),
             parking_area=data.get("parking_area"),
-            # overlooking=data.get("overlooking"),
+            overlooking=data.get("overlooking"),
             age=data.get("age"),
             facing=data.get("facing"),
             flooring=data.get("flooring"),
@@ -198,10 +208,9 @@ class Property(models.Model):
             contact=data.get("contact"),
             # other_charges=data.get("other_charges"),
             lease_term=data.get("lease_term"),
-            # nearest=data.get("nearest"),
+            nearest=property_nearest,
             buildup_area=data.get("buildup_area"),
         )
-        pdb.set_trace()
         return property
 
 

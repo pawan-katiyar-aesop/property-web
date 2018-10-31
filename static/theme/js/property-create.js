@@ -12,7 +12,7 @@ let property_create_app = new Vue({
             rentCharge: 0,
             monthlyMaintenance: 0,
             securityDeposits: 0,
-            otherCharges: [],
+            otherCharges: {},
             floorDetails: '',
             ceilingDetails: '',
             washroomDetails: {
@@ -22,7 +22,7 @@ let property_create_app = new Vue({
             landmark: '',
             overlookingList: [],
             mediaList: [],
-            nearestList: [],
+            nearestList: {},
             pantry: false,
             washroom: false,
             powerBackup: false,
@@ -62,8 +62,27 @@ let property_create_app = new Vue({
         nearestId: 0
     },
     methods: {
+        validateMandatoryFields:function(){
+          let that = this;
+          if(!that.newProperty.propertyName || !that.newProperty.contactNumber || !that.newAddress.contactName || !that.newAddress.streetLine1 || !that.newProperty.propertyID || !that.newProperty.countryCode){
+              return false;
+          }
+          return true;
+        },
         createProperty: function(){
             let that = this;
+            if (!that.validateMandatoryFields()){
+                alert("Please fill fields marked mandatory with a red asterisk");
+                return
+            }
+            that.newProperty.nearestList = {};
+            that.newProperty.otherCharges = {};
+            for (let i = 0; i<that.nearestId; i++){
+                that.newProperty.nearestList[$("#nearestList-title-"+i).val()] = $("#nearestList-distance-"+i).val();
+            }
+            for (let i = 0; i<that.otherId; i++){
+                that.newProperty.otherCharges[$("#otherCharges-charge-"+i).val()] = $("#otherCharges-value-"+i).val();
+            }
             let property_body = {
                 "property_name": that.newProperty.propertyName,
                 "description": that.newProperty.propertyDesc,
@@ -115,10 +134,11 @@ let property_create_app = new Vue({
                 "carpet_area": that.newProperty.carpetArea,
                 "buildup_area": that.newProperty.buildupArea
             };
+            debugger;
             axios.post('/api/property/', property_body)
             .then(function (response) {
                 // show_notification("success", "Property Successfully Created.");
-                window.location.href =  "/control/properties/";
+                window.location.href =  "/control/dash/properties/";
             })
             .catch(function (response) {
                 // show_notification("danger", "A fatal error occurred, and this page might not function correctly.")
@@ -128,12 +148,12 @@ let property_create_app = new Vue({
             let that = this;
             $("#other-charge-parent").append('<div class="col-md-8">\n' +
                 '                                            <div class="form-group">\n' +
-                '                                                <input id="charge-'+that.otherId+'" class="form-control" v-model="newProperty.otherCharges-charge-'+that.otherId+'" type="number" required>\n' +
+                '                                                <input class="form-control" id="otherCharges-charge-'+that.otherId+'" type="text" required>\n' +
                 '                                            </div>\n' +
                 '                                        </div>\n' +
                 '                                        <div class="col-md-4">\n' +
                 '                                            <div class="form-group">\n' +
-                '                                                <input id="value-'+that.otherId+'" class="form-control" onKeyPress="if(this.value.length===7) return false;" v-model="newProperty.otherCharges-value-'+that.otherId+'" type="number" required>\n' +
+                '                                                <input class="form-control" onKeyPress="if(this.value.length===7) return false;" id="otherCharges-value-'+that.otherId+'" type="number" required>\n' +
                 '                                            </div>\n' +
                 '                                        </div>');
 
@@ -143,7 +163,7 @@ let property_create_app = new Vue({
         addNearest: function () {
             let that = this;
             $("#nearest-building").append('<div class="col-md-8">\n' +
-                '                                            <select name="parking" class="form-control mb-20" v-model="newProperty.nearestList-title-\'+that.nearestId+\'" required>\n' +
+                '                                            <select name="parking" class="form-control mb-20" id="nearestList-title-'+that.nearestId+'" required>\n' +
                 '                                                <option disabled selected>Choose Any Option</option>\n' +
                 '                                                <option value="bus">Bus Stop</option>\n' +
                 '                                                <option value="school">School</option>\n' +
@@ -158,7 +178,7 @@ let property_create_app = new Vue({
                 '                                            </select>\n' +
                 '                                        </div>\n' +
                 '                                        <div class="col-md-4">\n' +
-                '                                            <input type="number" onKeyPress="if(this.value.length===2) return false;" v-model="newProperty.nearestList-distance-\'+that.nearestId+\'" class="form-control mb-20" required/>\n' +
+                '                                            <input type="number" onKeyPress="if(this.value.length===2) return false;" id="nearestList-distance-'+that.nearestId+'" class="form-control mb-20" required/>\n' +
                 '                                        </div>');
 
             that.nearestId += 1;
@@ -188,18 +208,24 @@ let property_create_app = new Vue({
 
             const url = '/api/overlooking/';
 
-            // Populate dropdown with list of overlooking
             $.getJSON(url, function (data) {
               $.each(data, function (key, entry) {
                 overlooking.append($('<option></option>').attr('value', entry.id).text(entry.name)).select2().on('change', function () {
                     if($(".select2-selection__choice").text() === "×Choose Any Option"){
                         $(".select2-selection__choice").remove();
                     }
+                    that.newProperty.overlookingList = [];
+                    that.newProperty.overlookingList.push($("#select-overlooking option:selected").text());
+                    // if (e.params.name === 'select') {
+                    //     that.newProperty.overlookingList.push(e.params.args.data.id);
+                    // }
+                    // else if(e.params.name === 'unselect'){
+                    //     that.newProperty.overlookingList.slice(_.indexOf(that.newProperty.overlookingList, e.params.args.data.id), 1)
+                    // }
                 });
               })
             });
         }
-
     },
     watch: {
 
