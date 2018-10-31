@@ -134,7 +134,6 @@ let property_create_app = new Vue({
                 "carpet_area": that.newProperty.carpetArea,
                 "buildup_area": that.newProperty.buildupArea
             };
-            debugger;
             axios.post('/api/property/', property_body)
             .then(function (response) {
                 // show_notification("success", "Property Successfully Created.");
