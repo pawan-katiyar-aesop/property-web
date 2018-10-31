@@ -11,16 +11,16 @@
         <meta name="author"  content=""/>
         <meta name="MobileOptimized" content="320" />
         <!--srart theme style -->
-        <link rel="stylesheet" type="text/css" href="css/bootstrap.css"/>
-        <link rel="stylesheet" type="text/css" href="css/font-awesome.css"/>
-        <link rel="stylesheet" type="text/css" href="css/fonts.css"/>
-        <link rel="stylesheet" type="text/css" href="css/owl.carousel.css"/>
-        <link rel="stylesheet" type="text/css" href="css/owl.theme.default.css"/>
-        <link rel="stylesheet" type="text/css" href="css/jquery-ui.css"/>
-        <link rel="stylesheet" type="text/css" href="css/swiper.min.css"/>
-        <link rel="stylesheet" type="text/css" href="css/style.css"/>
+        <link rel="stylesheet" type="text/css" href="{% static 'website-theme/css/bootstrap.css' %}"/>
+        <link rel="stylesheet" type="text/css" href="{% static 'website-theme/css/font-awesome.css' %}"/>
+        <link rel="stylesheet" type="text/css" href="{% static 'website-theme/css/fonts.css' %}"/>
+        <link rel="stylesheet" type="text/css" href="{% static 'website-theme/css/owl.carousel.css' %}"/>
+        <link rel="stylesheet" type="text/css" href="{% static 'website-theme/css/owl.theme.default.css' %}"/>
+        <link rel="stylesheet" type="text/css" href="{% static 'website-theme/css/jquery-ui.css' %}"/>
+        <link rel="stylesheet" type="text/css" href="{% static 'website-theme/css/swiper.min.css' %}"/>
+        <link rel="stylesheet" type="text/css" href="{% static 'website-theme/css/style.css' %}"/>
         <!-- favicon links -->
-        <link rel="shortcut icon" type="image/png" href="images/header/favicon.png" />
+        <link rel="shortcut icon" type="image/png" href="{% static 'website-theme/images/header/favicon.png' %}" />
 
     </head>
     <body>
@@ -30,15 +30,15 @@
                     <div class="row">
                         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                             <div class="rle_logo">
-                                <a href="#"><img src="images/icon/logo.png" alt="Logo" title="Logo"></a>
+                                <a href="#"><img src="{% static 'website-theme/images/icon/logo.png' %}" alt="Logo" title="Logo"></a>
                             </div>
                         </div>
                         <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                 <div class="rle_top_header">
                                     <ul>
-                                        <li><img src="images/icon/h_icon1.png"> Support now: (095) 3030 601</li>
-                                        <li><img src="images/icon/h_icon2.png"> <a href="#">Email : hello@realestate.com</a></li>
+                                        <li><img src="{% static 'website-theme/images/icon/h_icon1.png' %}"> Support now: (095) 3030 601</li>
+                                        <li><img src="{% static 'website-theme/images/icon/h_icon2.png' %}"> <a href="#">Email : hello@realestate.com</a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -48,41 +48,41 @@
                                     <ul>
                                         <li><a href="#">home</a>
                                             <ul class="sub-menu">
-                                                <li><a href="index.html">home 1</a></li>
-                                                <li><a href="index2.html">home 2</a></li>
-                                                <li><a href="index3.html">home 3</a></li>
-                                                <li><a href="index4.html">home 4</a></li>
+                                                <li><a href="{% static '/index.html' %}">home 1</a></li>
+                                                <li><a href="{% static '/index2.html' %}">home 2</a></li>
+                                                <li><a href="{% static '/index3.html' %}">home 3</a></li>
+                                                <li><a href="{% static '/index4.html' %}">home 4</a></li>
                                             </ul>
                                         </li>
-                                        <li><a href="about.html">about us</a></li>
+                                        <li><a href="{% static '/about.html' %}">about us</a></li>
                                         <li><a href="#">property</a>
                                             <ul class="sub-menu">
-                                                <li><a href="property_gird_fullwidth.html">gird fullwidth</a></li>
-                                                <li><a href="property_gird_sidebar.html">gird sidebar</a></li>
-                                                <li><a href="property_list_fullwidth.html">list fullwidth</a></li>
-                                                <li><a href="property_list_sidebar.html">list sidebar</a></li>
-                                                <li><a href="property_map.html">property map</a></li>
-                                                <li><a href="property_single_v1.html">single v1</a></li>
-                                                <li><a href="property_single_v2.html">single v2</a></li>
+                                                <li><a href="{% static '/property_gird_fullwidth.html' %}">gird fullwidth</a></li>
+                                                <li><a href="{% static '/property_gird_sidebar.html' %}">gird sidebar</a></li>
+                                                <li><a href="{% static '/property_list_fullwidth.html' %}">list fullwidth</a></li>
+                                                <li><a href="{% static '/property_list_sidebar.html' %}">list sidebar</a></li>
+                                                <li><a href="{% static '/property_map.html' %}">property map</a></li>
+                                                <li><a href="{% static '/property_single_v1.html' %}">single v1</a></li>
+                                                <li><a href="{% static '/property_single_v2.html' %}">single v2</a></li>
                                             </ul>
                                         </li>
                                         <li><a href="#">agents</a>
                                             <ul class="sub-menu">
-                                                <li><a href="agent.html">agent</a></li>
-                                                <li><a href="agent_single.html">agent single</a></li>
+                                                <li><a href="{% static '/agent.html' %}">agent</a></li>
+                                                <li><a href="{% static '/agent_single.html' %}">agent single</a></li>
                                             </ul>
                                         </li>
                                         <li><a href="#">pages</a>
                                             <ul class="sub-menu">
-                                                <li><a href="blog.html">blog</a></li>
-                                                <li><a href="blog_grid_v1.html">grid v1</a></li>
-                                                <li><a href="blog_grid_v2.html">grid v2</a></li>
-                                                <li><a href="blog_single.html">blog single</a></li>
-                                                <li><a href="gallery.html">gallery</a></li>
-                                                <li><a href="404_pages.html">404 error</a></li>
+                                                <li><a href="{% static '/blog.html' %}">blog</a></li>
+                                                <li><a href="{% static '/blog_grid_v1.html' %}">grid v1</a></li>
+                                                <li><a href="{% static '/blog_grid_v2.html' %}">grid v2</a></li>
+                                                <li><a href="{% static '/blog_single.html' %}">blog single</a></li>
+                                                <li><a href="{% static '/gallery.html' %}">gallery</a></li>
+                                                <li><a href="{% static '/404_pages.html' %}">404 error</a></li>
                                             </ul>
                                         </li>
-                                        <li><a href="contact.html">contact</a></li>
+                                        <li><a href="{% static '/contact.html' %}">contact</a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -121,7 +121,7 @@
                     <div class="rle_top_footer">
                         <div class="col-lg-4 col-md-4 col-sm-12">
                             <div class="widget text-widget">
-                                <img src="images/icon/logo.png" alt="Footer Logo" />
+                                <img src="{% static 'website-theme/images/icon/logo.png' %}" alt="Footer Logo" />
                                 <p class="rle_footertext">Alpha Housing.com is No 1 Property portal and has been adjudged as the most preferred by independent surveys the portal provides a platform for property.</p>
                                 <a href="#" class="rle_btn">Get offer today</a>
                             </div>
@@ -161,10 +161,10 @@
                                     <li><p><i class="fa fa-phone" aria-hidden="true"></i> 1 (773) 377-2804  |  1 (855) 781-7189</p></li>
                                 </ul>
                                 <ul class="rle_social_iicon">
-                                    <li><a href="#"><img src="images/icon/ftr_scl1.png" alt="" title=""></a></li>
-                                    <li><a href="#"><img src="images/icon/ftr_scl2.png" alt="" title=""></a></li>
-                                    <li><a href="#"><img src="images/icon/ftr_scl3.png" alt="" title=""></a></li>
-                                    <li><a href="#"><img src="images/icon/ftr_scl4.png" alt="" title=""></a></li>
+                                    <li><a href="#"><img src="{% static 'website-theme/images/icon/ftr_scl1.png' %}" alt="" title=""></a></li>
+                                    <li><a href="#"><img src="{% static 'website-theme/images/icon/ftr_scl2.png' %}" alt="" title=""></a></li>
+                                    <li><a href="#"><img src="{% static 'website-theme/images/icon/ftr_scl3.png' %}" alt="" title=""></a></li>
+                                    <li><a href="#"><img src="{% static 'website-theme/images/icon/ftr_scl4.png' %}" alt="" title=""></a></li>
                                 </ul>
                             </div>
                         </div>
@@ -177,13 +177,13 @@
         </div>
 
         <!--main js file start-->
-        <script type="text/javascript" src="js/jquery.js"></script>
-        <script type="text/javascript" src="js/jquery-ui.js"></script>
-        <script type="text/javascript" src="js/bootstrap.js"></script>
-        <script type="text/javascript" src="js/owl.carousel.js"></script>
-        <script type="text/javascript" src="js/Chart.min.js"></script>
-        <script type="text/javascript" src="js/swiper.min.js"></script>
-        <script type="text/javascript" src="js/custom.js"></script>
+        <script type="text/javascript" src="{% static 'website-theme/js/jquery.js' %}"></script>
+        <script type="text/javascript" src="{% static 'website-theme/js/jquery-ui.js' %}"></script>
+        <script type="text/javascript" src="{% static 'website-theme/js/bootstrap.js' %}"></script>
+        <script type="text/javascript" src="{% static 'website-theme/js/owl.carousel.js' %}"></script>
+        <script type="text/javascript" src="{% static 'website-theme/js/Chart.min.js' %}"></script>
+        <script type="text/javascript" src="{% static 'website-theme/js/swiper.min.js' %}"></script>
+        <script type="text/javascript" src="{% static 'website-theme/js/custom.js' %}"></script>
         <!--main js file end-->
 
         {% block page_level_scripts %}

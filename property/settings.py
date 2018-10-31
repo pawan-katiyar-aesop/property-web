@@ -43,13 +43,14 @@ BASE_URL = "http://localhost:8000"
 INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
-    'buyproperty',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'buyproperty',
+    'website'
 ]
 
 MIDDLEWARE = [
