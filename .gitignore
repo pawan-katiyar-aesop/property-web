@@ -8,3 +8,4 @@ property/__init__.pyc
 property/settings.pyc
 property/urls.pyc
 property/wsgi.pyc
+.idea/
