@@ -464,6 +464,20 @@
                             </div>
                         </div>
                     </div>
+                    <div class="card card-default mt-30">
+                        <div class="card-header">
+                            <b>Show on Homepage</b>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="property-top"><input type="checkbox" class="mr-10" id="property-top" v-model="newProperty.isTop" />Is Top Property?</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <button class="btn btn-success mt-20 mb-20" v-on:click="createProperty">Create Property</button>

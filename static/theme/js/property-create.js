@@ -19,6 +19,7 @@ let property_create_app = new Vue({
                 urinal: undefined,
                 wC: undefined
             },
+            isTop:false,
             landmark: '',
             overlookingList: [],
             mediaList: [],
@@ -132,7 +133,8 @@ let property_create_app = new Vue({
                 "beam_height": that.newProperty.beamHeight,
                 "lease_term": that.newProperty.leaseTerm,
                 "carpet_area": that.newProperty.carpetArea,
-                "buildup_area": that.newProperty.buildupArea
+                "buildup_area": that.newProperty.buildupArea,
+                "is_top": that.newProperty.isTop
             };
             axios.post('/api/property/', property_body)
             .then(function (response) {

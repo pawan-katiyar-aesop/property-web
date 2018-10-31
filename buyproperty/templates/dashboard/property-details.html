@@ -18,8 +18,8 @@
                         </div>
                         <div class="card-body">
                             <div class="form-group">
-                                <label for="property-name">Property Name</label>
-                                <input class="form-control" id="property-name" size="250" required type="text" v-model="property.property_name">
+                                <label for="property-name">Property Name<sup  style="color: red;">*</sup></label>
+                                <input class="form-control" id="property-name" size="250" required type="text" v-model="property.property_name" required="required">
                             </div>
                             <div class="form-group">
                                 <label for="property-description">Property Description</label>
@@ -28,8 +28,8 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="property-property_id">Property ID</label>
-                                        <input class="form-control" size="20" id="property-property_id" required type="text" v-model="property.property_id" disabled>
+                                        <label for="property-property_id">Property ID<sup  style="color: red;">*</sup></label>
+                                        <input class="form-control" size="20" id="property-property_id" required type="text" v-model="property.property_id" disabled required="required">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -40,7 +40,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="property-country_code">Country Code</label>
+                                        <label for="property-country_code">Country Code<sup  style="color: red;">*</sup></label>
                                         <select class="form-control form-select select-country_code" id="property-country_code"  v-model="property.country_code" name="property_country_code" required>
                                             <option v-for="code in countryCodes">{% verbatim %}{{ code.code }}{% endverbatim %}</option>
                                         </select>
@@ -48,8 +48,8 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="property-contact">Contact Number</label>
-                                        <input class="form-control" size="10" id="property-contact" required type="number" v-model="property.contact" required>
+                                        <label for="property-contact">Contact Number<sup  style="color: red;">*</sup></label>
+                                        <input class="form-control" size="10" id="property-contact" required type="number" v-model="property.contact" required="required">
                                     </div>
                                 </div>
                             </div>
@@ -62,12 +62,12 @@
 
                     <div class="card-body">
                         <div class="form-group">
-                            <label for="address-name">Name</label>
-                            <input class="form-control" id="address-name" required type="text" v-model="property.address.name">
+                            <label for="address-name">Name<sup  style="color: red;">*</sup></label>
+                            <input class="form-control" id="address-name" required type="text" v-model="property.address.name" required="required">
                         </div>
                         <div class="form-group">
-                            <label for="address-line1">Line 1</label>
-                            <input class="form-control" id="address-line1" required type="text" v-model="property.address.line_1">
+                            <label for="address-line1">Line 1<sup  style="color: red;">*</sup></label>
+                            <input class="form-control" id="address-line1" required type="text" v-model="property.address.line_1" required="required">
                         </div>
                         <div class="form-group">
                             <label for="address-line2">Line 2</label>
@@ -435,6 +435,21 @@
                                     <div class="form-group">
                                         <label for="property-buildupArea">Buildup Area</label>
                                         <input type="number" class="form-control mr-10" id="property-buildupArea" v-model="property.buildup_area" required/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card card-default mt-30">
+                        <div class="card-header">
+                            <b>Show on Homepage</b>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="property-top"><input type="checkbox" class="mr-10" id="property-top" v-model="property.is_top" />Is Top Property?</label>
                                     </div>
                                 </div>
                             </div>

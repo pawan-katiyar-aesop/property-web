@@ -16,8 +16,10 @@ class Address(models.Model):
     def __str__(self):
         if self.line_1 and self.name:
             return self.name + " " + self.line_1
-        else:
+        elif self.name:
             return self.name
+        else:
+            return None
 
 
 class Nearest(models.Model):
@@ -148,10 +150,14 @@ class Property(models.Model):
     other_charges = JSONField(null=True, blank=True)
     lease_term = models.FloatField(null=True, blank=True)
     nearest = models.ManyToManyField(Nearest, blank=True)
-    country_code = models.CharField(choices=country_choices, max_length=3, null=True, blank=True)
+    country_code = models.CharField(choices=country_choices, max_length=5, null=True, blank=True)
+    is_top = models.BooleanField(blank=True, default=False)
 
     def __str__(self):
-        return self.property_id + " " + self.property_name if self.property_id and self.property_name else None
+        if self.property_id and self.property_name:
+            return self.property_id + " " + self.property_name
+        elif self.property_name:
+            return self.property_name
 
     @classmethod
     def create_property(cls, data):
@@ -213,9 +219,13 @@ class Property(models.Model):
             lease_term=data.get("lease_term"),
             nearest=property_nearest,
             buildup_area=data.get("buildup_area"),
+            is_top=data.get("is_top")
         )
         return property
 
+    @classmethod
+    def count_top(cls):
+        return cls.objects.filter(is_top=True).count()
 
 class FloorPlan(models.Model):
     FLOOR_CHOICES = [(x, x) for x in range(0, 4)]
@@ -227,7 +237,7 @@ class CustomerLead(models.Model):
     name = models.CharField(max_length=250)
     email = models.EmailField(blank=True, null=True)
     contact = models.CharField(max_length=10, blank=True, null=True)
-    country_code = models.CharField(choices=country_choices, max_length=3, null=True, blank=True)
+    country_code = models.CharField(choices=country_choices, max_length=5, null=True, blank=True)
     for_property = models.ForeignKey(Property, on_delete=models.CASCADE, blank=True, null=True)
 
     def __str__(self):

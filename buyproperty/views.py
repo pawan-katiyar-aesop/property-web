@@ -5,8 +5,12 @@ from models import CustomerLead, AgentLead, Property, Address
 from django.views import generic
 from rest_framework.response import Response
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView, ListAPIView
-from serializers import CustomerLeadSerializer, AgentLeadSerializer, PropertySerializer, AddressSerializer, OverlookingSerializer
+from serializers import CustomerLeadSerializer, AgentLeadSerializer, PropertySerializer, AddressSerializer,\
+    OverlookingSerializer, TopPropertySerializer
 from rest_framework.views import APIView
+import itertools
+from django.db.models import Q
+from django.http import HttpResponseForbidden, HttpResponse
 
 
 class CustomerLeadsAPIView(ListCreateAPIView):
@@ -68,6 +72,20 @@ class RetrieveUpdateDestroyAddressAPIView(RetrieveUpdateDestroyAPIView):
 
     def get_object(self):
         return Address.objects.get(id=self.kwargs['pk'])
+
+
+class RetrieveTopPropertyView(ListAPIView):
+    queryset = Property.objects.filter(is_top=True)
+    serializer_class = TopPropertySerializer
+
+
+class SearchResultApiView(ListAPIView):
+    serializer_class = PropertySerializer
+
+    def get_queryset(self):
+        results = Property.objects.filter(Q(address__city__icontains=self.kwargs['key']) |
+                                          Q(landmark__icontains=self.kwargs['key']))
+        return results
 
 
 class CountryCodeListView(APIView):
