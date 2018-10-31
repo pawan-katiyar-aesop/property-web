@@ -45,9 +45,11 @@ class ListCreatePropertyAPIView(ListCreateAPIView):
     queryset = Property.objects.all()
 
     def create(self, request, *args, **kwargs):
-        properti = Property.create_property(self.request.data)
+        if (request.data.get("is_top") == 'true' or request.data.get("is_top") is True) and Property.count_top() == 6:
+            return Response({"status": False, "message": ""}, status=400)
+        property = Property.create_property(self.request.data)
 
-        return Response(PropertySerializer(properti).data, status=status.HTTP_201_CREATED)
+        return Response(PropertySerializer(property).data, status=status.HTTP_201_CREATED)
 
 
 class ListOverlookingAPIView(ListAPIView):
@@ -61,8 +63,16 @@ class RetrieveUpdateDestroyPropertyAPIView(RetrieveUpdateDestroyAPIView):
     queryset = Property.objects.all()
     serializer_class = PropertySerializer
 
-    def get_object(self):
-        return Property.objects.get(id=self.kwargs['pk'])
+    def update(self, request, *args, **kwargs):
+
+        if (request.data.get("is_top") == 'true' or request.data.get("is_top") is True) and Property.count_top() == 6:
+            return Response({"status": False, "message": "Top cannot be more than 6"}, status=400)
+
+        property = self.get_object()
+        serializer = self.serializer_class(property, data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(PropertySerializer(property).data, status=status.HTTP_200_OK)
 
 
 class RetrieveUpdateDestroyAddressAPIView(RetrieveUpdateDestroyAPIView):
