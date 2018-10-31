@@ -11,4 +11,4 @@ from rest_framework.views import APIView
 
 
 class HomePageView(TemplateView):
-    template_name = "../templates/home.html"
+    template_name = "home.html"

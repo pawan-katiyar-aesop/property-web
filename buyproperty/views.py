@@ -83,10 +83,6 @@ class CountryCodeListView(APIView):
         return Response(self.format_country_code_data(), status=status.HTTP_200_OK)
 
 
-class HomePageView(TemplateView):
-    template_name = "../templates/homepage.html"
-
-
 class DashboardView(TemplateView):
     template_name = "../templates/dashboard/dashboard.html"
 
