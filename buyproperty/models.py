@@ -209,7 +209,7 @@ class Property(models.Model):
             # media=data.get("media"),
             country_code=data.get("country_code"),
             contact=data.get("contact"),
-            # other_charges=data.get("other_charges"),
+            other_charges=data.get("other_charges"),
             lease_term=data.get("lease_term"),
             nearest=property_nearest,
             buildup_area=data.get("buildup_area"),
