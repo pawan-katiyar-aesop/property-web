@@ -88,6 +88,19 @@ class Media(models.Model):
         return ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(length))
 
 
+class FloorPlan(models.Model):
+    FLOOR_CHOICES = [
+        (0, 'GROUND'),
+        (1, 'FIRST'),
+        (2, 'SECOND'),
+        (3, 'THIRD'),
+    ]
+    floor_number = models.IntegerField(choices=FLOOR_CHOICES, null=True, blank=True)
+    description = models.TextField(null=True, blank=True)
+    media = models.ManyToManyField(Media, blank=True)
+
+
+
 class Overlooking(models.Model):
     name = models.CharField(max_length=50, blank=True, null=True)
 
@@ -183,7 +196,9 @@ class Property(models.Model):
     nearest = models.ManyToManyField(Nearest, blank=True)
     country_code = models.CharField(choices=country_choices, max_length=5, null=True, blank=True)
     is_top = models.BooleanField(blank=True, default=False)
-    video_tour = models.ForeignKey(Media, related_name="property_video_tour", on_delete=models.CASCADE, null=True, blank=True)
+    video_tour = models.ForeignKey(Media, related_name="property_video_tour", on_delete=models.CASCADE, null=True,
+                                   blank=True)
+    floor_plan = models.ManyToManyField(FloorPlan, blank=True)
 
     def __str__(self):
         if self.property_id and self.property_name:
@@ -242,12 +257,6 @@ class Property(models.Model):
     @classmethod
     def count_top(cls):
         return cls.objects.filter(is_top=True).count()
-
-
-class FloorPlan(models.Model):
-    FLOOR_CHOICES = [(x, x) for x in range(0, 4)]
-    number_of_floors = models.IntegerField(default=1)
-    base_floor = models.IntegerField(choices=FLOOR_CHOICES)
 
 
 class CustomerLead(models.Model):
