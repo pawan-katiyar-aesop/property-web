@@ -8,3 +8,5 @@ eggs/
 *.egg-info/
 .DS_Store
 .env
+static/admin/
+static/rest_framework/
