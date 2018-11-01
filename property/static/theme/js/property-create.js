@@ -97,8 +97,9 @@ let property_create_app = new Vue({
         },
         floorPlanListOfDescriptions:['','','',''],
         floorPlanListOfImagesList:[[],[],[],[]],
-        floorPlanListOfDVideoURLs:[[],[],[],[]],
+        floorPlanListOfVideoURLs:[[],[],[],[]],
         currentEditingFloor:-1
+
     },
     methods: {
         validateMandatoryFields:function(){
@@ -128,7 +129,7 @@ let property_create_app = new Vue({
             allVideoUrlList.push(that.newProperty.videoTourURL);
             that.newProperty.floorPlan.push(that.floorPlanListOfDescriptions);
             that.newProperty.floorPlan.push(that.floorPlanListOfImagesList);
-            that.newProperty.floorPlan.push(that.floorPlanListOfDVideoURLs);
+            that.newProperty.floorPlan.push(that.floorPlanListOfVideoURLs);
 
             let newAddress = {
                 "name": that.newAddress.contactName,
@@ -220,11 +221,23 @@ let property_create_app = new Vue({
             const index = generate_unique_number();
             urls_dict["url"+index] = "";
             urls_dict["index"] = index;
-            that.propertyVideos.push(urls_dict);
+            that.propertyVideos.push({urls_dict});
         },
         removeVideoUrlFields:function(index){
             let that = this;
             that.propertyVideos.splice(index, 1)
+        },
+        addVideoUrlFieldsFloor:function(){
+            let that = this;
+            let urls_dict_floor = {};
+            const index = generate_unique_number();
+            urls_dict_floor["url"+index] = "";
+            urls_dict_floor["index"] = index;
+            that.floorPlanListOfVideoURLs[parseInt(that.currentEditingFloor)].push({urls_dict_floor});
+        },
+        removeVideoUrlFieldsFloor:function(index){
+            let that = this;
+            that.floorPlanListOfVideoURLs[parseInt(that.currentEditingFloor)].splice(index, 1)
         },
         populateCharges :function(){
             let that=this;
@@ -454,7 +467,7 @@ let property_create_app = new Vue({
             let currentFloor = parseInt(that.currentEditingFloor);
             that.floorPlanListOfDescriptions[currentFloor] = that.floorPlanEdit.description;
             that.floorPlanListOfImagesList[currentFloor] = that.floorPlanEdit.imageList;
-            that.floorPlanListOfDVideoURLs[currentFloor] = that.floorPlanEdit.videos;
+            that.floorPlanListOfVideoURLs[currentFloor] = that.floorPlanEdit.videos;
 
             //clear temporary floor plan
             _.each(_.keys(that.floorPlanEdit), function (item, index) {
@@ -490,7 +503,7 @@ let property_create_app = new Vue({
             console.log(floor);
             that.floorPlanEdit.description = that.floorPlanListOfDescriptions[parseInt(that.currentEditingFloor)];
             that.floorPlanEdit.imageList = that.floorPlanListOfImagesList[parseInt(that.currentEditingFloor)];
-            that.floorPlanEdit.videos = that.floorPlanListOfDVideoURLs[parseInt(that.currentEditingFloor)];
+            that.floorPlanEdit.videos = that.floorPlanListOfVideoURLs[parseInt(that.currentEditingFloor)];
         }
     },
     watch: {
