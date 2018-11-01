@@ -180,15 +180,15 @@ let property_create_app = new Vue({
             let that = this;
             that.otherId += 1;
             $("#other-charge-parent").append('<div class="col-md-8">\n' +
-                '                                            <div class="form-group">\n' +
-                '                                                <input class="form-control" id="charge-'+that.otherId+'" type="text" required>\n' +
-                '                                            </div>\n' +
-                '                                        </div>\n' +
-                '                                        <div class="col-md-4">\n' +
-                '                                            <div class="form-group">\n' +
-                '                                                <input class="form-control" onKeyPress="if(this.value.length===7) return false;" id="value-'+that.otherId+'" type="number" required>\n' +
-                '                                            </div>\n' +
-                '                                        </div>');
+                '<div class="form-group">\n' +
+                '<input class="form-control" id="charge-'+that.otherId+'" type="text" required>\n' +
+                '</div>\n' +
+                '</div>\n' +
+                '<div class="col-md-4">\n' +
+                '<div class="form-group">\n' +
+                '<input class="form-control" onKeyPress="if(this.value.length===7) return false;" id="value-'+that.otherId+'" type="number" required>\n' +
+                '</div>\n' +
+                '</div>');
 
         },
         addVideoUrlFields:function(){

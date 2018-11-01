@@ -107,11 +107,12 @@
                             <div id="banner-vid-parent">
 
                             </div>
-                            <a href="#" class="mt-15 d-block" :disabled="false" v-on:click="addVideoUrlFields()">Add New Video URL</a>
+                            <a href="#" class="mt-15 d-block" v-if="propertyVideos.length === 0" v-on:click="addVideoUrlFields()">Add New Video URL</a>
+                            <a href="#" class="mt-15 d-block" v-else="propertyVideos.length === 0"></a>
                             <div class="row mt-20">
                                 <div class="col-md-12">
                                     <div class="help-box variants-help color-grey" v-if="!propertyVideos.length > 0">
-                                        Add product variants, such as color, size, versions, etc.
+                                        Add video url, youtube url etc.
                                     </div>
                                     <div v-if="propertyVideos.length > 0">
                                         <table class="table table-responsive variants-table">
