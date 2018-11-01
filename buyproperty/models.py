@@ -63,13 +63,32 @@ class Nearest(models.Model):
         return nearest_i
 
 
+class Video(models.Model):
+    TYPE_CHOICE = [
+        ('b', 'Banner'),
+        ('t', 'Tour')
+    ]
+    title = models.CharField(max_length=200, null=True,blank=True)
+    type = models.CharField(choices=TYPE_CHOICE, max_length=1, null=True, blank=True)
+    url = models.URLField(max_length=350, null=True, blank=True)
+
+    @classmethod
+    def create_video(cls, data):
+        video = Video.objects.create(
+            title=data.get("title"),
+            type=data.get("type"),
+            url=data.get("url")
+        )
+        return video
+
+
 class Media(models.Model):
     TYPE_CHOICE = [
-        ('img', 'Image'),
-        ('vid', 'Video')
+        ('b', 'Banner'),
+        ('f', 'Floor Plan')
     ]
     title = models.CharField(max_length=220, null=True, blank=True)
-    type = models.CharField(choices=TYPE_CHOICE, null=True, blank=True, max_length=3)
+    type = models.CharField(choices=TYPE_CHOICE, null=True, blank=True, max_length=1)
     description = models.TextField(null=True, blank=True)
     file = models.FileField(null=True)
     default_in_group = models.BooleanField(default=False)
@@ -97,8 +116,8 @@ class FloorPlan(models.Model):
     ]
     floor_number = models.IntegerField(choices=FLOOR_CHOICES, null=True, blank=True)
     description = models.TextField(null=True, blank=True)
-    media = models.ManyToManyField(Media, blank=True)
-
+    images = models.ManyToManyField(Media, blank=True)
+    videos = models.ManyToManyField(Video, blank=True)
 
 
 class Overlooking(models.Model):
@@ -188,7 +207,7 @@ class Property(models.Model):
     electrical_con = models.BooleanField(default=False)
     flooring_details = models.TextField(blank=True, null=True)
     ceiling_details = models.TextField(blank=True, null=True)
-    media = models.ManyToManyField(Media, blank=True)
+    images = models.ManyToManyField(Media, blank=True)
     address = models.ForeignKey(Address, on_delete=models.CASCADE)
     contact = models.CharField(max_length=10, blank=True, null=True)
     other_charges = JSONField(null=True, blank=True)
@@ -196,8 +215,7 @@ class Property(models.Model):
     nearest = models.ManyToManyField(Nearest, blank=True)
     country_code = models.CharField(choices=country_choices, max_length=5, null=True, blank=True)
     is_top = models.BooleanField(blank=True, default=False)
-    video_tour = models.ForeignKey(Media, related_name="property_video_tour", on_delete=models.CASCADE, null=True,
-                                   blank=True)
+    videos = models.ManyToManyField(Video, blank=True)
     floor_plan = models.ManyToManyField(FloorPlan, blank=True)
 
     def __str__(self):
