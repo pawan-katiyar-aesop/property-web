@@ -1,12 +1,14 @@
 .idea/
 .idea/*
 *.pyc
+*.css.map
 venv/
 .venv
 eggs/
 .eggs/
 *.egg-info/
 .DS_Store
+.static/
 .env
 static/admin/
 static/rest_framework/
