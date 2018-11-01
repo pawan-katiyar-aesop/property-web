@@ -1,7 +1,7 @@
 from __future__ import unicode_literals
 from rest_framework import status
 from django.views.generic import TemplateView
-from models import CustomerLead, AgentLead, Property, Address, Nearest, Overlooking, Video
+from models import CustomerLead, AgentLead, Property, Address, Nearest, Overlooking, Video, FloorPlan
 from django.views import generic
 from rest_framework.response import Response
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView, ListAPIView
@@ -73,6 +73,24 @@ class ListCreatePropertyAPIView(ListCreateAPIView):
         if request.data.get("videos"):
             for obj in request.data.get("videos"):
                 property.videos.add(Video.create_video(obj))
+
+        # create floor plan if requested
+        if request.data.get("floor_plan"):
+            floor_plan_list = list()
+            for i in range(0, len(request.data.get("floor_plan")[0])):
+                if len(request.data.get("floor_plan")[0])is not 0:
+                    #create a floor plan with description using list of descriptions and floor number
+                    plan = FloorPlan.create_plan(i, request.data.get("floor_plan")[0][i])
+
+                    #create image objects using list of imagelists and add it to plan
+                    self.add_images_to_property(request.data.get("floor_plan")[1][i], plan)
+
+                    #create video objects using list of video Objects and add them to plan
+                    for vidObj in request.data.get("floor_plan")[2][i]:
+                        plan.videos.add(Video.create_video(vidObj))
+
+                #Finally, add this plan to list of floor plans in property
+                property.floor_plan.add(plan)
 
         return Response(PropertySerializer(property).data, status=status.HTTP_201_CREATED)
 

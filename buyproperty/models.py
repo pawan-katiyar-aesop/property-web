@@ -68,7 +68,7 @@ class Video(models.Model):
         ('b', 'Banner'),
         ('t', 'Tour')
     ]
-    title = models.CharField(max_length=200, null=True,blank=True)
+    title = models.CharField(max_length=200, null=True, blank=True)
     type = models.CharField(choices=TYPE_CHOICE, max_length=1, null=True, blank=True)
     url = models.URLField(max_length=350, null=True, blank=True)
 
@@ -118,6 +118,19 @@ class FloorPlan(models.Model):
     description = models.TextField(null=True, blank=True)
     images = models.ManyToManyField(Media, blank=True)
     videos = models.ManyToManyField(Video, blank=True)
+
+    @classmethod
+    def create_plan(cls, number, desc):
+
+        plan = FloorPlan.objects.create(
+            floor_number=number,
+            description=desc
+        )
+        return plan
+
+    def __str__(self):
+        return str(self.floor_number)+" "+self.description if self.floor_number else self.description
+
 
 
 class Overlooking(models.Model):
