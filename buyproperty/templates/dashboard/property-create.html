@@ -94,7 +94,45 @@
                             </div>
                         </div>
                     </div>
+                </div>
+
+                <div class="card card-default mt-30">
+
+                    <div class="card-header">
+                        <b>Video Tour</b>
                     </div>
+
+                    <div class="card-body">
+
+                        <div class="float-right">
+                            <a href="javascript:;" v-on:click="selectVideoTour"><h5>Select Video</h5></a>
+                        </div>
+
+
+                        <div class="row">
+                            <input type="file" name="images" multiple style="visibility: hidden" @change="uploadVideoTour" id="select-video-hidden">
+                            <span class="help-block"></span>
+                        </div>
+                        <div v-if="!videoTours.list.length">
+                                <span>No video selected! ☹️ Please upload video.</span>
+                        </div>
+                        <div class="row col-md-6 insert-preview-images-here">
+                            <div class="preview-image-template" v-if="videoTours.list" v-for="(image, index) in videoTours.list">
+                                <div class="col-md-5 pointer">
+                                    <div class="pull-right" id="removed-image">
+                                        <a href="#" class="product-delete_image" v-on:click="removeVideoTour(index)">x</a>
+                                    </div>
+                                    <div class="product-images--preview-image">
+                                        <a href="#" class="open-image-edit-modal">
+                                            <i class="fa fa-pencil fa-lg"></i>
+                                        </a>
+                                    </div>
+                                    <img :src="image['image']" class="preview-image"  data-toggle="modal" :data-target="`#edit-image-info-modal-${index}`" v-on:click="videoSlider.currentIndex=index">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
 
                     <div class="card card-default mt-30">

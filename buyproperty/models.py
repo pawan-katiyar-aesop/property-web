@@ -183,6 +183,7 @@ class Property(models.Model):
     nearest = models.ManyToManyField(Nearest, blank=True)
     country_code = models.CharField(choices=country_choices, max_length=5, null=True, blank=True)
     is_top = models.BooleanField(blank=True, default=False)
+    video_tour = models.ForeignKey(Media, related_name="property_video_tour", on_delete=models.CASCADE, null=True, blank=True)
 
     def __str__(self):
         if self.property_id and self.property_name:

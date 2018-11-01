@@ -75,6 +75,9 @@ let property_create_app = new Vue({
         propertyImages:{
             imageList: [],
         },
+        videoTours:{
+            list: [],
+        },
         otherCharges:[],
         nearest:[]
     },
@@ -157,6 +160,7 @@ let property_create_app = new Vue({
                 "carpet_area": that.newProperty.carpetArea,
                 "buildup_area": that.newProperty.buildupArea,
                 "is_top": that.newProperty.isTop,
+                "video_tour":that.videoTours.list
 
             };
             axios.post('/api/property/', property_body)
@@ -356,7 +360,7 @@ let property_create_app = new Vue({
                 that.propertyImages.isPreviewImageActive = true;
                 $("#select-image-hidden").val("");
             } else {
-                show_notification("error", "No files were selected. Please select at least one file.")
+                alert("No files were selected. Please select at least one file.");
             }
         },
         removeImage: function (imageIndex) {
@@ -364,7 +368,53 @@ let property_create_app = new Vue({
             that.propertyImages.imageList.splice(imageIndex, 1);
             that.imageSlider.listLength -= 1;
             (that.propertyImages.imageList.length === 0)? that.propertyImages.isPreviewImageActive = false: that.propertyImages.isPreviewImageActive = true;
+        },
+        selectVideoTour: function () {
+            debugger;
+            $("#select-video-hidden").click();
+        },
+        uploadVideoTour: function (input) {
+            let that = this;
+            let unitArray = ['Bytes', 'KB', 'MB', 'GB'];
+            if (input.target.files[0]){
+                $.each(input.target.files, function (index, item) {
+                    let size = item.size;
+                    let i=0;
+                    while(size>900)
+                    {
+                        size/=1024;
+                        i++;
+                    }
+                    let actualSize = (Math.round(size * 100) / 100);
+                    if (i>1 && actualSize > 10) {
+                        alert("File size must be less than 10 mb, this file is too big " + actualSize + " " + unitArray[i]);
+                        return
+                    }
+                    // Generate unique ID for all images
+                    let image_id = 1212;
+
+                    // Read image and append into doc
+                    let reader = new FileReader();
+                    reader.onload = function (e) {
+                        that.videoTours.list.push({"image":e.target.result, "title":"", "description":"", "defaultInGroup":false});
+                        that.videoSlider.listLength += 1;
+                    };
+                    reader.readAsDataURL(input.target.files[index]);
+                });
+                debugger;
+                that.videoTours.isPreviewImageActive = true;
+                $("#select-image-hidden").val("");
+            } else {
+                alert("No files were selected. Please select at least one file.");
+            }
+        },
+        removeVideoTour: function (imageIndex) {
+            let that = this;
+            that.videoTours.list.splice(imageIndex, 1);
+            that.videoSlider.listLength -= 1;
+            (that.videoTours.list.length === 0)? that.videoTours.isPreviewImageActive = false: that.videoTours.isPreviewImageActive = true;
         }
+
 
 
     },

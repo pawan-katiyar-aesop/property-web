@@ -69,6 +69,21 @@ class ListCreatePropertyAPIView(ListCreateAPIView):
         #create and add media to propety
         self.add_media_to_property(request.data.get("media"), property)
 
+        #create video tour and add to property
+        if request.data.get("video_tour"):
+            image = request.data.get("video_tour")
+            import base64
+            from django.core.files.base import ContentFile
+            from .models import Media
+            image_format, img_str = image['image'].split(';base64,')
+            ext = image_format.split('/')[-1]
+
+            data = ContentFile(base64.b64decode(img_str), name=Media.generate_unique_key(10) + '.' + ext)
+            vid_tour = Media.objects.create(file=data, type='vid', title=image['title'],description=image['description'],
+                                              default_in_group=image['defaultInGroup'])
+            property.video_tour = vid_tour
+
+
         return Response(PropertySerializer(property).data, status=status.HTTP_201_CREATED)
 
     def add_media_to_property(self, images, property):
@@ -83,7 +98,7 @@ class ListCreatePropertyAPIView(ListCreateAPIView):
             image_format, img_str = image['image'].split(';base64,')
             ext = image_format.split('/')[-1]
 
-            data = ContentFile(base64.b64decode(img_str), name=Media.generate_unique_key(10) + ext)
+            data = ContentFile(base64.b64decode(img_str), name=Media.generate_unique_key(10) + '.' +ext)
             media.append(Media.objects.create(file=data, type=mediatype, title=image['title'],
                                               description=image['description'],
                                               default_in_group=image['defaultInGroup']))
