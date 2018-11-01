@@ -19,6 +19,7 @@ let property_create_app = new Vue({
                 urinal: undefined,
                 wC: undefined
             },
+            videoTourURL:'',
             isTop:false,
             landmark: '',
             overlookingList: [],
@@ -188,7 +189,8 @@ let property_create_app = new Vue({
                 '                                            </div>\n' +
                 '                                        </div>');
 
-
+        },
+        addVideoUrlFields:function(){
 
         },
         populateCharges :function(){
@@ -344,7 +346,7 @@ let property_create_app = new Vue({
                         i++;
                     }
                     let actualSize = (Math.round(size * 100) / 100);
-                    if (i>1 && actualSize > 10) {
+                    if (i>0 && actualSize > 100) {
                         alert("File size must be less than 10 mb, this file is too big " + actualSize + " " + unitArray[i]);
                         return
                     }
@@ -354,7 +356,7 @@ let property_create_app = new Vue({
                     // Read image and append into doc
                     let reader = new FileReader();
                     reader.onload = function (e) {
-                        that.propertyImages.imageList.push({"image":e.target.result, "title":"", "description":"", "defaultInGroup":false});
+                        that.propertyImages.imageList.push({"image":e.target.result,"type":"b", "title":"", "description":"", "defaultInGroup":false});
                         that.imageSlider.listLength += 1;
                     };
                     reader.readAsDataURL(input.target.files[index]);
