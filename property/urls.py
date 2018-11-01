@@ -20,8 +20,8 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^control/', include('buyproperty.urls.urls'), name="page"),
     url(r'^api/', include('buyproperty.urls.api'), name="api"),
-    url(r'^real_estate/', include('website.urls.urls'), name="website-page"),
-    url(r'^real_estate/api/', include('website.urls.api'), name="website-api"),
+    url(r'^', include('website.urls.urls'), name="website-page"),
+    url(r'^api/real_estate/', include('website.urls.api'), name="website-api"),
 
 ]
 # if settings.DEBUG:

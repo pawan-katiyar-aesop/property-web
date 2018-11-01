@@ -13,4 +13,5 @@ urlpatterns = [
     url(r'^property/top/$', views.RetrieveTopPropertyView.as_view(), name="retrieve-top-property"),
     url(r'^property/(?P<key>\w+)/$', views.SearchResultApiView.as_view(), name="retrieve-top-property"),
     url(r'^property/media/$', views.UploadMediaView.as_view(), name="property-media"),
+
 ]

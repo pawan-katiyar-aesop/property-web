@@ -19,14 +19,14 @@
                             <div class="tab-content">
                                 <div role="tabpanel" class="tab-pane active" id="buy">
                                     <div class="rle_searchform_box">
-                                        <input type="serch" placeholder="Street, town & landmark">
-                                        <button class="rle_btn"><i class="fa fa-search" aria-hidden="true"></i> search</button>
+                                        <input type="serch" v-model="searchInput" placeholder="Street, town & landmark">
+                                        <button v-on:click="get_searchResults" class="rle_btn"><i class="fa fa-search" aria-hidden="true"></i> search</button>
                                     </div>
                                 </div>
                                 <div role="tabpanel" class="tab-pane " id="rent">
                                     <div class="rle_searchform_box">
-                                        <input type="serch" placeholder="Street, town & landmark">
-                                        <button class="rle_btn"><i class="fa fa-search" aria-hidden="true"></i> search</button>
+                                        <input type="serch" v-model="searchInput" placeholder="Street, town & landmark">
+                                        <button v-on:click="get_searchResults" class="rle_btn"><i class="fa fa-search" aria-hidden="true"></i> search</button>
                                     </div>
                                 </div>
                             </div>
@@ -40,415 +40,266 @@
 
 {% block content %}
     <!-- Property Wrapper start -->
-    <div class="rle_property_wrapper rle_toppadder100 rle_bottompadder70">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                    <div class="rle_center_heading rle_bottompadder60">
-                        <h1>Top properties</h1>
-                        <p>Check out some of our listed properties</p>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                    <div class="rle_property_infobox">
-                        <div class="rle_property_infobox_img">
-                            <img src="http://placehold.it/370x300" alt="" title="">
-                            <ul>
-                                <li class="rle_red_clr">for sale</li>
-                                <li class="rle_black_clr">hot offer</li>
-                            </ul>
+    <div id="website-home-app">
+        <div class="rle_property_wrapper rle_toppadder100 rle_bottompadder70">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="rle_center_heading rle_bottompadder60">
+                            <h1>Top properties</h1>
+                            <p>Check out some of our listed properties</p>
                         </div>
-                        <div class="rle_property_infobox_details style_2">
-                            <div class="rle_property_infobox_details_header style_2">
-                                <h3><a href="#">The Chalet Estate</a></h3>
-                                <p>KT89B Hampton Court, England, United Kingdom</p>
+                    </div>
+                    <div v-for="item in property" class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                        <div class="rle_property_infobox">
+                            <div class="rle_property_infobox_img">
+                                <img src="http://placehold.it/370x300" alt="" title="">
+{#                                <ul>#}
+{#                                    <li class="rle_green_clr">for rent</li>#}
+{#                                    <li class="rle_black_clr">hot offer</li>#}
+{#                                </ul>#}
                             </div>
-                            <div class="rle_property_infobox_details_footer">
-                                <p>Area : 3578 sqft </p>
-                                <ul>
-                                    <li><i class="fa fa-bed" aria-hidden="true"></i> 03</li>
-                                    <li><i class="fa fa-bath" aria-hidden="true"></i> 02</li>
-                                    <li><i class="fa fa-taxi" aria-hidden="true"></i> yes</li>
-                                </ul>
-                            </div>
-                            <div class="rle_property_infobox_details_pricefooter">
-                                <span>$650.000</span>
-                                <a href="#">View detail <i class="fa fa-long-arrow-right" aria-hidden="true"></i></a>
+                            <div class="rle_property_infobox_details style_2">
+                                <div class="rle_property_infobox_details_header style_2">
+                                    <h3><a href="#">{% verbatim %}{{ item.property_name }}{% endverbatim %}</a></h3>
+                                    <p>{% verbatim %}{{ item.address.name }}, {{ item.address.line_2 }}, {{ item.address.city }}, {{ item.address.state }}, {{ item.address.country }}{% endverbatim %}</p>
+                                </div>
+                                <div class="rle_property_infobox_details_pricefooter">
+                                    <a href="#">View detail <i class="fa fa-long-arrow-right" aria-hidden="true"></i></a>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                    <div class="rle_property_infobox">
-                        <div class="rle_property_infobox_img">
-                            <img src="http://placehold.it/370x300" alt="" title="">
-                            <ul>
-                                <li class="rle_green_clr">for rent</li>
-                            </ul>
-                        </div>
-                        <div class="rle_property_infobox_details style_2">
-                            <div class="rle_property_infobox_details_header style_2">
-                                <h3><a href="#">Morden Apartment</a></h3>
-                                <p>KT89B Hampton Court, England, United Kingdom</p>
-                            </div>
-                            <div class="rle_property_infobox_details_footer">
-                                <p>Area : 3578 sqft </p>
-                                <ul>
-                                    <li><i class="fa fa-bed" aria-hidden="true"></i> 03</li>
-                                    <li><i class="fa fa-bath" aria-hidden="true"></i> 02</li>
-                                    <li><i class="fa fa-taxi" aria-hidden="true"></i> yes</li>
-                                </ul>
-                            </div>
-                            <div class="rle_property_infobox_details_pricefooter">
-                                <span>$4800.00<sub>/mon</sub></span>
-                                <a href="#">View detail <i class="fa fa-long-arrow-right" aria-hidden="true"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                    <div class="rle_property_infobox">
-                        <div class="rle_property_infobox_img">
-                            <img src="http://placehold.it/370x300" alt="" title="">
-                            <ul>
-                                <li class="rle_green_clr">for rent</li>
-                                <li class="rle_black_clr">hot offer</li>
-                            </ul>
-                        </div>
-                        <div class="rle_property_infobox_details style_2">
-                            <div class="rle_property_infobox_details_header style_2">
-                                <h3><a href="#">Luxurious Deplux</a></h3>
-                                <p>KT89B Hampton Court, England, United Kingdom</p>
-                            </div>
-                            <div class="rle_property_infobox_details_footer">
-                                <p>Area : 3578 sqft </p>
-                                <ul>
-                                    <li><i class="fa fa-bed" aria-hidden="true"></i> 03</li>
-                                    <li><i class="fa fa-bath" aria-hidden="true"></i> 02</li>
-                                    <li><i class="fa fa-taxi" aria-hidden="true"></i> yes</li>
-                                </ul>
-                            </div>
-                            <div class="rle_property_infobox_details_pricefooter">
-                                <span>$4800.00<sub>/mon</sub></span>
-                                <a href="#">View detail <i class="fa fa-long-arrow-right" aria-hidden="true"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                    <div class="rle_property_infobox">
-                        <div class="rle_property_infobox_img">
-                            <img src="http://placehold.it/370x300" alt="" title="">
-                            <ul>
-                                <li class="rle_red_clr">for sale</li>
-                            </ul>
-                        </div>
-                        <div class="rle_property_infobox_details style_2">
-                            <div class="rle_property_infobox_details_header style_2">
-                                <h3><a href="#">Westbourne House</a></h3>
-                                <p>KT89B Hampton Court, England, United Kingdom</p>
-                            </div>
-                            <div class="rle_property_infobox_details_footer">
-                                <p>Area : 3578 sqft </p>
-                                <ul>
-                                    <li><i class="fa fa-bed" aria-hidden="true"></i> 03</li>
-                                    <li><i class="fa fa-bath" aria-hidden="true"></i> 02</li>
-                                    <li><i class="fa fa-taxi" aria-hidden="true"></i> yes</li>
-                                </ul>
-                            </div>
-                            <div class="rle_property_infobox_details_pricefooter">
-                                <span>$650.00</span>
-                                <a href="#">View detail <i class="fa fa-long-arrow-right" aria-hidden="true"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                    <div class="rle_property_infobox">
-                        <div class="rle_property_infobox_img">
-                            <img src="http://placehold.it/370x300" alt="" title="">
-                            <ul>
-                                <li class="rle_red_clr">for sale</li>
-                            </ul>
-                        </div>
-                        <div class="rle_property_infobox_details style_2">
-                            <div class="rle_property_infobox_details_header style_2">
-                                <h3><a href="#">Sturrock Place Gordon</a></h3>
-                                <p>KT89B Hampton Court, England, United Kingdom</p>
-                            </div>
-                            <div class="rle_property_infobox_details_footer">
-                                <p>Area : 3578 sqft </p>
-                                <ul>
-                                    <li><i class="fa fa-bed" aria-hidden="true"></i> 03</li>
-                                    <li><i class="fa fa-bath" aria-hidden="true"></i> 02</li>
-                                    <li><i class="fa fa-taxi" aria-hidden="true"></i> yes</li>
-                                </ul>
-                            </div>
-                            <div class="rle_property_infobox_details_pricefooter">
-                                <span>$650.00</span>
-                                <a href="#">View detail <i class="fa fa-long-arrow-right" aria-hidden="true"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                    <div class="rle_property_infobox">
-                        <div class="rle_property_infobox_img">
-                            <img src="http://placehold.it/370x300" alt="" title="">
-                            <ul>
-                                <li class="rle_green_clr">for rent</li>
-                                <li class="rle_black_clr">hot offer</li>
-                            </ul>
-                        </div>
-                        <div class="rle_property_infobox_details style_2">
-                            <div class="rle_property_infobox_details_header style_2">
-                                <h3><a href="#">Valmark Orchard</a></h3>
-                                <p>KT89B Hampton Court, England, United Kingdom</p>
-                            </div>
-                            <div class="rle_property_infobox_details_footer">
-                                <p>Area : 3578 sqft </p>
-                                <ul>
-                                    <li><i class="fa fa-bed" aria-hidden="true"></i> 03</li>
-                                    <li><i class="fa fa-bath" aria-hidden="true"></i> 02</li>
-                                    <li><i class="fa fa-taxi" aria-hidden="true"></i> yes</li>
-                                </ul>
-                            </div>
-                            <div class="rle_property_infobox_details_pricefooter">
-                                <span>$4800.00<sub>/mon</sub></span>
-                                <a href="#">View detail <i class="fa fa-long-arrow-right" aria-hidden="true"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                    <div class="rle_btn_wrapper rle_toppadder40">
-                        <a href="#" class="rle_btn">View all properties</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Why we Wrapper start -->
-    <div class="rle_whywe_wrapper rle_toppadder100 rle_bottompadder70">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                    <div class="rle_whywe_box">
-                        <img src="{% static 'website-theme/images/icon/wyw1.png' %}">
-                        <div class="rle_whywe_box_text">
-                            <h1>3475</h1>
-                            <p>Homes For Sale</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                    <div class="rle_whywe_box">
-                        <img src="{% static 'website-theme/images/icon/wyw2.png' %}">
-                        <div class="rle_whywe_box_text">
-                            <h1>2896</h1>
-                            <p>Homes For Rent</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                    <div class="rle_whywe_box">
-                        <img src="{% static 'website-theme/images/icon/wyw3.png' %}">
-                        <div class="rle_whywe_box_text">
-                            <h1>8540</h1>
-                            <p>Visitor Month</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                    <div class="rle_whywe_box">
-                        <img src="{% static 'website-theme/images/icon/wyw4.png' %}">
-                        <div class="rle_whywe_box_text">
-                            <h1>1247</h1>
-                            <p>Happy Client</p>
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="rle_btn_wrapper rle_toppadder40">
+                            <a href="#" class="rle_btn">View all properties</a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <!-- popular areas Wrapper start -->
-    <div class="rle_awsagent_wrapper rle_toppadder100 rle_bottompadder100">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                    <div class="rle_center_heading rle_bottompadder60">
-                        <h1>Awesome agents</h1>
-                        <p>Lorem ipsum dolor sit amet consectetur adipiscing</p>
+        <!-- Why we Wrapper start -->
+        <div class="rle_whywe_wrapper rle_toppadder100 rle_bottompadder70">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                        <div class="rle_whywe_box">
+                            <img src="{% static 'website-theme/images/icon/wyw1.png' %}">
+                            <div class="rle_whywe_box_text">
+                                <h1>3475</h1>
+                                <p>Homes For Sale</p>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                    <div class="rle_agent_slider">
-                        <div class="owl-carousel owl-theme">
-                            <div class="item">
-                                <div class="rle_agent_slider_details">
-                                    <img src="http://placehold.it/370x340" alt="" title="">
-                                    <div class="rle_agent_slider_details_text">
-                                        <h4>Frederick Willis</h4>
-                                        <p><i class="fa fa-phone" aria-hidden="true"></i> 1-855-337-6228</p>
-                                        <a href="#"><i class="fa fa-envelope-o" aria-hidden="true"></i> hello@realestate.com</a>
-                                    </div>
-                                </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                        <div class="rle_whywe_box">
+                            <img src="{% static 'website-theme/images/icon/wyw2.png' %}">
+                            <div class="rle_whywe_box_text">
+                                <h1>2896</h1>
+                                <p>Homes For Rent</p>
                             </div>
-                            <div class="item">
-                                <div class="rle_agent_slider_details">
-                                    <img src="http://placehold.it/370x340" alt="" title="">
-                                    <div class="rle_agent_slider_details_text">
-                                        <h4>Johnny Watson</h4>
-                                        <p><i class="fa fa-phone" aria-hidden="true"></i> 1-855-337-6228</p>
-                                        <a href="#"><i class="fa fa-envelope-o" aria-hidden="true"></i> hello@realestate.com</a>
-                                    </div>
-                                </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                        <div class="rle_whywe_box">
+                            <img src="{% static 'website-theme/images/icon/wyw3.png' %}">
+                            <div class="rle_whywe_box_text">
+                                <h1>8540</h1>
+                                <p>Visitor Month</p>
                             </div>
-                            <div class="item">
-                                <div class="rle_agent_slider_details">
-                                    <img src="http://placehold.it/370x340" alt="" title="">
-                                    <div class="rle_agent_slider_details_text">
-                                        <h4>Caleb Fowler</h4>
-                                        <p><i class="fa fa-phone" aria-hidden="true"></i> 1-855-337-6228</p>
-                                        <a href="#"><i class="fa fa-envelope-o" aria-hidden="true"></i> hello@realestate.com</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="item">
-                                <div class="rle_agent_slider_details">
-                                    <img src="http://placehold.it/370x340" alt="" title="">
-                                    <div class="rle_agent_slider_details_text">
-                                        <h4>Hunter West</h4>
-                                        <p><i class="fa fa-phone" aria-hidden="true"></i> 1-855-337-6228</p>
-                                        <a href="#"><i class="fa fa-envelope-o" aria-hidden="true"></i> hello@realestate.com</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="item">
-                                <div class="rle_agent_slider_details">
-                                    <img src="http://placehold.it/370x340" alt="" title="">
-                                    <div class="rle_agent_slider_details_text">
-                                        <h4>Frederick Willis</h4>
-                                        <p><i class="fa fa-phone" aria-hidden="true"></i> 1-855-337-6228</p>
-                                        <a href="#"><i class="fa fa-envelope-o" aria-hidden="true"></i> hello@realestate.com</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="item">
-                                <div class="rle_agent_slider_details">
-                                    <img src="http://placehold.it/370x340" alt="" title="">
-                                    <div class="rle_agent_slider_details_text">
-                                        <h4>Hunter West</h4>
-                                        <p><i class="fa fa-phone" aria-hidden="true"></i> 1-855-337-6228</p>
-                                        <a href="#"><i class="fa fa-envelope-o" aria-hidden="true"></i> hello@realestate.com</a>
-                                    </div>
-                                </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                        <div class="rle_whywe_box">
+                            <img src="{% static 'website-theme/images/icon/wyw4.png' %}">
+                            <div class="rle_whywe_box_text">
+                                <h1>1247</h1>
+                                <p>Happy Client</p>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <!-- Clients & Partners Wrapper start -->
-    <div class="rle_clntsNprtnr_wrapper rle_toppadder100 rle_bottompadder100">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                    <div class="rle_left_heading rle_bottompadder60">
-                        <h1>What customer say</h1>
-                        <p>Lorem ipsum dolor sit amet consectetur adipiscing</p>
-                    </div>
-                    <div class="rle_client_say_slider">
-                        <div class="owl-carousel owl-theme">
-                            <div class="item">
-                                <div class="rle_clientsay_slider_details">
-                                    <div class="rle_clientsay_slider_details_text">
-                                        <p>“ The sale of one's family home is an emotional time and I was not looking forward to the stress that can come with the process it is with thanks. ”</p>
-                                        <ul>
-                                            <li><a href="#"><i class="fa fa-star" aria-hidden="true"></i></a></li>
-                                            <li><a href="#"><i class="fa fa-star" aria-hidden="true"></i></a></li>
-                                            <li><a href="#"><i class="fa fa-star" aria-hidden="true"></i></a></li>
-                                            <li><a href="#"><i class="fa fa-star" aria-hidden="true"></i></a></li>
-                                            <li><a href="#"><i class="fa fa-star" aria-hidden="true"></i></a></li>
-                                        </ul>
-                                    </div>
-                                    <div class="rle_clientsay_slider_details_img">
-                                        <img src="http://placehold.it/100x100" alt="" title="">
-                                        <h4>Eliza Salazar</h4>
-                                        <p>San Francisco, California</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="item">
-                                <div class="rle_clientsay_slider_details">
-                                    <div class="rle_clientsay_slider_details_text">
-                                        <p>“ The sale of one's family home is an emotional time and I was not looking forward to the stress that can come with the process it is with thanks. ”</p>
-                                    </div>
-                                    <div class="rle_clientsay_slider_details_img">
-                                        <img src="http://placehold.it/370x340" alt="" title="">
-                                        <h4>Hunter West</h4>
-                                        <p>San Francisco, California</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                        <div class="rle_left_heading rle_bottompadder60">
-                            <h1>Our partner</h1>
+        <!-- popular areas Wrapper start -->
+        <div class="rle_awsagent_wrapper rle_toppadder100 rle_bottompadder100">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="rle_center_heading rle_bottompadder60">
+                            <h1>Awesome agents</h1>
                             <p>Lorem ipsum dolor sit amet consectetur adipiscing</p>
                         </div>
-                    <div class="row">
-                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                            <div class="rle_partner_style_2">
-                                <img src="http://placehold.it/105x55" alt="" title="">
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                            <div class="rle_partner_style_2">
-                                <img src="http://placehold.it/105x55" alt="" title="">
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                            <div class="rle_partner_style_2">
-                                <img src="http://placehold.it/105x55" alt="" title="">
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                            <div class="rle_partner_style_2">
-                                <img src="http://placehold.it/105x55" alt="" title="">
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                            <div class="rle_partner_style_2">
-                                <img src="http://placehold.it/105x55" alt="" title="">
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                            <div class="rle_partner_style_2">
-                                <img src="http://placehold.it/105x55" alt="" title="">
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="rle_agent_slider">
+                            <div class="owl-carousel owl-theme">
+                                <div class="item">
+                                    <div class="rle_agent_slider_details">
+                                        <img src="http://placehold.it/370x340" alt="" title="">
+                                        <div class="rle_agent_slider_details_text">
+                                            <h4>Frederick Willis</h4>
+                                            <p><i class="fa fa-phone" aria-hidden="true"></i> 1-855-337-6228</p>
+                                            <a href="#"><i class="fa fa-envelope-o" aria-hidden="true"></i> hello@realestate.com</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="item">
+                                    <div class="rle_agent_slider_details">
+                                        <img src="http://placehold.it/370x340" alt="" title="">
+                                        <div class="rle_agent_slider_details_text">
+                                            <h4>Johnny Watson</h4>
+                                            <p><i class="fa fa-phone" aria-hidden="true"></i> 1-855-337-6228</p>
+                                            <a href="#"><i class="fa fa-envelope-o" aria-hidden="true"></i> hello@realestate.com</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="item">
+                                    <div class="rle_agent_slider_details">
+                                        <img src="http://placehold.it/370x340" alt="" title="">
+                                        <div class="rle_agent_slider_details_text">
+                                            <h4>Caleb Fowler</h4>
+                                            <p><i class="fa fa-phone" aria-hidden="true"></i> 1-855-337-6228</p>
+                                            <a href="#"><i class="fa fa-envelope-o" aria-hidden="true"></i> hello@realestate.com</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="item">
+                                    <div class="rle_agent_slider_details">
+                                        <img src="http://placehold.it/370x340" alt="" title="">
+                                        <div class="rle_agent_slider_details_text">
+                                            <h4>Hunter West</h4>
+                                            <p><i class="fa fa-phone" aria-hidden="true"></i> 1-855-337-6228</p>
+                                            <a href="#"><i class="fa fa-envelope-o" aria-hidden="true"></i> hello@realestate.com</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="item">
+                                    <div class="rle_agent_slider_details">
+                                        <img src="http://placehold.it/370x340" alt="" title="">
+                                        <div class="rle_agent_slider_details_text">
+                                            <h4>Frederick Willis</h4>
+                                            <p><i class="fa fa-phone" aria-hidden="true"></i> 1-855-337-6228</p>
+                                            <a href="#"><i class="fa fa-envelope-o" aria-hidden="true"></i> hello@realestate.com</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="item">
+                                    <div class="rle_agent_slider_details">
+                                        <img src="http://placehold.it/370x340" alt="" title="">
+                                        <div class="rle_agent_slider_details_text">
+                                            <h4>Hunter West</h4>
+                                            <p><i class="fa fa-phone" aria-hidden="true"></i> 1-855-337-6228</p>
+                                            <a href="#"><i class="fa fa-envelope-o" aria-hidden="true"></i> hello@realestate.com</a>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <!-- Newletters Wrapper start -->
-    <div class="rle_newletters_wrapper rle_toppadder80 rle_bottompadder80">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                    <div class="rle_center_heading rle_bottompadder30">
-                        <h1>Subcribe now for latest update</h1>
+        <!-- Clients & Partners Wrapper start -->
+        <div class="rle_clntsNprtnr_wrapper rle_toppadder100 rle_bottompadder100">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                        <div class="rle_left_heading rle_bottompadder60">
+                            <h1>What customer say</h1>
+                            <p>Lorem ipsum dolor sit amet consectetur adipiscing</p>
+                        </div>
+                        <div class="rle_client_say_slider">
+                            <div class="owl-carousel owl-theme">
+                                <div class="item">
+                                    <div class="rle_clientsay_slider_details">
+                                        <div class="rle_clientsay_slider_details_text">
+                                            <p>“ The sale of one's family home is an emotional time and I was not looking forward to the stress that can come with the process it is with thanks. ”</p>
+                                            <ul>
+                                                <li><a href="#"><i class="fa fa-star" aria-hidden="true"></i></a></li>
+                                                <li><a href="#"><i class="fa fa-star" aria-hidden="true"></i></a></li>
+                                                <li><a href="#"><i class="fa fa-star" aria-hidden="true"></i></a></li>
+                                                <li><a href="#"><i class="fa fa-star" aria-hidden="true"></i></a></li>
+                                                <li><a href="#"><i class="fa fa-star" aria-hidden="true"></i></a></li>
+                                            </ul>
+                                        </div>
+                                        <div class="rle_clientsay_slider_details_img">
+                                            <img src="http://placehold.it/100x100" alt="" title="">
+                                            <h4>Eliza Salazar</h4>
+                                            <p>San Francisco, California</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="item">
+                                    <div class="rle_clientsay_slider_details">
+                                        <div class="rle_clientsay_slider_details_text">
+                                            <p>“ The sale of one's family home is an emotional time and I was not looking forward to the stress that can come with the process it is with thanks. ”</p>
+                                        </div>
+                                        <div class="rle_clientsay_slider_details_img">
+                                            <img src="http://placehold.it/370x340" alt="" title="">
+                                            <h4>Hunter West</h4>
+                                            <p>San Francisco, California</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                            <div class="rle_left_heading rle_bottompadder60">
+                                <h1>Our partner</h1>
+                                <p>Lorem ipsum dolor sit amet consectetur adipiscing</p>
+                            </div>
+                        <div class="row">
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                <div class="rle_partner_style_2">
+                                    <img src="http://placehold.it/105x55" alt="" title="">
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                <div class="rle_partner_style_2">
+                                    <img src="http://placehold.it/105x55" alt="" title="">
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                <div class="rle_partner_style_2">
+                                    <img src="http://placehold.it/105x55" alt="" title="">
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                <div class="rle_partner_style_2">
+                                    <img src="http://placehold.it/105x55" alt="" title="">
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                <div class="rle_partner_style_2">
+                                    <img src="http://placehold.it/105x55" alt="" title="">
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                <div class="rle_partner_style_2">
+                                    <img src="http://placehold.it/105x55" alt="" title="">
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 col-lg-offset-3 col-md-offset-3">
-                    <div class="rle_newletters_box">
-                        <input type="serch" placeholder="Enter Your Email">
-                        <button class="rle_btn">Subcribe</button>
+            </div>
+        </div>
+        <!-- Newletters Wrapper start -->
+        <div class="rle_newletters_wrapper rle_toppadder80 rle_bottompadder80">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="rle_center_heading rle_bottompadder30">
+                            <h1>Subcribe now for latest update</h1>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 col-lg-offset-3 col-md-offset-3">
+                        <div class="rle_newletters_box">
+                            <input type="serch" placeholder="Enter Your Email">
+                            <button class="rle_btn">Subcribe</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -457,4 +308,5 @@
 {% endblock %}
 
 {% block page_level_scripts %}
+    <script src="{% static 'website-theme/js/website-js/home.js' %}"></script>
 {% endblock page_level_scripts %}
