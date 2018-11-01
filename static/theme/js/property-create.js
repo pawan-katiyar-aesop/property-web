@@ -164,13 +164,15 @@ let property_create_app = new Vue({
 
             };
             axios.post('/api/property/', property_body)
-            .then(function (response) {
-                // show_notification("success", "Property Successfully Created.");
-                window.location.href =  "/control/dash/properties/";
-            })
-            .catch(function (response) {
-                // show_notification("danger", "A fatal error occurred, and this page might not function correctly.")
-            })
+                .then(function (response) {
+                    // show_notification("success", "Property Successfully Created.");
+                    window.location.href =  "/control/dash/properties/";
+                })
+                .catch(function (response) {
+                    // show_notification("danger", "A fatal error occurred, and this page might not function correctly.")
+                })
+
+
         },
         addOtherCharge: function () {
             let that = this;
@@ -205,7 +207,8 @@ let property_create_app = new Vue({
             for(let i=0; i<listOfKey.length;i++){
                 that.otherCharges[listOfKey[i]] = listOfVal[i];
             }
-
+            debugger;
+            console.log(that.otherCharges);
         },
         populateNearest :function(){
             let that=this;
@@ -222,7 +225,6 @@ let property_create_app = new Vue({
             for(let i=0; i<listOfKey.length;i++){
                 that.nearest[listOfKey[i]] = listOfVal[i];
             }
-
             console.log(that.nearest);
         },
         addNearest: function () {
@@ -370,7 +372,6 @@ let property_create_app = new Vue({
             (that.propertyImages.imageList.length === 0)? that.propertyImages.isPreviewImageActive = false: that.propertyImages.isPreviewImageActive = true;
         },
         selectVideoTour: function () {
-            debugger;
             $("#select-video-hidden").click();
         },
         uploadVideoTour: function (input) {
@@ -401,7 +402,6 @@ let property_create_app = new Vue({
                     };
                     reader.readAsDataURL(input.target.files[index]);
                 });
-                debugger;
                 that.videoTours.isPreviewImageActive = true;
                 $("#select-image-hidden").val("");
             } else {
