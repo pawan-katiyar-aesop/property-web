@@ -6,7 +6,7 @@ from django.views import generic
 from rest_framework.response import Response
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView, ListAPIView
 from serializers import CustomerLeadSerializer, AgentLeadSerializer, PropertySerializer, AddressSerializer,\
-    OverlookingSerializer, TopPropertySerializer
+    OverlookingSerializer, TopPropertySerializer, RetrievePropertySerializer
 from rest_framework.views import APIView
 import itertools
 from django.db.models import Q
@@ -120,7 +120,7 @@ class ListOverlookingAPIView(ListAPIView):
 
 class RetrieveUpdateDestroyPropertyAPIView(RetrieveUpdateDestroyAPIView):
     queryset = Property.objects.all()
-    serializer_class = PropertySerializer
+    serializer_class = RetrievePropertySerializer
 
     def update(self, request, *args, **kwargs):
 
