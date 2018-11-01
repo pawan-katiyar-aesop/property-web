@@ -8,6 +8,7 @@ class Address(models.Model):
     name = models.CharField(max_length=200, blank=True, null=True)
     line_1 = models.CharField(max_length=100, blank=True, null=True)
     line_2 = models.CharField(max_length=100, blank=True, null=True)
+    locality = models.CharField(max_length=100, blank=True, null=True)
     city = models.CharField(max_length=50, blank=True, null=True)
     state = models.CharField(max_length=50, blank=True, null=True)
     country = models.CharField(max_length=50, blank=True, null=True)
@@ -27,6 +28,7 @@ class Address(models.Model):
             name=data.get("name"),
             line_1=data.get("street_line1"),
             line_2=data.get("street_line2"),
+            locality=data.get("locality"),
             city=data.get("city"),
             state=data.get("state"),
             country=data.get("country"),
@@ -216,7 +218,7 @@ class Property(models.Model):
     description = models.TextField(null=True, blank=True)
     ceiling_height = models.FloatField(blank=True, null=True)
     beam_height = models.FloatField(blank=True, null=True)
-    earthing = models.BooleanField(default=True)
+    earthing = models.BooleanField(default=False)
     electrical_con = models.BooleanField(default=False)
     flooring_details = models.TextField(blank=True, null=True)
     ceiling_details = models.TextField(blank=True, null=True)
