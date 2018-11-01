@@ -576,7 +576,7 @@
                             </a>
                             -->
 
-                            <select class="form-control"  id="floor" type="text" v-model="currentEditingFloor" onchange="populateFloorPlanEdit(this.value)">
+                            <select class="form-control"  id="floor" type="text" v-model="currentEditingFloor">
                                 <option value="0">Ground</option>
                                 <option value="1">First</option>
                                 <option value="2">Second</option>
@@ -605,20 +605,25 @@
                         </div>
                     </div>
                     <div class="modal-body">
-                        <div class="form-group">
 
-                        </div>
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label for="wc">Floor Description</label>
+                                <label for="wc"><b>Floor Description</b></label>
                                 <textarea class="form-control" type="number" v-model="floorPlanEdit.description" ></textarea>
                             </div>
                         </div>
+                        <div class="card card-default mt-30">
+
+                    <div class="card-header">
+                        <b>Images</b>
+                    </div>
+
+                    <div class="card-body">
+
+
                         <div class="form-group" data-toggle="tooltip" data-title="Add basic fields for your category. " data-placement="bottom">
 
-                                <div class="float-left">
-                                    <b>Images</b>
-                                </div>
+
                                 <div class="float-right">
                                     <a href="javascript:;" @click="selectFloorPlanImage">Select Image</a>
                                 </div>
@@ -645,15 +650,62 @@
                                     </div>
                                 </div>
                         </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="wc">Video URLs</label>
-                                <textarea class="form-control" type="number"></textarea>
+                    </div>
+                    </div>
+<!--
+                        <div class="card card-default mt-30">
+
+                    <div class="card-header">
+                        <b>Videos</b>
+                    </div>
+
+                    <div class="card-body">
+
+                        <div class="form-group">
+                            <div id="banner-vid-parent">
+
+                            </div>
+                            <a href="#" class="mt-15 d-block" v-if="floorPlanListOfVideoURLs[0].length === 0" v-on:click="addVideoUrlFields()">Add New Video URL</a>
+                            <a href="#" class="mt-15 d-block" v-else="floorPlanListOfVideoURLs[0].length === 0"></a>
+                            <div class="row mt-20">
+                                <div class="col-md-12">
+                                    <div class="help-box variants-help color-grey" v-if="!floorPlanListOfVideoURLs[0].length > 0">
+                                        Add video url, youtube url etc.
+                                    </div>
+                                    <div v-if="floorPlanListOfVideoURLs[0].length > 0">
+                                        <table class="table table-responsive variants-table">
+                                            <thead >
+                                                <tr>
+                                                    <th style="">Video url</th>
+                                                    <th style="border: none;"></th>
+                                                    <th style="border: none;"></th>
+                                                </tr>
+                                            </thead>
+                                            <tr v-for="(key, index) in floorPlanListOfVideoURLs[0]">
+                                                <td>
+                                                    <input maxlength="250" size="80" class="form-control" v-model="key['url'+key.index]" type="text">
+                                                </td>
+                                                <td>
+                                                    <button @click="removeVideoUrlFieldsFloor(index)" type="button" class="btn btn-danger">
+                                                      Remove
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                        <td>
+                                            <button @click="addVideoUrlFieldsFloor()" class="btn btn-success" type="button">
+                                             Add more
+                                            </button>
+                                        </td>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-
-
                     </div>
+                </div>
+
+-->
+            </div>
 
 
                     <div class="modal-footer">
