@@ -12,3 +12,4 @@ eggs/
 .env
 static/admin/
 static/rest_framework/
+manage.py
