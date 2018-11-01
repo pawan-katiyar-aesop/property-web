@@ -19,7 +19,14 @@ let property_create_app = new Vue({
                 urinal: undefined,
                 wC: undefined
             },
-            videoTourURL:'',
+            videoTourURL:{
+                'title':'',
+                'type':'t',
+                'url':''
+            },
+            bannerVideos:[
+                //objects of format -->{ 'title':'','type':'','url:''}
+            ],
             isTop:false,
             landmark: '',
             overlookingList: [],
@@ -50,7 +57,8 @@ let property_create_app = new Vue({
             leaseTerm: 0,
             carpetArea: 0,
             buildupArea: 0,
-            isTop:false
+            isTop:false,
+            floorPlan: []
 
         },
         newAddress:{
@@ -81,7 +89,16 @@ let property_create_app = new Vue({
             list: [],
         },
         otherCharges:[],
-        nearest:[]
+        nearest:[],
+        floorPlanEdit:{
+            description:'',
+            imageList:[],
+            videos:[]
+        },
+        floorPlanListOfDescriptions:['','','',''],
+        floorPlanListOfImagesList:[[],[],[],[]],
+        floorPlanListOfDVideoURLs:[[],[],[],[]],
+        currentEditingFloor:-1
     },
     methods: {
         validateMandatoryFields:function(){
@@ -107,6 +124,11 @@ let property_create_app = new Vue({
             // }
             that.populateCharges();
             that.populateNearest();
+            let allVideoUrlList = [];
+            allVideoUrlList.push(that.newProperty.videoTourURL);
+            that.newProperty.floorPlan.push(that.floorPlanListOfDescriptions);
+            that.newProperty.floorPlan.push(that.floorPlanListOfImagesList);
+            that.newProperty.floorPlan.push(that.floorPlanListOfDVideoURLs);
 
             let newAddress = {
                 "name": that.newAddress.contactName,
@@ -134,7 +156,7 @@ let property_create_app = new Vue({
                 "washroom_details": that.newProperty.washroomDetails,
                 "landmark": that.newProperty.landmark,
                 "overlooking": that.newProperty.overlookingList,
-                "media": that.propertyImages.imageList,
+                "images": that.propertyImages.imageList,
                 "nearest": that.nearest,
                 "pantry": that.newProperty.pantry,
                 "washroom": that.newProperty.washroom,
@@ -162,7 +184,8 @@ let property_create_app = new Vue({
                 "carpet_area": that.newProperty.carpetArea,
                 "buildup_area": that.newProperty.buildupArea,
                 "is_top": that.newProperty.isTop,
-                "video_tour":that.videoTours.list
+                "videos":allVideoUrlList,
+                "floor_plan": that.newProperty.floorPlan
 
             };
             axios.post('/api/property/', property_body)
@@ -383,10 +406,10 @@ let property_create_app = new Vue({
             that.imageSlider.listLength -= 1;
             (that.propertyImages.imageList.length === 0)? that.propertyImages.isPreviewImageActive = false: that.propertyImages.isPreviewImageActive = true;
         },
-        selectVideoTour: function () {
-            $("#select-video-hidden").click();
+        selectFloorPlanImage:function(){
+          $("#select-floor-image-hidden").click();
         },
-        uploadVideoTour: function (input) {
+        uploadFloorPlanImage: function (input) {
             let that = this;
             let unitArray = ['Bytes', 'KB', 'MB', 'GB'];
             if (input.target.files[0]){
@@ -399,7 +422,7 @@ let property_create_app = new Vue({
                         i++;
                     }
                     let actualSize = (Math.round(size * 100) / 100);
-                    if (i>1 && actualSize > 10) {
+                    if (i>0 && actualSize > 100) {
                         alert("File size must be less than 10 mb, this file is too big " + actualSize + " " + unitArray[i]);
                         return
                     }
@@ -409,26 +432,66 @@ let property_create_app = new Vue({
                     // Read image and append into doc
                     let reader = new FileReader();
                     reader.onload = function (e) {
-                        that.videoTours.list.push({"image":e.target.result, "title":"", "description":"", "defaultInGroup":false});
-                        that.videoSlider.listLength += 1;
+                        that.floorPlanEdit.imageList.push({"image":e.target.result,"type":"f", "title":"", "description":"", "defaultInGroup":false});
+                        that.imageSlider.listLength += 1;
                     };
                     reader.readAsDataURL(input.target.files[index]);
                 });
-                that.videoTours.isPreviewImageActive = true;
-                $("#select-image-hidden").val("");
+                that.floorPlanEdit.isPreviewImageActive = true;
+                $("#select-floor-image-hidden").val("");
             } else {
                 alert("No files were selected. Please select at least one file.");
             }
         },
-        removeVideoTour: function (imageIndex) {
+        removeFloorPlanImage: function (imageIndex) {
             let that = this;
-            that.videoTours.list.splice(imageIndex, 1);
-            that.videoSlider.listLength -= 1;
-            (that.videoTours.list.length === 0)? that.videoTours.isPreviewImageActive = false: that.videoTours.isPreviewImageActive = true;
+            that.floorPlanEdit.imageList.splice(imageIndex, 1);
+            that.imageSlider.listLength -= 1;
+            (that.floorPlanEdit.imageList.length === 0)? that.floorPlanEdit.isPreviewImageActive = false: that.floorPlanEdit.isPreviewImageActive = true;
+        },
+        addFloorPlan:function(){
+            let that = this;
+            let currentFloor = parseInt(that.currentEditingFloor);
+            that.floorPlanListOfDescriptions[currentFloor] = that.floorPlanEdit.description;
+            that.floorPlanListOfImagesList[currentFloor] = that.floorPlanEdit.imageList;
+            that.floorPlanListOfDVideoURLs[currentFloor] = that.floorPlanEdit.videos;
+
+            //clear temporary floor plan
+            _.each(_.keys(that.floorPlanEdit), function (item, index) {
+                if(item === 'description'){
+                    that.floorPlanEdit[item] = '';
+                }
+                else{
+                    that.floorPlanEdit[item] = [];
+                }
+
+            });
+
+            $("#floor-plan-modal").modal('hide');
+
+
+        },
+        clearFloorPlanEdit:function(){
+            let that = this;
+            //clear temporary floor plan
+            _.each(_.keys(that.floorPlanEdit), function (item, index) {
+                if(item === 'description'){
+                    that.floorPlanEdit[item] = '';
+                }
+                else{
+                    that.floorPlanEdit[item] = [];
+                }
+
+            })
+
+        },
+        populateFloorPlanEdit : function(floor){
+            let that = this;
+            console.log(floor);
+            that.floorPlanEdit.description = that.floorPlanListOfDescriptions[parseInt(that.currentEditingFloor)];
+            that.floorPlanEdit.imageList = that.floorPlanListOfImagesList[parseInt(that.currentEditingFloor)];
+            that.floorPlanEdit.videos = that.floorPlanListOfDVideoURLs[parseInt(that.currentEditingFloor)];
         }
-
-
-
     },
     watch: {
 
