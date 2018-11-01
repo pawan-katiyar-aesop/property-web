@@ -76,6 +76,7 @@ let property_create_app = new Vue({
         propertyImages:{
             imageList: [],
         },
+        propertyVideos: [],
         videoTours:{
             list: [],
         },
@@ -191,7 +192,16 @@ let property_create_app = new Vue({
 
         },
         addVideoUrlFields:function(){
-
+            let that = this;
+            let urls_dict = {};
+            const index = generate_unique_number();
+            urls_dict["url"+index] = "";
+            urls_dict["index"] = index;
+            that.propertyVideos.push(urls_dict);
+        },
+        removeVideoUrlFields:function(index){
+            let that = this;
+            that.propertyVideos.splice(index, 1)
         },
         populateCharges :function(){
             let that=this;

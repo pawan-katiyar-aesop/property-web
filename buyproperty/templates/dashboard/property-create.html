@@ -107,9 +107,40 @@
                             <div id="banner-vid-parent">
 
                             </div>
-                            <a href="#" class="mt-15 d-block" v-on:click="addVideoUrlFields">Add New Video URL</a>
-
-
+                            <a href="#" class="mt-15 d-block" :disabled="false" v-on:click="addVideoUrlFields()">Add New Video URL</a>
+                            <div class="row mt-20">
+                                <div class="col-md-12">
+                                    <div class="help-box variants-help color-grey" v-if="!propertyVideos.length > 0">
+                                        Add product variants, such as color, size, versions, etc.
+                                    </div>
+                                    <div v-if="propertyVideos.length > 0">
+                                        <table class="table table-responsive variants-table">
+                                            <thead >
+                                                <tr>
+                                                    <th style="">Video url</th>
+                                                    <th style="border: none;"></th>
+                                                    <th style="border: none;"></th>
+                                                </tr>
+                                            </thead>
+                                            <tr v-for="(key, index) in propertyVideos">
+                                                <td>
+                                                    <input maxlength="250" size="80" class="form-control" v-model="key['url'+key.index]" type="text">
+                                                </td>
+                                                <td>
+                                                    <button @click="removeVideoUrlFields(index)" type="button" class="btn btn-danger">
+                                                      Remove
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                        <td>
+                                            <button @click="addVideoUrlFields()" class="btn btn-success" type="button">
+                                             Add more
+                                            </button>
+                                        </td>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -532,5 +563,6 @@
         </div>
     </div>
     <script src="{% static 'theme/js/property-create.js' %}"></script>
+    <script src="{% static 'theme/js/shortcuts.js' %}"></script>
 
 {% endblock %}
