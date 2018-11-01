@@ -19,6 +19,7 @@ let property_create_app = new Vue({
                 urinal: undefined,
                 wC: undefined
             },
+            videoTourURL:'',
             isTop:false,
             landmark: '',
             overlookingList: [],
@@ -164,13 +165,15 @@ let property_create_app = new Vue({
 
             };
             axios.post('/api/property/', property_body)
-            .then(function (response) {
-                // show_notification("success", "Property Successfully Created.");
-                window.location.href =  "/control/dash/properties/";
-            })
-            .catch(function (response) {
-                // show_notification("danger", "A fatal error occurred, and this page might not function correctly.")
-            })
+                .then(function (response) {
+                    // show_notification("success", "Property Successfully Created.");
+                    window.location.href =  "/control/dash/properties/";
+                })
+                .catch(function (response) {
+                    // show_notification("danger", "A fatal error occurred, and this page might not function correctly.")
+                })
+
+
         },
         addOtherCharge: function () {
             let that = this;
@@ -186,7 +189,8 @@ let property_create_app = new Vue({
                 '                                            </div>\n' +
                 '                                        </div>');
 
-
+        },
+        addVideoUrlFields:function(){
 
         },
         populateCharges :function(){
@@ -205,7 +209,8 @@ let property_create_app = new Vue({
             for(let i=0; i<listOfKey.length;i++){
                 that.otherCharges[listOfKey[i]] = listOfVal[i];
             }
-
+            debugger;
+            console.log(that.otherCharges);
         },
         populateNearest :function(){
             let that=this;
@@ -222,7 +227,6 @@ let property_create_app = new Vue({
             for(let i=0; i<listOfKey.length;i++){
                 that.nearest[listOfKey[i]] = listOfVal[i];
             }
-
             console.log(that.nearest);
         },
         addNearest: function () {
@@ -342,7 +346,7 @@ let property_create_app = new Vue({
                         i++;
                     }
                     let actualSize = (Math.round(size * 100) / 100);
-                    if (i>1 && actualSize > 10) {
+                    if (i>0 && actualSize > 100) {
                         alert("File size must be less than 10 mb, this file is too big " + actualSize + " " + unitArray[i]);
                         return
                     }
@@ -352,7 +356,7 @@ let property_create_app = new Vue({
                     // Read image and append into doc
                     let reader = new FileReader();
                     reader.onload = function (e) {
-                        that.propertyImages.imageList.push({"image":e.target.result, "title":"", "description":"", "defaultInGroup":false});
+                        that.propertyImages.imageList.push({"image":e.target.result,"type":"b", "title":"", "description":"", "defaultInGroup":false});
                         that.imageSlider.listLength += 1;
                     };
                     reader.readAsDataURL(input.target.files[index]);
@@ -370,7 +374,6 @@ let property_create_app = new Vue({
             (that.propertyImages.imageList.length === 0)? that.propertyImages.isPreviewImageActive = false: that.propertyImages.isPreviewImageActive = true;
         },
         selectVideoTour: function () {
-            debugger;
             $("#select-video-hidden").click();
         },
         uploadVideoTour: function (input) {
@@ -401,7 +404,6 @@ let property_create_app = new Vue({
                     };
                     reader.readAsDataURL(input.target.files[index]);
                 });
-                debugger;
                 that.videoTours.isPreviewImageActive = true;
                 $("#select-image-hidden").val("");
             } else {

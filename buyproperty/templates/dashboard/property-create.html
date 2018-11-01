@@ -61,13 +61,13 @@
                 <div class="card card-default mt-30">
 
                     <div class="card-header">
-                        <b>Media</b>
+                        <b>Images</b>
                     </div>
 
                     <div class="card-body">
 
                         <div class="float-right">
-                            <a href="javascript:;" v-on:click="selectPropertyImage"><h5>Select Media</h5></a>
+                            <a href="javascript:;" v-on:click="selectPropertyImage"><h5>Select Banner Images</h5></a>
                         </div>
 
 
@@ -76,7 +76,7 @@
                             <span class="help-block"></span>
                         </div>
                         <div v-if="!propertyImages.imageList.length">
-                                <span>No media selected! ☹️ Please upload image/video.</span>
+                                <span>No image selected! ☹️ Please upload images.</span>
                         </div>
                         <div class="row col-md-6 insert-preview-images-here">
                             <div class="preview-image-template" v-if="propertyImages.imageList" v-for="(image, index) in propertyImages.imageList">
@@ -95,7 +95,24 @@
                         </div>
                     </div>
                 </div>
+                <div class="card card-default mt-30">
 
+                    <div class="card-header">
+                        <b>Videos</b>
+                    </div>
+
+                    <div class="card-body">
+
+                        <div class="form-group">
+                            <div id="banner-vid-parent">
+
+                            </div>
+                            <a href="#" class="mt-15 d-block" v-on:click="addVideoUrlFields">Add New Video URL</a>
+
+
+                        </div>
+                    </div>
+                </div>
                 <div class="card card-default mt-30">
 
                     <div class="card-header">
@@ -104,32 +121,9 @@
 
                     <div class="card-body">
 
-                        <div class="float-right">
-                            <a href="javascript:;" v-on:click="selectVideoTour"><h5>Select Video</h5></a>
-                        </div>
-
-
-                        <div class="row">
-                            <input type="file" name="images" multiple style="visibility: hidden" @change="uploadVideoTour" id="select-video-hidden">
-                            <span class="help-block"></span>
-                        </div>
-                        <div v-if="!videoTours.list.length">
-                                <span>No video selected! ☹️ Please upload video.</span>
-                        </div>
-                        <div class="row col-md-6 insert-preview-images-here">
-                            <div class="preview-image-template" v-if="videoTours.list" v-for="(image, index) in videoTours.list">
-                                <div class="col-md-5 pointer">
-                                    <div class="pull-right" id="removed-image">
-                                        <a href="#" class="product-delete_image" v-on:click="removeVideoTour(index)">x</a>
-                                    </div>
-                                    <div class="product-images--preview-image">
-                                        <a href="#" class="open-image-edit-modal">
-                                            <i class="fa fa-pencil fa-lg"></i>
-                                        </a>
-                                    </div>
-                                    <img :src="image['image']" class="preview-image"  data-toggle="modal" :data-target="`#edit-image-info-modal-${index}`" v-on:click="videoSlider.currentIndex=index">
-                                </div>
-                            </div>
+                        <div class="form-group">
+                            <label for="video-tour-url">Video URL</label>
+                            <input class="form-control" id="video-tour-url"  type="text" v-model="newProperty.videoTourURL">
                         </div>
                     </div>
                 </div>

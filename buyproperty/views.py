@@ -1,7 +1,7 @@
 from __future__ import unicode_literals
 from rest_framework import status
 from django.views.generic import TemplateView
-from models import CustomerLead, AgentLead, Property, Address, Nearest, Overlooking
+from models import CustomerLead, AgentLead, Property, Address, Nearest, Overlooking, Video
 from django.views import generic
 from rest_framework.response import Response
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView, ListAPIView
@@ -66,43 +66,31 @@ class ListCreatePropertyAPIView(ListCreateAPIView):
             for id in request.data.get("overlooking"):
                 property.overlooking.add(Overlooking.objects.get(pk=id))
 
-        #create and add media to propety
-        self.add_media_to_property(request.data.get("media"), property)
+        #create and add images to propety
+        self.add_images_to_property(request.data.get("images"), property)
 
-        #create video tour and add to property
-        if request.data.get("video_tour"):
-            image = request.data.get("video_tour")
-            import base64
-            from django.core.files.base import ContentFile
-            from .models import Media
-            image_format, img_str = image['image'].split(';base64,')
-            ext = image_format.split('/')[-1]
-
-            data = ContentFile(base64.b64decode(img_str), name=Media.generate_unique_key(10) + '.' + ext)
-            vid_tour = Media.objects.create(file=data, type='vid', title=image['title'],description=image['description'],
-                                              default_in_group=image['defaultInGroup'])
-            property.video_tour = vid_tour
-
+        #create videos objects and add to property
+        if request.data.get("videos"):
+            for obj in request.data.get("videos"):
+                property.videos.add(Video.create_video(obj))
 
         return Response(PropertySerializer(property).data, status=status.HTTP_201_CREATED)
 
-    def add_media_to_property(self, images, property):
+    def add_images_to_property(self, images, property):
         media = list()
         for image in images:
             import base64
             from django.core.files.base import ContentFile
             from .models import Media
-            mediatype = 'img'
-            if image['image'][5] == 'v':
-                mediatype = 'vid'
+            media_type = image['type']
             image_format, img_str = image['image'].split(';base64,')
             ext = image_format.split('/')[-1]
 
-            data = ContentFile(base64.b64decode(img_str), name=Media.generate_unique_key(10) + '.' +ext)
-            media.append(Media.objects.create(file=data, type=mediatype, title=image['title'],
+            data = ContentFile(base64.b64decode(img_str), name=Media.generate_unique_key(10) + '.' + ext)
+            media.append(Media.objects.create(file=data, type=media_type, title=image['title'],
                                               description=image['description'],
                                               default_in_group=image['defaultInGroup']))
-        [property.media.add(_media) for _media in media]
+        [property.images.add(_media) for _media in media]
 
 
 class ListOverlookingAPIView(ListAPIView):
