@@ -155,7 +155,7 @@
 
                         <div class="form-group">
                             <label for="video-tour-url">Video URL</label>
-                            <input class="form-control" id="video-tour-url"  type="text" v-model="newProperty.videoTourURL">
+                            <input class="form-control" id="video-tour-url"  type="text" v-model="newProperty.videoTourURL.url">
                         </div>
                     </div>
                 </div>
@@ -554,6 +554,37 @@
                                 </div>
                             </div>
                         </div>
+
+                    </div>
+                    <div class="card card-default mt-30">
+                        <div class="card-header">
+                            <b>Floor Plan</b>
+                        </div>
+                        <div class="card-body">
+                            <!--
+                            <a href="#" class="float-left mt-20" data-toggle="modal" data-target="#floor-plan-modal">
+                                0
+                            </a>
+                            <a href="#" class="float-left mt-20" data-toggle="modal" data-target="#floor-plan-modal">
+                                1
+                            </a>
+                            <a href="#" class="float-left mt-20" data-toggle="modal" data-target="#floor-plan-modal">
+                                2
+                            </a>
+                            <a href="#" class="float-left mt-20" data-toggle="modal" data-target="#floor-plan-modal">
+                                3
+                            </a>
+                            -->
+
+                            <select class="form-control"  id="floor" type="text" v-model="currentEditingFloor" onchange="populateFloorPlanEdit(this.value)">
+                                <option value="0">Ground</option>
+                                <option value="1">First</option>
+                                <option value="2">Second</option>
+                                <option value="3">Third</option>
+                            </select>
+
+                        </div>
+
                     </div>
                 </div>
             </div>
@@ -561,9 +592,85 @@
             <button class="btn btn-success mt-20 mb-20" v-on:click="createProperty">Create Property</button>
             <a href="/properties/" class="btn btn-primary ml-20 mt-30 mb-30" data-dismiss="modal">View Property List</a>
 
+
         </div>
+        <!-- modal for floor plan -->
+        <div class="modal mt-100 fade" data-backdrop="false" id="floor-plan-modal" role="dialog" tabindex="-1">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <div class="modal-title">
+                            <h4>Create a new floor plan for floor : {% verbatim %}{{ currentEditingFloor }}{% endverbatim %}</h4>
+                            <div class="float-right"><a href="" data-dismiss="modal"><i class="fa fa-times"></i></a></div>
+                        </div>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="wc">Floor Description</label>
+                                <textarea class="form-control" type="number" v-model="floorPlanEdit.description" ></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group" data-toggle="tooltip" data-title="Add basic fields for your category. " data-placement="bottom">
+
+                                <div class="float-left">
+                                    <b>Images</b>
+                                </div>
+                                <div class="float-right">
+                                    <a href="javascript:;" @click="selectFloorPlanImage">Select Image</a>
+                                </div>
+                                <div class="row">
+                                    <input type="file" name="images" multiple style="visibility: hidden" @change="uploadFloorPlanImage" id="select-floor-image-hidden">
+                                    <span class="help-block"></span>
+                                </div>
+                                <div v-if="!floorPlanEdit.imageList.length">
+                                    <span>No image selected! ☹️ Please upload images.</span>
+                                </div>
+                                <div class="row col-md-12 insert-preview-images-here">
+                                    <div class="preview-image-template" v-if="floorPlanEdit.imageList" v-for="(image, index) in floorPlanEdit.imageList">
+                                        <div class="col-md-5 pointer">
+                                            <div class="pull-right" id="removed-image">
+                                                <a href="#" class="product-delete_image" v-on:click="removeFloorPlanImage">x</a>
+                                            </div>
+                                            <div class="product-images--preview-image">
+                                                <a href="#" class="open-image-edit-modal">
+                                                    <i class="fa fa-pencil fa-lg"></i>
+                                                </a>
+                                            </div>
+                                            <img :src="image['image'] || image.file" class="preview-image"  data-toggle="modal" :data-target="`#edit-image-info-modal-${index}`" v-on:click="imageSlider.currentIndex=index">
+                                        </div>
+                                    </div>
+                                </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="wc">Video URLs</label>
+                                <textarea class="form-control" type="number"></textarea>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+
+                    <div class="modal-footer">
+                        <button class="btn btn-xs btn-primary float-left" type="button"  v-on:click="addFloorPlan">Add Plan</button>
+                        <button class="btn btn-xs btn-warning" type="button" @click="clearFloorPlanEdit">Clear</button>
+                        <button class="btn btn-xs btn-secondary btn-danger" type="button" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+     <!-- end modal-->
     </div>
     <script src="{% static 'theme/js/property-create.js' %}"></script>
     <script src="{% static 'theme/js/shortcuts.js' %}"></script>
-
+<script>
+    $("#floor").on('change', function() {
+        $("#floor-plan-modal").modal('show');
+    });
+</script>
 {% endblock %}
