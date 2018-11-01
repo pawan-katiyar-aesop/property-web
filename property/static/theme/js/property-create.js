@@ -223,7 +223,7 @@ let property_create_app = new Vue({
             const index = generate_unique_number();
             urls_dict["url"+index] = "";
             urls_dict["index"] = index;
-            that.propertyVideos.push({urls_dict});
+            that.propertyVideos.push(urls_dict);
         },
         removeVideoUrlFields:function(index){
             let that = this;

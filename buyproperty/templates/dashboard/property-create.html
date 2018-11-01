@@ -111,7 +111,7 @@
                             <a href="#" class="mt-15 d-block" v-else="propertyVideos.length === 0"></a>
                             <div class="row mt-20">
                                 <div class="col-md-12">
-                                    <div class="help-box variants-help color-grey" v-if="!propertyVideos.length > 0">
+                                    <div class="help-box variants-help color-grey" v-if="propertyVideos.length === 0">
                                         Add video url, youtube url etc.
                                     </div>
                                     <div v-if="propertyVideos.length > 0">
@@ -140,6 +140,7 @@
                                             </button>
                                         </td>
                                     </div>
+
                                 </div>
                             </div>
                         </div>
