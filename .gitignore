@@ -7,3 +7,4 @@ eggs/
 .eggs/
 *.egg-info/
 .DS_Store
+.env

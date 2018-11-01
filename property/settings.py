@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
 import os
+from decouple import config
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -20,7 +21,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'qg)pcug)x-+-98&f$rbcw5u$$bs^13zwfy_v@g*11%=vhly5q&'
+SECRET_KEY = config('DJANGO_SECRET_KEY', 'DJANGO_SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -29,14 +30,21 @@ ALLOWED_HOSTS = [
     "*"
 ]
 
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, "static"),
-)
+# STATICFILES_DIRS = (
+#     os.path.join(BASE_DIR, "static"),
+# )
 
 STATIC_URL = '/static/'
-MEDIA_URL = '/media/'
-
 # STATIC_ROOT = os.path.join(BASE_DIR, "static/")
+
+if DEBUG:
+    STATICFILES_DIRS = (
+        os.path.join("static/"),
+    )
+else:
+    STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+MEDIA_URL = '/media/'
 
 BASE_URL = "http://localhost:8000"
 
@@ -89,11 +97,11 @@ WSGI_APPLICATION = 'property.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'property',
-        'USER': 'admin',
-        'PASSWORD': 'admin@property',
-        'HOST': 'localhost',
-        'PORT': '5432'
+        'NAME': config('DB_NAME', 'DB_NAME'),
+        'USER': config('DB_USER', 'DB_USER'),
+        'PASSWORD': config('DB_PASSWORD', 'DB_PASSWORD'),
+        'HOST': config('DB_HOST', 'DB_HOST'),
+        'PORT': config('DB_PORT', 'DB_PORT'),
     }
 }
 
