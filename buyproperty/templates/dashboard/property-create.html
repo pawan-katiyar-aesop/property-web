@@ -4,6 +4,8 @@
 {% block scoped_css %}
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/css/select2.min.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/js/select2.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.9.1/underscore-min.js"></script>
+
 {% endblock %}
 
 {% block content %}
@@ -41,7 +43,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="country-code">Country Code<sup  style="color: red;">*</sup></label>
-                                        <select name="country-code" id="select-country-code" class="form-control">
+                                        <select name="country-code" id="select-country-code" class="form-control" v-model="newProperty.countryCode">
 
                                         </select>
                                     </div>
@@ -55,6 +57,46 @@
                             </div>
                         </div>
                     </div>
+
+                <div class="card card-default mt-30">
+
+                    <div class="card-header">
+                        <b>Media</b>
+                    </div>
+
+                    <div class="card-body">
+
+                        <div class="float-right">
+                            <a href="javascript:;" v-on:click="selectPropertyImage"><h5>Select Media</h5></a>
+                        </div>
+
+
+                        <div class="row">
+                            <input type="file" name="images" multiple style="visibility: hidden" @change="uploadPropertyImage" id="select-image-hidden">
+                            <span class="help-block"></span>
+                        </div>
+                        <div v-if="!propertyImages.imageList.length">
+                                <span>No media selected! ☹️ Please upload image/video.</span>
+                        </div>
+                        <div class="row col-md-6 insert-preview-images-here">
+                            <div class="preview-image-template" v-if="propertyImages.imageList" v-for="(image, index) in propertyImages.imageList">
+                                <div class="col-md-5 pointer">
+                                    <div class="pull-right" id="removed-image">
+                                        <a href="#" class="product-delete_image" v-on:click="removeImage(index)">x</a>
+                                    </div>
+                                    <div class="product-images--preview-image">
+                                        <a href="#" class="open-image-edit-modal">
+                                            <i class="fa fa-pencil fa-lg"></i>
+                                        </a>
+                                    </div>
+                                    <img :src="image['image']" class="preview-image"  data-toggle="modal" :data-target="`#edit-image-info-modal-${index}`" v-on:click="imageSlider.currentIndex=index">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+
+
                     <div class="card card-default mt-30">
                         <div class="card-header">
                             <b>Address Details</b>
@@ -138,8 +180,8 @@
                                     </div>
                                 </div>
                                 <div class="col-md-12">
-                                    <p class="mt-15"><b>Other Charges</b></p>
-                                    <div class="row" id="other-charge-heading">
+                                    <p class="mt-15" v-if="otherId!==-1"><b>Other Charges</b></p>
+                                    <div class="row" id="other-charge-heading" v-if="otherId!==-1">
                                         <div class="col-md-8">
                                             <div class="form-group">
                                                 <label for="charge-description">Charges Description</label>
@@ -213,43 +255,14 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <select name="overlooking" id="select-overlooking" class="form-control"  multiple="multiple">
+                                                <option v-for="over in overlookingOptions" :value="over.id" >{% verbatim %}{{ over.name }}{% endverbatim %}</option>
+
                                             </select>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="row mt-15">
-                                <div class="col-md-12">
-                                    <label for="media">Media</label>
-    {#                                <div class="row">#}
-    {#                                    <div class="col-md-6">#}
-    {#                                        <div class="row">#}
-    {#                                            <input type="file" name="images" multiple style="visibility: hidden" @change="uploadProductImage" id="select-image-hidden">#}
-    {#                                            <span class="help-block"></span>#}
-    {#                                        </div>#}
-    {#                                        <div v-if="!product.productImages.imageList.length">#}
-    {#                                                <span>No image selected! ☹️ Please upload images.</span>#}
-    {#                                        </div>#}
-    {#                                        <div class="row col-md-6 insert-preview-images-here">#}
-    {#                                            <div class="preview-image-template" v-if="product.productImages.imageList" v-for="(image, index) in product.productImages.imageList">#}
-    {#                                                <div class="col-md-5 pointer">#}
-    {#                                                    <div class="pull-right" id="removed-image">#}
-    {#                                                        <a href="#" class="product-delete_image" v-on:click="removeImage(index)">x</a>#}
-    {#                                                    </div>#}
-    {#                                                    <div class="product-images--preview-image">#}
-    {#                                                        <a href="#" class="open-image-edit-modal">#}
-    {#                                                            <i class="fa fa-pencil fa-lg"></i>#}
-    {#                                                        </a>#}
-    {#                                                    </div>#}
-    {#                                                    <img :src="image['image']" class="preview-image"  data-toggle="modal" :data-target="`#edit-image-info-modal-${index}`" v-on:click="imageSlider.currentIndex=index">#}
-    {#                                                </div>#}
-    {#                                            </div>#}
-    {#                                        </div>#}
-    {#                                    </div>#}
-    {#                                </div>#}
-    {#                                <a href="javascript:;" v-on:click="selectProductImage" class="mt-15 mb-20 d-block">Select Image</a>#}
-                                </div>
-                            </div>
+
                             <div class="row">
                                 <div class="col-md-12">
                                     <label for="nearest-building"><b>Nearest Buildings</b></label>
@@ -480,6 +493,7 @@
                     </div>
                 </div>
             </div>
+
             <button class="btn btn-success mt-20 mb-20" v-on:click="createProperty">Create Property</button>
             <a href="/properties/" class="btn btn-primary ml-20 mt-30 mb-30" data-dismiss="modal">View Property List</a>
 

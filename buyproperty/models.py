@@ -21,6 +21,19 @@ class Address(models.Model):
         else:
             return None
 
+    @classmethod
+    def create_address(cls, data):
+        address = Address.objects.create(
+            name=data.get("name"),
+            line_1=data.get("street_line1"),
+            line_2=data.get("street_line2"),
+            city=data.get("city"),
+            state=data.get("state"),
+            country=data.get("country"),
+            zip=data.get("zip")
+        )
+        return address
+
 
 class Nearest(models.Model):
     LOCALITY_CHOICES = [
@@ -59,9 +72,20 @@ class Media(models.Model):
     type = models.CharField(choices=TYPE_CHOICE, null=True, blank=True, max_length=3)
     description = models.TextField(null=True, blank=True)
     file = models.FileField(null=True)
+    default_in_group = models.BooleanField(default=False)
 
     def __str__(self):
         return "Media " + str(self.id) + " : " + str(self.title) if self.id and self.title else None
+
+    @classmethod
+    def generate_unique_key(cls, length):
+        '''
+        Generates a random string of a specified length.
+        :param length:
+        :return:
+        '''
+        import random, string
+        return ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(length))
 
 
 class Overlooking(models.Model):
@@ -69,6 +93,13 @@ class Overlooking(models.Model):
 
     def __str__(self):
         return self.name if self.name else None
+
+    @classmethod
+    def create_overlooking(cls, name):
+        overl = Nearest.objects.create(
+            name=name
+        )
+        return overl
 
 
 class OtherCharges(models.Model):
@@ -160,29 +191,16 @@ class Property(models.Model):
             return self.property_name
 
     @classmethod
-    def create_property(cls, data):
-        nearest = data.get("nearest")
-        property_nearest = []
-        for key, value in nearest.items():
-            property_nearest.append(Nearest.create_nearest(key, value))
+    def create_property(cls, data, address):
 
-        address = Address.objects.create(
-            name=data.get("name"),
-            line_1=data.get("street_line1"),
-            line_2=data.get("street_line2"),
-            city=data.get("city"),
-            state=data.get("state"),
-            country=data.get("country"),
-            zip=data.get("zip")
-        )
         property = cls.objects.create(
             property_name=data.get("property_name"),
             furnishing_status=data.get("furnishing_status"),
             unit_of_area=data.get("unit_of_area"),
             property_id=data.get("property_id"),
             carpet_area=data.get("carpet_area"),
-            rental_value=data.get("rental_value"),
             address=address,
+            rental_value=data.get("rental_value"),
             monthly_maintenance=data.get("monthly_maintenance"),
             security_deposit=data.get("security_deposit"),
             pantry=data.get("pantry"),
@@ -197,7 +215,6 @@ class Property(models.Model):
             lift_availability=data.get("lift_availability"),
             landmark=data.get("landmark"),
             parking_area=data.get("parking_area"),
-            overlooking=data.get("overlooking"),
             age=data.get("age"),
             facing=data.get("facing"),
             flooring=data.get("flooring"),
@@ -212,12 +229,10 @@ class Property(models.Model):
             electrical_con=data.get("electrical_con"),
             flooring_details=data.get("flooring_details"),
             ceiling_details=data.get("ceiling_details"),
-            # media=data.get("media"),
             country_code=data.get("country_code"),
             contact=data.get("contact"),
             other_charges=data.get("other_charges"),
             lease_term=data.get("lease_term"),
-            nearest=property_nearest,
             buildup_area=data.get("buildup_area"),
             is_top=data.get("is_top")
         )
@@ -226,6 +241,7 @@ class Property(models.Model):
     @classmethod
     def count_top(cls):
         return cls.objects.filter(is_top=True).count()
+
 
 class FloorPlan(models.Model):
     FLOOR_CHOICES = [(x, x) for x in range(0, 4)]

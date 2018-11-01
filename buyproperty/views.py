@@ -1,7 +1,7 @@
 from __future__ import unicode_literals
 from rest_framework import status
 from django.views.generic import TemplateView
-from models import CustomerLead, AgentLead, Property, Address
+from models import CustomerLead, AgentLead, Property, Address, Nearest, Overlooking
 from django.views import generic
 from rest_framework.response import Response
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView, ListAPIView
@@ -47,9 +47,47 @@ class ListCreatePropertyAPIView(ListCreateAPIView):
     def create(self, request, *args, **kwargs):
         if (request.data.get("is_top") == 'true' or request.data.get("is_top") is True) and Property.count_top() == 6:
             return Response({"status": False, "message": ""}, status=400)
-        property = Property.create_property(self.request.data)
+
+        import pdb
+        # create address object if requested
+        new_address = Address.create_address(request.data.get("address"))
+
+        # create property object with request data
+        property = Property.create_property(request.data, new_address)
+
+        pdb.set_trace()
+        #create nearest list if requested
+        if request.data.get("nearest"):
+            for key, value in request.data.get("nearest").items():
+                property.nearest.add(Nearest.create_nearest(key, value))
+
+        #create overlooking if requested
+        if request.data.get("overlooking"):
+            for id in request.data.get("overlooking"):
+                property.overlooking.add(Overlooking.objects.get(pk=id))
+
+        #create and add media to propety
+        self.add_media_to_property(request.data.get("media"), property)
 
         return Response(PropertySerializer(property).data, status=status.HTTP_201_CREATED)
+
+    def add_media_to_property(self, images, property):
+        media = list()
+        for image in images:
+            import base64
+            from django.core.files.base import ContentFile
+            from .models import Media
+            mediatype = 'img'
+            if image['image'][5] == 'v':
+                mediatype = 'vid'
+            image_format, img_str = image['image'].split(';base64,')
+            ext = image_format.split('/')[-1]
+
+            data = ContentFile(base64.b64decode(img_str), name=Media.generate_unique_key(10) + ext)
+            media.append(Media.objects.create(file=data, type=mediatype, title=image['title'],
+                                              description=image['description'],
+                                              default_in_group=image['defaultInGroup']))
+        [property.media.add(_media) for _media in media]
 
 
 class ListOverlookingAPIView(ListAPIView):
@@ -170,3 +208,9 @@ class PropertyCreateView(TemplateView):
 
     def active_tab(self):
         return "property-create"
+
+
+class UploadMediaView(ListCreateAPIView):
+    serializer_class = PropertySerializer
+    property = Property.objects.all()
+

@@ -48,7 +48,9 @@ let property_create_app = new Vue({
             beamHeight: 0,
             leaseTerm: 0,
             carpetArea: 0,
-            buildupArea: 0
+            buildupArea: 0,
+            isTop:false
+
         },
         newAddress:{
             contactName: '',
@@ -59,31 +61,57 @@ let property_create_app = new Vue({
             country: '',
             zip: ''
         },
-        otherId: 0,
-        nearestId: 0
+        overlookingOptions :[],
+        otherId: -1,
+        nearestId: 0,
+        imageSlider: {
+            currentIndex: 0,
+            listLength: 0,
+        },
+        videoSlider: {
+            currentIndex: 0,
+            listLength: 0,
+        },
+        propertyImages:{
+            imageList: [],
+        },
+        otherCharges:[],
+        nearest:[]
     },
     methods: {
         validateMandatoryFields:function(){
           let that = this;
-          if(!that.newProperty.propertyName || !that.newProperty.contactNumber || !that.newAddress.contactName || !that.newAddress.streetLine1 || !that.newProperty.propertyID || !that.newProperty.countryCode){
+          if(!that.newProperty.propertyName.length || !that.newProperty.contactNumber.length || !that.newAddress.contactName.length || !that.newAddress.streetLine1.length || !that.newProperty.propertyID.length || !that.newProperty.countryCode.length){
               return false;
           }
           return true;
         },
         createProperty: function(){
             let that = this;
-            if (!that.validateMandatoryFields()){
-                alert("Please fill fields marked mandatory with a red asterisk");
-                return
-            }
-            that.newProperty.nearestList = {};
-            that.newProperty.otherCharges = {};
-            for (let i = 0; i<that.nearestId; i++){
-                that.newProperty.nearestList[$("#nearestList-title-"+i).val()] = $("#nearestList-distance-"+i).val();
-            }
-            for (let i = 0; i<that.otherId; i++){
-                that.newProperty.otherCharges[$("#otherCharges-charge-"+i).val()] = $("#otherCharges-value-"+i).val();
-            }
+            // if (!that.validateMandatoryFields()){
+            //     alert("Please fill fields marked mandatory with a red asterisk");
+            //     return
+            // }
+            //that.newProperty.nearestList = {};
+            //that.newProperty.otherCharges = {};
+            // for (let i = 0; i<that.nearestId; i++){
+            //     that.newProperty.nearestList[$("#nearestList-title-"+i).val()] = $("#nearestList-distance-"+i).val();
+            // }
+            // for (let i = 0; i<that.otherId; i++){
+            //     that.newProperty.otherCharges[$("#otherCharges-charge-"+i).val()] = $("#otherCharges-value-"+i).val();
+            // }
+            that.populateCharges();
+            that.populateNearest();
+
+            let newAddress = {
+                "name": that.newAddress.contactName,
+                "line_1": that.newAddress.streetLine1,
+                "line_2": that.newAddress.streetLine2,
+                "city": that.newAddress.city,
+                "state": that.newAddress.state,
+                "country": that.newAddress.country,
+                "zip": that.newAddress.zip
+            };
             let property_body = {
                 "property_name": that.newProperty.propertyName,
                 "description": that.newProperty.propertyDesc,
@@ -91,24 +119,18 @@ let property_create_app = new Vue({
                 "age": that.newProperty.propertyAge,
                 "country_code": that.newProperty.countryCode,
                 "contact": that.newProperty.contactNumber,
-                "name": that.newAddress.contactName,
-                "line_1": that.newAddress.streetLine1,
-                "line_2": that.newAddress.streetLine2,
-                "city": that.newAddress.city,
-                "state": that.newAddress.state,
-                "country": that.newAddress.country,
-                "zip": that.newAddress.zip,
+                "address": newAddress,
                 "rental_value": that.newProperty.rentCharge,
                 "monthly_maintenance": that.newProperty.monthlyMaintenance,
                 "security_deposit": that.newProperty.securityDeposits,
-                "other_charges": that.newProperty.otherCharges,
+                "other_charges": that.otherCharges,
                 "flooring_details": that.newProperty.floorDetails,
                 "ceiling_details": that.newProperty.ceilingDetails,
                 "washroom_details": that.newProperty.washroomDetails,
                 "landmark": that.newProperty.landmark,
                 "overlooking": that.newProperty.overlookingList,
-                "media": that.newProperty.mediaList,
-                "nearest": that.newProperty.nearestList,
+                "media": that.propertyImages.imageList,
+                "nearest": that.nearest,
                 "pantry": that.newProperty.pantry,
                 "washroom": that.newProperty.washroom,
                 "power_backup": that.newProperty.powerBackup,
@@ -134,12 +156,13 @@ let property_create_app = new Vue({
                 "lease_term": that.newProperty.leaseTerm,
                 "carpet_area": that.newProperty.carpetArea,
                 "buildup_area": that.newProperty.buildupArea,
-                "is_top": that.newProperty.isTop
+                "is_top": that.newProperty.isTop,
+
             };
             axios.post('/api/property/', property_body)
             .then(function (response) {
                 // show_notification("success", "Property Successfully Created.");
-                window.location.href =  "/dash/properties/";
+                window.location.href =  "/control/dash/properties/";
             })
             .catch(function (response) {
                 // show_notification("danger", "A fatal error occurred, and this page might not function correctly.")
@@ -147,19 +170,56 @@ let property_create_app = new Vue({
         },
         addOtherCharge: function () {
             let that = this;
+            that.otherId += 1;
             $("#other-charge-parent").append('<div class="col-md-8">\n' +
                 '                                            <div class="form-group">\n' +
-                '                                                <input class="form-control" id="otherCharges-charge-'+that.otherId+'" type="text" required>\n' +
+                '                                                <input class="form-control" id="charge-'+that.otherId+'" type="text" required>\n' +
                 '                                            </div>\n' +
                 '                                        </div>\n' +
                 '                                        <div class="col-md-4">\n' +
                 '                                            <div class="form-group">\n' +
-                '                                                <input class="form-control" onKeyPress="if(this.value.length===7) return false;" id="otherCharges-value-'+that.otherId+'" type="number" required>\n' +
+                '                                                <input class="form-control" onKeyPress="if(this.value.length===7) return false;" id="value-'+that.otherId+'" type="number" required>\n' +
                 '                                            </div>\n' +
                 '                                        </div>');
 
-            that.otherId += 1;
 
+
+        },
+        populateCharges :function(){
+            let that=this;
+            let listOfKey = [];
+            let listOfVal = [];
+            $('#other-charge-parent > div > div').children('input').each(function () {
+                if(this.id.toString()[0]==='c')
+                {
+                    listOfKey.push(this.value);
+                }
+                else {
+                    listOfVal.push(parseInt(this.value));
+                }
+                });
+            for(let i=0; i<listOfKey.length;i++){
+                that.otherCharges[listOfKey[i]] = listOfVal[i];
+            }
+
+        },
+        populateNearest :function(){
+            let that=this;
+            let listOfKey = [];
+            let listOfVal = [];
+            let element = $('#nearest-building > div');
+            element.children('select').each(function () {
+                listOfKey.push(this.value);
+            });
+            element.children('input').each(function () {
+                listOfVal.push(parseFloat(this.value));
+            });
+
+            for(let i=0; i<listOfKey.length;i++){
+                that.nearest[listOfKey[i]] = listOfVal[i];
+            }
+
+            console.log(that.nearest);
         },
         addNearest: function () {
             let that = this;
@@ -200,6 +260,36 @@ let property_create_app = new Vue({
               })
             });
         },
+
+        // loads categories and tags
+        loadOverlooking: function (urlParam) {
+            let that = this;
+             axios.get("/api/overlooking/", {
+            })
+            .then(function (response) {
+                 that.overlookingOptions = response.data;
+                 that.initSelect2();
+            })
+            .catch(function (response) {
+                alert("A fatal error occurredfetching overlooking options, and this page might not function correctly.")
+            });
+        },
+        initSelect2: function () {
+            let that = this;
+            let overlookingElement = $('#select-overlooking');
+
+            overlookingElement.select2({
+                placeholder: "overlooking",
+                theme: "classic"
+            }).on('select2:selecting select2:unselecting', function (e) {
+                if (e.params.name === 'select') {
+                    that.newProperty.overlookingList.push(e.params.args.data.id);
+                }
+                else if(e.params.name === 'unselect'){
+                    that.newProperty.overlookingList.slice(_.indexOf(that.newProperty.overlookingList, e.params.args.data.id), 1)
+                }
+            });
+        },
         get_overlooking: function(){
             let that = this;
             let overlooking = $('#select-overlooking');
@@ -211,29 +301,79 @@ let property_create_app = new Vue({
 
             $.getJSON(url, function (data) {
               $.each(data, function (key, entry) {
-                overlooking.append($('<option></option>').attr('value', entry.id).text(entry.name)).select2().on('change', function () {
-                    if($(".select2-selection__choice").text() === "×Choose Any Option"){
-                        $(".select2-selection__choice").remove();
+                overlooking.append($('<option></option>').attr('value', entry.id).text(entry.name)).select2()
+
+                //     .on('change', function () {
+                //     if($(".select2-selection__choice").text() === "×Choose Any Option"){
+                //         $(".select2-selection__choice").remove();
+                //     }
+                //     //that.newProperty.overlookingList = [];
+                //     //that.newProperty.overlookingList.push($("#select-overlooking option:selected").text());
+                //
+                // })
+                    .on('select2: selecting select:unselecting',function (e) {
+                    if (e.params.name === 'select') {
+                        that.newProperty.overlookingList.push(e.params.args.data.id);
                     }
-                    that.newProperty.overlookingList = [];
-                    that.newProperty.overlookingList.push($("#select-overlooking option:selected").text());
-                    // if (e.params.name === 'select') {
-                    //     that.newProperty.overlookingList.push(e.params.args.data.id);
-                    // }
-                    // else if(e.params.name === 'unselect'){
-                    //     that.newProperty.overlookingList.slice(_.indexOf(that.newProperty.overlookingList, e.params.args.data.id), 1)
-                    // }
+                    else if(e.params.name === 'unselect'){
+                        that.newProperty.overlookingList.splice(_.indexOf(that.newProperty.overlookingList, e.params.args.data.id), 1)
+                    }
                 });
               })
             });
+        },
+        selectPropertyImage: function () {
+            $("#select-image-hidden").click();
+        },
+        uploadPropertyImage: function (input) {
+            let that = this;
+            let unitArray = ['Bytes', 'KB', 'MB', 'GB'];
+            if (input.target.files[0]){
+                $.each(input.target.files, function (index, item) {
+                    let size = item.size;
+                    let i=0;
+                    while(size>900)
+                    {
+                        size/=1024;
+                        i++;
+                    }
+                    let actualSize = (Math.round(size * 100) / 100);
+                    if (i>1 && actualSize > 10) {
+                        alert("File size must be less than 10 mb, this file is too big " + actualSize + " " + unitArray[i]);
+                        return
+                    }
+                    // Generate unique ID for all images
+                    let image_id = 1212;
+
+                    // Read image and append into doc
+                    let reader = new FileReader();
+                    reader.onload = function (e) {
+                        that.propertyImages.imageList.push({"image":e.target.result, "title":"", "description":"", "defaultInGroup":false});
+                        that.imageSlider.listLength += 1;
+                    };
+                    reader.readAsDataURL(input.target.files[index]);
+                });
+                that.propertyImages.isPreviewImageActive = true;
+                $("#select-image-hidden").val("");
+            } else {
+                show_notification("error", "No files were selected. Please select at least one file.")
+            }
+        },
+        removeImage: function (imageIndex) {
+            let that = this;
+            that.propertyImages.imageList.splice(imageIndex, 1);
+            that.imageSlider.listLength -= 1;
+            (that.propertyImages.imageList.length === 0)? that.propertyImages.isPreviewImageActive = false: that.propertyImages.isPreviewImageActive = true;
         }
+
+
     },
     watch: {
 
     },
     mounted() {
         this.get_country_codes();
-        this.get_overlooking();
+        this.loadOverlooking();
     },
     computed: {
 

@@ -11,7 +11,6 @@ urlpatterns = [
     url(r'^property/(?P<pk>\d+)/$', views.RetrieveUpdateDestroyPropertyAPIView.as_view(), name="retrieve-update-property"),
     url(r'^country_codes/$', views.CountryCodeListView.as_view(), name="retrieve-update-property"),
     url(r'^property/top/$', views.RetrieveTopPropertyView.as_view(), name="retrieve-top-property"),
-    url(r'^property/(?P<key>\w+)/$', views.SearchResultApiView.as_view(), name="retrieve-top-property")
-
-
+    url(r'^property/(?P<key>\w+)/$', views.SearchResultApiView.as_view(), name="retrieve-top-property"),
+    url(r'^property/media/$', views.UploadMediaView.as_view(), name="property-media"),
 ]
