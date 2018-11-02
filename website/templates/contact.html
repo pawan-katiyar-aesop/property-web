@@ -138,17 +138,17 @@
                             <div class="row">
                                 <form>
                                     <div class="col-md-6 col-sm-6 col-xs-12">
-                                        <input type="text" placeholder="Your name*">
+                                        <input type="text" placeholder="Your name*" v-model="contactName">
                                     </div>
 
                                     <div class="col-md-6 col-sm-6 col-xs-12">
-                                        <input type="email" placeholder="Your email*">
+                                        <input type="email" placeholder="Your email*" v-model="contactEmail">
                                     </div>
                                     <div class="col-lg-12">
-                                        <textarea rows="8" placeholder="Message"></textarea>
+                                        <textarea rows="8" placeholder="Message" v-model="contactMessage"></textarea>
                                     </div>
                                     <div class="col-lg-12">
-                                        <a href="#" class="rle_btn">Send message</a>
+                                        <a href="#" class="rle_btn" on:click="sendEmail">Send message</a>
                                     </div>
                                 </form>
                             </div>
@@ -180,5 +180,5 @@
 {% block page_level_scripts %}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.2.0/js.cookie.min.js"></script>
     <script src ="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.9.1/underscore-min.js"></script>
-    <script src="{% static 'website-theme/js/website-js/listing.js' %}"></script>
+    <script src="{% static 'website-theme/js/website-js/contact.js' %}"></script>
 {% endblock page_level_scripts %}

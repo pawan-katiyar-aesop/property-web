@@ -134,7 +134,6 @@ class FloorPlan(models.Model):
         return str(self.floor_number)+" "+self.description if self.floor_number else "No floor plan"
 
 
-
 class Overlooking(models.Model):
     name = models.CharField(max_length=50, blank=True, null=True)
 
