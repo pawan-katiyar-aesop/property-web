@@ -162,7 +162,7 @@ let property_detail_app = new Vue({
         },
         removeVideoUrlFields:function(index){
             let that = this;
-            that.propertyVideos.splice(index, 1)
+            that.property.videos.splice(index, 1)
         },
         updateAddress:function(){
           let that = this;
@@ -359,7 +359,9 @@ let property_detail_app = new Vue({
                     }
                     let actualSize = (Math.round(size * 100) / 100);
                     if (i>0 && actualSize > 100) {
+
                         alert("File size must be less than 100 KB, this file is too big " + actualSize + " " + unitArray[i]);
+
                         return
                     }
                     // Generate unique ID for all images
@@ -368,7 +370,7 @@ let property_detail_app = new Vue({
                     // Read image and append into doc
                     let reader = new FileReader();
                     reader.onload = function (e) {
-                        that.property.images.push({"image":e.target.result,"type":"b", "title":"", "description":"", "defaultInGroup":false});
+                        that.propertyImages.imageList.push({"file":e.target.result,"type":"b", "title":"", "description":"", "defaultInGroup":false});
                         that.imageSlider.listLength += 1;
                     };
                     reader.readAsDataURL(input.target.files[index]);

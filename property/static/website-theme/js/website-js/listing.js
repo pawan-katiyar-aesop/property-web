@@ -87,6 +87,9 @@ let website_listing_app = new Vue({
                     return item.address.locality === that.filterInput;
                 });
             }
+        },
+        productDetails: function () {
+            
         }
     },
     watch: {
