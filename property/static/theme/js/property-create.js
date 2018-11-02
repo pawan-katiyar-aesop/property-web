@@ -259,11 +259,13 @@ let property_create_app = new Vue({
             urls_dict_floor["index"] = index;
             urls_dict_floor["title"] = "";
             urls_dict_floor["type"] = "f";
-            that.floorPlanListOfVideoURLs[parseInt(that.currentEditingFloor)].push(urls_dict_floor);
+            that.floorPlanListOfVideoURLs[parseInt(this.currentEditingFloor)].push(urls_dict_floor);
+            that.floorPlanEdit.videos.push(urls_dict_floor)
         },
         removeVideoUrlFieldsFloor:function(index){
             let that = this;
-            that.floorPlanListOfVideoURLs[parseInt(that.currentEditingFloor)].splice(index, 1)
+            that.floorPlanListOfVideoURLs[parseInt(this.currentEditingFloor)].splice(index, 1);
+            that.floorPlanEdit.videos.splice(index, 1)
         },
 
         populateCharges :function(){
