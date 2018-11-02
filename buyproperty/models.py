@@ -58,11 +58,11 @@ class Nearest(models.Model):
 
     @classmethod
     def create_nearest(cls, key, value):
-        nearest_i = Nearest.objects.create(
+        nearest = Nearest.objects.create(
             title=key,
             distance=value
         )
-        return nearest_i
+        return nearest
 
 
 class Video(models.Model):

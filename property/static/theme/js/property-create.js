@@ -88,7 +88,7 @@ let property_create_app = new Vue({
             list: [],
         },
         otherCharges:{},
-        nearest:[],
+        nearest:{},
         floorPlanEdit:{
             description:'',
             imageList:[],
@@ -207,7 +207,6 @@ let property_create_app = new Vue({
 
             };
 
-            console.log('*****property_body******', property_body);
 
 
             axios.post('/api/property/', property_body)
@@ -296,12 +295,9 @@ let property_create_app = new Vue({
             });
 
             for(let i=0; i<listOfKey.length;i++){
-                obj={};
-                obj[listOfKey[i]+""] = listOfVal[i];
-                that.nearest.push(obj);
+
+                that.nearest[listOfKey[i]+""] = listOfVal[i];
             }
-            debugger;
-            console.log(that.nearest);
         },
         addNearest: function () {
             let that = this;
@@ -531,7 +527,6 @@ let property_create_app = new Vue({
         },
         populateFloorPlanEdit : function(floor){
             let that = this;
-            console.log(floor);
             that.floorPlanEdit.description = that.floorPlanListOfDescriptions[parseInt(that.currentEditingFloor)];
             that.floorPlanEdit.imageList = that.floorPlanListOfImagesList[parseInt(that.currentEditingFloor)];
             that.floorPlanEdit.videos = that.floorPlanListOfVideoURLs[parseInt(that.currentEditingFloor)];
