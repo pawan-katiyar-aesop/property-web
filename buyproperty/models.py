@@ -92,7 +92,7 @@ class Media(models.Model):
     title = models.CharField(max_length=220, null=True, blank=True)
     type = models.CharField(choices=TYPE_CHOICE, null=True, blank=True, max_length=1)
     description = models.TextField(null=True, blank=True)
-    file = models.FileField(null=True)
+    file = models.FileField(null=True, upload_to="files/")
     default_in_group = models.BooleanField(default=False)
 
     def __str__(self):

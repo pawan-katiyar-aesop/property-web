@@ -2,9 +2,12 @@ let website_home_app = new Vue({
     el: "#website-home-app",
     data: {
         property: undefined,
-        searchInput: undefined,
-        searchResults: undefined,
-        processing: false
+        searchInput: '',
+        processing: false,
+        countryCode:'',
+        clientName: '',
+        clientEmail: '',
+        clientContact: ''
         
     },
     methods: {
@@ -13,28 +16,47 @@ let website_home_app = new Vue({
             axios.get('/api/real_estate/property/top/')
              .then(function (response) {
                  that.property = response.data;
-                 debugger;
              })
              .catch(function (response) {
 
              });
         },
         get_searchResults: function () {
+            Cookies.set("token", this.searchInput);
+            window.location = '/property-listing';
+        },
+        get_country_codes: function(){
             let that = this;
-            that.processing = true;
-            let body = {
-                "key": that.searchInput
-            };
-            axios.post('/api/real_estate/property/', body)
-             .then(function (response) {
-                 that.searchResults = response.data;
-                 that.processing = false;
+            let country_codes = $('#select-country-code');
+            country_codes.empty();
+            country_codes.append('<option selected="true" disabled>Choose Country Code</option>');
+            country_codes.prop('selectedIndex', 0);
 
-             })
-             .catch(function (response) {
-                alert("Failed fetching data for search");
-                that.processing = false;
-             });
+            const url = '/api/country_codes/';
+
+            // Populate dropdown with list of country codes
+            $.getJSON(url, function (data) {
+              $.each(data, function (key, entry) {
+                country_codes.append($('<option></option>').attr('value', entry.id).text(entry.code));
+              })
+            });
+        },
+        clientQuery: function () {
+            let that = this;
+            let body = {
+                "name": that.clientName,
+                "email": that.clientEmail,
+                "contact": that.clientContact,
+                "country_code": that.countryCode
+            };
+            axios.post('/api/customer_leads/', body)
+            .then(function (response) {
+                // show_notification("success", "Property Successfully Created.");
+
+            })
+            .catch(function (response) {
+                // show_notification("danger", "A fatal error occurred, and this page might not function correctly.")
+            })
         }
     },
     watch: {
@@ -42,7 +64,7 @@ let website_home_app = new Vue({
     },
     mounted() {
         this.get_topProperty();
-
+        this.get_country_codes();
     },
     computed: {
 
