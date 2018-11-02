@@ -12,3 +12,11 @@ from rest_framework.views import APIView
 
 class HomePageView(TemplateView):
     template_name = "home.html"
+
+
+class PropertyListView(TemplateView):
+    template_name = "property-listing.html"
+
+
+class PropertyDetailsView(TemplateView):
+    template_name = "property-details.html"

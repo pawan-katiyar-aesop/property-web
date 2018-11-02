@@ -4,30 +4,119 @@
 {% block scoped_css %}
 
 {% endblock scoped_css %}
+
 {% block homeBanner %}
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                <div class="rle_banner_text style_2">
-                    <h1>Trusted Place to Find a Home</h1>
-                    <p>A modern look, new enhanced search features, more buying opportunities!</p>
+    <div id="website-home-app">
+    <div class="rle_banner_wrapper style_2">
+        <div class="rle_header_wrapper style_2">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                        <div class="rle_logo">
+                            <a href="#"><img src="{% static 'website-theme/images/icon/logo.png' %}" alt="Logo" title="Logo"></a>
+                        </div>
+                    </div>
+                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="rle_top_header">
+                                <ul>
+                                    <li><img src="{% static 'website-theme/images/icon/h_icon1.png' %}"> Support now: (095) 3030 601</li>
+                                    <li><img src="{% static 'website-theme/images/icon/h_icon2.png' %}"> <a href="#">Email : hello@realestate.com</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <button class="rle_menu_btn"><i class="fa fa-bars" aria-hidden="true"></i></button>
+                        <div class="rle_main_menu_wrapper">
+                            <div class="rle_main_menu">
+                                <ul>
+                                    <li><a href="/">home</a>
+{#                                        <ul class="sub-menu">#}
+{#                                            <li><a href="{% static '/index.html' %}">home 1</a></li>#}
+{#                                            <li><a href="{% static '/index2.html' %}">home 2</a></li>#}
+{#                                            <li><a href="{% static '/index3.html' %}">home 3</a></li>#}
+{#                                            <li><a href="{% static '/index4.html' %}">home 4</a></li>#}
+{#                                        </ul>#}
+                                    </li>
+                                    <li><a href="{% static '/about.html' %}">about us</a></li>
+                                    <li><a href="/property-listing/">properties</a>
+{#                                        <ul class="sub-menu">#}
+{#                                            <li><a href="{% static '/property_gird_fullwidth.html' %}">gird fullwidth</a></li>#}
+{#                                            <li><a href="{% static '/property_gird_sidebar.html' %}">gird sidebar</a></li>#}
+{#                                            <li><a href="{% static '/property_list_fullwidth.html' %}">list fullwidth</a></li>#}
+{#                                            <li><a href="{% static '/property_list_sidebar.html' %}">list sidebar</a></li>#}
+{#                                            <li><a href="{% static '/property_map.html' %}">property map</a></li>#}
+{#                                            <li><a href="{% static '/property_single_v1.html' %}">single v1</a></li>#}
+{#                                            <li><a href="{% static '/property_single_v2.html' %}">single v2</a></li>#}
+{#                                        </ul>#}
+                                    </li>
+{#                                    <li><a href="#">agents</a>#}
+{#                                        <ul class="sub-menu">#}
+{#                                            <li><a href="{% static '/agent.html' %}">agent</a></li>#}
+{#                                            <li><a href="{% static '/agent_single.html' %}">agent single</a></li>#}
+{#                                        </ul>#}
+{#                                    </li>#}
+{#                                    <li><a href="#">pages</a>#}
+{#                                        <ul class="sub-menu">#}
+{#                                            <li><a href="{% static '/blog.html' %}">blog</a></li>#}
+{#                                            <li><a href="{% static '/blog_grid_v1.html' %}">grid v1</a></li>#}
+{#                                            <li><a href="{% static '/blog_grid_v2.html' %}">grid v2</a></li>#}
+{#                                            <li><a href="{% static '/blog_single.html' %}">blog single</a></li>#}
+{#                                            <li><a href="{% static '/gallery.html' %}">gallery</a></li>#}
+{#                                            <li><a href="{% static '/404_pages.html' %}">404 error</a></li>#}
+{#                                        </ul>#}
+{#                                    </li>#}
+                                    <li><a href="#" data-toggle="modal" data-target="#client-query-modal">client query</a></li>
+                                    <li><a href="{% static '/contact.html' %}">contact</a></li>
+                                </ul>
+                            </div>
+                        </div>
+{#                        <div class="rle_signin">#}
+{#                            <a href="#" class="rle_btn" id="login_button">sign in</a>#}
+{#                            <div id="login_one" class="rle_login_form">#}
+{#                                <p>Don’t have an account? <a href="#">Sign up</a></p>#}
+{#                                <form class="form">#}
+{#                                    <input type="text" placeholder="Username">#}
+{#                                    <input type="password" placeholder="Password">#}
+{#                                    <div class="rle_checkbox">#}
+{#                                        <input type="checkbox" id="remember_me" checked />#}
+{#                                        <label for="remember_me">Remember me</label>#}
+{#                                    </div>#}
+{#                                    <a href="#" class="forgot_pswd">forgot password?</a>#}
+{#                                    <button type="submit" class="rle_btn">sign in</button>#}
+{#                                    <span>or</span>#}
+{#                                    <a href="#" class="share_btn fcbk_clr_1"><i class="fa fa-facebook" aria-hidden="true"></i>login with facebook</a>#}
+{#                                    <a href="#" class="share_btn ggl_clr_2"><i class="fa fa-google-plus" aria-hidden="true"></i>login with google plus</a>#}
+{#                                </form>#}
+{#                            </div>#}
+{#                        </div>#}
+                    </div>
                 </div>
-                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 col-lg-offset-3 col-md-offset-3">
-                    <div class="row">
-                        <div class="rle_searchform_tabs style_2">
-                            <!-- Tab panes -->
-                            <div class="tab-content">
-                                <div role="tabpanel" class="tab-pane active" id="buy">
-                                    <div class="rle_searchform_box">
-                                        <input type="serch" v-model="searchInput" placeholder="Street, town & landmark">
-                                        <button v-on:click="get_searchResults" class="rle_btn"><i class="fa fa-search" aria-hidden="true"></i> search</button>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="rle_banner_text style_2">
+                        <h1>Trusted Place to Find a Home</h1>
+                        <p>A modern look, new enhanced search features, more buying opportunities!</p>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 col-lg-offset-3 col-md-offset-3">
+                        <div class="row">
+                            <div class="rle_searchform_tabs style_2">
+                                <!-- Tab panes -->
+                                <div class="tab-content">
+                                    <div role="tabpanel" class="tab-pane active" id="buy">
+                                        <div class="rle_searchform_box">
+                                            <input type="search" placeholder="Street, town & landmark" v-model="searchInput">
+                                            <button v-on:click="get_searchResults" class="rle_btn"><i class="fa fa-search" aria-hidden="true"></i> search</button>
+                                        </div>
                                     </div>
-                                </div>
-                                <div role="tabpanel" class="tab-pane " id="rent">
-                                    <div class="rle_searchform_box">
-                                        <input type="serch" v-model="searchInput" placeholder="Street, town & landmark">
-                                        <button v-on:click="get_searchResults" class="rle_btn"><i class="fa fa-search" aria-hidden="true"></i> search</button>
-                                    </div>
+{#                                    <div role="tabpanel" class="tab-pane " id="rent">#}
+{#                                        <div class="rle_searchform_box">#}
+{#                                            <input type="serch" v-model="searchInput" placeholder="Street, town & landmark">#}
+{#                                            <button v-on:click="get_searchResults" class="rle_btn"><i class="fa fa-search" aria-hidden="true"></i> search</button>#}
+{#                                        </div>#}
+{#                                    </div>#}
                                 </div>
                             </div>
                         </div>
@@ -40,7 +129,7 @@
 
 {% block content %}
     <!-- Property Wrapper start -->
-    <div id="website-home-app">
+
         <div class="rle_property_wrapper rle_toppadder100 rle_bottompadder70">
             <div class="container">
                 <div class="row">
@@ -72,134 +161,134 @@
                     </div>
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                         <div class="rle_btn_wrapper rle_toppadder40">
-                            <a href="#" class="rle_btn">View all properties</a>
+                            <a href="/property-listing/" class="rle_btn">View all properties</a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- Why we Wrapper start -->
-        <div class="rle_whywe_wrapper rle_toppadder100 rle_bottompadder70">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                        <div class="rle_whywe_box">
-                            <img src="{% static 'website-theme/images/icon/wyw1.png' %}">
-                            <div class="rle_whywe_box_text">
-                                <h1>3475</h1>
-                                <p>Homes For Sale</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                        <div class="rle_whywe_box">
-                            <img src="{% static 'website-theme/images/icon/wyw2.png' %}">
-                            <div class="rle_whywe_box_text">
-                                <h1>2896</h1>
-                                <p>Homes For Rent</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                        <div class="rle_whywe_box">
-                            <img src="{% static 'website-theme/images/icon/wyw3.png' %}">
-                            <div class="rle_whywe_box_text">
-                                <h1>8540</h1>
-                                <p>Visitor Month</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                        <div class="rle_whywe_box">
-                            <img src="{% static 'website-theme/images/icon/wyw4.png' %}">
-                            <div class="rle_whywe_box_text">
-                                <h1>1247</h1>
-                                <p>Happy Client</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- popular areas Wrapper start -->
-        <div class="rle_awsagent_wrapper rle_toppadder100 rle_bottompadder100">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                        <div class="rle_center_heading rle_bottompadder60">
-                            <h1>Awesome agents</h1>
-                            <p>Lorem ipsum dolor sit amet consectetur adipiscing</p>
-                        </div>
-                    </div>
-                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                        <div class="rle_agent_slider">
-                            <div class="owl-carousel owl-theme">
-                                <div class="item">
-                                    <div class="rle_agent_slider_details">
-                                        <img src="http://placehold.it/370x340" alt="" title="">
-                                        <div class="rle_agent_slider_details_text">
-                                            <h4>Frederick Willis</h4>
-                                            <p><i class="fa fa-phone" aria-hidden="true"></i> 1-855-337-6228</p>
-                                            <a href="#"><i class="fa fa-envelope-o" aria-hidden="true"></i> hello@realestate.com</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="item">
-                                    <div class="rle_agent_slider_details">
-                                        <img src="http://placehold.it/370x340" alt="" title="">
-                                        <div class="rle_agent_slider_details_text">
-                                            <h4>Johnny Watson</h4>
-                                            <p><i class="fa fa-phone" aria-hidden="true"></i> 1-855-337-6228</p>
-                                            <a href="#"><i class="fa fa-envelope-o" aria-hidden="true"></i> hello@realestate.com</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="item">
-                                    <div class="rle_agent_slider_details">
-                                        <img src="http://placehold.it/370x340" alt="" title="">
-                                        <div class="rle_agent_slider_details_text">
-                                            <h4>Caleb Fowler</h4>
-                                            <p><i class="fa fa-phone" aria-hidden="true"></i> 1-855-337-6228</p>
-                                            <a href="#"><i class="fa fa-envelope-o" aria-hidden="true"></i> hello@realestate.com</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="item">
-                                    <div class="rle_agent_slider_details">
-                                        <img src="http://placehold.it/370x340" alt="" title="">
-                                        <div class="rle_agent_slider_details_text">
-                                            <h4>Hunter West</h4>
-                                            <p><i class="fa fa-phone" aria-hidden="true"></i> 1-855-337-6228</p>
-                                            <a href="#"><i class="fa fa-envelope-o" aria-hidden="true"></i> hello@realestate.com</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="item">
-                                    <div class="rle_agent_slider_details">
-                                        <img src="http://placehold.it/370x340" alt="" title="">
-                                        <div class="rle_agent_slider_details_text">
-                                            <h4>Frederick Willis</h4>
-                                            <p><i class="fa fa-phone" aria-hidden="true"></i> 1-855-337-6228</p>
-                                            <a href="#"><i class="fa fa-envelope-o" aria-hidden="true"></i> hello@realestate.com</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="item">
-                                    <div class="rle_agent_slider_details">
-                                        <img src="http://placehold.it/370x340" alt="" title="">
-                                        <div class="rle_agent_slider_details_text">
-                                            <h4>Hunter West</h4>
-                                            <p><i class="fa fa-phone" aria-hidden="true"></i> 1-855-337-6228</p>
-                                            <a href="#"><i class="fa fa-envelope-o" aria-hidden="true"></i> hello@realestate.com</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+{#        <!-- Why we Wrapper start -->#}
+{#        <div class="rle_whywe_wrapper rle_toppadder100 rle_bottompadder70">#}
+{#            <div class="container">#}
+{#                <div class="row">#}
+{#                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">#}
+{#                        <div class="rle_whywe_box">#}
+{#                            <img src="{% static 'website-theme/images/icon/wyw1.png' %}">#}
+{#                            <div class="rle_whywe_box_text">#}
+{#                                <h1>3475</h1>#}
+{#                                <p>Homes For Sale</p>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">#}
+{#                        <div class="rle_whywe_box">#}
+{#                            <img src="{% static 'website-theme/images/icon/wyw2.png' %}">#}
+{#                            <div class="rle_whywe_box_text">#}
+{#                                <h1>2896</h1>#}
+{#                                <p>Homes For Rent</p>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">#}
+{#                        <div class="rle_whywe_box">#}
+{#                            <img src="{% static 'website-theme/images/icon/wyw3.png' %}">#}
+{#                            <div class="rle_whywe_box_text">#}
+{#                                <h1>8540</h1>#}
+{#                                <p>Visitor Month</p>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">#}
+{#                        <div class="rle_whywe_box">#}
+{#                            <img src="{% static 'website-theme/images/icon/wyw4.png' %}">#}
+{#                            <div class="rle_whywe_box_text">#}
+{#                                <h1>1247</h1>#}
+{#                                <p>Happy Client</p>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+{#        <!-- popular areas Wrapper start -->#}
+{#        <div class="rle_awsagent_wrapper rle_toppadder100 rle_bottompadder100">#}
+{#            <div class="container">#}
+{#                <div class="row">#}
+{#                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">#}
+{#                        <div class="rle_center_heading rle_bottompadder60">#}
+{#                            <h1>Awesome agents</h1>#}
+{#                            <p>Lorem ipsum dolor sit amet consectetur adipiscing</p>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">#}
+{#                        <div class="rle_agent_slider">#}
+{#                            <div class="owl-carousel owl-theme">#}
+{#                                <div class="item">#}
+{#                                    <div class="rle_agent_slider_details">#}
+{#                                        <img src="http://placehold.it/370x340" alt="" title="">#}
+{#                                        <div class="rle_agent_slider_details_text">#}
+{#                                            <h4>Frederick Willis</h4>#}
+{#                                            <p><i class="fa fa-phone" aria-hidden="true"></i> 1-855-337-6228</p>#}
+{#                                            <a href="#"><i class="fa fa-envelope-o" aria-hidden="true"></i> hello@realestate.com</a>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                                <div class="item">#}
+{#                                    <div class="rle_agent_slider_details">#}
+{#                                        <img src="http://placehold.it/370x340" alt="" title="">#}
+{#                                        <div class="rle_agent_slider_details_text">#}
+{#                                            <h4>Johnny Watson</h4>#}
+{#                                            <p><i class="fa fa-phone" aria-hidden="true"></i> 1-855-337-6228</p>#}
+{#                                            <a href="#"><i class="fa fa-envelope-o" aria-hidden="true"></i> hello@realestate.com</a>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                                <div class="item">#}
+{#                                    <div class="rle_agent_slider_details">#}
+{#                                        <img src="http://placehold.it/370x340" alt="" title="">#}
+{#                                        <div class="rle_agent_slider_details_text">#}
+{#                                            <h4>Caleb Fowler</h4>#}
+{#                                            <p><i class="fa fa-phone" aria-hidden="true"></i> 1-855-337-6228</p>#}
+{#                                            <a href="#"><i class="fa fa-envelope-o" aria-hidden="true"></i> hello@realestate.com</a>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                                <div class="item">#}
+{#                                    <div class="rle_agent_slider_details">#}
+{#                                        <img src="http://placehold.it/370x340" alt="" title="">#}
+{#                                        <div class="rle_agent_slider_details_text">#}
+{#                                            <h4>Hunter West</h4>#}
+{#                                            <p><i class="fa fa-phone" aria-hidden="true"></i> 1-855-337-6228</p>#}
+{#                                            <a href="#"><i class="fa fa-envelope-o" aria-hidden="true"></i> hello@realestate.com</a>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                                <div class="item">#}
+{#                                    <div class="rle_agent_slider_details">#}
+{#                                        <img src="http://placehold.it/370x340" alt="" title="">#}
+{#                                        <div class="rle_agent_slider_details_text">#}
+{#                                            <h4>Frederick Willis</h4>#}
+{#                                            <p><i class="fa fa-phone" aria-hidden="true"></i> 1-855-337-6228</p>#}
+{#                                            <a href="#"><i class="fa fa-envelope-o" aria-hidden="true"></i> hello@realestate.com</a>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                                <div class="item">#}
+{#                                    <div class="rle_agent_slider_details">#}
+{#                                        <img src="http://placehold.it/370x340" alt="" title="">#}
+{#                                        <div class="rle_agent_slider_details_text">#}
+{#                                            <h4>Hunter West</h4>#}
+{#                                            <p><i class="fa fa-phone" aria-hidden="true"></i> 1-855-337-6228</p>#}
+{#                                            <a href="#"><i class="fa fa-envelope-o" aria-hidden="true"></i> hello@realestate.com</a>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
         <!-- Clients & Partners Wrapper start -->
         <div class="rle_clntsNprtnr_wrapper rle_toppadder100 rle_bottompadder100">
             <div class="container">
@@ -304,9 +393,55 @@
                 </div>
             </div>
         </div>
-    </div>
+        <!-- Client Query modal -->
+        <div class="modal" tabindex="-1" role="dialog" id="client-query-modal">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Change status</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <div class="card-body">
+                    <div class="form-group">
+                        <label for="address-name">Name</label>
+                        <input class="form-control" id="client-name" required type="text" v-model="clientName">
+                    </div>
+                    <div class="form-group">
+                        <label for="address-line1">Email</label>
+                        <input class="form-control" id="client-email" required type="email" v-model="clientEmail">
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="country-code">Country Code<sup style="color: red;">*</sup></label>
+                                <select name="country-code" id="select-country-code" class="form-control" v-model="countryCode">
+
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="address-state">Contact</label>
+                                <input class="form-control" onKeyPress="if(this.value.length===10) return false;" id="client-contact" required type="number" v-model="clientContact">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                      <button type="button" class="btn btn-primary project-status" v-on:click="clientQuery">Submit</button>
+                  </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--end Client Query modal -->
+</div>
 {% endblock %}
 
 {% block page_level_scripts %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.2.0/js.cookie.min.js"></script>
     <script src="{% static 'website-theme/js/website-js/home.js' %}"></script>
 {% endblock page_level_scripts %}

@@ -47,32 +47,31 @@ class ListCreatePropertyAPIView(ListCreateAPIView):
     def create(self, request, *args, **kwargs):
         if (request.data.get("is_top") == 'true' or request.data.get("is_top") is True) and Property.count_top() == 6:
             return Response({"status": False, "message": ""}, status=400)
-        import pdb
-        pdb.set_trace()
         # create address object if requested
         new_address = Address.create_address(request.data.get("address"))
-        pdb.set_trace()
         # create property object with request data
         property = Property.create_property(request.data, new_address)
 
         #create nearest list if requested
         if request.data.get("nearest"):
             for key, value in request.data.get("nearest").items():
+                print(key, value)
                 property.nearest.add(Nearest.create_nearest(key, value))
+        ""
 
         #create overlooking if requested
         if request.data.get("overlooking"):
             for id in request.data.get("overlooking"):
                 property.overlooking.add(Overlooking.objects.get(pk=id))
-        pdb.set_trace()
+        ""
         #create and add images to propety
         self.add_images_to_property(request.data.get("images"), property)
-        pdb.set_trace()
+        ""
         #create videos objects and add to property
         if request.data.get("videos"):
             for obj in request.data.get("videos"):
                 property.videos.add(Video.create_video(obj))
-        pdb.set_trace()
+        ""
         # create floor plan if requested
         if request.data.get("floor_plan"):
             for i in range(0, len(request.data.get("floor_plan")[0])):
@@ -88,7 +87,7 @@ class ListCreatePropertyAPIView(ListCreateAPIView):
 
                 #Finally, add this plan to list of floor plans in property
                 property.floor_plan.add(plan)
-        pdb.set_trace()
+        ""
         return Response(PropertySerializer(property).data, status=status.HTTP_201_CREATED)
 
     def add_images_to_property(self, images, property):
