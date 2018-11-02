@@ -26,8 +26,8 @@ class Address(models.Model):
     def create_address(cls, data):
         address = Address.objects.create(
             name=data.get("name"),
-            line_1=data.get("street_line1"),
-            line_2=data.get("street_line2"),
+            line_1=data.get("line_1"),
+            line_2=data.get("line_2"),
             locality=data.get("locality"),
             city=data.get("city"),
             state=data.get("state"),
@@ -54,7 +54,7 @@ class Nearest(models.Model):
     distance = models.TextField(null=True, blank=True)
 
     def __str__(self):
-        return self.title if self.title else None
+        return self.title if self.title else ""
 
     @classmethod
     def create_nearest(cls, key, value):
@@ -131,7 +131,7 @@ class FloorPlan(models.Model):
         return plan
 
     def __str__(self):
-        return str(self.floor_number)+" "+self.description if self.floor_number else self.description
+        return str(self.floor_number)+" "+self.description if self.floor_number else "No floor plan"
 
 
 
@@ -237,7 +237,7 @@ class Property(models.Model):
         if self.property_id and self.property_name:
             return self.property_id + " " + self.property_name
         elif self.property_name:
-            return self.property_name
+            return self.id
 
     @classmethod
     def create_property(cls, data, address):

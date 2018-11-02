@@ -47,15 +47,14 @@ class ListCreatePropertyAPIView(ListCreateAPIView):
     def create(self, request, *args, **kwargs):
         if (request.data.get("is_top") == 'true' or request.data.get("is_top") is True) and Property.count_top() == 6:
             return Response({"status": False, "message": ""}, status=400)
-
         import pdb
+        pdb.set_trace()
         # create address object if requested
         new_address = Address.create_address(request.data.get("address"))
-
+        pdb.set_trace()
         # create property object with request data
         property = Property.create_property(request.data, new_address)
 
-        pdb.set_trace()
         #create nearest list if requested
         if request.data.get("nearest"):
             for key, value in request.data.get("nearest").items():
@@ -65,33 +64,31 @@ class ListCreatePropertyAPIView(ListCreateAPIView):
         if request.data.get("overlooking"):
             for id in request.data.get("overlooking"):
                 property.overlooking.add(Overlooking.objects.get(pk=id))
-
+        pdb.set_trace()
         #create and add images to propety
         self.add_images_to_property(request.data.get("images"), property)
-
+        pdb.set_trace()
         #create videos objects and add to property
         if request.data.get("videos"):
             for obj in request.data.get("videos"):
                 property.videos.add(Video.create_video(obj))
-
+        pdb.set_trace()
         # create floor plan if requested
         if request.data.get("floor_plan"):
-            floor_plan_list = list()
             for i in range(0, len(request.data.get("floor_plan")[0])):
-                if len(request.data.get("floor_plan")[0])is not 0:
-                    #create a floor plan with description using list of descriptions and floor number
-                    plan = FloorPlan.create_plan(i, request.data.get("floor_plan")[0][i])
+                #create a floor plan with description using list of descriptions and floor number
+                plan = FloorPlan.create_plan(i, request.data.get("floor_plan")[0][i])
 
-                    #create image objects using list of imagelists and add it to plan
-                    self.add_images_to_property(request.data.get("floor_plan")[1][i], plan)
+                #create image objects using list of imagelists and add it to plan
+                self.add_images_to_property(request.data.get("floor_plan")[1][i], plan)
 
-                    #create video objects using list of video Objects and add them to plan
-                    for vidObj in request.data.get("floor_plan")[2][i]:
-                        plan.videos.add(Video.create_video(vidObj))
+                #create video objects using list of video Objects and add them to plan
+                for vidObj in request.data.get("floor_plan")[2][i]:
+                    plan.videos.add(Video.create_video(vidObj))
 
                 #Finally, add this plan to list of floor plans in property
                 property.floor_plan.add(plan)
-
+        pdb.set_trace()
         return Response(PropertySerializer(property).data, status=status.HTTP_201_CREATED)
 
     def add_images_to_property(self, images, property):
@@ -100,12 +97,11 @@ class ListCreatePropertyAPIView(ListCreateAPIView):
             import base64
             from django.core.files.base import ContentFile
             from .models import Media
-            media_type = image['type']
             image_format, img_str = image['image'].split(';base64,')
             ext = image_format.split('/')[-1]
 
             data = ContentFile(base64.b64decode(img_str), name=Media.generate_unique_key(10) + '.' + ext)
-            media.append(Media.objects.create(file=data, type=media_type, title=image['title'],
+            media.append(Media.objects.create(file=data, type=image['type'], title=image['title'],
                                               description=image['description'],
                                               default_in_group=image['defaultInGroup']))
         [property.images.add(_media) for _media in media]

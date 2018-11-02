@@ -3,21 +3,21 @@ let property_detail_app = new Vue({
     data: {
         property: undefined,
         processing:true,
-        newAddress:{
-            name : undefined,
-            line_1 : undefined,
-            line_2 : undefined,
-            city : undefined,
-            state : undefined,
-            country : undefined,
-            zip : undefined
-        },
         otherCharges:{},
         pk:'',
         otherId :-1,
         overlookingOptions:[],
         countryCodes:[],
-        selectedOverlookingIds:[]
+        selectedOverlookingIds:[],
+        videoTour:'',
+        propertyVideos:[],
+        propertyImages:{
+            imageList:[]
+        },
+        imageSlider: {
+            currentIndex: 0,
+            listLength: 0,
+        }
     }
     ,
     methods:{
@@ -42,6 +42,7 @@ let property_detail_app = new Vue({
             axios.get('/api/property/'+that.pk+"/")
          .then(function (response) {
              that.property = response.data;
+             that.propertyImages.imageList = that.property.images;
              console.log(that.property);
              that.loadCountryCodes();
              that.get_overlooking();
@@ -115,9 +116,12 @@ let property_detail_app = new Vue({
                 "buildup_area":that.property.buildup_area,
                 "country_code":that.property.country_code,
                 "other_charges":that.otherCharges,
-                "is_top": that.property.is_top
+                "is_top": that.property.is_top,
+                "images":that.property.images
+
 
             };
+            debugger;
             axios.put("/api/property/"+parseInt(that.pk)+"/" ,data)
             .then(function (response) {
                 alert( "Property has been successfully updated");
@@ -130,6 +134,21 @@ let property_detail_app = new Vue({
                 //window.location.href = "http://localhost:8000/control/dash/properties/";
             });
         },
+        addVideoUrlFields:function(){
+            let that = this;
+            let urls_dict = {};
+            const index = generate_unique_number();
+            urls_dict["url"] = "";
+            urls_dict["index"] = index;
+            urls_dict["title"] = "";
+            urls_dict["type"] = "b";
+            that.property.videos.push(urls_dict);
+            //that.propertyVideos.push({"title":"", "type":"b","url":urls_dict["url"+index]});
+        },
+        removeVideoUrlFields:function(index){
+            let that = this;
+            that.propertyVideos.splice(index, 1)
+        },
         updateAddress:function(){
           let that = this;
 
@@ -140,7 +159,8 @@ let property_detail_app = new Vue({
             axios.put('/api/address/'+that.property.address.id+'/', that.property.address)
               .then(function (response) {
                   alert("Address has been updated for prop : "+that.property.property_id);
-                  window.location.reload(true);
+                  //window.location.reload(true);
+                  return
               })
             .catch(function (response) {
                 alert("A fatal error occurred, and this page might not function correctly.")
@@ -228,7 +248,50 @@ let property_detail_app = new Vue({
                     that.property.overlooking.splice(_.indexOf(that.property.overlooking,e.params.args.data),1);
                 }
             });
-        }
+        },
+        selectPropertyImage: function () {
+            $("#select-image-hidden").click();
+        },
+        uploadPropertyImage: function (input) {
+            let that = this;
+            let unitArray = ['Bytes', 'KB', 'MB', 'GB'];
+            if (input.target.files[0]){
+                $.each(input.target.files, function (index, item) {
+                    let size = item.size;
+                    let i=0;
+                    while(size>900)
+                    {
+                        size/=1024;
+                        i++;
+                    }
+                    let actualSize = (Math.round(size * 100) / 100);
+                    if (i>0 && actualSize > 100) {
+                        alert("File size must be less than 10 mb, this file is too big " + actualSize + " " + unitArray[i]);
+                        return
+                    }
+                    // Generate unique ID for all images
+                    let image_id = 1212;
+
+                    // Read image and append into doc
+                    let reader = new FileReader();
+                    reader.onload = function (e) {
+                        that.property.images.push({"image":e.target.result,"type":"b", "title":"", "description":"", "defaultInGroup":false});
+                        that.imageSlider.listLength += 1;
+                    };
+                    reader.readAsDataURL(input.target.files[index]);
+                });
+                that.property.isPreviewImageActive = true;
+                $("#select-image-hidden").val("");
+            } else {
+                alert("No files were selected. Please select at least one file.");
+            }
+        },
+        removeImage: function (imageIndex) {
+            let that = this;
+            that.property.images.splice(imageIndex, 1);
+            that.imageSlider.listLength -= 1;
+            (that.property.images.length === 0)? that.property.isPreviewImageActive = false: that.property.isPreviewImageActive = true;
+        },
     },
     mounted(){
         this.getPropertyDetails();
