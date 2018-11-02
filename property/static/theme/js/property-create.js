@@ -12,13 +12,10 @@ let property_create_app = new Vue({
             rentCharge: 0,
             monthlyMaintenance: 0,
             securityDeposits: 0,
-            otherCharges: {},
             floorDetails: '',
             ceilingDetails: '',
-            washroomDetails: {
-                urinal: undefined,
-                wC: undefined
-            },
+            urinal: 0,
+            wC: 0,
             videoTourURL:{
                 'title':'',
                 'type':'t',
@@ -61,6 +58,7 @@ let property_create_app = new Vue({
             floorPlan: []
 
         },
+        processing:true,
         newAddress:{
             contactName: '',
             streetLine1: '',
@@ -89,7 +87,7 @@ let property_create_app = new Vue({
         videoTours:{
             list: [],
         },
-        otherCharges:[],
+        otherCharges:{},
         nearest:[],
         floorPlanEdit:{
             description:'',
@@ -99,23 +97,34 @@ let property_create_app = new Vue({
         floorPlanListOfDescriptions:['','','',''],
         floorPlanListOfImagesList:[[],[],[],[]],
         floorPlanListOfVideoURLs:[[],[],[],[]],
-        currentEditingFloor:-1
+        currentEditingFloor:-1,
+        loaded:false
 
     },
     methods: {
         validateMandatoryFields:function(){
           let that = this;
           if(!that.newProperty.propertyName.length || !that.newProperty.contactNumber.length || !that.newAddress.contactName.length || !that.newAddress.streetLine1.length || !that.newProperty.propertyID.length || !that.newProperty.countryCode.length){
-              return false;
+              alert("Please fill up fields marked as mandatory")
+              return
           }
-          return true;
+          else{
+
+            if(!that.floorPlanListOfDescriptions[0].length && !that.floorPlanListOfDescriptions[1].length && !that.floorPlanListOfDescriptions[2].length && !that.floorPlanListOfDescriptions[3].length){
+                alert("Create atleast one floor plan to proceed to save");
+                return
+            }
+            else{
+                alert("Click OK to continue with saving this property");
+                that.createProperty();
+            }
+
+          }
+
         },
         createProperty: function(){
             let that = this;
-            // if (!that.validateMandatoryFields()){
-            //     alert("Please fill fields marked mandatory with a red asterisk");
-            //     return
-            // }
+
             //that.newProperty.nearestList = {};
             //that.newProperty.otherCharges = {};
             // for (let i = 0; i<that.nearestId; i++){
@@ -124,13 +133,19 @@ let property_create_app = new Vue({
             // for (let i = 0; i<that.otherId; i++){
             //     that.newProperty.otherCharges[$("#otherCharges-charge-"+i).val()] = $("#otherCharges-value-"+i).val();
             // }
+            let washroomDetails = {
+                "Urinals":that.newProperty.urinal,
+                "WC":that.newProperty.wC
+            };
+
             that.populateCharges();
             that.populateNearest();
             let allVideoUrlList = [];
-            allVideoUrlList.push(that.newProperty.videoTourURL);
+            that.propertyVideos.push(that.newProperty.videoTourURL);
             that.newProperty.floorPlan.push(that.floorPlanListOfDescriptions);
             that.newProperty.floorPlan.push(that.floorPlanListOfImagesList);
             that.newProperty.floorPlan.push(that.floorPlanListOfVideoURLs);
+
 
             let newAddress = {
                 "name": that.newAddress.contactName,
@@ -156,7 +171,7 @@ let property_create_app = new Vue({
                 "other_charges": that.otherCharges,
                 "flooring_details": that.newProperty.floorDetails,
                 "ceiling_details": that.newProperty.ceilingDetails,
-                "washroom_details": that.newProperty.washroomDetails,
+                "washroom_details": washroomDetails,
                 "landmark": that.newProperty.landmark,
                 "overlooking": that.newProperty.overlookingList,
                 "images": that.propertyImages.imageList,
@@ -187,10 +202,14 @@ let property_create_app = new Vue({
                 "carpet_area": that.newProperty.carpetArea,
                 "buildup_area": that.newProperty.buildupArea,
                 "is_top": that.newProperty.isTop,
-                "videos":allVideoUrlList,
+                "videos":that.propertyVideos,
                 "floor_plan": that.newProperty.floorPlan
 
             };
+
+            console.log('*****property_body******', property_body);
+
+
             axios.post('/api/property/', property_body)
                 .then(function (response) {
                     // show_notification("success", "Property Successfully Created.");
@@ -221,9 +240,12 @@ let property_create_app = new Vue({
             let that = this;
             let urls_dict = {};
             const index = generate_unique_number();
-            urls_dict["url"+index] = "";
+            urls_dict["url"] = "";
             urls_dict["index"] = index;
+            urls_dict["title"] = "";
+            urls_dict["type"] = "b";
             that.propertyVideos.push(urls_dict);
+            //that.propertyVideos.push({"title":"", "type":"b","url":urls_dict["url"+index]});
         },
         removeVideoUrlFields:function(index){
             let that = this;
@@ -235,12 +257,15 @@ let property_create_app = new Vue({
             const index = generate_unique_number();
             urls_dict_floor["url"+index] = "";
             urls_dict_floor["index"] = index;
-            that.floorPlanListOfVideoURLs[parseInt(that.currentEditingFloor)].push({urls_dict_floor});
+            urls_dict_floor["title"] = "";
+            urls_dict_floor["type"] = "f";
+            that.floorPlanListOfVideoURLs[parseInt(that.currentEditingFloor)].push(urls_dict_floor);
         },
         removeVideoUrlFieldsFloor:function(index){
             let that = this;
             that.floorPlanListOfVideoURLs[parseInt(that.currentEditingFloor)].splice(index, 1)
         },
+
         populateCharges :function(){
             let that=this;
             let listOfKey = [];
@@ -255,10 +280,8 @@ let property_create_app = new Vue({
                 }
                 });
             for(let i=0; i<listOfKey.length;i++){
-                that.otherCharges[listOfKey[i]] = listOfVal[i];
+                that.otherCharges[listOfKey[i]+""] = listOfVal[i];
             }
-            debugger;
-            console.log(that.otherCharges);
         },
         populateNearest :function(){
             let that=this;
@@ -273,8 +296,11 @@ let property_create_app = new Vue({
             });
 
             for(let i=0; i<listOfKey.length;i++){
-                that.nearest[listOfKey[i]] = listOfVal[i];
+                obj={};
+                obj[listOfKey[i]+""] = listOfVal[i];
+                that.nearest.push(obj);
             }
+            debugger;
             console.log(that.nearest);
         },
         addNearest: function () {
@@ -320,13 +346,16 @@ let property_create_app = new Vue({
         // loads categories and tags
         loadOverlooking: function (urlParam) {
             let that = this;
+            that.processing = true;
              axios.get("/api/overlooking/", {
             })
             .then(function (response) {
                  that.overlookingOptions = response.data;
                  that.initSelect2();
+                 that.processing = false
             })
             .catch(function (response) {
+                that.processing = false;
                 alert("A fatal error occurredfetching overlooking options, and this page might not function correctly.")
             });
         },
@@ -513,7 +542,7 @@ let property_create_app = new Vue({
     },
     mounted() {
         this.get_country_codes();
-        this.loadOverlooking();
+        //this.loadOverlooking();
     },
     computed: {
 

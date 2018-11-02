@@ -52,7 +52,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'storages',
     'buyproperty',
     'website'
 ]
@@ -150,15 +149,3 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
-AWS_ACCESS_KEY_ID = config('AWS_ACCESS_KEY', 'AWS_ACCESS_KEY')
-AWS_SECRET_ACCESS_KEY = config('AWS_SECRET_KEY', 'AWS_SECRET_KEY')
-AWS_S3_REGION_NAME = config('AWS_REGION', 'AWS_REGION')
-AWS_STORAGE_BUCKET_NAME = config('AWS_BUCKET_NAME', 'AWS_BUCKET_NAME')
-
-AWS_S3_CUSTOM_DOMAIN = 's3.ap-south-1.amazonaws.com/%s' % AWS_STORAGE_BUCKET_NAME
-MEDIA_URL = "https://%s/" % AWS_S3_CUSTOM_DOMAIN
-
-DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-AWS_S3_HOST = 's3.ap-south-1.amazonaws.com'
-S3_USE_SIGV4 = True
