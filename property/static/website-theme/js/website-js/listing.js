@@ -84,7 +84,7 @@ let website_listing_app = new Vue({
             }
             else if (filter === "locality") {
                 that.searchResults = _.filter(that.allProperties, function (item) {
-                    return item.address.line_2 === that.filterInput;
+                    return item.address.locality === that.filterInput;
                 });
             }
         }
