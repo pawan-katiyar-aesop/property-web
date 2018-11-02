@@ -88,8 +88,9 @@ let website_listing_app = new Vue({
                 });
             }
         },
-        productDetails: function () {
-            
+        productDetails: function (property_id) {
+            Cookies.set("property-id-for-details", property_id);
+            window.location = '/property-details/';
         }
     },
     watch: {
