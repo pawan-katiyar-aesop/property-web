@@ -19,7 +19,14 @@ let property_create_app = new Vue({
                 urinal: undefined,
                 wC: undefined
             },
-            videoTourURL:'',
+            videoTourURL:{
+                'title':'',
+                'type':'t',
+                'url':''
+            },
+            bannerVideos:[
+                //objects of format -->{ 'title':'','type':'','url:''}
+            ],
             isTop:false,
             landmark: '',
             overlookingList: [],
@@ -50,13 +57,15 @@ let property_create_app = new Vue({
             leaseTerm: 0,
             carpetArea: 0,
             buildupArea: 0,
-            isTop:false
+            isTop:false,
+            floorPlan: []
 
         },
         newAddress:{
             contactName: '',
             streetLine1: '',
             streetLine2: '',
+            locality: '',
             city: '',
             state: '',
             country: '',
@@ -76,11 +85,22 @@ let property_create_app = new Vue({
         propertyImages:{
             imageList: [],
         },
+        propertyVideos: [],
         videoTours:{
             list: [],
         },
         otherCharges:[],
-        nearest:[]
+        nearest:[],
+        floorPlanEdit:{
+            description:'',
+            imageList:[],
+            videos:[]
+        },
+        floorPlanListOfDescriptions:['','','',''],
+        floorPlanListOfImagesList:[[],[],[],[]],
+        floorPlanListOfVideoURLs:[[],[],[],[]],
+        currentEditingFloor:-1
+
     },
     methods: {
         validateMandatoryFields:function(){
@@ -106,11 +126,17 @@ let property_create_app = new Vue({
             // }
             that.populateCharges();
             that.populateNearest();
+            let allVideoUrlList = [];
+            allVideoUrlList.push(that.newProperty.videoTourURL);
+            that.newProperty.floorPlan.push(that.floorPlanListOfDescriptions);
+            that.newProperty.floorPlan.push(that.floorPlanListOfImagesList);
+            that.newProperty.floorPlan.push(that.floorPlanListOfVideoURLs);
 
             let newAddress = {
                 "name": that.newAddress.contactName,
                 "line_1": that.newAddress.streetLine1,
                 "line_2": that.newAddress.streetLine2,
+                "locality": that.newAddress.locality,
                 "city": that.newAddress.city,
                 "state": that.newAddress.state,
                 "country": that.newAddress.country,
@@ -133,7 +159,7 @@ let property_create_app = new Vue({
                 "washroom_details": that.newProperty.washroomDetails,
                 "landmark": that.newProperty.landmark,
                 "overlooking": that.newProperty.overlookingList,
-                "media": that.propertyImages.imageList,
+                "images": that.propertyImages.imageList,
                 "nearest": that.nearest,
                 "pantry": that.newProperty.pantry,
                 "washroom": that.newProperty.washroom,
@@ -161,7 +187,8 @@ let property_create_app = new Vue({
                 "carpet_area": that.newProperty.carpetArea,
                 "buildup_area": that.newProperty.buildupArea,
                 "is_top": that.newProperty.isTop,
-                "video_tour":that.videoTours.list
+                "videos":allVideoUrlList,
+                "floor_plan": that.newProperty.floorPlan
 
             };
             axios.post('/api/property/', property_body)
@@ -179,19 +206,40 @@ let property_create_app = new Vue({
             let that = this;
             that.otherId += 1;
             $("#other-charge-parent").append('<div class="col-md-8">\n' +
-                '                                            <div class="form-group">\n' +
-                '                                                <input class="form-control" id="charge-'+that.otherId+'" type="text" required>\n' +
-                '                                            </div>\n' +
-                '                                        </div>\n' +
-                '                                        <div class="col-md-4">\n' +
-                '                                            <div class="form-group">\n' +
-                '                                                <input class="form-control" onKeyPress="if(this.value.length===7) return false;" id="value-'+that.otherId+'" type="number" required>\n' +
-                '                                            </div>\n' +
-                '                                        </div>');
+                '<div class="form-group">\n' +
+                '<input class="form-control" id="charge-'+that.otherId+'" type="text" required>\n' +
+                '</div>\n' +
+                '</div>\n' +
+                '<div class="col-md-4">\n' +
+                '<div class="form-group">\n' +
+                '<input class="form-control" onKeyPress="if(this.value.length===7) return false;" id="value-'+that.otherId+'" type="number" required>\n' +
+                '</div>\n' +
+                '</div>');
 
         },
         addVideoUrlFields:function(){
-
+            let that = this;
+            let urls_dict = {};
+            const index = generate_unique_number();
+            urls_dict["url"+index] = "";
+            urls_dict["index"] = index;
+            that.propertyVideos.push(urls_dict);
+        },
+        removeVideoUrlFields:function(index){
+            let that = this;
+            that.propertyVideos.splice(index, 1)
+        },
+        addVideoUrlFieldsFloor:function(){
+            let that = this;
+            let urls_dict_floor = {};
+            const index = generate_unique_number();
+            urls_dict_floor["url"+index] = "";
+            urls_dict_floor["index"] = index;
+            that.floorPlanListOfVideoURLs[parseInt(that.currentEditingFloor)].push({urls_dict_floor});
+        },
+        removeVideoUrlFieldsFloor:function(index){
+            let that = this;
+            that.floorPlanListOfVideoURLs[parseInt(that.currentEditingFloor)].splice(index, 1)
         },
         populateCharges :function(){
             let that=this;
@@ -373,10 +421,10 @@ let property_create_app = new Vue({
             that.imageSlider.listLength -= 1;
             (that.propertyImages.imageList.length === 0)? that.propertyImages.isPreviewImageActive = false: that.propertyImages.isPreviewImageActive = true;
         },
-        selectVideoTour: function () {
-            $("#select-video-hidden").click();
+        selectFloorPlanImage:function(){
+          $("#select-floor-image-hidden").click();
         },
-        uploadVideoTour: function (input) {
+        uploadFloorPlanImage: function (input) {
             let that = this;
             let unitArray = ['Bytes', 'KB', 'MB', 'GB'];
             if (input.target.files[0]){
@@ -389,7 +437,7 @@ let property_create_app = new Vue({
                         i++;
                     }
                     let actualSize = (Math.round(size * 100) / 100);
-                    if (i>1 && actualSize > 10) {
+                    if (i>0 && actualSize > 100) {
                         alert("File size must be less than 10 mb, this file is too big " + actualSize + " " + unitArray[i]);
                         return
                     }
@@ -399,26 +447,66 @@ let property_create_app = new Vue({
                     // Read image and append into doc
                     let reader = new FileReader();
                     reader.onload = function (e) {
-                        that.videoTours.list.push({"image":e.target.result, "title":"", "description":"", "defaultInGroup":false});
-                        that.videoSlider.listLength += 1;
+                        that.floorPlanEdit.imageList.push({"image":e.target.result,"type":"f", "title":"", "description":"", "defaultInGroup":false});
+                        that.imageSlider.listLength += 1;
                     };
                     reader.readAsDataURL(input.target.files[index]);
                 });
-                that.videoTours.isPreviewImageActive = true;
-                $("#select-image-hidden").val("");
+                that.floorPlanEdit.isPreviewImageActive = true;
+                $("#select-floor-image-hidden").val("");
             } else {
                 alert("No files were selected. Please select at least one file.");
             }
         },
-        removeVideoTour: function (imageIndex) {
+        removeFloorPlanImage: function (imageIndex) {
             let that = this;
-            that.videoTours.list.splice(imageIndex, 1);
-            that.videoSlider.listLength -= 1;
-            (that.videoTours.list.length === 0)? that.videoTours.isPreviewImageActive = false: that.videoTours.isPreviewImageActive = true;
+            that.floorPlanEdit.imageList.splice(imageIndex, 1);
+            that.imageSlider.listLength -= 1;
+            (that.floorPlanEdit.imageList.length === 0)? that.floorPlanEdit.isPreviewImageActive = false: that.floorPlanEdit.isPreviewImageActive = true;
+        },
+        addFloorPlan:function(){
+            let that = this;
+            let currentFloor = parseInt(that.currentEditingFloor);
+            that.floorPlanListOfDescriptions[currentFloor] = that.floorPlanEdit.description;
+            that.floorPlanListOfImagesList[currentFloor] = that.floorPlanEdit.imageList;
+            that.floorPlanListOfVideoURLs[currentFloor] = that.floorPlanEdit.videos;
+
+            //clear temporary floor plan
+            _.each(_.keys(that.floorPlanEdit), function (item, index) {
+                if(item === 'description'){
+                    that.floorPlanEdit[item] = '';
+                }
+                else{
+                    that.floorPlanEdit[item] = [];
+                }
+
+            });
+
+            $("#floor-plan-modal").modal('hide');
+
+
+        },
+        clearFloorPlanEdit:function(){
+            let that = this;
+            //clear temporary floor plan
+            _.each(_.keys(that.floorPlanEdit), function (item, index) {
+                if(item === 'description'){
+                    that.floorPlanEdit[item] = '';
+                }
+                else{
+                    that.floorPlanEdit[item] = [];
+                }
+
+            })
+
+        },
+        populateFloorPlanEdit : function(floor){
+            let that = this;
+            console.log(floor);
+            that.floorPlanEdit.description = that.floorPlanListOfDescriptions[parseInt(that.currentEditingFloor)];
+            that.floorPlanEdit.imageList = that.floorPlanListOfImagesList[parseInt(that.currentEditingFloor)];
+            that.floorPlanEdit.videos = that.floorPlanListOfVideoURLs[parseInt(that.currentEditingFloor)];
         }
-
-
-
     },
     watch: {
 
