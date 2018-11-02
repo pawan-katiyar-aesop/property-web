@@ -100,7 +100,7 @@
                         <b>Videos</b>
                     </div>
 
-                    <div class="card-body">
+                    <div class="card-body" v-if="property">
 
                         <div class="form-group">
                             <div id="banner-vid-parent">
@@ -145,6 +145,7 @@
                         </div>
                     </div>
                 </div>
+                    <!--
                     <div class="card card-default mt-30">
 
                     <div class="card-header">
@@ -159,6 +160,7 @@
                         </div>
                     </div>
                 </div>
+                    -->
                     <div class="card card-default mt-30">
                         <div class="card-header">
                             <b>Address Details</b>
@@ -576,13 +578,7 @@
                                 3
                             </a>
                             -->
-
-                            <select class="form-control"  id="floor"  v-model="currentEditingFloor" onchange="loadFLoorPlan()">
-                                <option value="0" >Ground</option>
-                                <option value="1" >First</option>
-                                <option value="2" >Second</option>
-                                <option value="3" >Third</option>
-                            </select>
+                            <div><button class="btn btn-primary" data-toggle="modal" data-target="#floor-plan-modal">Edit Floor Plans</button></div>
 
                         </div>
 
@@ -605,7 +601,13 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <div class="modal-title">
-                            <h4>Change a new floor plan for floor : {% verbatim %}{{ currentEditingFloor }}{% endverbatim %}</h4>
+                            <h4>Choose Floor</h4>
+                            <select class="form-control"  id="floor"  v-model="currentEditingFloor" >
+                                <option value="0" >Ground</option>
+                                <option value="1" >First</option>
+                                <option value="2" >Second</option>
+                                <option value="3" >Third</option>
+                            </select>
                             <div class="float-right"><a href="" data-dismiss="modal"><i class="fa fa-times"></i></a></div>
                         </div>
                     </div>
@@ -663,7 +665,7 @@
                             <b>Videos</b>
                         </div>
 
-                        <div class="card-body">
+                        <div class="card-body" v-if="property">
 
                             <div class="form-group">
                                 <div id="banner-vid-parent">
@@ -728,5 +730,10 @@
 
 
     <script src="{% static 'theme/js/shortcuts.js' %}"></script>
+    <script>
+    $("#floor").on('change', function() {
+        $("#floor-plan-modal").modal('show');
+    });
+</script>
 
 {% endblock %}

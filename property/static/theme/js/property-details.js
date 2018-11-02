@@ -134,7 +134,6 @@ let property_detail_app = new Vue({
 
 
             };
-            debugger;
             axios.put("/api/property/"+parseInt(that.pk)+"/" ,data)
             .then(function (response) {
                 alert( "Property has been successfully updated");
@@ -150,7 +149,6 @@ let property_detail_app = new Vue({
         addVideoUrlFields:function(){
             let that = this;
             let urls_dict = {};
-            debugger;
             const index = generate_unique_number();
             urls_dict["url"] = "";
             urls_dict["index"] = index;
@@ -447,13 +445,11 @@ let property_detail_app = new Vue({
             that.floorPlanEdit.videos.splice(index, 1)
         },
         loadFloorPlan:function () {
-            debugger;
             let that=this;
             let currentFloorPlan = {};
             that.floorPlanEdit['description']=that.property.floor_plan[parseInt(that.currentEditingFloor)]['description'];
             that.floorPlanEdit['images']=that.property.floor_plan[parseInt(that.currentEditingFloor)]['images'];
             that.floorPlanEdit['videos']=that.property.floor_plan[parseInt(that.currentEditingFloor)]['videos'];
-
 
 
         }
@@ -462,5 +458,10 @@ let property_detail_app = new Vue({
         this.getPropertyDetails();
         this.loadOverlooking()
 
+    },
+    watch:{
+        currentEditingFloor:function (newQuery, oldQuery) {
+            this.loadFloorPlan()
+        }
     }
 });
