@@ -17,7 +17,18 @@ let property_detail_app = new Vue({
         imageSlider: {
             currentIndex: 0,
             listLength: 0,
-        }
+        },
+        nearest:{},
+        floorPlanEdit:{
+            description:'',
+            imageList:[],
+            videos:[]
+        },
+        floorPlanListOfDescriptions:['','','',''],
+        floorPlanListOfImagesList:[[],[],[],[]],
+        floorPlanListOfVideoURLs:[[],[],[],[]],
+        currentEditingFloor:-1,
+        nearestId:0
     }
     ,
     methods:{
@@ -43,7 +54,7 @@ let property_detail_app = new Vue({
          .then(function (response) {
              that.property = response.data;
              that.propertyImages.imageList = that.property.images;
-             console.log(that.property);
+             console.log("--------This Page Property-------",that.property);
              that.loadCountryCodes();
              that.get_overlooking();
              that.loadOtherCharges();
@@ -75,6 +86,7 @@ let property_detail_app = new Vue({
                 return
             }
             that.populateCharges();
+            // that.populateNearest()
             const data  = {
                 "property_name": that.property.property_name,
                 "description": that.property.description,
@@ -117,7 +129,8 @@ let property_detail_app = new Vue({
                 "country_code":that.property.country_code,
                 "other_charges":that.otherCharges,
                 "is_top": that.property.is_top,
-                "images":that.property.images
+                "images":that.property.images,
+                "nearest":that.nearest
 
 
             };
@@ -137,12 +150,14 @@ let property_detail_app = new Vue({
         addVideoUrlFields:function(){
             let that = this;
             let urls_dict = {};
+            debugger;
             const index = generate_unique_number();
             urls_dict["url"] = "";
             urls_dict["index"] = index;
             urls_dict["title"] = "";
             urls_dict["type"] = "b";
             that.property.videos.push(urls_dict);
+
             //that.propertyVideos.push({"title":"", "type":"b","url":urls_dict["url"+index]});
         },
         removeVideoUrlFields:function(index){
@@ -182,6 +197,29 @@ let property_detail_app = new Vue({
                 '                                        </div>');
 
         },
+        addNearest: function () {
+            let that = this;
+            $("#nearest-building").append('<div class="col-md-8">\n' +
+                '                                            <select name="parking" class="form-control mb-20" id="nearestList-title-'+that.nearestId+'" required>\n' +
+                '                                                <option disabled selected>Choose Any Option</option>\n' +
+                '                                                <option value="bus">Bus Stop</option>\n' +
+                '                                                <option value="school">School</option>\n' +
+                '                                                <option value="mall">Shopping Mall</option>\n' +
+                '                                                <option value="hospital">Hospital</option>\n' +
+                '                                                <option value="bank">Bank</option>\n' +
+                '                                                <option value="atm">ATM</option>\n' +
+                '                                                <option value="restaurant">Restaurant</option>\n' +
+                '                                                <option value="metro">Metro Station</option>\n' +
+                '                                                <option value="train">Train Station</option>\n' +
+                '                                                <option value="pharmacy">Pharmacy</option>\n' +
+                '                                            </select>\n' +
+                '                                        </div>\n' +
+                '                                        <div class="col-md-4">\n' +
+                '                                            <input type="number" onKeyPress="if(this.value.length===2) return false;" id="nearestList-distance-'+that.nearestId+'" class="form-control mb-20" required/>\n' +
+                '                                        </div>');
+
+            that.nearestId += 1;
+        },
         populateCharges :function(){
             let that=this;
             let listOfKey = [];
@@ -196,9 +234,25 @@ let property_detail_app = new Vue({
                 }
                 });
             for(let i=0; i<listOfKey.length;i++){
-                that.otherCharges[listOfKey[i]] = listOfVal[i];
+                that.otherCharges[listOfKey[i]+""] = listOfVal[i];
             }
-            console.log(that.otherCharges);
+        },
+        populateNearest :function(){
+            let that=this;
+            let listOfKey = [];
+            let listOfVal = [];
+            let element = $('#nearest-building > div');
+            element.children('select').each(function () {
+                listOfKey.push(this.value);
+            });
+            element.children('input').each(function () {
+                listOfVal.push(parseFloat(this.value));
+            });
+
+            for(let i=0; i<listOfKey.length;i++){
+
+                that.nearest[listOfKey[i]+""] = listOfVal[i];
+            }
         },
         loadOtherCharges : function () {
             let that = this;
@@ -224,6 +278,45 @@ let property_detail_app = new Vue({
              });
 
          },
+        loadOverlooking: function () {
+            let that = this;
+            that.processing = true;
+
+             let overlookingElement = $('#select-overlooking');
+
+            overlookingElement.select2({
+                ajax: {
+                url: "/api/overlooking/",
+                headers: {
+                    "Content-Type" : "application/json",
+                },
+                data: function (params) {
+                    // "tax-policy"===urlParam?query={name:params.term}:"category"===urlParam?query={category:params.term}:"group"===urlParam?query={group:params.term}:"category/group"===urlParam?query={group:params.term}:"city"===urlParam?query={city:params.term}:"state"===urlParam?query={state:params.term}:"country"===urlParam?query={country:params.term}:"tag"===urlParam&&(query={country:params.term});
+                    // return query;
+                },
+                processResults: function (data) {
+                    const processed_data = $.map(data.results, function (obj) {
+                        obj.text = obj['name'];
+                        return obj;
+                    });
+                    return {
+                        results: processed_data
+                    };
+                }
+            },
+                placeholder: "overlooking",
+                theme: "classic"
+            }).on('select2:selecting select2:unselecting', function (e) {
+                if (e.params.name === 'select') {
+                    that.property.overlooking.push(e.params.args.data.id);
+                }
+                else if (e.params.name === 'unselect') {
+                    that.property.overlooking.splice(_.indexOf(that.property.overlooking, e.params.args.data.id), 1)
+                }
+            });
+            this.processing=false;
+
+        },
         get_overlooking: function(){
             let that = this;
             let overlooking = $("#select-overlooking");
@@ -266,7 +359,9 @@ let property_detail_app = new Vue({
                     }
                     let actualSize = (Math.round(size * 100) / 100);
                     if (i>0 && actualSize > 100) {
-                        alert("File size must be less than 100 kb, this file is too big " + actualSize + " " + unitArray[i]);
+
+                        alert("File size must be less than 100 KB, this file is too big " + actualSize + " " + unitArray[i]);
+
                         return
                     }
                     // Generate unique ID for all images
@@ -292,9 +387,80 @@ let property_detail_app = new Vue({
             that.imageSlider.listLength -= 1;
             (that.property.images.length === 0)? that.property.isPreviewImageActive = false: that.property.isPreviewImageActive = true;
         },
+        selectFloorPlanImage:function(){
+          $("#select-floor-image-hidden").click();
+        },
+        uploadFloorPlanImage: function (input) {
+            let that = this;
+            let unitArray = ['Bytes', 'KB', 'MB', 'GB'];
+            if (input.target.files[0]){
+                $.each(input.target.files, function (index, item) {
+                    let size = item.size;
+                    let i=0;
+                    while(size>900)
+                    {
+                        size/=1024;
+                        i++;
+                    }
+                    let actualSize = (Math.round(size * 100) / 100);
+                    if (i>0 && actualSize > 100) {
+                        alert("File size must be less than 10 mb, this file is too big " + actualSize + " " + unitArray[i]);
+                        return
+                    }
+                    // Generate unique ID for all images
+                    let image_id = 1212;
+
+                    // Read image and append into doc
+                    let reader = new FileReader();
+                    reader.onload = function (e) {
+                        that.floorPlanEdit.imageList.push({"image":e.target.result,"type":"f", "title":"", "description":"", "defaultInGroup":false});
+                        that.imageSlider.listLength += 1;
+                    };
+                    reader.readAsDataURL(input.target.files[index]);
+                });
+                that.floorPlanEdit.isPreviewImageActive = true;
+                $("#select-floor-image-hidden").val("");
+            } else {
+                alert("No files were selected. Please select at least one file.");
+            }
+        },
+        removeFloorPlanImage: function (imageIndex) {
+            let that = this;
+            that.floorPlanEdit.imageList.splice(imageIndex, 1);
+            that.imageSlider.listLength -= 1;
+            (that.floorPlanEdit.imageList.length === 0)? that.floorPlanEdit.isPreviewImageActive = false: that.floorPlanEdit.isPreviewImageActive = true;
+        },
+        addVideoUrlFieldsFloor:function(){
+            let that = this;
+            let urls_dict_floor = {};
+            const index = generate_unique_number();
+            urls_dict_floor["url"+index] = "";
+            urls_dict_floor["index"] = index;
+            urls_dict_floor["title"] = "";
+            urls_dict_floor["type"] = "f";
+            that.floorPlanListOfVideoURLs[parseInt(this.currentEditingFloor)].push(urls_dict_floor);
+            that.floorPlanEdit.videos.push(urls_dict_floor)
+        },
+        removeVideoUrlFieldsFloor:function(index){
+            let that = this;
+            that.floorPlanListOfVideoURLs[parseInt(this.currentEditingFloor)].splice(index, 1);
+            that.floorPlanEdit.videos.splice(index, 1)
+        },
+        loadFloorPlan:function () {
+            debugger;
+            let that=this;
+            let currentFloorPlan = {};
+            that.floorPlanEdit['description']=that.property.floor_plan[parseInt(that.currentEditingFloor)]['description'];
+            that.floorPlanEdit['images']=that.property.floor_plan[parseInt(that.currentEditingFloor)]['images'];
+            that.floorPlanEdit['videos']=that.property.floor_plan[parseInt(that.currentEditingFloor)]['videos'];
+
+
+
+        }
     },
     mounted(){
         this.getPropertyDetails();
+        this.loadOverlooking()
 
     }
 });

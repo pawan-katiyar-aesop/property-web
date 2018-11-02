@@ -340,7 +340,7 @@ let property_create_app = new Vue({
               })
             });
         },
-        loadOverlooking: function (urlParam) {
+        loadOverlooking: function () {
             let that = this;
             that.processing = true;
 
@@ -369,7 +369,6 @@ let property_create_app = new Vue({
                 placeholder: "overlooking",
                 theme: "classic"
             }).on('select2:selecting select2:unselecting', function (e) {
-                debugger;
                 if (e.params.name === 'select') {
                     that.newProperty.overlookingList.push(e.params.args.data.id);
                 }

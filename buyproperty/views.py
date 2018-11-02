@@ -55,7 +55,6 @@ class ListCreatePropertyAPIView(ListCreateAPIView):
         #create nearest list if requested
         if request.data.get("nearest"):
             for key, value in request.data.get("nearest").items():
-                print(key, value)
                 property.nearest.add(Nearest.create_nearest(key, value))
         ""
         import pdb
@@ -124,7 +123,17 @@ class RetrieveUpdateDestroyPropertyAPIView(RetrieveUpdateDestroyAPIView):
         if (request.data.get("is_top") == 'true' or request.data.get("is_top") is True) and Property.count_top() == 6:
             return Response({"status": False, "message": "Top cannot be more than 6"}, status=400)
 
+        data = request.data
         property = self.get_object()
+        import pdb
+
+        if data.get("nearest"):
+            property.nearest.clear()
+            for key, value in data.get("nearest").items():
+                property.nearest.add(Nearest.create_nearest(key, value))
+        pdb.set_trace()
+
+
         serializer = self.serializer_class(property, data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
