@@ -56,6 +56,109 @@
                         </div>
                     </div>
                     <div class="card card-default mt-30">
+
+                    <div class="card-header">
+                        <b>Images</b>
+                    </div>
+
+                    <div class="card-body">
+
+                        <div class="float-right">
+                            <a href="javascript:;" v-on:click="selectPropertyImage"><h5>Select Banner Images</h5></a>
+                        </div>
+
+
+                        <div class="row">
+                            <input type="file" name="images" multiple style="visibility: hidden" @change="uploadPropertyImage" id="select-image-hidden">
+                            <span class="help-block"></span>
+                        </div>
+                        <div v-if="!property.images.length">
+                                <span>No image selected! ☹️ Please upload images.</span>
+                        </div>
+                        <div class="row col-md-6 insert-preview-images-here">
+                            <div class="preview-image-template" v-if="property.images" v-for="(image, index) in property.images">
+                                <div class="col-md-5 pointer">
+                                    <div class="pull-right" id="removed-image">
+                                        <a href="#" class="product-delete_image" v-on:click="removeImage(index)">x</a>
+                                    </div>
+                                    <div class="product-images--preview-image">
+                                        <a href="#" class="open-image-edit-modal">
+                                            <i class="fa fa-pencil fa-lg"></i>
+                                        </a>
+                                    </div>
+
+                                    <img  :src="image['image']" class="preview-image"  width="125" height="130" v-on:click="imageSlider.currentIndex=index">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card card-default mt-30">
+
+                    <div class="card-header">
+                        <b>Videos</b>
+                    </div>
+
+                    <div class="card-body">
+
+                        <div class="form-group">
+                            <div id="banner-vid-parent">
+
+                            </div>
+                            <a href="#" class="mt-15 d-block" v-if="propertyVideos.length === 0" v-on:click="addVideoUrlFields()">Add New Video URL</a>
+                            <a href="#" class="mt-15 d-block" v-else="propertyVideos.length === 0"></a>
+                            <div class="row mt-20">
+                                <div class="col-md-12">
+                                    <div class="help-box variants-help color-grey" v-if="propertyVideos.length === 0">
+                                        Add video url, youtube url etc.
+                                    </div>
+                                    <div v-if="propertyVideos.length > 0">
+                                        <table class="table table-responsive variants-table">
+                                            <thead >
+                                                <tr>
+                                                    <th style="">Video url</th>
+                                                    <th style="border: none;"></th>
+                                                    <th style="border: none;"></th>
+                                                </tr>
+                                            </thead>
+                                            <tr v-for="(key, index) in propertyVideos">
+                                                <td>
+                                                    <input maxlength="250" size="80" class="form-control" v-model="key['url']" type="text">
+                                                </td>
+                                                <td>
+                                                    <button @click="removeVideoUrlFields(index)" type="button" class="btn btn-danger">
+                                                      Remove
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                        <td>
+                                            <button @click="addVideoUrlFields()" class="btn btn-success" type="button">
+                                             Add more
+                                            </button>
+                                        </td>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                    <div class="card card-default mt-30">
+
+                    <div class="card-header">
+                        <b>Video Tour</b>
+                    </div>
+
+                    <div class="card-body">
+
+                        <div class="form-group">
+                            <label for="video-tour-url">Video URL</label>
+                            <input class="form-control" id="video-tour-url"  type="text" >
+                        </div>
+                    </div>
+                </div>
+                    <div class="card card-default mt-30">
                         <div class="card-header">
                             <b>Address Details</b>
                         </div>
@@ -72,6 +175,10 @@
                         <div class="form-group">
                             <label for="address-line2">Line 2</label>
                             <input class="form-control" id="address-line2" required type="text" v-model="property.address.line_2">
+                        </div>
+                        <div class="form-group">
+                            <label for="address-line2">Locality</label>
+                            <input class="form-control" id="address-line2" required type="text" v-model="property.address.locality">
                         </div>
                         <div class="row">
                             <div class="col-md-4">
@@ -198,7 +305,8 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <select name="overlooking" id="select-overlooking" class="form-control" multiple="multiple">
-                                                <option v-for="option in overlookingOptions" :value="option.id" >{% verbatim %} {{ option.name }}{% endverbatim %}</option>
+                                                <!--<option v-for="option in overlookingOptions" :value="option.id" >{% verbatim %} {{ option.name }}{% endverbatim %}</option>
+                                                -->
                                             </select>
                                         </div>
                                     </div>
@@ -463,66 +571,6 @@
             <div class="row" style="margin-top: 40px"></div>
 
 
-            <!-- address modal -->
-            <div class="modal" tabindex="-1" role="dialog" id="address-modal">
-              <div class="modal-dialog modal-lg" role="document">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h5 class="modal-title">Create New Address</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                      <span aria-hidden="true">&times;</span>
-                    </button>
-                  </div>
-                  <div class="modal-body">
-                    <div class="card-body">
-                        <div class="form-group">
-                            <label for="address-name">Name</label>
-                            <input class="form-control" id="address-name" required type="text" v-model="newAddress.name">
-                        </div>
-                        <div class="form-group">
-                            <label for="address-line1">Line 1</label>
-                            <input class="form-control" id="address-name1" required type="text" v-model="newAddress.line1">
-                        </div>
-                        <div class="form-group">
-                            <label for="address-name2">Line 2</label>
-                            <input class="form-control" id="address-name2" required type="text" v-model="newAddress.line2">
-                        </div>
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="address-city">City</label>
-                                    <input class="form-control" id="address-city" required type="text" v-model="newAddress.city">
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="address-state">State</label>
-                                    <input class="form-control" id="address-state" required type="text" v-model="newAddress.state">
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="address-country">Country</label>
-                                    <input class="form-control" id="address-country" required type="text" v-model="newAddress.country">
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="address-zip">Zip</label>
-                                    <input class="form-control" id="address-zip" required type="number" v-model="newAddress.zip">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- end onboarding modal -->
 
             <!-- onboarding modal -->
             <div class="modal" tabindex="-1" role="dialog" id="automatic-update-logs-modal">
@@ -711,5 +759,6 @@
     <script src="{% static 'theme/js/property-details.js' %}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/js/select2.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/js/select2.full.min.js"></script>
+    <script src="{% static 'theme/js/shortcuts.js' %}"></script>
 
 {% endblock %}

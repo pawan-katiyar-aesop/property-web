@@ -24,7 +24,11 @@
                         {% for property in property_list %}
                             <tr class="table-info">
                                 <td><a href="../property-details/?p={{ property.pk }}">#{{ property.property_id }}</a> </td>
-                                <td>{{ property.property_name }}</td>
+                                {% if property.property_name %}
+                                    <td>{{ property.property_name }}</td>
+                                {% else %}
+                                    <td>---------</td>
+                                {% endif %}
                                 <td>{{ property.address }} </td>
                                 {% if property.landmark %}
                                     <td>{{ property.landmark }}</td>
