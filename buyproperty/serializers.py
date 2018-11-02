@@ -44,3 +44,11 @@ class TopPropertySerializer(serializers.ModelSerializer):
         model = Property
         fields = ('id', 'property_name', 'address', 'images', 'videos')
         depth = 1
+
+
+class RetrievePropertySerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Property
+        fields = "__all__"
+        depth = 2
