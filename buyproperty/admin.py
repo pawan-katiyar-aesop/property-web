@@ -2,7 +2,7 @@ from __future__ import unicode_literals
 
 from django.contrib import admin
 from buyproperty.models import Property, Address, CustomerLead, AgentLead, FloorPlan, Nearest, Media, OtherCharges, \
-    Overlooking
+    Overlooking, Video
 
 
 admin.site.register(Property)
@@ -14,3 +14,4 @@ admin.site.register(Nearest)
 admin.site.register(Media)
 admin.site.register(OtherCharges)
 admin.site.register(Overlooking)
+admin.site.register(Video)
