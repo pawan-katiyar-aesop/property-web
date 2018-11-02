@@ -20,3 +20,11 @@ class PropertyListView(TemplateView):
 
 class PropertyDetailsView(TemplateView):
     template_name = "property-details.html"
+
+
+class AboutView(TemplateView):
+    template_name = "about.html"
+
+
+class ContactView(TemplateView):
+    template_name = "contact.html"

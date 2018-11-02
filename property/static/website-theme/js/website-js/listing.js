@@ -15,7 +15,7 @@ let website_listing_app = new Vue({
             if(that.searchInput){
                 axios.get('/api/real_estate/property/'+that.searchInput)
                  .then(function (response) {
-                     that.searchResults = response.data;
+                     that.searchResults = response.data.results;
                      that.allProperties = that.searchResults;
                      that.processing = false;
                      Cookies.set("token", '');
@@ -28,7 +28,7 @@ let website_listing_app = new Vue({
             } else {
                 axios.get('/api/property/')
                  .then(function (response) {
-                     that.searchResults = response.data;
+                     that.searchResults = response.data.results;
                      that.allProperties = that.searchResults;
                      that.searchResults = _.sortBy(that.searchResults, function (item) {
                          return -item.id;
@@ -84,7 +84,7 @@ let website_listing_app = new Vue({
             }
             else if (filter === "locality") {
                 that.searchResults = _.filter(that.allProperties, function (item) {
-                    return item.address.line_2 === that.filterInput;
+                    return item.address.locality === that.filterInput;
                 });
             }
         }

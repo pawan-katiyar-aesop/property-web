@@ -58,12 +58,14 @@ class ListCreatePropertyAPIView(ListCreateAPIView):
                 print(key, value)
                 property.nearest.add(Nearest.create_nearest(key, value))
         ""
-
+        import pdb
+        pdb.set_trace()
         #create overlooking if requested
         if request.data.get("overlooking"):
             for id in request.data.get("overlooking"):
                 property.overlooking.add(Overlooking.objects.get(pk=id))
         ""
+        pdb.set_trace()
         #create and add images to propety
         self.add_images_to_property(request.data.get("images"), property)
         ""

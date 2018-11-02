@@ -194,7 +194,7 @@ let property_create_app = new Vue({
                 "number_of_floors": that.newProperty.noOfFloors,
                 "total_number_of_floors": that.newProperty.totalNoOfFloors,
                 "number_of_basements": that.newProperty.numberOfBasements,
-                "units_on_floor": that.newProperty.units_on_floor,
+                "units_on_floor": that.newProperty.unitsOnFloors,
                 "parking_area": that.newProperty.parkingArea,
                 "ceiling_height": that.newProperty.ceilingHeight,
                 "beam_height": that.newProperty.beamHeight,
@@ -340,38 +340,44 @@ let property_create_app = new Vue({
               })
             });
         },
-
-        // loads categories and tags
         loadOverlooking: function (urlParam) {
             let that = this;
             that.processing = true;
-             axios.get("/api/overlooking/", {
-            })
-            .then(function (response) {
-                 that.overlookingOptions = response.data;
-                 that.initSelect2();
-                 that.processing = false
-            })
-            .catch(function (response) {
-                that.processing = false;
-                alert("A fatal error occurredfetching overlooking options, and this page might not function correctly.")
-            });
-        },
-        initSelect2: function () {
-            let that = this;
-            let overlookingElement = $('#select-overlooking');
+
+             let overlookingElement = $('#select-overlooking');
 
             overlookingElement.select2({
+                ajax: {
+                url: "/api/overlooking/",
+                headers: {
+                    "Content-Type" : "application/json",
+                },
+                data: function (params) {
+                    // "tax-policy"===urlParam?query={name:params.term}:"category"===urlParam?query={category:params.term}:"group"===urlParam?query={group:params.term}:"category/group"===urlParam?query={group:params.term}:"city"===urlParam?query={city:params.term}:"state"===urlParam?query={state:params.term}:"country"===urlParam?query={country:params.term}:"tag"===urlParam&&(query={country:params.term});
+                    // return query;
+                },
+                processResults: function (data) {
+                    const processed_data = $.map(data.results, function (obj) {
+                        obj.text = obj['name']
+                        return obj;
+                    });
+                    return {
+                        results: processed_data
+                    };
+                }
+            },
                 placeholder: "overlooking",
                 theme: "classic"
             }).on('select2:selecting select2:unselecting', function (e) {
+                debugger;
                 if (e.params.name === 'select') {
                     that.newProperty.overlookingList.push(e.params.args.data.id);
                 }
-                else if(e.params.name === 'unselect'){
-                    that.newProperty.overlookingList.slice(_.indexOf(that.newProperty.overlookingList, e.params.args.data.id), 1)
+                else if (e.params.name === 'unselect') {
+                    that.newProperty.overlookingList.splice(_.indexOf(that.newProperty.overlookingList, e.params.args.data.id), 1)
                 }
             });
+
         },
         get_overlooking: function(){
             let that = this;
@@ -539,7 +545,7 @@ let property_create_app = new Vue({
     },
     mounted() {
         this.get_country_codes();
-        //this.loadOverlooking();
+        this.loadOverlooking();
     },
     computed: {
 
