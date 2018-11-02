@@ -15,7 +15,7 @@ let website_home_app = new Vue({
             let that = this;
             axios.get('/api/real_estate/property/top/')
              .then(function (response) {
-                 that.property = response.data;
+                 that.property = response.data.results;
              })
              .catch(function (response) {
 
@@ -51,10 +51,12 @@ let website_home_app = new Vue({
             };
             axios.post('/api/customer_leads/', body)
             .then(function (response) {
+                $("#client-query-modal").hide();
                 // show_notification("success", "Property Successfully Created.");
 
             })
             .catch(function (response) {
+                alert("error occured.");
                 // show_notification("danger", "A fatal error occurred, and this page might not function correctly.")
             })
         }

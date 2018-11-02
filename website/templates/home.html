@@ -139,7 +139,7 @@
                             <p>Check out some of our listed properties</p>
                         </div>
                     </div>
-                    <div v-for="item in property" class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                    <div v-if="property" v-for="item in property" class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                         <div class="rle_property_infobox">
                             <div class="rle_property_infobox_img">
                                 <img src="http://placehold.it/370x300" alt="" title="">
