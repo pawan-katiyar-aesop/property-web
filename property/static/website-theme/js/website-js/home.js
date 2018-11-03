@@ -89,6 +89,10 @@ let website_home_app = new Vue({
                 alert("error occured.");
                 // show_notification("danger", "A fatal error occurred, and this page might not function correctly.")
             })
+        },
+        productDetails: function (property_id) {
+            Cookies.set("property-id-for-details", property_id);
+            window.location = '/property-details/';
         }
     },
     watch: {

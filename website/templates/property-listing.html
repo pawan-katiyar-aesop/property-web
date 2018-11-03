@@ -101,9 +101,9 @@
                             <h2>Property list Fullwidth</h2>
                         </div>
                         <ul class="breadcrumb">
-                            <li><a href="index.html"><i class="fa fa-home" aria-hidden="true"></i> home</a></li>
+                            <li><a href="/"><i class="fa fa-home" aria-hidden="true"></i> home</a></li>
                             <li><i class="fa fa-angle-right" aria-hidden="true"></i></li>
-                            <li><a href="property_list_fullwidth.html">Property list</a></li>
+                            <li><a href="/property-listing/">Property list</a></li>
                         </ul>
                     </div>
                 </div>
@@ -177,7 +177,9 @@
 {#                                        <div id="slider-area"></div>#}
 {#                                    </div>#}
                                     <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
-                                        <button class="rle_btn" v-on:click="filterPropertyList"><i class="fa fa-search" aria-hidden="true"></i> Filter</button>
+                                        <button class="rle_btn" v-on:click="filterPropertyList">
+{#                                            <i class="fa fa-search" aria-hidden="true"></i>#}
+                                            Filter</button>
                                     </div>
                                 </div>
                             </div>
@@ -219,14 +221,14 @@
 {#                                        </li>#}
                                     </ul>
                                 </div>
-                                <div class="col-lg-6 col-md-6 col-sm-5 col-xs-12">
-                                    <ul class="rle_view_type">
-                                        <span>View</span>
-                                        <li><a href="property_gird_fullwidth.html"><i class="fa fa-th-large" aria-hidden="true"></i></a></li>
-                                        <li><a href="property_list_fullwidth.html"><i class="fa fa-list-ul" aria-hidden="true"></i></a></li>
-                                        <li><a href="property_map.html"><i class="fa fa-map" aria-hidden="true"></i></a></li>
-                                    </ul>
-                                </div>
+{#                                <div class="col-lg-6 col-md-6 col-sm-5 col-xs-12">#}
+{#                                    <ul class="rle_view_type">#}
+{#                                        <span>View</span>#}
+{#                                        <li><a href="property_gird_fullwidth.html"><i class="fa fa-th-large" aria-hidden="true"></i></a></li>#}
+{#                                        <li><a href="property_list_fullwidth.html"><i class="fa fa-list-ul" aria-hidden="true"></i></a></li>#}
+{#                                        <li><a href="property_map.html"><i class="fa fa-map" aria-hidden="true"></i></a></li>#}
+{#                                    </ul>#}
+{#                                </div>#}
                             </div>
                         </div>
                     </div>
@@ -236,7 +238,7 @@
                                 <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                                     <div class="rle_property_infobox_img">
                                         <img src="http://placehold.it/370x300" alt="" title="">
-                                        <span><sup>Rs </sup>{% verbatim %}{{ item.rental_value }}{% endverbatim %}</span>
+                                        <span v-if="item.rental_value"><sup>Rs </sup>{% verbatim %}{{ item.rental_value }}{% endverbatim %}</span>
                                     </div>
                                 </div>
                                 <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
@@ -247,8 +249,8 @@
 {#                                                <li class="rle_black_clr">hot offer</li>#}
 {#                                            </ul>#}
                                             <h3><a href="#">{% verbatim %}{{ item.property_name }}{% endverbatim %}</a></h3>
-                                            <p>{% verbatim %}{{ item.address.name }}, {{ item.address.line_2 }}, {{ item.address.city }}, {{ item.address.state }}, {{ item.address.country }}{% endverbatim %}</p>
-                                            <span>{% verbatim %}{{ item.description }}{% endverbatim %}</span>
+                                            <p v-if="item.address">{% verbatim %}{{ item.address.name }}, {{ item.address.line_2 }}, {{ item.address.city }}, {{ item.address.state }}, {{ item.address.country }}{% endverbatim %}</p>
+                                            <span v-if="item.description" v-html="item.description"></span>
                                         </div>
 {#                                        <div class="rle_property_infobox_details_footer">#}
 {#                                            <p>Area : 3578 sqft </p>#}

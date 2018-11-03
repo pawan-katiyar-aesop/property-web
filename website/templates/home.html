@@ -107,7 +107,7 @@
                                 <div class="tab-content">
                                     <div role="tabpanel" class="tab-pane active" id="buy">
                                         <div class="rle_searchform_box">
-                                            <input type="search" placeholder="Street, town & landmark" v-model="searchInput">
+                                            <input type="search" placeholder="City or landmark" v-model="searchInput">
                                             <button v-on:click="get_searchResults" class="rle_btn"><i class="fa fa-search" aria-hidden="true"></i> search</button>
                                         </div>
                                     </div>
@@ -154,7 +154,7 @@
                                     <p>{% verbatim %}{{ item.address.name }}, {{ item.address.line_2 }}, {{ item.address.city }}, {{ item.address.state }}, {{ item.address.country }}{% endverbatim %}</p>
                                 </div>
                                 <div class="rle_property_infobox_details_pricefooter">
-                                    <a href="#">View detail <i class="fa fa-long-arrow-right" aria-hidden="true"></i></a>
+                                    <a href="#" v-on:click="productDetails(item.id)">View detail <i class="fa fa-long-arrow-right" aria-hidden="true"></i></a>
                                 </div>
                             </div>
                         </div>
@@ -381,13 +381,13 @@
                 <div class="row">
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                         <div class="rle_center_heading rle_bottompadder30">
-                            <h1>Subcribe now for latest update</h1>
+                            <h1>Subscribe now for latest update</h1>
                         </div>
                     </div>
                     <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 col-lg-offset-3 col-md-offset-3">
                         <div class="rle_newletters_box">
                             <input type="serch" placeholder="Enter Your Email">
-                            <button class="rle_btn">Subcribe</button>
+                            <button class="rle_btn">Subscribe</button>
                         </div>
                     </div>
                 </div>
@@ -409,11 +409,11 @@
                 <div class="modal-body">
                 <div class="card-body">
                     <div class="form-group">
-                        <label for="address-name">Name</label>
+                        <label for="address-name">Name<sup style="color: red;">*</sup></label>
                         <input class="form-control" id="client-name" required type="text" v-model="clientName">
                     </div>
                     <div class="form-group">
-                        <label for="address-line1">Email</label>
+                        <label for="address-line1">Email<sup style="color: red;">*</sup></label>
                         <input class="form-control" id="client-email" required type="email" v-model="clientEmail">
                     </div>
                     <div class="row">
@@ -427,7 +427,7 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="address-state">Contact</label>
+                                <label for="address-state">Contact<sup style="color: red;">*</sup></label>
                                 <input class="form-control" onKeyPress="if(this.value.length===10) return false;" id="client-contact" required type="number" v-model="clientContact">
                             </div>
                         </div>
@@ -454,15 +454,15 @@
               <div class="modal-body">
                 <div class="card-body">
                     <div class="form-group">
-                        <label for="address-name">Name</label>
+                        <label for="address-name">Name<sup style="color: red;">*</sup></label>
                         <input class="form-control" id="client-name" required type="text" v-model="agentName">
                     </div>
                     <div class="form-group">
-                        <label for="address-line1">Email</label>
+                        <label for="address-line1">Email<sup style="color: red;">*</sup></label>
                         <input class="form-control" id="client-email" required type="email" v-model="agentEmail">
                     </div>
                     <div class="form-group">
-                        <label for="address-name">Message</label>
+                        <label for="address-name">Message<sup style="color: red;">*</sup></label>
                         <textarea class="form-control" id="client-name" required type="text" v-model="agentMessage"></textarea>
                     </div>
                     <div class="row">
@@ -476,7 +476,7 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="address-state">Contact</label>
+                                <label for="address-state">Contact<sup style="color: red;">*</sup></label>
                                 <input class="form-control" onKeyPress="if(this.value.length===10) return false;" id="client-contact" required type="number" v-model="agentContact">
                             </div>
                         </div>

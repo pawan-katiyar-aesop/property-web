@@ -112,8 +112,8 @@
                 <div class="row">
                     <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
                         <div class="rle_property_single_heading">
-                            <h2>{% verbatim %}{{ propertyDetails.property_name }}{% endverbatim %} <sup>For rent</sup></h2>
-                            <p>{% verbatim %}{{ propertyDetails.address.name }}, {{ propertyDetails.address.locality }}, {{ propertyDetails.address.city }}, {{ propertyDetails.address.state }}{% endverbatim %}</p>
+                            <h2 v-if="propertyDetails.property_name">{% verbatim %}{{ propertyDetails.property_name }}{% endverbatim %} <sup>For rent</sup></h2>
+                            <p v-if="propertyDetails.address">{% verbatim %}{{ propertyDetails.address.name }} {{ propertyDetails.address.locality }} {{ propertyDetails.address.city }} {{ propertyDetails.address.state }}{% endverbatim %}</p>
                         </div>
                         <div class="rle_property_details_box">
                             <h3>Property description</h3>
@@ -122,97 +122,121 @@
                         <div class="rle_property_details_box">
                             <h3>Features property</h3>
                             <ul class="feature_prop">
-                                <li>
+                                <li v-if="propertyDetails.pantry">
                                     <div class="rle_checkbox">
-                                        <input type="checkbox" id="1" checked />
-                                        <label for="1">Swimming Pool</label>
+                                        <input type="checkbox" id="1" checked disabled />
+                                        <label for="1">Pantry</label>
                                     </div>
                                 </li>
-                                <li>
+                                <li v-if="propertyDetails.washroom">
                                     <div class="rle_checkbox">
-                                        <input type="checkbox" id="2" checked />
-                                        <label for="2">Air Conditioning</label>
+                                        <input type="checkbox" id="2" checked disabled />
+                                        <label for="2">Washroom</label>
                                     </div>
                                 </li>
-                                <li>
+                                <li v-if="propertyDetails.power_backup">
                                     <div class="rle_checkbox">
-                                        <input type="checkbox" id="3" checked />
-                                        <label for="3">Fireplace</label>
+                                        <input type="checkbox" id="3" checked disabled />
+                                        <label for="3">Power Backup</label>
                                     </div>
                                 </li>
-                                <li>
+                                <li v-if="propertyDetails.lift_availability">
                                     <div class="rle_checkbox">
-                                        <input type="checkbox" id="4" checked />
-                                        <label for="4">Balcony</label>
+                                        <input type="checkbox" id="4" checked disabled />
+                                        <label for="4">Lift Availability</label>
                                     </div>
                                 </li>
-                                <li>
+                                <li v-if="propertyDetails.a_c">
                                     <div class="rle_checkbox">
-                                        <input type="checkbox" id="5" checked />
-                                        <label for="5">Garage</label>
+                                        <input type="checkbox" id="5" checked disabled />
+                                        <label for="5">AC</label>
                                     </div>
                                 </li>
-                                <li>
+                                <li v-if="propertyDetails.cctv">
                                     <div class="rle_checkbox">
-                                        <input type="checkbox" id="6" checked />
-                                        <label for="6">Electric Range</label>
+                                        <input type="checkbox" id="6" checked disabled />
+                                        <label for="6">CCTV</label>
                                     </div>
                                 </li>
-                                <li>
+                                <li v-if="propertyDetails.cafeteria">
                                     <div class="rle_checkbox">
-                                        <input type="checkbox" id="7" checked />
-                                        <label for="7">Washer</label>
+                                        <input type="checkbox" id="7" checked disabled />
+                                        <label for="7">Cafeteria</label>
                                     </div>
                                 </li>
-                                <li>
+                                <li v-if="propertyDetails.fire_sprinklers">
                                     <div class="rle_checkbox">
-                                        <input type="checkbox" id="8" checked />
-                                        <label for="8">Sauna</label>
+                                        <input type="checkbox" id="8" checked disabled />
+                                        <label for="8">Fire Sprinklers</label>
                                     </div>
                                 </li>
-                                <li>
+                                <li v-if="propertyDetails.earthing">
                                     <div class="rle_checkbox">
-                                        <input type="checkbox" id="9" checked />
-                                        <label for="9">Dual Sinks</label>
+                                        <input type="checkbox" id="9" checked disabled />
+                                        <label for="9">Earthing</label>
                                     </div>
                                 </li>
-                                <li>
+                                <li v-if="propertyDetails.electrical_con">
                                     <div class="rle_checkbox">
                                         <input type="checkbox" id="10" checked />
-                                        <label for="10">Microwave</label>
+                                        <label for="10">Electrical Connection</label>
                                     </div>
                                 </li>
-                                <li>
-                                    <div class="rle_checkbox">
-                                        <input type="checkbox" id="11" checked />
-                                        <label for="11">Bedding</label>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="rle_checkbox">
-                                        <input type="checkbox" id="12" checked />
-                                        <label for="12">Laundry</label>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="rle_checkbox">
-                                        <input type="checkbox" id="13" checked />
-                                        <label for="13">Tv cable</label>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="rle_checkbox">
-                                        <input type="checkbox" id="14" checked />
-                                        <label for="14">Refrigerator</label>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="rle_checkbox">
-                                        <input type="checkbox" id="15" checked />
-                                        <label for="15">Wifi</label>
-                                    </div>
-                                </li>
+{#                                <li>#}
+{#                                    <div class="rle_checkbox">#}
+{#                                        <input type="checkbox" id="11" checked />#}
+{#                                        <label for="11">Bedding</label>#}
+{#                                    </div>#}
+{#                                </li>#}
+{#                                <li>#}
+{#                                    <div class="rle_checkbox">#}
+{#                                        <input type="checkbox" id="12" checked />#}
+{#                                        <label for="12">Laundry</label>#}
+{#                                    </div>#}
+{#                                </li>#}
+{#                                <li>#}
+{#                                    <div class="rle_checkbox">#}
+{#                                        <input type="checkbox" id="13" checked />#}
+{#                                        <label for="13">Tv cable</label>#}
+{#                                    </div>#}
+{#                                </li>#}
+{#                                <li>#}
+{#                                    <div class="rle_checkbox">#}
+{#                                        <input type="checkbox" id="14" checked />#}
+{#                                        <label for="14">Refrigerator</label>#}
+{#                                    </div>#}
+{#                                </li>#}
+{#                                <li>#}
+{#                                    <div class="rle_checkbox">#}
+{#                                        <input type="checkbox" id="15" checked />#}
+{#                                        <label for="15">Wifi</label>#}
+{#                                    </div>#}
+{#                                </li>#}
                             </ul>
+                        </div>
+                        <div class="rle_property_details_box">
+                            <h3>More Features</h3>
+                            <p v-if="propertyDetails.furnishing_status">Furnishing Status: <span v-html="furnishing_status[propertyDetails.furnishing_status]"></span></p>
+                            <p v-if="propertyDetails.age">Property Age: {% verbatim %}{{ propertyDetails.age }}{% endverbatim %}</p>
+                            <p v-if="propertyDetails.rental_value">Property Rent: Rs. {% verbatim %}{{ propertyDetails.rental_value }}{% endverbatim %}</p>
+                            <p v-if="propertyDetails.monthly_maintenance">Monthly Maintenance: Rs. {% verbatim %}{{ propertyDetails.monthly_maintenance }}{% endverbatim %}</p>
+                            <p v-if="propertyDetails.security_deposit">Security Deposit: Rs. {% verbatim %}{{ propertyDetails.security_deposit }}{% endverbatim %}</p>
+                            <p v-if="propertyDetails.other_charges" v-for="item in propertyDetails.other_charges">{% verbatim %}{{ item.charge_desc }}: Rs. {{ item.amount }}{% endverbatim %}</p>
+                            <p v-if="propertyDetails.parking">Parking Type: <span v-html="parking_choice[propertyDetails.parking]"></span></p>
+                            <p v-if="propertyDetails.parking_area">Parking Area: {% verbatim %}{{ propertyDetails.parking_area }}{% endverbatim %}</p>
+                            <p v-if="propertyDetails.facing">Facing Direction: <span v-html="facing_options[propertyDetails.facing]"></span></p>
+                            <p v-if="propertyDetails.flooring">Flooring Type: <span v-html="flooring_type[propertyDetails.flooring]"></span></p>
+                            <p v-if="propertyDetails.buildup_area">Buildup Area: {% verbatim %}{{ propertyDetails.buildup_area }}{% endverbatim %}</p>
+                            <p v-if="propertyDetails.carpet_area">Carpet Area: {% verbatim %}{{ propertyDetails.carpet_area }}{% endverbatim %}</p>
+                            <p v-if="propertyDetails.number_of_basements">Number of Basements: {% verbatim %}{{ propertyDetails.number_of_basements }}{% endverbatim %}</p>
+                            <p v-if="propertyDetails.ceiling_height">Ceiling Height: {% verbatim %}{{ propertyDetails.ceiling_height }}{% endverbatim %}</p>
+                            <p v-if="propertyDetails.beam_height">Beam Height: {% verbatim %}{{ propertyDetails.beam_height }}{% endverbatim %}</p>
+                            <p v-if="propertyDetails.lease_term">Lease Term: {% verbatim %}{{ propertyDetails.lease_term }}{% endverbatim %}</p>
+                            <p v-if="propertyDetails.flooring_details">Flooring Details: <span v-html="propertyDetails.flooring_details"></span></p>
+                            <p v-if="propertyDetails.ceiling_details">Ceiling Details: </p>
+                            <p v-if="propertyDetails.washroom_details">Washroom Details: &nbsp; &nbsp; WC: <span v-html="propertyDetails.washroom_details[WC]"></span> &nbsp; &nbsp; Urinals: <span v-html="propertyDetails.washroom_details[Urinals]"></span></p>
+                            <p v-if="propertyDetails.landmark">Landmark: {% verbatim %}{{ propertyDetails.landmark }}{% endverbatim %}</p>
+                            <p v-if="propertyDetails.overlooking">Overlooking: <span v-for="item in propertyDetails.overlooking">{% verbatim %}{{ item }}{% endverbatim %}, </span></p>
                         </div>
                         <div class="rle_property_details_box">
                             <h3>Floor plan</h3>
@@ -262,59 +286,61 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="rle_property_details_box">
+                        <div v-if="propertyDetails.nearest" class="rle_property_details_box">
                             <h3>Point of interest</h3>
                             <div class="panel-group" id="accordion">
-                                <div class="panel panel-default">
+                                {% verbatim %}
+                                <div v-for="item in propertyDetails.nearest" class="panel panel-default">
                                     <div class="panel-heading">
                                         <h4 class="panel-title">
-                                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse1"><i class="fa fa-building" aria-hidden="true"></i> School</a>
+                                            <a data-toggle="collapse" data-parent="#accordion" :href="'#collapse'+item.id"><i class="fa fa-building" aria-hidden="true"></i> <span v-html="nearest_code[item.title]"></span></a>
                                         </h4>
                                     </div>
-                                    <div id="collapse1" class="panel-collapse collapse in">
-                                        <div class="panel-body">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</div>
+                                    <div :id="'collapse'+item.id" class="panel-collapse collapse">
+                                        <div class="panel-body">Distance: {{ item.distance }}Km</div>
                                     </div>
                                 </div>
-                                <div class="panel panel-default">
-                                    <div class="panel-heading">
-                                        <h4 class="panel-title">
-                                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse2"><i class="fa fa-coffee" aria-hidden="true"></i> Restaurant</a>
-                                        </h4>
-                                    </div>
-                                    <div id="collapse2" class="panel-collapse collapse">
-                                        <div class="panel-body">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</div>
-                                    </div>
-                                </div>
-                                <div class="panel panel-default">
-                                    <div class="panel-heading">
-                                        <h4 class="panel-title">
-                                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse3"><i class="fa fa-university" aria-hidden="true"></i> Bank</a>
-                                        </h4>
-                                    </div>
-                                    <div id="collapse3" class="panel-collapse collapse">
-                                        <div class="panel-body">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</div>
-                                    </div>
-                                </div>
-                                <div class="panel panel-default">
-                                    <div class="panel-heading">
-                                        <h4 class="panel-title">
-                                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse4"><i class="fa fa-train" aria-hidden="true"></i> Public Transportation</a>
-                                        </h4>
-                                    </div>
-                                    <div id="collapse4" class="panel-collapse collapse">
-                                        <div class="panel-body">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</div>
-                                    </div>
-                                </div>
+                                {% endverbatim %}
+{#                                <div class="panel panel-default">#}
+{#                                    <div class="panel-heading">#}
+{#                                        <h4 class="panel-title">#}
+{#                                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse2"><i class="fa fa-coffee" aria-hidden="true"></i> Restaurant</a>#}
+{#                                        </h4>#}
+{#                                    </div>#}
+{#                                    <div id="collapse2" class="panel-collapse collapse">#}
+{#                                        <div class="panel-body">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</div>#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                                <div class="panel panel-default">#}
+{#                                    <div class="panel-heading">#}
+{#                                        <h4 class="panel-title">#}
+{#                                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse3"><i class="fa fa-university" aria-hidden="true"></i> Bank</a>#}
+{#                                        </h4>#}
+{#                                    </div>#}
+{#                                    <div id="collapse3" class="panel-collapse collapse">#}
+{#                                        <div class="panel-body">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</div>#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                                <div class="panel panel-default">#}
+{#                                    <div class="panel-heading">#}
+{#                                        <h4 class="panel-title">#}
+{#                                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse4"><i class="fa fa-train" aria-hidden="true"></i> Public Transportation</a>#}
+{#                                        </h4>#}
+{#                                    </div>#}
+{#                                    <div id="collapse4" class="panel-collapse collapse">#}
+{#                                        <div class="panel-body">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</div>#}
+{#                                    </div>#}
+{#                                </div>#}
                             </div>
                         </div>
                         <div class="rle_property_details_box">
                             <h3>Video tour</h3>
                             <iframe src="https://www.youtube.com/embed/PPdhawk7ZRw" frameborder="0" allowfullscreen></iframe>
                         </div>
-                        <div class="rle_property_details_box">
-                            <h3>Page view</h3>
-                            <canvas id="canvas"></canvas>
-                        </div>
+{#                        <div class="rle_property_details_box">#}
+{#                            <h3>Page view</h3>#}
+{#                            <canvas id="canvas"></canvas>#}
+{#                        </div>#}
                     </div>
                     <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                         <div class="rle_property_details_box_2">
@@ -329,30 +355,29 @@
                             </div>
                         </div>
                         <div class="rle_property_details_box">
-                            <div class="user_info">
-                                <img src="http://placehold.it/100x100">
-                                <h4>Nicholas Jacobs</h4>
-                                <p>Expert agent</p>
-                                <ul>
-                                    <li><a href="#" class="clr_facebook"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
-                                    <li><a href="#" class="clr_twitter"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
-                                    <li><a href="#" class="clr_linkedin"><i class="fa fa-linkedin" aria-hidden="true"></i></a></li>
-                                </ul>
-                            </div>
+{#                            <div class="user_info">#}
+{#                                <img src="http://placehold.it/100x100">#}
+{#                                <h4>Nicholas Jacobs</h4>#}
+{#                                <p>Expert agent</p>#}
+{#                                <ul>#}
+{#                                    <li><a href="#" class="clr_facebook"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>#}
+{#                                    <li><a href="#" class="clr_twitter"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>#}
+{#                                    <li><a href="#" class="clr_linkedin"><i class="fa fa-linkedin" aria-hidden="true"></i></a></li>#}
+{#                                </ul>#}
+{#                            </div>#}
                             <div class="user_info_share style_2">
-                                <ul>
-                                    <li><a href="#"><i class="fa fa-phone" aria-hidden="true"></i> (+012) 568 2367  |  (+011) 245 7863</a></li>
-                                    <li><a href="#"><i class="fa fa-envelope" aria-hidden="true"></i> Jacobs@alphahousing.com</a></li>
-                                    <li><a href="#"><i class="fa fa-skype" aria-hidden="true"></i> NicholasJacobos.Agent</a></li>
+                                <ul v-if="propertyDetails.contact">
+                                    <li><a href="#"><i class="fa fa-phone" aria-hidden="true"></i> {% verbatim %}{{ propertyDetails.country_code }} {{ propertyDetails.contact }}{% endverbatim %}</a></li>
+{#                                    <li><a href="#"><i class="fa fa-envelope" aria-hidden="true"></i> Jacobs@alphahousing.com</a></li>#}
+{#                                    <li><a href="#"><i class="fa fa-skype" aria-hidden="true"></i> NicholasJacobos.Agent</a></li>#}
                                 </ul>
                             </div>
                             <div class="user_info_form">
                                 <form>
-                                    <input type="text" placeholder="Name">
-                                    <input type="email" placeholder="Email">
-                                    <input type="text" placeholder="Mobile">
-                                    <textarea rows="6" placeholder="Message"></textarea>
-                                    <a href="#" class="rle_btn">get contact detail</a>
+                                    <input type="text" maxlength="250" placeholder="Name" v-model="clientName">
+                                    <input type="email" placeholder="Email" v-model="clientEmail">
+                                    <input type="number" placeholder="Mobile" onKeyPress="if(this.value.length===10) return false;" v-model="clientContact">
+                                    <a href="#" class="rle_btn" v-on:click="clientQuery">get contact detail</a>
                                 </form>
                             </div>
                         </div>
@@ -364,177 +389,177 @@
             </div>
         </div>
         <!-- Property Wrapper start -->
-        <div class="rle_property_wrapper rle_bottompadder70">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                        <div class="rle_center_heading rle_bottompadder60">
-                            <h1>Similar property</h1>
-                            <p>Real Estate In Australia has access to new release properties</p>
-                        </div>
-                    </div>
-                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                        <div class="rle_property_slider">
-                            <div class="owl-carousel owl-theme">
-                                <div class="item">
-                                    <div class="rle_property_infobox">
-                                        <div class="rle_property_infobox_img">
-                                            <img src="http://placehold.it/370x300" alt="" title="">
-                                            <span><sup>$</sup>650.000</span>
-                                        </div>
-                                        <div class="rle_property_infobox_details">
-                                            <div class="rle_property_infobox_details_header">
-                                                <ul>
-                                                    <li class="rle_red_clr">for sale</li>
-                                                    <li class="rle_black_clr">hot offer</li>
-                                                </ul>
-                                                <h3><a href="#">The Chalet Estate</a></h3>
-                                                <p>KT89B Hampton Court, England, United Kingdom</p>
-                                            </div>
-                                            <div class="rle_property_infobox_details_footer">
-                                                <p>Area : 3578 sqft </p>
-                                                <ul>
-                                                    <li><i class="fa fa-bed" aria-hidden="true"></i> 03</li>
-                                                    <li><i class="fa fa-bath" aria-hidden="true"></i> 02</li>
-                                                    <li><i class="fa fa-taxi" aria-hidden="true"></i> yes</li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="item">
-                                    <div class="rle_property_infobox">
-                                        <div class="rle_property_infobox_img">
-                                            <img src="http://placehold.it/370x300" alt="" title="">
-                                            <span><sup>$</sup>4800.00<sub>/mon</sub></span>
-                                        </div>
-                                        <div class="rle_property_infobox_details">
-                                            <div class="rle_property_infobox_details_header">
-                                                <ul>
-                                                    <li class="rle_green_clr">for rent</li>
-                                                </ul>
-                                                <h3><a href="#">Morden Apartment</a></h3>
-                                                <p>KT89B Hampton Court, England, United Kingdom</p>
-                                            </div>
-                                            <div class="rle_property_infobox_details_footer">
-                                                <p>Area : 3578 sqft </p>
-                                                <ul>
-                                                    <li><i class="fa fa-bed" aria-hidden="true"></i> 03</li>
-                                                    <li><i class="fa fa-bath" aria-hidden="true"></i> 02</li>
-                                                    <li><i class="fa fa-taxi" aria-hidden="true"></i> yes</li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="item">
-                                    <div class="rle_property_infobox">
-                                        <div class="rle_property_infobox_img">
-                                            <img src="http://placehold.it/370x300" alt="" title="">
-                                            <span><sup>$</sup>4800.00<sub>/mon</sub></span>
-                                        </div>
-                                        <div class="rle_property_infobox_details">
-                                            <div class="rle_property_infobox_details_header">
-                                                <ul>
-                                                    <li class="rle_green_clr">for rent</li>
-                                                    <li class="rle_black_clr">hot offer</li>
-                                                </ul>
-                                                <h3><a href="#">Luxurious Deplux</a></h3>
-                                                <p>KT89B Hampton Court, England, United Kingdom</p>
-                                            </div>
-                                            <div class="rle_property_infobox_details_footer">
-                                                <p>Area : 3578 sqft </p>
-                                                <ul>
-                                                    <li><i class="fa fa-bed" aria-hidden="true"></i> 03</li>
-                                                    <li><i class="fa fa-bath" aria-hidden="true"></i> 02</li>
-                                                    <li><i class="fa fa-taxi" aria-hidden="true"></i> yes</li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="item">
-                                    <div class="rle_property_infobox">
-                                        <div class="rle_property_infobox_img">
-                                            <img src="http://placehold.it/370x300" alt="" title="">
-                                            <span><sup>$</sup>650.00</span>
-                                        </div>
-                                        <div class="rle_property_infobox_details">
-                                            <div class="rle_property_infobox_details_header">
-                                                <ul>
-                                                    <li class="rle_red_clr">for sale</li>
-                                                </ul>
-                                                <h3><a href="#">Westbourne House</a></h3>
-                                                <p>KT89B Hampton Court, England, United Kingdom</p>
-                                            </div>
-                                            <div class="rle_property_infobox_details_footer">
-                                                <p>Area : 3578 sqft </p>
-                                                <ul>
-                                                    <li><i class="fa fa-bed" aria-hidden="true"></i> 03</li>
-                                                    <li><i class="fa fa-bath" aria-hidden="true"></i> 02</li>
-                                                    <li><i class="fa fa-taxi" aria-hidden="true"></i> yes</li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="item">
-                                    <div class="rle_property_infobox">
-                                        <div class="rle_property_infobox_img">
-                                            <img src="http://placehold.it/370x300" alt="" title="">
-                                            <span><sup>$</sup>650.00</span>
-                                        </div>
-                                        <div class="rle_property_infobox_details">
-                                            <div class="rle_property_infobox_details_header">
-                                                <ul>
-                                                    <li class="rle_red_clr">for sale</li>
-                                                </ul>
-                                                <h3><a href="#">Sturrock Place Gordon</a></h3>
-                                                <p>KT89B Hampton Court, England, United Kingdom</p>
-                                            </div>
-                                            <div class="rle_property_infobox_details_footer">
-                                                <p>Area : 3578 sqft </p>
-                                                <ul>
-                                                    <li><i class="fa fa-bed" aria-hidden="true"></i> 03</li>
-                                                    <li><i class="fa fa-bath" aria-hidden="true"></i> 02</li>
-                                                    <li><i class="fa fa-taxi" aria-hidden="true"></i> yes</li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="item">
-                                    <div class="rle_property_infobox">
-                                        <div class="rle_property_infobox_img">
-                                            <img src="http://placehold.it/370x300" alt="" title="">
-                                            <span><sup>$</sup>4800.00<sub>/mon</sub></span>
-                                        </div>
-                                        <div class="rle_property_infobox_details">
-                                            <div class="rle_property_infobox_details_header">
-                                                <ul>
-                                                    <li class="rle_green_clr">for rent</li>
-                                                    <li class="rle_black_clr">hot offer</li>
-                                                </ul>
-                                                <h3><a href="#">Valmark Orchard</a></h3>
-                                                <p>KT89B Hampton Court, England, United Kingdom</p>
-                                            </div>
-                                            <div class="rle_property_infobox_details_footer">
-                                                <p>Area : 3578 sqft </p>
-                                                <ul>
-                                                    <li><i class="fa fa-bed" aria-hidden="true"></i> 03</li>
-                                                    <li><i class="fa fa-bath" aria-hidden="true"></i> 02</li>
-                                                    <li><i class="fa fa-taxi" aria-hidden="true"></i> yes</li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+{#        <div class="rle_property_wrapper rle_bottompadder70">#}
+{#            <div class="container">#}
+{#                <div class="row">#}
+{#                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">#}
+{#                        <div class="rle_center_heading rle_bottompadder60">#}
+{#                            <h1>Similar property</h1>#}
+{#                            <p>Real Estate In Australia has access to new release properties</p>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">#}
+{#                        <div class="rle_property_slider">#}
+{#                            <div class="owl-carousel owl-theme">#}
+{#                                <div class="item">#}
+{#                                    <div class="rle_property_infobox">#}
+{#                                        <div class="rle_property_infobox_img">#}
+{#                                            <img src="http://placehold.it/370x300" alt="" title="">#}
+{#                                            <span><sup>$</sup>650.000</span>#}
+{#                                        </div>#}
+{#                                        <div class="rle_property_infobox_details">#}
+{#                                            <div class="rle_property_infobox_details_header">#}
+{#                                                <ul>#}
+{#                                                    <li class="rle_red_clr">for sale</li>#}
+{#                                                    <li class="rle_black_clr">hot offer</li>#}
+{#                                                </ul>#}
+{#                                                <h3><a href="#">The Chalet Estate</a></h3>#}
+{#                                                <p>KT89B Hampton Court, England, United Kingdom</p>#}
+{#                                            </div>#}
+{#                                            <div class="rle_property_infobox_details_footer">#}
+{#                                                <p>Area : 3578 sqft </p>#}
+{#                                                <ul>#}
+{#                                                    <li><i class="fa fa-bed" aria-hidden="true"></i> 03</li>#}
+{#                                                    <li><i class="fa fa-bath" aria-hidden="true"></i> 02</li>#}
+{#                                                    <li><i class="fa fa-taxi" aria-hidden="true"></i> yes</li>#}
+{#                                                </ul>#}
+{#                                            </div>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                                <div class="item">#}
+{#                                    <div class="rle_property_infobox">#}
+{#                                        <div class="rle_property_infobox_img">#}
+{#                                            <img src="http://placehold.it/370x300" alt="" title="">#}
+{#                                            <span><sup>$</sup>4800.00<sub>/mon</sub></span>#}
+{#                                        </div>#}
+{#                                        <div class="rle_property_infobox_details">#}
+{#                                            <div class="rle_property_infobox_details_header">#}
+{#                                                <ul>#}
+{#                                                    <li class="rle_green_clr">for rent</li>#}
+{#                                                </ul>#}
+{#                                                <h3><a href="#">Morden Apartment</a></h3>#}
+{#                                                <p>KT89B Hampton Court, England, United Kingdom</p>#}
+{#                                            </div>#}
+{#                                            <div class="rle_property_infobox_details_footer">#}
+{#                                                <p>Area : 3578 sqft </p>#}
+{#                                                <ul>#}
+{#                                                    <li><i class="fa fa-bed" aria-hidden="true"></i> 03</li>#}
+{#                                                    <li><i class="fa fa-bath" aria-hidden="true"></i> 02</li>#}
+{#                                                    <li><i class="fa fa-taxi" aria-hidden="true"></i> yes</li>#}
+{#                                                </ul>#}
+{#                                            </div>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                                <div class="item">#}
+{#                                    <div class="rle_property_infobox">#}
+{#                                        <div class="rle_property_infobox_img">#}
+{#                                            <img src="http://placehold.it/370x300" alt="" title="">#}
+{#                                            <span><sup>$</sup>4800.00<sub>/mon</sub></span>#}
+{#                                        </div>#}
+{#                                        <div class="rle_property_infobox_details">#}
+{#                                            <div class="rle_property_infobox_details_header">#}
+{#                                                <ul>#}
+{#                                                    <li class="rle_green_clr">for rent</li>#}
+{#                                                    <li class="rle_black_clr">hot offer</li>#}
+{#                                                </ul>#}
+{#                                                <h3><a href="#">Luxurious Deplux</a></h3>#}
+{#                                                <p>KT89B Hampton Court, England, United Kingdom</p>#}
+{#                                            </div>#}
+{#                                            <div class="rle_property_infobox_details_footer">#}
+{#                                                <p>Area : 3578 sqft </p>#}
+{#                                                <ul>#}
+{#                                                    <li><i class="fa fa-bed" aria-hidden="true"></i> 03</li>#}
+{#                                                    <li><i class="fa fa-bath" aria-hidden="true"></i> 02</li>#}
+{#                                                    <li><i class="fa fa-taxi" aria-hidden="true"></i> yes</li>#}
+{#                                                </ul>#}
+{#                                            </div>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                                <div class="item">#}
+{#                                    <div class="rle_property_infobox">#}
+{#                                        <div class="rle_property_infobox_img">#}
+{#                                            <img src="http://placehold.it/370x300" alt="" title="">#}
+{#                                            <span><sup>$</sup>650.00</span>#}
+{#                                        </div>#}
+{#                                        <div class="rle_property_infobox_details">#}
+{#                                            <div class="rle_property_infobox_details_header">#}
+{#                                                <ul>#}
+{#                                                    <li class="rle_red_clr">for sale</li>#}
+{#                                                </ul>#}
+{#                                                <h3><a href="#">Westbourne House</a></h3>#}
+{#                                                <p>KT89B Hampton Court, England, United Kingdom</p>#}
+{#                                            </div>#}
+{#                                            <div class="rle_property_infobox_details_footer">#}
+{#                                                <p>Area : 3578 sqft </p>#}
+{#                                                <ul>#}
+{#                                                    <li><i class="fa fa-bed" aria-hidden="true"></i> 03</li>#}
+{#                                                    <li><i class="fa fa-bath" aria-hidden="true"></i> 02</li>#}
+{#                                                    <li><i class="fa fa-taxi" aria-hidden="true"></i> yes</li>#}
+{#                                                </ul>#}
+{#                                            </div>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                                <div class="item">#}
+{#                                    <div class="rle_property_infobox">#}
+{#                                        <div class="rle_property_infobox_img">#}
+{#                                            <img src="http://placehold.it/370x300" alt="" title="">#}
+{#                                            <span><sup>$</sup>650.00</span>#}
+{#                                        </div>#}
+{#                                        <div class="rle_property_infobox_details">#}
+{#                                            <div class="rle_property_infobox_details_header">#}
+{#                                                <ul>#}
+{#                                                    <li class="rle_red_clr">for sale</li>#}
+{#                                                </ul>#}
+{#                                                <h3><a href="#">Sturrock Place Gordon</a></h3>#}
+{#                                                <p>KT89B Hampton Court, England, United Kingdom</p>#}
+{#                                            </div>#}
+{#                                            <div class="rle_property_infobox_details_footer">#}
+{#                                                <p>Area : 3578 sqft </p>#}
+{#                                                <ul>#}
+{#                                                    <li><i class="fa fa-bed" aria-hidden="true"></i> 03</li>#}
+{#                                                    <li><i class="fa fa-bath" aria-hidden="true"></i> 02</li>#}
+{#                                                    <li><i class="fa fa-taxi" aria-hidden="true"></i> yes</li>#}
+{#                                                </ul>#}
+{#                                            </div>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                                <div class="item">#}
+{#                                    <div class="rle_property_infobox">#}
+{#                                        <div class="rle_property_infobox_img">#}
+{#                                            <img src="http://placehold.it/370x300" alt="" title="">#}
+{#                                            <span><sup>$</sup>4800.00<sub>/mon</sub></span>#}
+{#                                        </div>#}
+{#                                        <div class="rle_property_infobox_details">#}
+{#                                            <div class="rle_property_infobox_details_header">#}
+{#                                                <ul>#}
+{#                                                    <li class="rle_green_clr">for rent</li>#}
+{#                                                    <li class="rle_black_clr">hot offer</li>#}
+{#                                                </ul>#}
+{#                                                <h3><a href="#">Valmark Orchard</a></h3>#}
+{#                                                <p>KT89B Hampton Court, England, United Kingdom</p>#}
+{#                                            </div>#}
+{#                                            <div class="rle_property_infobox_details_footer">#}
+{#                                                <p>Area : 3578 sqft </p>#}
+{#                                                <ul>#}
+{#                                                    <li><i class="fa fa-bed" aria-hidden="true"></i> 03</li>#}
+{#                                                    <li><i class="fa fa-bath" aria-hidden="true"></i> 02</li>#}
+{#                                                    <li><i class="fa fa-taxi" aria-hidden="true"></i> yes</li>#}
+{#                                                </ul>#}
+{#                                            </div>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
         <!-- Partner Wrapper start -->
         <div class="rle_partner_wrapper rle_toppadder60 rle_bottompadder60">
             <div class="container">
