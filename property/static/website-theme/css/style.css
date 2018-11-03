@@ -2474,7 +2474,7 @@ textarea:focus {
 }
 .rle_newletters_box input{
     float: left;
-	width:calc(100% - 120px);
+	width:calc(100% - 140px);
     padding: 0px 15px 0px 50px;
     height: 45px;
     border-radius: 3px;

@@ -74,7 +74,9 @@ let website_listing_app = new Vue({
             }
             else if (filter === "budget") {
                 that.searchResults = _.filter(that.allProperties, function (item) {
-                    return item.rental_value <= that.filterInput;
+                    let result_list = parseFloat(item.rental_value) <= parseFloat(that.filterInput);
+                    return result_list;
+
                 });
             }
             else if (filter === "city") {
