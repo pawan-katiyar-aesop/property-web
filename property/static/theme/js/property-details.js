@@ -132,10 +132,10 @@ let property_detail_app = new Vue({
                 "other_charges":that.otherCharges,
                 "is_top": that.property.is_top,
                 "images":that.property.images,
-                "nearest":that.nearest
-
-
+                "nearest":that.nearest,
+                "videos":that.property.videos
             };
+
             axios.put("/api/property/"+parseInt(that.pk)+"/" ,data)
             .then(function (response) {
                 alert( "Property has been successfully updated");
