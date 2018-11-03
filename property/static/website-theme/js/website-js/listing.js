@@ -67,17 +67,14 @@ let website_listing_app = new Vue({
             }
         },
         filterPropertyList: function () {
-            debugger;
             let that = this;
             let filter = $("#filter-property-list").val();
             if (filter === "all") {
                 that.searchResults = that.allProperties;
             }
             else if (filter === "budget") {
-                debugger;
                 that.searchResults = _.filter(that.allProperties, function (item) {
                     let result_list = parseFloat(item.rental_value) <= parseFloat(that.filterInput);
-                    debugger;
                     return result_list;
 
                 });
