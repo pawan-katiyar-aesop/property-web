@@ -21,14 +21,16 @@ let property_detail_app = new Vue({
         nearest:{},
         floorPlanEdit:{
             description:'',
-            imageList:[],
-            videos:[]
+            images:[],
+            videos:[],
+            id:undefined
         },
         floorPlanListOfDescriptions:['','','',''],
         floorPlanListOfImagesList:[[],[],[],[]],
         floorPlanListOfVideoURLs:[[],[],[],[]],
         currentEditingFloor:-1,
-        nearestId:0
+        nearestId:0,
+        existing:false
     }
     ,
     methods:{
@@ -411,7 +413,7 @@ let property_detail_app = new Vue({
                     // Read image and append into doc
                     let reader = new FileReader();
                     reader.onload = function (e) {
-                        that.floorPlanEdit.imageList.push({"image":e.target.result,"type":"f", "title":"", "description":"", "defaultInGroup":false});
+                        that.floorPlanEdit.images.push({"image":e.target.result,"type":"f", "title":"", "description":"", "defaultInGroup":false});
                         that.imageSlider.listLength += 1;
                     };
                     reader.readAsDataURL(input.target.files[index]);
@@ -424,7 +426,7 @@ let property_detail_app = new Vue({
         },
         removeFloorPlanImage: function (imageIndex) {
             let that = this;
-            that.floorPlanEdit.imageList.splice(imageIndex, 1);
+            that.floorPlanEdit.images.splice(imageIndex, 1);
             that.imageSlider.listLength -= 1;
             (that.floorPlanEdit.imageList.length === 0)? that.floorPlanEdit.isPreviewImageActive = false: that.floorPlanEdit.isPreviewImageActive = true;
         },
@@ -447,10 +449,108 @@ let property_detail_app = new Vue({
         loadFloorPlan:function () {
             let that=this;
             let currentFloorPlan = {};
-            that.floorPlanEdit['description']=that.property.floor_plan[parseInt(that.currentEditingFloor)]['description'];
-            that.floorPlanEdit['images']=that.property.floor_plan[parseInt(that.currentEditingFloor)]['images'];
-            that.floorPlanEdit['videos']=that.property.floor_plan[parseInt(that.currentEditingFloor)]['videos'];
+            let index = -1;
+            let floorPlanId = -1;
+            index = _.indexOf(_.pluck(that.property.floor_plan,'floor_number'),parseInt(that.currentEditingFloor));
+            console.log(index);
+            if (index!==-1){
+                that.existing = true;
+                floorPlanId = that.property.floor_plan[index]['id'];
+                console.log(floorPlanId);
+                that.floorPlanEdit['description']=that.property.floor_plan[index]['description'];
+                that.floorPlanEdit['images']=that.property.floor_plan[index]['images'];
+                that.floorPlanEdit['videos']=that.property.floor_plan[index]['videos'];
+                that.floorPlanEdit['id']=floorPlanId;
+            }
+            else{
+                that.existing = false;
+                that.floorPlanEdit['description'] = "";
+                that.floorPlanEdit['images'] = [];
+                that.floorPlanEdit['videos'] = [];
+                that.floorPlanEdit['id'] = undefined;
+            }
 
+
+
+        },
+        clearFloorPlan: function () {
+            let that = this;
+            that.floorPlanEdit['description'] = "";
+            that.floorPlanEdit['images'] = [];
+            that.floorPlanEdit['videos'] = [];
+            that.floorPlanEdit['id'] = undefined;
+        },
+        updateFloorPlan: function () {
+            let that = this;
+            let data = {
+                "description":that.floorPlanEdit['description'],
+                "images":that.floorPlanEdit['images']
+            };
+            axios.put("/api/floor_plan/"+parseInt(that.floorPlanEdit['id'])+"/", data)
+                .then(function (response) {
+                    alert("Updated floor plan!");
+                    window.location.reload(true);
+                })
+                .catch(function (response) {
+                    alert("Error occured while updating floor plan!!");
+                });
+        },
+        unlinkFloorPlan: function () {
+            let that = this;
+            
+            axios.delete("/api/floor_plan/"+parseInt(that.floorPlanEdit['id'])+"/")
+                .then(function (response) {
+                    alert("Updated floor plan!");
+                    window.location.reload(true);
+                })
+                .catch(function (response) {
+                    alert("Error occured while updating floor plan!!");
+                });
+        },
+        deleteProperty : function () {
+            let that = this;
+            bootbox.confirm({
+            title: "Delete Property?",
+            message: "Do you want to delete this property? This cannot be undone.",
+            buttons: {
+                cancel: {
+                    label: '<i class="fa fa-times"></i> Cancel'
+                },
+                confirm: {
+                    label: '<i class="fa fa-check"></i> Confirm'
+                }
+            },
+            callback: function (result) {
+                if(result){
+                    axios.delete("/api/property/"+that.pk+"/")
+                        .then(function (response) {
+                            alert("Property has been successfully delete");
+                            window.location.href =  "/control/dash/properties/";
+                        })
+                        .catch(function (response) {
+                            alert("Somer error occurred while deleting the property");
+                        })
+                }
+            }
+            });
+        },
+        addNewFLoorPlan : function () {
+            let that = this;
+            let data = {
+                "floor_number":parseInt(that.currentEditingFloor),
+                "description":that.floorPlanEdit['description'],
+                "images":that.floorPlanEdit['images'],
+                "videos":that.floorPlanEdit['videos'],
+                "property":that.pk
+            };
+            axios.post("/api/floor_plan/",data)
+                .then(function (response) {
+                    alert("Saved new floor plan successfully")
+                    window.location.reload(true);
+                })
+                .catch(function (response) {
+                    alert("Error occured in saving new floor plan")
+                })
 
         }
     },

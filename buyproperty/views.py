@@ -1,12 +1,12 @@
 from __future__ import unicode_literals
 from rest_framework import status
 from django.views.generic import TemplateView
-from models import CustomerLead, AgentLead, Property, Address, Nearest, Overlooking, Video, FloorPlan
+from models import CustomerLead, AgentLead, Property, Address, Nearest, Overlooking, Video, FloorPlan, Media
 from django.views import generic
 from rest_framework.response import Response
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView, ListAPIView
 from serializers import CustomerLeadSerializer, AgentLeadSerializer, PropertySerializer, AddressSerializer,\
-    OverlookingSerializer, TopPropertySerializer, RetrievePropertySerializer
+    OverlookingSerializer, TopPropertySerializer, RetrievePropertySerializer, FloorPlanSerializer
 from rest_framework.views import APIView
 import itertools
 from django.db.models import Q
@@ -51,7 +51,6 @@ class ListCreatePropertyAPIView(ListCreateAPIView):
         new_address = Address.create_address(request.data.get("address"))
         # create property object with request data
         property = Property.create_property(request.data, new_address)
-
         #create nearest list if requested
         if request.data.get("nearest"):
             for key, value in request.data.get("nearest").items():
@@ -62,7 +61,6 @@ class ListCreatePropertyAPIView(ListCreateAPIView):
             for id in request.data.get("overlooking"):
                 property.overlooking.add(Overlooking.objects.get(pk=id))
         ""
-        
         #create and add images to propety
         self.add_images_to_property(request.data.get("images"), property)
         ""
@@ -71,22 +69,26 @@ class ListCreatePropertyAPIView(ListCreateAPIView):
             for obj in request.data.get("videos"):
                 property.videos.add(Video.create_video(obj))
         ""
+        
         # create floor plan if requested
         if request.data.get("floor_plan"):
             for i in range(0, len(request.data.get("floor_plan")[0])):
-                #create a floor plan with description using list of descriptions and floor number
-                plan = FloorPlan.create_plan(i, request.data.get("floor_plan")[0][i])
+                if len(request.data.get("floor_plan")[0][i]) != 0:
+                    
+                    #create a floor plan with description using list of descriptions and floor number
+                    plan = FloorPlan.create_plan(i, request.data.get("floor_plan")[0][i])
 
-                #create image objects using list of imagelists and add it to plan
-                self.add_images_to_property(request.data.get("floor_plan")[1][i], plan)
+                    #create image objects using list of imagelists and add it to plan
+                    self.add_images_to_property(request.data.get("floor_plan")[1][i], plan)
 
-                #create video objects using list of video Objects and add them to plan
-                for vidObj in request.data.get("floor_plan")[2][i]:
-                    plan.videos.add(Video.create_video(vidObj))
+                    #create video objects using list of video Objects and add them to plan
+                    for vidObj in request.data.get("floor_plan")[2][i]:
+                        plan.videos.add(Video.create_video(vidObj))
 
-                #Finally, add this plan to list of floor plans in property
-                property.floor_plan.add(plan)
+                    #Finally, add this plan to list of floor plans in property
+                    property.floor_plan.add(plan)
         ""
+        
         return Response(PropertySerializer(property).data, status=status.HTTP_201_CREATED)
 
     def add_images_to_property(self, images, property):
@@ -157,6 +159,117 @@ class SearchResultApiView(ListAPIView):
         results = Property.objects.filter(Q(address__city__icontains=self.kwargs['key']) |
                                           Q(landmark__icontains=self.kwargs['key']))
         return results
+
+
+class ListCreateFloorPlanAPIView(ListCreateAPIView):
+
+    serializer_class = FloorPlanSerializer
+    queryset = FloorPlan.objects.all()
+
+    def create(self, request, *args, **kwargs):
+        data = request.data
+        description = data.get("description")
+        images = data.get("images")
+        videos = data.get("videos")
+        floor_number= data.get("floor_number")
+
+        plan = FloorPlan.create_plan(floor_number, description)
+        self.add_images_to_plan(images, plan)
+
+        for video in videos:
+            plan.videos.add(Video.create_video(video))
+
+        if data.get("property"):
+            property = Property.objects.get(pk=data.get("property"))
+            property.floor_plan.add(plan)
+
+        return Response(FloorPlanSerializer(plan).data, status=status.HTTP_201_CREATED)
+
+    def add_images_to_plan(self, images, plan):
+        media = list()
+        for image in images:
+            import base64
+            from django.core.files.base import ContentFile
+            from .models import Media
+            image_format, img_str = image['image'].split(';base64,')
+            ext = image_format.split('/')[-1]
+
+            data = ContentFile(base64.b64decode(img_str), name=Media.generate_unique_key(10) + '.' + ext)
+            media.append(Media.objects.create(file=data, type=image['type'], title=image['title'],
+                                              description=image['description'],
+                                              default_in_group=image['defaultInGroup']))
+        [plan.images.add(_media) for _media in media]
+
+
+
+
+class RetrieveUpdateDestroyFloorPlanAPIView(RetrieveUpdateDestroyAPIView):
+
+    serializer_class = FloorPlanSerializer
+    queryset = FloorPlan.objects.all()
+
+    def update(self, request, *args, **kwargs):
+        from .models import Media, Video
+        description = request.data.get("description")
+        images = request.data.get("images")
+        videos = request.data.get("videos")
+        floor_plan = self.get_object()
+
+        existing_image_ids = []
+        posted_image_ids = []
+
+        #manage existing images, if removed
+        floor_plan.images.clear()
+        
+        for image in images:
+            if image.get('id'):
+                floor_plan.images.add(Media.objects.get(pk=image['id']))
+
+        #creating new images if sent
+        media = list()
+
+        for image in images:
+            import base64
+            from django.core.files.base import ContentFile
+            from .models import Media
+            if image.get('image'):
+                image_format, img_str = image['image'].split(';base64,')
+                ext = image_format.split('/')[-1]
+
+                data = ContentFile(base64.b64decode(img_str), name=Media.generate_unique_key(10) + '.' + ext)
+                media.append(Media.objects.create(file=data, type=image['type'], title=image['title'],
+                                                  description=image['description'],
+                                                  default_in_group=image['defaultInGroup']))
+        [floor_plan.images.add(_media) for _media in media]
+        
+
+        #manaeg existing videos
+        if floor_plan.videos:
+            floor_plan.videos.clear()
+        for video in videos:
+            if video.get('id'):
+                video_obj = Video.objects.get(pk=video['id'])
+                print(video_obj.url)
+                video_obj.url = video['url']
+                print(video_obj.url)
+                video_obj.save()
+                
+                floor_plan.videos.add(video_obj)
+            else:
+                video_obj = Video.create_video(video)
+                floor_plan.videos.add(video_obj)
+
+        
+
+
+
+
+        floor_plan.description = description
+        floor_plan.save()
+
+
+
+        return Response(FloorPlanSerializer(floor_plan).data, status=status.HTTP_200_OK)
 
 
 class CountryCodeListView(APIView):

@@ -5,6 +5,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/css/select2.min.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/js/select2.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.9.1/underscore-min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.min.js"></script>
 {% endblock %}
 
 {% block content %}
@@ -583,6 +584,14 @@
                         </div>
 
                     </div>
+                    <div class="card card-default mt-30">
+                        <div class="card-header">
+                            <b>Delete Property</b>
+                        </div>
+                        <div class="card-body" v-if="property">
+                            <button type="button" class="btn btn-danger btn-primary" @click="deleteProperty">Delete Property</button>
+                        </div>
+                    </div>
 
 
                 </div>
@@ -619,58 +628,59 @@
                                 <textarea class="form-control" type="number" v-model="floorPlanEdit.description" ></textarea>
                             </div>
                         </div>
+
                         <div class="card card-default mt-30">
 
-                    <div class="card-header">
-                        <b>Images</b>
-                    </div>
+                            <div class="card-header">
+                                <b>Images</b>
+                            </div>
 
-                    <div class="card-body">
-
-
-                        <div class="form-group" data-toggle="tooltip" data-title="Add basic fields for your category. " data-placement="bottom">
+                            <div class="card-body" v-if="property.floor_plan">
 
 
-                                <div class="float-right">
-                                    <a href="javascript:;" @click="selectFloorPlanImage">Select Image</a>
-                                </div>
-                                <div class="row">
-                                    <input type="file" name="images" multiple style="visibility: hidden" @change="uploadFloorPlanImage" id="select-floor-image-hidden">
-                                    <span class="help-block"></span>
-                                </div>
-                                <div v-if="!floorPlanEdit.imageList.length">
-                                    <span>No image selected! ☹️ Please upload images.</span>
-                                </div>
-                                <div class="row col-md-12 insert-preview-images-here">
-                                    <div class="preview-image-template" v-if="floorPlanEdit.imageList" v-for="(image, index) in floorPlanEdit.imageList">
-                                        <div class="col-md-5 pointer">
-                                            <div class="pull-right" id="removed-image">
-                                                <a href="#" class="product-delete_image" v-on:click="removeFloorPlanImage">x</a>
+                                <div class="form-group" data-toggle="tooltip" data-title="Add images to floors." data-placement="bottom">
+
+
+                                    <div class="float-right">
+                                        <a href="javascript:;" @click="selectFloorPlanImage">Select Image</a>
+                                    </div>
+                                    <div class="row">
+                                        <input type="file" name="images" multiple style="visibility: hidden" @change="uploadFloorPlanImage" id="select-floor-image-hidden">
+                                        <span class="help-block"></span>
+                                    </div>
+                                    <div v-if="!floorPlanEdit.images.length">
+                                        <span>No image selected! ☹️ Please upload images.</span>
+                                    </div>
+                                    <div class="row col-md-12 insert-preview-images-here">
+                                        <div class="preview-image-template" v-if="floorPlanEdit.images" v-for="(image, index) in floorPlanEdit.images">
+                                            <div class="col-md-5 pointer">
+                                                <div class="pull-right" id="removed-image">
+                                                    <a href="#" class="product-delete_image" v-on:click="removeFloorPlanImage">x</a>
+                                                </div>
+                                                <div class="product-images--preview-image">
+                                                    <a href="#" class="open-image-edit-modal">
+                                                        <i class="fa fa-pencil fa-lg"></i>
+                                                    </a>
+                                                </div>
+                                                <img :src="image['image'] || image.file" class="preview-image"  data-toggle="modal" width="70" height="85" v-on:click="imageSlider.currentIndex=index">
                                             </div>
-                                            <div class="product-images--preview-image">
-                                                <a href="#" class="open-image-edit-modal">
-                                                    <i class="fa fa-pencil fa-lg"></i>
-                                                </a>
-                                            </div>
-                                            <img :src="image['image'] || image.file" class="preview-image"  data-toggle="modal" width="70" height="85" v-on:click="imageSlider.currentIndex=index">
                                         </div>
                                     </div>
                                 </div>
+                            </div>
                         </div>
-                    </div>
-                    </div>
-                    <div class="card card-default mt-30">
+                        <div class="card card-default mt-30">
 
-                        <div class="card-header">
-                            <b>Videos</b>
-                        </div>
+                            <div class="card-header">
+                                <b>Videos</b>
+                            </div>
 
-                        <div class="card-body" v-if="property">
+                            <div class="card-body" v-if="property.floor_plan">
 
-                            <div class="form-group">
-                                <div id="banner-vid-parent">
+                                <div class="form-group">
+                                    <div id="banner-vid-parent">
 
-                                </div>
+                                    </div>
                                 <a href="#" class="mt-15 d-block" v-if="floorPlanEdit.videos.length === 0" v-on:click="addVideoUrlFieldsFloor()">Add New Video URL</a>
                                 <a href="#" class="mt-15 d-block" v-else="floorPlanEdit.videos.length === 0"></a>
                                 <div class="row mt-20">
@@ -689,7 +699,7 @@
                                                 </thead>
                                                 <tr v-for="(key, index) in floorPlanEdit.videos">
                                                     <td>
-                                                        <input maxlength="250" size="80" class="form-control" v-model="key['url'+key.index]" type="text">
+                                                        <input maxlength="250" size="80" class="form-control" v-model="key.url" type="text">
                                                     </td>
                                                     <td>
                                                         <button @click="removeVideoUrlFieldsFloor(index)" type="button" class="btn btn-danger">
@@ -707,16 +717,18 @@
                                     </div>
                                 </div>
                             </div>
+                            </div>
                         </div>
+
+
                     </div>
 
 
-            </div>
-
-
                     <div class="modal-footer">
-                        <button class="btn btn-xs btn-primary float-left" type="button"  v-on:click="">Add Plan</button>
-                        <button class="btn btn-xs btn-warning" type="button" @click="">Clear</button>
+                        <button class="btn btn-xs btn-primary float-left" type="button" v-if="existing" v-on:click="updateFloorPlan">Update Floor</button>
+                        <button class="btn btn-xs btn-primary float-left" type="button" v-if="existing" v-on:click="unlinkFloorPlan">Remove Floor</button>
+                        <button class="btn btn-xs btn-primary float-left" type="button" v-if="!existing" v-on:click="addNewFLoorPlan">Add Plan</button>
+                        <button class="btn btn-xs btn-warning" type="button" @click="clearFloorPlan">Clear</button>
                         <button class="btn btn-xs btn-secondary btn-danger" type="button" data-dismiss="modal">Close</button>
                     </div>
                 </div>

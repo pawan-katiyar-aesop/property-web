@@ -141,7 +141,9 @@ let property_create_app = new Vue({
             that.populateCharges();
             that.populateNearest();
             let allVideoUrlList = [];
-            that.propertyVideos.push(that.newProperty.videoTourURL);
+            if (that.newProperty.videoTourURL.url.length){
+                that.propertyVideos.push(that.newProperty.videoTourURL);
+            }
             that.newProperty.floorPlan.push(that.floorPlanListOfDescriptions);
             that.newProperty.floorPlan.push(that.floorPlanListOfImagesList);
             that.newProperty.floorPlan.push(that.floorPlanListOfVideoURLs);
@@ -499,6 +501,10 @@ let property_create_app = new Vue({
         addFloorPlan:function(){
             let that = this;
             let currentFloor = parseInt(that.currentEditingFloor);
+            if(!that.floorPlanEdit.description){
+                alert("Please fill a description")
+                return
+            }
             that.floorPlanListOfDescriptions[currentFloor] = that.floorPlanEdit.description;
             that.floorPlanListOfImagesList[currentFloor] = that.floorPlanEdit.imageList;
             that.floorPlanListOfVideoURLs[currentFloor] = that.floorPlanEdit.videos;
