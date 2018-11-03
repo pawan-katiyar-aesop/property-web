@@ -690,7 +690,7 @@
                                             </thead>
                                             <tr v-for="(key, index) in floorPlanEdit.videos">
                                                 <td>
-                                                    <input maxlength="250" size="80" class="form-control" v-model="key['url'+key.index]" type="text">
+                                                    <input maxlength="250" size="80" class="form-control" v-model="key['url']" type="text">
                                                 </td>
                                                 <td>
                                                     <button @click="removeVideoUrlFieldsFloor(index)" type="button" class="btn btn-danger">

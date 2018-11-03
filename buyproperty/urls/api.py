@@ -13,5 +13,7 @@ urlpatterns = [
     url(r'^property/top/$', views.RetrieveTopPropertyView.as_view(), name="retrieve-top-property"),
     url(r'^property/(?P<key>\w+)/$', views.SearchResultApiView.as_view(), name="retrieve-top-property"),
     url(r'^property/media/$', views.UploadMediaView.as_view(), name="property-media"),
+    url(r'^floor_plan/$', views.ListCreateFloorPlanAPIView.as_view(), name="floor-plan-list-create"),
+    url(r'^floor_plan/(?P<pk>\d+)/$', views.RetrieveUpdateDestroyFloorPlanAPIView.as_view(), name="retrieve-update-floor-plan")
 
 ]

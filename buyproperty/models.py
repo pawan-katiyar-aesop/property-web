@@ -5,6 +5,11 @@ from django.contrib.postgres.fields import JSONField
 
 
 class Address(models.Model):
+
+    class Meta:
+        verbose_name = "Address"
+        verbose_name_plural = "Addresses"
+
     name = models.CharField(max_length=200, blank=True, null=True)
     line_1 = models.CharField(max_length=100, blank=True, null=True)
     line_2 = models.CharField(max_length=100, blank=True, null=True)
@@ -54,7 +59,7 @@ class Nearest(models.Model):
     distance = models.TextField(null=True, blank=True)
 
     def __str__(self):
-        return self.title if self.title else ""
+        return str(self.title) if self.title else "No title"
 
     @classmethod
     def create_nearest(cls, key, value):
@@ -70,8 +75,8 @@ class Video(models.Model):
         ('b', 'Banner'),
         ('t', 'Tour')
     ]
-    title = models.CharField(max_length=200, null=True, blank=True)
-    type = models.CharField(choices=TYPE_CHOICE, max_length=1, null=True, blank=True)
+    title = models.CharField(max_length=200, default="Video Title", blank=True)
+    type = models.CharField(choices=TYPE_CHOICE, max_length=1, null=True, blank=True, default="b")
     url = models.URLField(max_length=350, null=True, blank=True)
 
     @classmethod
@@ -83,20 +88,23 @@ class Video(models.Model):
         )
         return video
 
+    def __str__(self):
+        return "Video Url "+str(self.title) if self.title else self.url
+
 
 class Media(models.Model):
     TYPE_CHOICE = [
         ('b', 'Banner'),
         ('f', 'Floor Plan')
     ]
-    title = models.CharField(max_length=220, null=True, blank=True)
-    type = models.CharField(choices=TYPE_CHOICE, null=True, blank=True, max_length=1)
-    description = models.TextField(null=True, blank=True)
+    title = models.CharField(max_length=220, null=True, blank=True, default="Media Title")
+    type = models.CharField(choices=TYPE_CHOICE, null=True, blank=True, max_length=1, default="b")
+    description = models.TextField(null=True, blank=True, default="Default Description")
     file = models.FileField(null=True, upload_to="files/")
     default_in_group = models.BooleanField(default=False)
 
     def __str__(self):
-        return "Media " + str(self.id) + " : " + str(self.title) if self.id and self.title else None
+        return "Media " + str(self.id) if str(self.id) else "Media Object"
 
     @classmethod
     def generate_unique_key(cls, length):
@@ -116,8 +124,8 @@ class FloorPlan(models.Model):
         (2, 'SECOND'),
         (3, 'THIRD'),
     ]
-    floor_number = models.IntegerField(choices=FLOOR_CHOICES, null=True, blank=True)
-    description = models.TextField(null=True, blank=True)
+    floor_number = models.IntegerField(choices=FLOOR_CHOICES, blank=True, null=True)
+    description = models.TextField(blank=True, default="Floor description here")
     images = models.ManyToManyField(Media, blank=True)
     videos = models.ManyToManyField(Video, blank=True)
 
@@ -131,14 +139,17 @@ class FloorPlan(models.Model):
         return plan
 
     def __str__(self):
-        return str(self.floor_number)+" "+self.description if self.floor_number else "No floor plan"
+        if len(self.description) != 0:
+            return str(self.floor_number)+" "+str(self.description)
+        else:
+            return str(self.floor_number)
 
 
 class Overlooking(models.Model):
-    name = models.CharField(max_length=50, blank=True, null=True)
+    name = models.CharField(max_length=50, blank=True, null=True, default="Default")
 
     def __str__(self):
-        return self.name if self.name else None
+        return str(self.name) if self.name else None
 
     @classmethod
     def create_overlooking(cls, name):
@@ -149,14 +160,24 @@ class Overlooking(models.Model):
 
 
 class OtherCharges(models.Model):
-    charge_desc = models.CharField(blank=True, null=True, max_length=100)
+
+    class Meta:
+        verbose_name = "Other Charge"
+        verbose_name_plural = "Other Charges"
+
+    charge_desc = models.CharField(blank=True, null=True, max_length=100, default="default key")
     amount = models.DecimalField(max_digits=12, decimal_places=2)
 
     def __str__(self):
-        return self.charge_desc if self.charge_desc else None
+        return str(self.charge_desc) if self.charge_desc else "No charge desc"
 
 
 class Property(models.Model):
+
+    class Meta:
+        verbose_name = 'Property'
+        verbose_name_plural = "Properties"
+
     FURNISHING_CHOICE = [
         ('semi', 'Semi Furnished'),
         ('bare', 'Bareshell')
@@ -185,8 +206,8 @@ class Property(models.Model):
         ('sqmt', 'Square Mt.'),
         ('sqft', 'Square Ft.')
     ]
-    property_id = models.CharField(max_length=20, null=True)
-    property_name = models.CharField(blank=True, max_length=250)
+    property_id = models.CharField(max_length=20, null=True, default=" ")
+    property_name = models.CharField(blank=True, max_length=250, default=" ")
     furnishing_status = models.CharField(choices=FURNISHING_CHOICE, blank=True, null=True, max_length=30)
     unit_of_area = models.CharField(choices=UNIT_CHOICES, null=True, blank=True, max_length=20)
     buildup_area = models.FloatField(null=True, blank=True)
@@ -204,7 +225,7 @@ class Property(models.Model):
     power_backup = models.BooleanField(default=False)
     parking = models.CharField(choices=PARKING_CHOICE, blank=True, null=True, max_length=6)
     lift_availability = models.BooleanField(default=False)
-    landmark = models.CharField(max_length=200, null=True, blank=True)
+    landmark = models.CharField(max_length=200, null=True, blank=True, default=" ")
     parking_area = models.FloatField(blank=True, null=True)
     overlooking = models.ManyToManyField(Overlooking, blank=True)
     age = models.FloatField(null=True, blank=True)
@@ -223,7 +244,7 @@ class Property(models.Model):
     ceiling_details = models.TextField(blank=True, null=True)
     images = models.ManyToManyField(Media, blank=True)
     address = models.ForeignKey(Address, on_delete=models.CASCADE)
-    contact = models.CharField(max_length=10, blank=True, null=True)
+    contact = models.CharField(max_length=10, blank=True, null=True, default=" ")
     other_charges = JSONField(null=True, blank=True)
     lease_term = models.FloatField(null=True, blank=True)
     nearest = models.ManyToManyField(Nearest, blank=True)
@@ -234,9 +255,9 @@ class Property(models.Model):
 
     def __str__(self):
         if self.property_id and self.property_name:
-            return self.property_id + " " + self.property_name
+            return str(self.property_id) + " " + str(self.property_name)
         elif self.property_name:
-            return self.id
+            return str(self.id)
 
     @classmethod
     def create_property(cls, data, address):
@@ -292,22 +313,22 @@ class Property(models.Model):
 
 
 class CustomerLead(models.Model):
-    name = models.CharField(max_length=250)
+    name = models.CharField(max_length=250, default=" ")
     email = models.EmailField(blank=True, null=True)
-    contact = models.CharField(max_length=10, blank=True, null=True)
+    contact = models.CharField(max_length=10, blank=True, null=True, default=" ")
     country_code = models.CharField(choices=country_choices, max_length=5, null=True, blank=True)
     for_property = models.ForeignKey(Property, on_delete=models.CASCADE, blank=True, null=True)
 
     def __str__(self):
-        return self.email if self.email else None
+        return str(self.email) if self.email else None
 
 
 class AgentLead(models.Model):
-    name = models.CharField(max_length=250)
-    email = models.EmailField(blank=True, null=True)
-    contact = models.CharField(max_length=10, blank=True, null=True)
+    name = models.CharField(max_length=250, default=" ")
+    email = models.EmailField(blank=True, null=True, default="someone@example.com")
+    contact = models.CharField(max_length=10, blank=True, null=True, default=" ")
     country_code = models.CharField(choices=country_choices, max_length=3, null=True, blank=True)
     message = models.TextField(blank=True, null=True)
 
     def __str__(self):
-        return self.email if self.email else None
+        return str(self.email) if self.email else None
