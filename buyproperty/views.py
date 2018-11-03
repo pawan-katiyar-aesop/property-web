@@ -130,7 +130,44 @@ class RetrieveUpdateDestroyPropertyAPIView(RetrieveUpdateDestroyAPIView):
             property.nearest.clear()
             for key, value in data.get("nearest").items():
                 property.nearest.add(Nearest.create_nearest(key, value))
+        
+        if data.get("images"):
+            import base64
+            from django.core.files.base import ContentFile
+            from .models import Media
+            
+            property.images.clear()
+            for image in data.get("images"):
 
+                if image.get("id"):
+                    #add these to property
+                    property.images.add(Media.objects.get(pk=image['id']))
+                else:
+                    #create a new image object and add it to property
+                    image_format, img_str = image['file'].split(';base64,')
+                    ext = image_format.split('/')[-1]
+
+                    data = ContentFile(base64.b64decode(img_str), name=Media.generate_unique_key(10) + '.' + ext)
+                    property.images.add(Media.objects.create(file=data, type=image['type'], title=image['title'],
+                                                      description=image['description'],
+                                                      default_in_group=image['defaultInGroup']))
+        
+
+        if data.get("videos"):
+            property.videos.clear()
+            for video in data.get("videos"):
+                if video.get('id'):
+                    #add these videos to property
+                    video_obj = Video.objects.get(pk=video['id'])
+                    video_obj.url = video['url']
+                    video_obj.save()
+                    property.videos.add(video_obj)
+                else:
+                    #save new video object and add it to property
+                    vid_obj = Video.create_video(video)
+                    property.videos.add(vid_obj)
+        
+        property.save()
 
         serializer = self.serializer_class(property, data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -249,9 +286,7 @@ class RetrieveUpdateDestroyFloorPlanAPIView(RetrieveUpdateDestroyAPIView):
         for video in videos:
             if video.get('id'):
                 video_obj = Video.objects.get(pk=video['id'])
-                print(video_obj.url)
                 video_obj.url = video['url']
-                print(video_obj.url)
                 video_obj.save()
                 
                 floor_plan.videos.add(video_obj)
