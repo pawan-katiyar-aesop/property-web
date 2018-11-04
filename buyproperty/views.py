@@ -125,7 +125,8 @@ class RetrieveUpdateDestroyPropertyAPIView(RetrieveUpdateDestroyAPIView):
 
         data = request.data
         property = self.get_object()
-
+        
+        
         if data.get("nearest"):
             property.nearest.clear()
             for key, value in data.get("nearest").items():
@@ -137,6 +138,7 @@ class RetrieveUpdateDestroyPropertyAPIView(RetrieveUpdateDestroyAPIView):
             from .models import Media
             
             property.images.clear()
+            
             for image in data.get("images"):
 
                 if image.get("id"):
@@ -152,23 +154,28 @@ class RetrieveUpdateDestroyPropertyAPIView(RetrieveUpdateDestroyAPIView):
                                                       description=image['description'],
                                                       default_in_group=image['defaultInGroup']))
         
-
+        property.videos.clear()
         if data.get("videos"):
-            property.videos.clear()
             for video in data.get("videos"):
                 if video.get('id'):
                     #add these videos to property
                     video_obj = Video.objects.get(pk=video['id'])
                     video_obj.url = video['url']
+                    if len(video['type'])is not 0:
+                        video_obj.type = video['type']
+                    else:
+                        video_obj.type = "b"
                     video_obj.save()
                     property.videos.add(video_obj)
                 else:
                     #save new video object and add it to property
+                    if len(video['type'])is 0:
+                        video['type'] = 'b'
                     vid_obj = Video.create_video(video)
                     property.videos.add(vid_obj)
-        
-        property.save()
 
+        property.save()
+        
         serializer = self.serializer_class(property, data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
@@ -238,8 +245,6 @@ class ListCreateFloorPlanAPIView(ListCreateAPIView):
         [plan.images.add(_media) for _media in media]
 
 
-
-
 class RetrieveUpdateDestroyFloorPlanAPIView(RetrieveUpdateDestroyAPIView):
 
     serializer_class = FloorPlanSerializer
@@ -254,17 +259,19 @@ class RetrieveUpdateDestroyFloorPlanAPIView(RetrieveUpdateDestroyAPIView):
 
         existing_image_ids = []
         posted_image_ids = []
+        
 
+        
         #manage existing images, if removed
         floor_plan.images.clear()
         
         for image in images:
             if image.get('id'):
                 floor_plan.images.add(Media.objects.get(pk=image['id']))
-
+        
         #creating new images if sent
         media = list()
-
+        
         for image in images:
             import base64
             from django.core.files.base import ContentFile
@@ -279,10 +286,9 @@ class RetrieveUpdateDestroyFloorPlanAPIView(RetrieveUpdateDestroyAPIView):
                                                   default_in_group=image['defaultInGroup']))
         [floor_plan.images.add(_media) for _media in media]
         
-
+        
         #manaeg existing videos
-        if floor_plan.videos:
-            floor_plan.videos.clear()
+        floor_plan.videos.clear()
         for video in videos:
             if video.get('id'):
                 video_obj = Video.objects.get(pk=video['id'])
@@ -298,7 +304,7 @@ class RetrieveUpdateDestroyFloorPlanAPIView(RetrieveUpdateDestroyAPIView):
 
 
 
-
+        
         floor_plan.description = description
         floor_plan.save()
 

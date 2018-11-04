@@ -9,7 +9,6 @@ let property_detail_app = new Vue({
         overlookingOptions:[],
         countryCodes:[],
         selectedOverlookingIds:[],
-        videoTour:'',
         propertyVideos:[],
         propertyImages:{
             imageList:[]
@@ -30,7 +29,12 @@ let property_detail_app = new Vue({
         floorPlanListOfVideoURLs:[[],[],[],[]],
         currentEditingFloor:-1,
         nearestId:0,
-        existing:false
+        existing:false,
+        videoTour:{
+            url:'',
+            type:'',
+            title:''
+        }
     }
     ,
     methods:{
@@ -53,15 +57,16 @@ let property_detail_app = new Vue({
             this.processing = true;
             that.pk = this.getUrlParameter('p');
             axios.get('/api/property/'+that.pk+"/")
-         .then(function (response) {
-             that.property = response.data;
-             that.propertyImages.imageList = that.property.images;
-             console.log("--------This Page Property-------",that.property);
-             that.loadCountryCodes();
-             that.get_overlooking();
-             that.loadOtherCharges();
+                .then(function (response) {
+                that.property = response.data;
+                that.propertyImages.imageList = that.property.images;
+                console.log("--------This Page Property-------",that.property);
+                that.loadCountryCodes();
+                that.get_overlooking();
+                that.loadOtherCharges();
 
-             that.processing = false;
+
+                that.processing = false;
 
 
          })
@@ -155,7 +160,7 @@ let property_detail_app = new Vue({
             urls_dict["url"] = "";
             urls_dict["index"] = index;
             urls_dict["title"] = "";
-            urls_dict["type"] = "b";
+            urls_dict["type"] = "";
             that.property.videos.push(urls_dict);
 
             //that.propertyVideos.push({"title":"", "type":"b","url":urls_dict["url"+index]});
@@ -452,11 +457,9 @@ let property_detail_app = new Vue({
             let index = -1;
             let floorPlanId = -1;
             index = _.indexOf(_.pluck(that.property.floor_plan,'floor_number'),parseInt(that.currentEditingFloor));
-            console.log(index);
             if (index!==-1){
                 that.existing = true;
                 floorPlanId = that.property.floor_plan[index]['id'];
-                console.log(floorPlanId);
                 that.floorPlanEdit['description']=that.property.floor_plan[index]['description'];
                 that.floorPlanEdit['images']=that.property.floor_plan[index]['images'];
                 that.floorPlanEdit['videos']=that.property.floor_plan[index]['videos'];
@@ -484,7 +487,8 @@ let property_detail_app = new Vue({
             let that = this;
             let data = {
                 "description":that.floorPlanEdit['description'],
-                "images":that.floorPlanEdit['images']
+                "images":that.floorPlanEdit['images'],
+                "videos":that.floorPlanEdit['videos']
             };
             axios.put("/api/floor_plan/"+parseInt(that.floorPlanEdit['id'])+"/", data)
                 .then(function (response) {
