@@ -98,10 +98,11 @@
         <!-- Property Single Wrapper start -->
         <div class="swiper-container slider_v2">
             <div class="swiper-wrapper">
-                <div class="swiper-slide"><img src="http://placehold.it/956x520" alt="" /></div>
-                <div class="swiper-slide"><img src="http://placehold.it/956x520" alt="" /></div>
+                <div v-if="propertyDetails.images.length > 0" v-for="item in propertyDetails.images" class="swiper-slide"><img v-if="item.type === 'b'" :src="item.file" alt="" /></divv-if>
+                <div v-if="propertyDetails.videos.length > 0" v-for="item in propertyDetails.videos" class="swiper-slide"><iframe v-if="item.type === 'b'" width="100%" height="100%" :src="item.url+'?rel=0&showinfo=0&autoplay=1'" allow="autoplay;"></iframe></div>
+{#                <div class="swiper-slide"><img src="http://placehold.it/956x520" alt="" /></div>#}
     {#            <div class="swiper-slide"><iframe width="100%" height="100%" src="https://www.youtube.com/embed/tgbNymZ7vqY?rel=0&showinfo=0&autoplay=1" allow="autoplay;"></iframe></div>#}
-                <div class="swiper-slide"><img src="http://placehold.it/956x520" alt="" /></div>
+{#                <div class="swiper-slide"><img src="http://placehold.it/956x520" alt="" /></div>#}
             </div>
             <div class="swiper-button-next swiper-button-white"></div>
             <div class="swiper-button-prev swiper-button-white"></div>
@@ -238,52 +239,60 @@
                             <p v-if="propertyDetails.landmark">Landmark: {% verbatim %}{{ propertyDetails.landmark }}{% endverbatim %}</p>
                             <p v-if="propertyDetails.overlooking">Overlooking: <span v-for="item in propertyDetails.overlooking">{% verbatim %}{{ item }}{% endverbatim %}, </span></p>
                         </div>
-                        <div class="rle_property_details_box">
+                        <div v-if="propertyDetails.floor_plan.length > 0" class="rle_property_details_box">
                             <h3>Floor plan</h3>
                             <!-- Nav tabs -->
                             <ul class="nav nav-tabs" role="tablist">
-                                <li role="presentation" class="active"><a href="#groud" aria-controls="groud" role="tab" data-toggle="tab">groud floor</a></li>
-                                <li role="presentation"><a href="#first" aria-controls="first" role="tab" data-toggle="tab">first floor</a></li>
-                                <li role="presentation"><a href="#second" aria-controls="second" role="tab" data-toggle="tab">second floor</a></li>
+                                <li v-for="item in propertyDetails.floor_plan" role="presentation" class="active"><a :href="'#floor'+item.floor_number" :aria-controls="'floor'+item.floor_number" role="tab" data-toggle="tab" v-html="floor_choice[item.floor_number]"></a></li>
+{#                                <li role="presentation"><a href="#first" aria-controls="first" role="tab" data-toggle="tab">first floor</a></li>#}
+{#                                <li role="presentation"><a href="#second" aria-controls="second" role="tab" data-toggle="tab">second floor</a></li>#}
                             </ul>
                             <!-- Tab panes -->
                             <div class="tab-content">
-                                <div role="tabpanel" class="tab-pane active" id="groud">
-                                    <p>Fusce eu scelerisque eros. Duis scelerisque, ante sed lacinia ullamcorper, erat lectus imperdiet ante, quis pharetra lectus dui in nisl.  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque eget lorem quis ex faucibus tempor. Nullam eget interdum neque, sed sodales nulla. Mauris pharetra vestibulum velit at finibus</p>
-                                    <ul>
-                                        <li><span>1458</span> sqft</li>
-                                        <li><span>02</span> bedrooms</li>
-                                        <li><span>02</span> bathroom</li>
-                                        <li><span>$2800</span> per month</li>
-                                    </ul>
-                                    <div class="floor_img">
-                                        <img src="http://placehold.it/681x456" class="img-responsive">
+                                <div v-for="item in propertyDetails.floor_plan" role="tabpanel" class="tab-pane active" :id="'floor'+item.floor_number">
+                                    <p>{% verbatim %}{{ item.description }}{% endverbatim %}</p>
+{#                                    <ul>#}
+{#                                        <li><span>1458</span> sqft</li>#}
+{#                                        <li><span>02</span> bedrooms</li>#}
+{#                                        <li><span>02</span> bathroom</li>#}
+{#                                        <li><span>$2800</span> per month</li>#}
+{#                                    </ul>#}
+                                    <div class="swiper-container slider_v2">
+                                        <div class="swiper-wrapper">
+                                            <div v-if="item.file" class="swiper-slide"><img :src="item.file" alt="" /></div>
+                                            <div v-if="item.url" class="swiper-slide"><iframe width="100%" height="100%" :src="item.url+'?rel=0&showinfo=0&autoplay=1'" allow="autoplay;"></iframe></div>
+                            {#                <div class="swiper-slide"><img src="http://placehold.it/956x520" alt="" /></div>#}
+                                {#            <div class="swiper-slide"><iframe width="100%" height="100%" src="https://www.youtube.com/embed/tgbNymZ7vqY?rel=0&showinfo=0&autoplay=1" allow="autoplay;"></iframe></div>#}
+                            {#                <div class="swiper-slide"><img src="http://placehold.it/956x520" alt="" /></div>#}
+                                        </div>
+                                        <div class="swiper-button-next swiper-button-white"></div>
+                                        <div class="swiper-button-prev swiper-button-white"></div>
                                     </div>
                                 </div>
-                                <div role="tabpanel" class="tab-pane" id="first">
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce eu scelerisque eros. Duis scelerisque, ante sed lacinia ullamcorper, erat lectus imperdiet ante, quis pharetra lectus dui in nisl. Quisque eget lorem quis ex faucibus tempor. Nullam eget interdum neque, sed sodales nulla. Mauris pharetra vestibulum velit at finibus</p>
-                                    <ul>
-                                        <li><span>1368</span> sqft</li>
-                                        <li><span>02</span> bedrooms</li>
-                                        <li><span>01</span> bathroom</li>
-                                        <li><span>$2300</span> per month</li>
-                                    </ul>
-                                    <div class="floor_img">
-                                        <img src="http://placehold.it/681x456" class="img-responsive">
-                                    </div>
-                                </div>
-                                <div role="tabpanel" class="tab-pane" id="second">
-                                    <p>Nullam eget interdum neque, sed sodales nulla. Mauris pharetra vestibulum velit at finibus Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce eu scelerisque eros. Duis scelerisque, ante sed lacinia ullamcorper, erat lectus imperdiet ante, quis pharetra lectus dui in nisl. Quisque eget lorem quis ex faucibus tempor. </p>
-                                    <ul>
-                                        <li><span>2510</span> sqft</li>
-                                        <li><span>03</span> bedrooms</li>
-                                        <li><span>03</span> bathroom</li>
-                                        <li><span>$3000</span> per month</li>
-                                    </ul>
-                                    <div class="floor_img">
-                                        <img src="http://placehold.it/681x456" class="img-responsive">
-                                    </div>
-                                </div>
+{#                                <div role="tabpanel" class="tab-pane" id="first">#}
+{#                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce eu scelerisque eros. Duis scelerisque, ante sed lacinia ullamcorper, erat lectus imperdiet ante, quis pharetra lectus dui in nisl. Quisque eget lorem quis ex faucibus tempor. Nullam eget interdum neque, sed sodales nulla. Mauris pharetra vestibulum velit at finibus</p>#}
+{#                                    <ul>#}
+{#                                        <li><span>1368</span> sqft</li>#}
+{#                                        <li><span>02</span> bedrooms</li>#}
+{#                                        <li><span>01</span> bathroom</li>#}
+{#                                        <li><span>$2300</span> per month</li>#}
+{#                                    </ul>#}
+{#                                    <div class="floor_img">#}
+{#                                        <img src="http://placehold.it/681x456" class="img-responsive">#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                                <div role="tabpanel" class="tab-pane" id="second">#}
+{#                                    <p>Nullam eget interdum neque, sed sodales nulla. Mauris pharetra vestibulum velit at finibus Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce eu scelerisque eros. Duis scelerisque, ante sed lacinia ullamcorper, erat lectus imperdiet ante, quis pharetra lectus dui in nisl. Quisque eget lorem quis ex faucibus tempor. </p>#}
+{#                                    <ul>#}
+{#                                        <li><span>2510</span> sqft</li>#}
+{#                                        <li><span>03</span> bedrooms</li>#}
+{#                                        <li><span>03</span> bathroom</li>#}
+{#                                        <li><span>$3000</span> per month</li>#}
+{#                                    </ul>#}
+{#                                    <div class="floor_img">#}
+{#                                        <img src="http://placehold.it/681x456" class="img-responsive">#}
+{#                                    </div>#}
+{#                                </div>#}
                             </div>
                         </div>
                         <div v-if="propertyDetails.nearest" class="rle_property_details_box">
@@ -335,7 +344,9 @@
                         </div>
                         <div class="rle_property_details_box">
                             <h3>Video tour</h3>
-                            <iframe src="https://www.youtube.com/embed/PPdhawk7ZRw" frameborder="0" allowfullscreen></iframe>
+                            <div v-if="propertyDetails.videos.length > 0" v-for="item in propertyDetails.videos">
+{#                                <iframe v-if="item.type === 't" :src="item.url" frameborder="0" allowfullscreen></iframe>#}
+                            </div>
                         </div>
 {#                        <div class="rle_property_details_box">#}
 {#                            <h3>Page view</h3>#}
