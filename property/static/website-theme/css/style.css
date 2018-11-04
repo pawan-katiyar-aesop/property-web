@@ -4853,7 +4853,7 @@ textarea:focus {
 	text-align: center;
 	font-size: 18px;
 	background: #fff;
-	width: 60%;
+	width: 80%;
 	/* Center slide text vertically */
 	display: -webkit-box;
 	display: -ms-flexbox;
@@ -4868,6 +4868,7 @@ textarea:focus {
 	-webkit-align-items: center;
 	align-items: center;
 	position: relative;
+	height: 90vh;
 }
 .slider_v2 .swiper-slide:after{
 	content: "";
