@@ -142,8 +142,8 @@
                     <div v-if="property" v-for="item in property" class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                         <div class="rle_property_infobox">
                             <div class="rle_property_infobox_img">
-{#                                <img v-if="item.images[0].file" :src="item.images[0].file" alt="" title="">#}
-                                <img src="http://placehold.it/370x300" alt="" title="">
+                                <img v-if="item.images.length > 0" :src="item.images[0].file" alt="" title="">
+                                <img v-else src="http://placehold.it/370x300" alt="" title="">
 {#                                <ul>#}
 {#                                    <li class="rle_green_clr">for rent</li>#}
 {#                                    <li class="rle_black_clr">hot offer</li>#}

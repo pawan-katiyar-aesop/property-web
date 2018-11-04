@@ -98,7 +98,7 @@
         <!-- Property Single Wrapper start -->
         <div class="swiper-container slider_v2">
             <div class="swiper-wrapper">
-                <div v-if="propertyDetails.images.length > 0" v-for="item in propertyDetails.images" class="swiper-slide"><img v-if="item.type === 'b'" :src="item.file" alt="" /></divv-if>
+                <div v-if="propertyDetails.images.length > 0" v-for="item in propertyDetails.images" class="swiper-slide"><img v-if="item.type === 'b'" :src="item.file" alt="" /></div>
                 <div v-if="propertyDetails.videos.length > 0" v-for="item in propertyDetails.videos" class="swiper-slide"><iframe v-if="item.type === 'b'" width="100%" height="100%" :src="item.url+'?rel=0&showinfo=0&autoplay=1'" allow="autoplay;"></iframe></div>
 {#                <div class="swiper-slide"><img src="http://placehold.it/956x520" alt="" /></div>#}
     {#            <div class="swiper-slide"><iframe width="100%" height="100%" src="https://www.youtube.com/embed/tgbNymZ7vqY?rel=0&showinfo=0&autoplay=1" allow="autoplay;"></iframe></div>#}
@@ -222,7 +222,7 @@
                             <p v-if="propertyDetails.rental_value">Property Rent: Rs. {% verbatim %}{{ propertyDetails.rental_value }}{% endverbatim %}</p>
                             <p v-if="propertyDetails.monthly_maintenance">Monthly Maintenance: Rs. {% verbatim %}{{ propertyDetails.monthly_maintenance }}{% endverbatim %}</p>
                             <p v-if="propertyDetails.security_deposit">Security Deposit: Rs. {% verbatim %}{{ propertyDetails.security_deposit }}{% endverbatim %}</p>
-                            <p v-if="propertyDetails.other_charges" v-for="item in propertyDetails.other_charges">{% verbatim %}{{ item.charge_desc }}: Rs. {{ item.amount }}{% endverbatim %}</p>
+                            <p v-if="propertyDetails.other_charges.length > 0" v-for="item in propertyDetails.other_charges">{% verbatim %}{{ item.charge_desc }}: Rs. {{ item.amount }}{% endverbatim %}</p>
                             <p v-if="propertyDetails.parking">Parking Type: <span v-html="parking_choice[propertyDetails.parking]"></span></p>
                             <p v-if="propertyDetails.parking_area">Parking Area: {% verbatim %}{{ propertyDetails.parking_area }}{% endverbatim %}</p>
                             <p v-if="propertyDetails.facing">Facing Direction: <span v-html="facing_options[propertyDetails.facing]"></span></p>
@@ -234,23 +234,22 @@
                             <p v-if="propertyDetails.beam_height">Beam Height: {% verbatim %}{{ propertyDetails.beam_height }}{% endverbatim %}</p>
                             <p v-if="propertyDetails.lease_term">Lease Term: {% verbatim %}{{ propertyDetails.lease_term }}{% endverbatim %}</p>
                             <p v-if="propertyDetails.flooring_details">Flooring Details: <span v-html="propertyDetails.flooring_details"></span></p>
-                            <p v-if="propertyDetails.ceiling_details">Ceiling Details: </p>
-                            <p v-if="propertyDetails.washroom_details">Washroom Details: &nbsp; &nbsp; WC: <span v-html="propertyDetails.washroom_details[WC]"></span> &nbsp; &nbsp; Urinals: <span v-html="propertyDetails.washroom_details[Urinals]"></span></p>
+                            <p v-if="propertyDetails.ceiling_details">Ceiling Details: <span v-html="propertyDetails.ceiling_details"></span></p>
+                            <p v-if="propertyDetails.washroom_details.length > 0">Washroom Details: &nbsp; &nbsp; WC: <span v-html="propertyDetails.washroom_details[WC]"></span> &nbsp; &nbsp; Urinals: <span v-html="propertyDetails.washroom_details[Urinals]"></span></p>
                             <p v-if="propertyDetails.landmark">Landmark: {% verbatim %}{{ propertyDetails.landmark }}{% endverbatim %}</p>
-                            <p v-if="propertyDetails.overlooking">Overlooking: <span v-for="item in propertyDetails.overlooking">{% verbatim %}{{ item }}{% endverbatim %}, </span></p>
                         </div>
                         <div v-if="propertyDetails.floor_plan.length > 0" class="rle_property_details_box">
                             <h3>Floor plan</h3>
                             <!-- Nav tabs -->
                             <ul class="nav nav-tabs" role="tablist">
-                                <li v-for="item in propertyDetails.floor_plan" role="presentation" class="active"><a :href="'#floor'+item.floor_number" :aria-controls="'floor'+item.floor_number" role="tab" data-toggle="tab" v-html="floor_choice[item.floor_number]"></a></li>
+                                <li v-if="propertyDetails.floor_plan.length > 0" v-for="item in propertyDetails.floor_plan" role="presentation" class="active"><a :href="'#floor'+item.floor_number" :aria-controls="'floor'+item.floor_number" role="tab" data-toggle="tab" v-html="floor_choice[item.floor_number]"></a></li>
 {#                                <li role="presentation"><a href="#first" aria-controls="first" role="tab" data-toggle="tab">first floor</a></li>#}
 {#                                <li role="presentation"><a href="#second" aria-controls="second" role="tab" data-toggle="tab">second floor</a></li>#}
                             </ul>
                             <!-- Tab panes -->
                             <div class="tab-content">
-                                <div v-for="item in propertyDetails.floor_plan" role="tabpanel" class="tab-pane active" :id="'floor'+item.floor_number">
-                                    <p>{% verbatim %}{{ item.description }}{% endverbatim %}</p>
+                                <div v-for="items in propertyDetails.floor_plan" role="tabpanel" class="tab-pane active" :id="'floor'+items.floor_number">
+                                    <p>{% verbatim %}{{ items.description }}{% endverbatim %}</p>
 {#                                    <ul>#}
 {#                                        <li><span>1458</span> sqft</li>#}
 {#                                        <li><span>02</span> bedrooms</li>#}
@@ -259,8 +258,8 @@
 {#                                    </ul>#}
                                     <div class="swiper-container slider_v2">
                                         <div class="swiper-wrapper">
-                                            <div v-if="item.file" class="swiper-slide"><img :src="item.file" alt="" /></div>
-                                            <div v-if="item.url" class="swiper-slide"><iframe width="100%" height="100%" :src="item.url+'?rel=0&showinfo=0&autoplay=1'" allow="autoplay;"></iframe></div>
+                                            <div v-if="items.images.length > 0" v-for="item in items.images" class="swiper-slide"><img :src="item.file" alt="" /></div>
+                                            <div v-if="items.videos.length > 0" v-for="item in items.videos" class="swiper-slide"><iframe v-if="item.type === 'f'" width="100%" height="100%" :src="item.url+'?rel=0&showinfo=0&autoplay=1'" allow="autoplay;"></iframe></div>
                             {#                <div class="swiper-slide"><img src="http://placehold.it/956x520" alt="" /></div>#}
                                 {#            <div class="swiper-slide"><iframe width="100%" height="100%" src="https://www.youtube.com/embed/tgbNymZ7vqY?rel=0&showinfo=0&autoplay=1" allow="autoplay;"></iframe></div>#}
                             {#                <div class="swiper-slide"><img src="http://placehold.it/956x520" alt="" /></div>#}
@@ -345,7 +344,7 @@
                         <div class="rle_property_details_box">
                             <h3>Video tour</h3>
                             <div v-if="propertyDetails.videos.length > 0" v-for="item in propertyDetails.videos">
-{#                                <iframe v-if="item.type === 't" :src="item.url" frameborder="0" allowfullscreen></iframe>#}
+                                <iframe v-if="item.type === 't'" :src="item.url+'?rel=0&showinfo=0&autoplay=1'" frameborder="0" allowfullscreen></iframe>
                             </div>
                         </div>
 {#                        <div class="rle_property_details_box">#}
