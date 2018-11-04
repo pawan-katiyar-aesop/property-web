@@ -344,7 +344,7 @@
                         <div class="rle_property_details_box">
                             <h3>Video tour</h3>
                             <div v-if="propertyDetails.videos.length > 0" v-for="item in propertyDetails.videos">
-                                <iframe v-if="item.type === 't'" :src="item.url+'?rel=0&showinfo=0&autoplay=1'" frameborder="0" allowfullscreen></iframe>
+                                <iframe v-if="item.type === 't'" :src="item.url+'?rel=0&showinfo=0&autoplay=0'" width="100%" height="100%" frameborder="0" allowfullscreen></iframe>
                             </div>
                         </div>
 {#                        <div class="rle_property_details_box">#}
