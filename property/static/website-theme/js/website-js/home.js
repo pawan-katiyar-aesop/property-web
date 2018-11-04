@@ -21,7 +21,6 @@ let website_home_app = new Vue({
             axios.get('/api/real_estate/property/top/')
              .then(function (response) {
                  that.property = response.data.results;
-                 debugger;
              })
              .catch(function (response) {
 
