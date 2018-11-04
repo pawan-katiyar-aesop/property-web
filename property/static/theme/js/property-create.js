@@ -253,6 +253,7 @@ let property_create_app = new Vue({
             that.propertyVideos.splice(index, 1)
         },
         addVideoUrlFieldsFloor:function(){
+            
             let that = this;
             let urls_dict_floor = {};
             const index = generate_unique_number();
@@ -260,7 +261,7 @@ let property_create_app = new Vue({
             urls_dict_floor["index"] = index;
             urls_dict_floor["title"] = "";
             urls_dict_floor["type"] = "f";
-            that.floorPlanListOfVideoURLs[parseInt(this.currentEditingFloor)].push(urls_dict_floor);
+            //that.floorPlanListOfVideoURLs[parseInt(this.currentEditingFloor)].push(urls_dict_floor);
             that.floorPlanEdit.videos.push(urls_dict_floor)
         },
         removeVideoUrlFieldsFloor:function(index){
@@ -519,7 +520,6 @@ let property_create_app = new Vue({
                 }
 
             });
-
             $("#floor-plan-modal").modal('hide');
 
 
@@ -540,13 +540,17 @@ let property_create_app = new Vue({
         },
         populateFloorPlanEdit : function(floor){
             let that = this;
+            
             that.floorPlanEdit.description = that.floorPlanListOfDescriptions[parseInt(that.currentEditingFloor)];
             that.floorPlanEdit.imageList = that.floorPlanListOfImagesList[parseInt(that.currentEditingFloor)];
             that.floorPlanEdit.videos = that.floorPlanListOfVideoURLs[parseInt(that.currentEditingFloor)];
         }
+
     },
     watch: {
-
+        currentEditingFloor:function (newQuery, oldQuery) {
+            this.populateFloorPlanEdit()
+        }
     },
     mounted() {
         this.get_country_codes();

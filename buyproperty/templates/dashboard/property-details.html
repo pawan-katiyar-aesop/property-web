@@ -153,22 +153,6 @@
                     </div>
                 </div>
 
-                    <!--
-                    <div class="card card-default mt-30">
-
-                    <div class="card-header">
-                        <b>Video Tour</b>
-                    </div>
-
-                    <div class="card-body">
-
-                        <div class="form-group">
-                            <label for="video-tour-url">Video URL</label>
-                            <input class="form-control" id="video-tour-url"  type="text" >
-                        </div>
-                    </div>
-                </div>
-                    -->
                     <div class="card card-default mt-30">
                         <div class="card-header">
                             <b>Address Details</b>
@@ -572,20 +556,6 @@
                             <b>Floor Plan</b>
                         </div>
                         <div class="card-body" v-if="property">
-                            <!--
-                            <a href="#" class="float-left mt-20" data-toggle="modal" data-target="#floor-plan-modal">
-                                0
-                            </a>
-                            <a href="#" class="float-left mt-20" data-toggle="modal" data-target="#floor-plan-modal">
-                                1
-                            </a>
-                            <a href="#" class="float-left mt-20" data-toggle="modal" data-target="#floor-plan-modal">
-                                2
-                            </a>
-                            <a href="#" class="float-left mt-20" data-toggle="modal" data-target="#floor-plan-modal">
-                                3
-                            </a>
-                            -->
                             <div><button class="btn btn-primary" data-toggle="modal" data-target="#floor-plan-modal">Edit Floor Plans</button></div>
 
                         </div>
@@ -746,13 +716,5 @@
 {% endblock %}
 {% block page_level_scripts %}
     <script src="{% static 'theme/js/property-details.js' %}"></script>
-
-
     <script src="{% static 'theme/js/shortcuts.js' %}"></script>
-    <script>
-    $("#floor").on('change', function() {
-        $("#floor-plan-modal").modal('show');
-    });
-</script>
-
 {% endblock %}

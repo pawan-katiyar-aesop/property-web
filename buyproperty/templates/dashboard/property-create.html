@@ -568,27 +568,7 @@
                             <b>Floor Plan</b>
                         </div>
                         <div class="card-body">
-                            <!--
-                            <a href="#" class="float-left mt-20" data-toggle="modal" data-target="#floor-plan-modal">
-                                0
-                            </a>
-                            <a href="#" class="float-left mt-20" data-toggle="modal" data-target="#floor-plan-modal">
-                                1
-                            </a>
-                            <a href="#" class="float-left mt-20" data-toggle="modal" data-target="#floor-plan-modal">
-                                2
-                            </a>
-                            <a href="#" class="float-left mt-20" data-toggle="modal" data-target="#floor-plan-modal">
-                                3
-                            </a>
-                            -->
-
-                            <select class="form-control"  id="floor" type="text" v-model="currentEditingFloor">
-                                <option value="0">Ground</option>
-                                <option value="1">First</option>
-                                <option value="2">Second</option>
-                                <option value="3">Third</option>
-                            </select>
+                            <div><button class="btn btn-primary" data-toggle="modal" data-target="#floor-plan-modal">Create/Edit Floor Plans</button></div>
 
                         </div>
 
@@ -607,7 +587,13 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <div class="modal-title">
-                            <h4>Create a new floor plan for floor : {% verbatim %}{{ currentEditingFloor }}{% endverbatim %}</h4>
+                            <h4>Choose Floor</h4>
+                            <select class="form-control"  id="floor"  v-model="currentEditingFloor" >
+                                <option value="0" >Ground</option>
+                                <option value="1" >First</option>
+                                <option value="2" >Second</option>
+                                <option value="3" >Third</option>
+                            </select>
                             <div class="float-right"><a href="" data-dismiss="modal"><i class="fa fa-times"></i></a></div>
                         </div>
                     </div>
@@ -728,9 +714,4 @@
     </div>
     <script src="{% static 'theme/js/property-create.js' %}"></script>
     <script src="{% static 'theme/js/shortcuts.js' %}" async></script>
-<script>
-    $("#floor").on('change', function() {
-        $("#floor-plan-modal").modal('show');
-    });
-</script>
 {% endblock %}
