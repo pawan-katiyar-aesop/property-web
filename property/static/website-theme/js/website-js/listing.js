@@ -17,6 +17,9 @@ let website_listing_app = new Vue({
                  .then(function (response) {
                      that.searchResults = response.data.results;
                      that.allProperties = that.searchResults;
+                     that.searchResults = _.sortBy(that.searchResults, function (item) {
+                         return -item.id;
+                     });
                      that.processing = false;
                      Cookies.set("token", '');
 
@@ -74,8 +77,7 @@ let website_listing_app = new Vue({
             }
             else if (filter === "budget") {
                 that.searchResults = _.filter(that.allProperties, function (item) {
-                    let result_list = parseFloat(item.rental_value) <= parseFloat(that.filterInput);
-                    return result_list;
+                    return parseFloat(item.rental_value) <= parseFloat(that.filterInput);
 
                 });
             }

@@ -43,6 +43,12 @@ let website_details_app = new Vue({
             'wood': 'Wooden',
             'carpet': 'Carpet',
             'bare': 'Bare'
+        },
+        floor_choice: {
+            0: 'GROUND FLOOR',
+            1: 'FIRST FLOOR',
+            2: 'SECOND FLOOR',
+            3: 'THIRD FLOOR'
         }
 
     },
@@ -54,7 +60,7 @@ let website_details_app = new Vue({
              .then(function (response) {
                  that.propertyDetails = response.data;
                  that.processing = false;
-
+                 debugger;
              })
              .catch(function (response) {
                 alert("Failed fetching data for property details.");
