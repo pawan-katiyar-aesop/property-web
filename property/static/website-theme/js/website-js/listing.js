@@ -5,6 +5,8 @@ let website_listing_app = new Vue({
         searchResults: '',
         allProperties: '',
         filterInput: '',
+        count: 0,
+        pageNum: 1,
         processing: false
 
     },
@@ -29,9 +31,12 @@ let website_listing_app = new Vue({
                     that.processing = false;
                  });
             } else {
-                axios.get('/api/property/')
+                let url = '/api/property/?page_size=5&page='+that.pageNum;
+                axios.get(url)
                  .then(function (response) {
                      that.searchResults = response.data.results;
+                     that.count = response.data.count;
+                     that.count = Math.ceil(that.count/5);
                      that.allProperties = that.searchResults;
                      that.searchResults = _.sortBy(that.searchResults, function (item) {
                          return -item.id;
@@ -95,6 +100,18 @@ let website_listing_app = new Vue({
         productDetails: function (property_id) {
             Cookies.set("property-id-for-details", property_id);
             window.location = '/property-details/';
+        },
+        nextPage: function () {
+            this.pageNum = this.pageNum + 1;
+            this.get_searchResults();
+        },
+        prevPage: function () {
+            this.pageNum = this.pageNum - 1;
+            this.get_searchResults();
+        },
+        staticPage: function (page) {
+            this.pageNum = page;
+            this.get_searchResults();
         }
     },
     watch: {
