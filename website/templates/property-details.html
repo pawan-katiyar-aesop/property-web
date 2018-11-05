@@ -99,6 +99,7 @@
         <div class="swiper-container slider_v2">
             <div class="swiper-wrapper">
                 <div v-if="propertyDetails.images.length > 0" v-for="item in propertyDetails.images" class="swiper-slide"><img v-if="item.type === 'b'" :src="item.file" alt="" /></div>
+                <div v-else class="swiper-slide"><img src="http://placehold.it/956x520" alt="" /></div>
                 <div v-if="propertyDetails.videos.length > 0" v-for="item in propertyDetails.videos" class="swiper-slide"><iframe v-if="item.type === 'b'" width="100%" height="100%" :src="item.url+'?rel=0&showinfo=0&autoplay=1'" allow="autoplay;"></iframe></div>
 {#                <div class="swiper-slide"><img src="http://placehold.it/956x520" alt="" /></div>#}
     {#            <div class="swiper-slide"><iframe width="100%" height="100%" src="https://www.youtube.com/embed/tgbNymZ7vqY?rel=0&showinfo=0&autoplay=1" allow="autoplay;"></iframe></div>#}
@@ -222,7 +223,7 @@
                             <p v-if="propertyDetails.rental_value">Property Rent: Rs. {% verbatim %}{{ propertyDetails.rental_value }}{% endverbatim %}</p>
                             <p v-if="propertyDetails.monthly_maintenance">Monthly Maintenance: Rs. {% verbatim %}{{ propertyDetails.monthly_maintenance }}{% endverbatim %}</p>
                             <p v-if="propertyDetails.security_deposit">Security Deposit: Rs. {% verbatim %}{{ propertyDetails.security_deposit }}{% endverbatim %}</p>
-                            <p v-if="propertyDetails.other_charges.length > 0" v-for="item in propertyDetails.other_charges">{% verbatim %}{{ item.charge_desc }}: Rs. {{ item.amount }}{% endverbatim %}</p>
+                            <p v-if="propertyDetails.other_charges !== null" v-for="key, value in propertyDetails.other_charges"><span>{% verbatim %}{{ value }}: Rs. {{ key }}{% endverbatim %}</span></p>
                             <p v-if="propertyDetails.parking">Parking Type: <span v-html="parking_choice[propertyDetails.parking]"></span></p>
                             <p v-if="propertyDetails.parking_area">Parking Area: {% verbatim %}{{ propertyDetails.parking_area }}{% endverbatim %}</p>
                             <p v-if="propertyDetails.facing">Facing Direction: <span v-html="facing_options[propertyDetails.facing]"></span></p>
@@ -235,7 +236,7 @@
                             <p v-if="propertyDetails.lease_term">Lease Term: {% verbatim %}{{ propertyDetails.lease_term }}{% endverbatim %}</p>
                             <p v-if="propertyDetails.flooring_details">Flooring Details: <span v-html="propertyDetails.flooring_details"></span></p>
                             <p v-if="propertyDetails.ceiling_details">Ceiling Details: <span v-html="propertyDetails.ceiling_details"></span></p>
-                            <p v-if="propertyDetails.washroom_details.length > 0">Washroom Details: &nbsp; &nbsp; WC: <span v-html="propertyDetails.washroom_details[WC]"></span> &nbsp; &nbsp; Urinals: <span v-html="propertyDetails.washroom_details[Urinals]"></span></p>
+                            <p v-if="propertyDetails.washroom_details !== null">Washroom Details: &nbsp; &nbsp; <span v-if="propertyDetails.washroom_details.WC">WC: {% verbatim %}{{ propertyDetails.washroom_details.WC }}{% endverbatim %}</span> &nbsp; &nbsp; <span v-if="propertyDetails.washroom_details.Urinals">Urinals: {% verbatim %}{{ propertyDetails.washroom_details.Urinals }}{% endverbatim %}</span></p>
                             <p v-if="propertyDetails.landmark">Landmark: {% verbatim %}{{ propertyDetails.landmark }}{% endverbatim %}</p>
                         </div>
                         <div v-if="propertyDetails.floor_plan.length > 0" class="rle_property_details_box">
@@ -259,8 +260,8 @@
                                     <div class="swiper-container slider_v2">
                                         <div class="swiper-wrapper">
                                             <div v-if="items.images.length > 0" v-for="item in items.images" class="swiper-slide"><img :src="item.file" alt="" /></div>
+                                            <div v-else class="swiper-slide"><img src="http://placehold.it/956x520" alt="" /></div>
                                             <div v-if="items.videos.length > 0" v-for="item in items.videos" class="swiper-slide"><iframe v-if="item.type === 'f'" width="100%" height="100%" :src="item.url+'?rel=0&showinfo=0&autoplay=1'" allow="autoplay;"></iframe></div>
-                            {#                <div class="swiper-slide"><img src="http://placehold.it/956x520" alt="" /></div>#}
                                 {#            <div class="swiper-slide"><iframe width="100%" height="100%" src="https://www.youtube.com/embed/tgbNymZ7vqY?rel=0&showinfo=0&autoplay=1" allow="autoplay;"></iframe></div>#}
                             {#                <div class="swiper-slide"><img src="http://placehold.it/956x520" alt="" /></div>#}
                                         </div>
