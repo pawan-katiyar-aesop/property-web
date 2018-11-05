@@ -274,16 +274,26 @@
                                         <a v-if="pageNum > 1" v-on:click="prevPage"><i class="fa fa-angle-double-left" aria-hidden="true"></i></a>
                                         <a v-else><i class="fa fa-angle-double-left" aria-hidden="true"></i></a>
                                     </li>
-                                    <li><a v-if="count >= 1" v-on:click="staticPage(1)" href="#">01</a></li>
-                                    <li><a v-if="count >= 2" v-on:click="staticPage(2)" href="#">02</a></li>
-                                    <li><a v-if="count >= 3" v-on:click="staticPage(3)" href="#">03</a></li>
-                                    <li><a v-if="count >= 4" v-on:click="staticPage(4)" href="#">04</a></li>
-                                    <li><a v-if="count >= 5" v-on:click="staticPage(5)" href="#">05</a></li>
-                                    <li><a v-if="count >= 6" v-on:click="staticPage(6)" href="#">06</a></li>
-                                    <li><a v-if="count >= 7" v-on:click="staticPage(7)" href="#">07</a></li>
-                                    <li><a v-if="count >= 8" v-on:click="staticPage(8)" href="#">08</a></li>
-                                    <li><a v-if="count >= 9" v-on:click="staticPage(9)" href="#">09</a></li>
-                                    <li><a v-if="count >= 10" v-on:click="staticPage(10)" href="#">10</a></li>
+                                    <li v-if="pageNum === 1" class="active"><a v-if="count >= 1" v-on:click="staticPage(1)" href="#">01</a></li>
+                                    <li v-else><a v-if="count >= 1" v-on:click="staticPage(1)" href="#">01</a></li>
+                                    <li v-if="pageNum === 2" class="active"><a v-if="count >= 2" v-on:click="staticPage(2)" href="#">02</a></li>
+                                    <li v-else><a v-if="count >= 2" v-on:click="staticPage(2)" href="#">02</a></li>
+                                    <li v-if="pageNum === 3" class="active"><a v-if="count >= 3" v-on:click="staticPage(3)" href="#">03</a></li>
+                                    <li v-else><a v-if="count >= 3" v-on:click="staticPage(3)" href="#">03</a></li>
+                                    <li v-if="pageNum === 4" class="active"><a v-if="count >= 4" v-on:click="staticPage(4)" href="#">04</a></li>
+                                    <li v-else><a v-if="count >= 4" v-on:click="staticPage(4)" href="#">04</a></li>
+                                    <li v-if="pageNum === 5" class="active"><a v-if="count >= 5" v-on:click="staticPage(5)" href="#">05</a></li>
+                                    <li v-else><a v-if="count >= 5" v-on:click="staticPage(5)" href="#">05</a></li>
+                                    <li v-if="pageNum === 6" class="active"><a v-if="count >= 6" v-on:click="staticPage(6)" href="#">06</a></li>
+                                    <li v-else><a v-if="count >= 6" v-on:click="staticPage(6)" href="#">06</a></li>
+                                    <li v-if="pageNum === 7" class="active"><a v-if="count >= 7" v-on:click="staticPage(7)" href="#">07</a></li>
+                                    <li v-else><a v-if="count >= 7" v-on:click="staticPage(7)" href="#">07</a></li>
+                                    <li v-if="pageNum === 8" class="active"><a v-if="count >= 8" v-on:click="staticPage(8)" href="#">08</a></li>
+                                    <li v-else><a v-if="count >= 8" v-on:click="staticPage(8)" href="#">08</a></li>
+                                    <li v-if="pageNum === 9" class="active"><a v-if="count >= 9" v-on:click="staticPage(9)" href="#">09</a></li>
+                                    <li v-else><a v-if="count >= 9" v-on:click="staticPage(9)" href="#">09</a></li>
+                                    <li v-if="pageNum === 10" class="active"><a v-if="count >= 10" v-on:click="staticPage(10)" href="#">10</a></li>
+                                    <li v-else><a v-if="count >= 10" v-on:click="staticPage(10)" href="#">10</a></li>
                                     <li class="active">
                                         <a v-if="pageNum <= count" v-on:click="nextPage" href="#"><i class="fa fa-angle-double-right" aria-hidden="true"></i> <span class="sr-only">(current)</span></a>
                                         <a v-else><i class="fa fa-angle-double-right" aria-hidden="true"></i> <span class="sr-only">(current)</span></a>

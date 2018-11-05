@@ -1,7 +1,7 @@
 let website_details_app = new Vue({
     el: "#website-details-app",
     data: {
-        propertyId: Cookies.get("property-id-for-details"),
+        propertyId: 0,
         propertyDetails: '',
         clientName: '',
         clientEmail: '',
@@ -56,6 +56,7 @@ let website_details_app = new Vue({
         get_product_details: function () {
             let that = this;
             that.processing = true;
+            that.propertyId = this.getUrlParameter('id');
             axios.get('/api/property/'+that.propertyId)
              .then(function (response) {
                  that.propertyDetails = response.data;
@@ -84,6 +85,20 @@ let website_details_app = new Vue({
                 alert("error occured.");
                 // show_notification("danger", "A fatal error occurred, and this page might not function correctly.")
             })
+        },
+        getUrlParameter : function (sParam) {
+            var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+                sURLVariables = sPageURL.split('&'),
+                sParameterName,
+                i;
+
+            for (i = 0; i < sURLVariables.length; i++) {
+                sParameterName = sURLVariables[i].split('=');
+
+                if (sParameterName[0] === sParam) {
+                    return sParameterName[1] === undefined ? true : sParameterName[1];
+                }
+            }
         }
     },
     watch: {
