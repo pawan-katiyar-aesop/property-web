@@ -96,15 +96,6 @@
             </div>
         </div>
         <!-- Property Single Wrapper start -->
-{#        <div class="swiper-container slider_v2">#}
-{#            <div class="swiper-wrapper">#}
-{#                <div class="swiper-slide"><img src="http://placehold.it/956x520" alt="" /></div>#}
-{#                <div class="swiper-slide"><img src="http://placehold.it/956x520" alt="" /></div>#}
-{#                <div class="swiper-slide"><img src="http://placehold.it/956x520" alt="" /></div>#}
-{#            </div>#}
-{#            <div class="swiper-button-next swiper-button-white"></div>#}
-{#            <div class="swiper-button-prev swiper-button-white"></div>#}
-{#        </div>#}
         <div class="swiper-container slider_v2">
             <div class="swiper-wrapper">
                 <div v-if="propertyDetails.images.length > 0" v-for="item in propertyDetails.images" class="swiper-slide"><img v-if="item.type === 'b'" :src="item.file" alt="" /></div>
