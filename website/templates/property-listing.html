@@ -272,7 +272,7 @@
                                 <ul class="pagination">
                                     <li>
                                         <a v-if="pageNum > 1" v-on:click="prevPage"><i class="fa fa-angle-double-left" aria-hidden="true"></i></a>
-                                        <a v-else href="#"><i class="fa fa-angle-double-left" aria-hidden="true"></i></a>
+                                        <a v-else><i class="fa fa-angle-double-left" aria-hidden="true"></i></a>
                                     </li>
                                     <li><a v-if="count >= 1" v-on:click="staticPage(1)" href="#">01</a></li>
                                     <li><a v-if="count >= 2" v-on:click="staticPage(2)" href="#">02</a></li>
@@ -285,8 +285,8 @@
                                     <li><a v-if="count >= 9" v-on:click="staticPage(9)" href="#">09</a></li>
                                     <li><a v-if="count >= 10" v-on:click="staticPage(10)" href="#">10</a></li>
                                     <li class="active">
-                                        <a v-if="pageNum <= count" v-on:click="nextPage" href="#"><i class="fa fa-angle-double-right" aria-hidden="true"></i> <span class="sr-only">(current)</span></a></li>
-                                        <a v-else href="#"><i class="fa fa-angle-double-right" aria-hidden="true"></i> <span class="sr-only">(current)</span></a>
+                                        <a v-if="pageNum <= count" v-on:click="nextPage" href="#"><i class="fa fa-angle-double-right" aria-hidden="true"></i> <span class="sr-only">(current)</span></a>
+                                        <a v-else><i class="fa fa-angle-double-right" aria-hidden="true"></i> <span class="sr-only">(current)</span></a>
                                     </li>
                                 </ul>
                             </nav>
