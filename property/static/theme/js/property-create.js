@@ -327,7 +327,7 @@ let property_create_app = new Vue({
 
             that.nearestId += 1;
         },
-        get_country_codes: function(){
+        loadCountryCodes: function(){
             let that = this;
             let country_codes = $('#select-country-code');
             country_codes.empty();
@@ -339,7 +339,7 @@ let property_create_app = new Vue({
             // Populate dropdown with list of country codes
             $.getJSON(url, function (data) {
               $.each(data, function (key, entry) {
-                country_codes.append($('<option></option>').attr('value', entry.id).text(entry.code));
+                country_codes.append($('<option></option>').attr('value', entry.id).text(entry.name));
               })
             });
         },
@@ -553,7 +553,7 @@ let property_create_app = new Vue({
         }
     },
     mounted() {
-        this.get_country_codes();
+        this.loadCountryCodes();
         this.loadOverlooking();
     },
     computed: {

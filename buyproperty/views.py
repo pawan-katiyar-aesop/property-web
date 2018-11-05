@@ -320,7 +320,7 @@ class CountryCodeListView(APIView):
     from country_code import country_code_data
 
     def format_country_code_data(self):
-        return [{"code": country_code["code"], "id": country_code["code"]} for country_code in self.country_code_data]
+        return [{"name": country_code["name"], "id": country_code["dial_code"]} for country_code in self.country_code_data]
 
     def get(self, request):
         return Response(self.format_country_code_data(), status=status.HTTP_200_OK)

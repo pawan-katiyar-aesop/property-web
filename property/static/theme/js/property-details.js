@@ -34,7 +34,8 @@ let property_detail_app = new Vue({
             url:'',
             type:'',
             title:''
-        }
+        },
+        countryCode : ''
     }
     ,
     methods:{
@@ -55,17 +56,15 @@ let property_detail_app = new Vue({
         getPropertyDetails : function () {
             let that = this;
             this.processing = true;
+
             that.pk = this.getUrlParameter('p');
             axios.get('/api/property/'+that.pk+"/")
                 .then(function (response) {
                 that.property = response.data;
                 that.propertyImages.imageList = that.property.images;
                 console.log("--------This Page Property-------",that.property);
-                that.loadCountryCodes();
-                that.get_overlooking();
                 that.loadOtherCharges();
-
-
+                that.countryCode = that.countryCodes[_.indexOf(_.pluck(that.countryCodes,'id'),that.property.country_code)]['name'];
                 that.processing = false;
 
 
@@ -93,6 +92,7 @@ let property_detail_app = new Vue({
                 return
             }
             that.populateCharges();
+            that.populateCountryCode();
             // that.populateNearest()
             const data  = {
                 "property_name": that.property.property_name,
@@ -140,7 +140,6 @@ let property_detail_app = new Vue({
                 "nearest":that.nearest,
                 "videos":that.property.videos
             };
-
             axios.put("/api/property/"+parseInt(that.pk)+"/" ,data)
             .then(function (response) {
                 alert( "Property has been successfully updated");
@@ -224,6 +223,12 @@ let property_detail_app = new Vue({
                 '                                        </div>');
 
             that.nearestId += 1;
+        },
+        populateCountryCode : function(){
+          let that = this;
+          that.property.country_code = that.countryCodes[_.indexOf(_.pluck(that.countryCodes,'name'),that.countryCode)]['id'];
+          console.log(that.property.country_code);
+
         },
         populateCharges :function(){
             let that=this;
@@ -501,7 +506,10 @@ let property_detail_app = new Vue({
         },
         unlinkFloorPlan: function () {
             let that = this;
-            
+            if (that.property.floor_plan.length===1){
+                alert("Sorry, this is your only floor plan, deleting not allowed");
+                return
+            }
             axios.delete("/api/floor_plan/"+parseInt(that.floorPlanEdit['id'])+"/")
                 .then(function (response) {
                     alert("Updated floor plan!");
@@ -559,6 +567,8 @@ let property_detail_app = new Vue({
         }
     },
     mounted(){
+        this.loadCountryCodes();
+        this.get_overlooking();
         this.getPropertyDetails();
         this.loadOverlooking()
 

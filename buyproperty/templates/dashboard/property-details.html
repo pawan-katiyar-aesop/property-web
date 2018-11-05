@@ -43,8 +43,8 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="property-country_code">Country Code<sup  style="color: red;">*</sup></label>
-                                        <select class="form-control form-select select-country_code" id="property-country_code"  v-model="property.country_code" name="property_country_code" required>
-                                            <option v-for="code in countryCodes">{% verbatim %}{{ code.code }}{% endverbatim %}</option>
+                                        <select class="form-control form-select select-country_code" id="property-country_code"  v-model="countryCode" name="property_country_code" required>
+                                            <option v-for="(value,key,index) in countryCodes" id="value.id">{% verbatim %}{{ value.name }}{% endverbatim %}</option>
                                         </select>
                                     </div>
                                 </div>
@@ -508,7 +508,7 @@
                                         <input type="number" class="form-control mr-10" id="property-units_on_floor" v-model="property.units_on_floor"/>
                                     </div>
                                     <div class="form-group">
-                                        <label for="property-parking-area">Parking Area</label>
+                                        <label for="property-parking-area">Available Parking Space</label>
                                         <input type="number" class="form-control mr-10" id="property-parking-area" v-model="property.parking_area"/>
                                     </div>
                                     <div class="form-group">
