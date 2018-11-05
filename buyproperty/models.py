@@ -159,19 +159,6 @@ class Overlooking(models.Model):
         return overl
 
 
-class OtherCharges(models.Model):
-
-    class Meta:
-        verbose_name = "Other Charge"
-        verbose_name_plural = "Other Charges"
-
-    charge_desc = models.CharField(blank=True, null=True, max_length=100, default="default key")
-    amount = models.DecimalField(max_digits=12, decimal_places=2)
-
-    def __str__(self):
-        return str(self.charge_desc) if self.charge_desc else "No charge desc"
-
-
 class Property(models.Model):
 
     class Meta:
