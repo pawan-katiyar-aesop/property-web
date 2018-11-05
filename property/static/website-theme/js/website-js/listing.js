@@ -31,12 +31,12 @@ let website_listing_app = new Vue({
                     that.processing = false;
                  });
             } else {
-                let url = '/api/property/?page_size=5&page='+that.pageNum;
+                let url = '/api/property/?page_size=20&page='+that.pageNum;
                 axios.get(url)
                  .then(function (response) {
                      that.searchResults = response.data.results;
                      that.count = response.data.count;
-                     that.count = Math.ceil(that.count/5);
+                     that.count = Math.ceil(that.count/20);
                      that.allProperties = that.searchResults;
                      that.searchResults = _.sortBy(that.searchResults, function (item) {
                          return -item.id;
