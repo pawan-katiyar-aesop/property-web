@@ -429,12 +429,12 @@ let property_create_app = new Vue({
                         i++;
                     }
                     let actualSize = (Math.round(size * 100) / 100);
-                    if (i>0 && actualSize > 100) {
-                        alert("File size must be less than 10 mb, this file is too big " + actualSize + " " + unitArray[i]);
+                    if (i>0 && actualSize > 500) {
+                        alert("File size must be less than 500 kb, this file is too big " + actualSize + " " + unitArray[i]);
                         return
                     }
                     // Generate unique ID for all images
-                    let image_id = 1212;
+                    let image_id = generate_unique_number();;
 
                     // Read image and append into doc
                     let reader = new FileReader();
@@ -472,12 +472,12 @@ let property_create_app = new Vue({
                         i++;
                     }
                     let actualSize = (Math.round(size * 100) / 100);
-                    if (i>0 && actualSize > 100) {
-                        alert("File size must be less than 10 mb, this file is too big " + actualSize + " " + unitArray[i]);
+                    if (i>0 && actualSize > 500) {
+                        alert("File size must be less than 500 kb, this file is too big " + actualSize + " " + unitArray[i]);
                         return
                     }
                     // Generate unique ID for all images
-                    let image_id = 1212;
+                    let image_id = generate_unique_number();;
 
                     // Read image and append into doc
                     let reader = new FileReader();
