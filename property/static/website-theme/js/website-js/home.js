@@ -27,8 +27,8 @@ let website_home_app = new Vue({
              });
         },
         get_searchResults: function () {
-            Cookies.set("token", this.searchInput);
-            window.location = '/property-listing';
+            let that = this;
+            window.location = '/property-listing/?search='+that.searchInput;
         },
         get_country_codes: function(){
             let that = this;
