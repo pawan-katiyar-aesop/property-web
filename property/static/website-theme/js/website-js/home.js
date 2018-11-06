@@ -46,8 +46,9 @@ let website_home_app = new Vue({
             // Populate dropdown with list of country codes
             $.getJSON(url, function (data) {
               $.each(data, function (key, entry) {
-                country_codes.append($('<option></option>').attr('value', entry.id).text(entry.code));
-                agent_country_codes.append($('<option></option>').attr('value', entry.id).text(entry.code));
+                  // debugger;
+                country_codes.append($('<option></option>').attr('value', entry.id).text(entry.name));
+                agent_country_codes.append($('<option></option>').attr('value', entry.id).text(entry.name));
               })
             });
         },
