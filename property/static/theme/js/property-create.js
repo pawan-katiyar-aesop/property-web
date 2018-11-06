@@ -370,7 +370,6 @@ let property_create_app = new Vue({
                 }
             },
                 placeholder: "overlooking",
-                theme: "classic"
             }).on('select2:selecting select2:unselecting', function (e) {
                 if (e.params.name === 'select') {
                     that.newProperty.overlookingList.push(e.params.args.data.id);

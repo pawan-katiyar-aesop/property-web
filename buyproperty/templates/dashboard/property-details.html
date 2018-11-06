@@ -312,7 +312,7 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <select name="overlooking" class="form-control form-select" id="select-overlooking" multiple="multiple">
-                                                <option v-for="option in overlookingOptions" :value="option.id">{% verbatim %} {{ option.name }}{% endverbatim %}</option>
+                                                <option v-for="option in jsonData.results" :value="option.id" :selected="option.selected">{% verbatim %} {{ option.name }}{% endverbatim %}</option>
 
                                             </select>
                                         </div>
