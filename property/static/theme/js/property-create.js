@@ -361,7 +361,7 @@ let property_create_app = new Vue({
                 },
                 processResults: function (data) {
                     const processed_data = $.map(data.results, function (obj) {
-                        obj.text = obj['name']
+                        obj.text = obj['name'];
                         return obj;
                     });
                     return {

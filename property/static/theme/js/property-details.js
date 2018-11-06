@@ -35,7 +35,8 @@ let property_detail_app = new Vue({
             type:'',
             title:''
         },
-        countryCode : ''
+        countryCode : '',
+        selectedOverlooking:[]
     }
     ,
     methods:{
@@ -66,13 +67,18 @@ let property_detail_app = new Vue({
                 that.loadOtherCharges();
                 that.countryCode = that.countryCodes[_.indexOf(_.pluck(that.countryCodes,'id'),that.property.country_code)]['name'];
                 that.processing = false;
+                that.loadOverlooking();
 
 
-         })
-         .catch(function (response) {
-            alert("Failed fetching data for id : "+that.pk);
-            that.processing = false;
-         });
+            })
+            .catch(function (response) {
+                alert("Failed fetching data for id : "+that.pk);
+                that.processing = false;
+            })
+                .finally(function (response) {
+                that.initSelect2();
+                })
+                ;
         },
         validateMandatoryFields:function(){
           let that = this;
@@ -93,7 +99,7 @@ let property_detail_app = new Vue({
             }
             that.populateCharges();
             that.populateCountryCode();
-            // that.populateNearest()
+            that.populateNearest();
             const data  = {
                 "property_name": that.property.property_name,
                 "description": that.property.description,
@@ -131,7 +137,7 @@ let property_detail_app = new Vue({
                 "lease_term": that.property.lease_term,
                 "carpet_area": that.property.carpet_area,
                 "landmark": that.property.landmark,
-                "overlooking": that.property.overlooking,
+                //"overlooking": that.property.overlooking,
                 "buildup_area":that.property.buildup_area,
                 "country_code":that.property.country_code,
                 "other_charges":that.otherCharges,
@@ -290,41 +296,48 @@ let property_detail_app = new Vue({
          },
         loadOverlooking: function () {
             let that = this;
-            that.processing = true;
+            debugger;
+            axios.get("/api/overlooking/")
+                .then(function (response) {
+                    that.overlookingOptions = response.data.results;
+                    that.selectedOverlooking = _.pluck(that.property.overlooking,'id');
+                })
+                .catch(function (response) {
+                    alert("Some error occurred fetching overlooking options");
+                });
 
-             let overlookingElement = $('#select-overlooking');
+        },
+        initSelect2:function(){
+            let that = this;
+            let overlookingElement = $('#select-overlooking');
+            try{
 
-            overlookingElement.select2({
-                ajax: {
-                url: "/api/overlooking/",
-                headers: {
-                    "Content-Type" : "application/json",
-                },
-                data: function (params) {
-                    // "tax-policy"===urlParam?query={name:params.term}:"category"===urlParam?query={category:params.term}:"group"===urlParam?query={group:params.term}:"category/group"===urlParam?query={group:params.term}:"city"===urlParam?query={city:params.term}:"state"===urlParam?query={state:params.term}:"country"===urlParam?query={country:params.term}:"tag"===urlParam&&(query={country:params.term});
-                    // return query;
-                },
-                processResults: function (data) {
-                    const processed_data = $.map(data.results, function (obj) {
-                        obj.text = obj['name'];
-                        return obj;
-                    });
-                    return {
-                        results: processed_data
-                    };
-                }
-            },
-                placeholder: "overlooking",
-                theme: "classic"
-            }).on('select2:selecting select2:unselecting', function (e) {
+            if (overlookingElement.hasClass("select2-hidden-accessible")){overlookingElement.select2('destroy');
+                overlookingElement.find('option').remove();}
+            }
+            catch (e) {
+                //nothing
+            }
+             overlookingElement.select2({
+
+             })
+                 .on('select2:selecting select2:unselecting', function (e) {
+                debugger;
                 if (e.params.name === 'select') {
-                    that.property.overlooking.push(e.params.args.data.id);
+                    that.selectedOverlooking.push(parseInt(e.params.args.data.id));
                 }
                 else if (e.params.name === 'unselect') {
-                    that.property.overlooking.splice(_.indexOf(that.property.overlooking, e.params.args.data.id), 1)
+                    that.selectedOverlooking.splice(_.indexOf(that.selectedOverlooking, parseInt(e.params.args.data.id)), 1)
                 }
             });
-            this.processing=false;
+
+            // for (let i = 0; i < that.overlookingOptions.length; i++){
+            //    overlookingElement.append(
+            //         new Option(that.overlookingOptions[i].name, that.overlookingOptions[i].id,
+            //             !!_.findWhere(that.property.overlooking, {id: that.overlookingOptions[i].id}), false,
+            //             )
+            //    ).trigger("change");
+            // }
 
         },
         get_overlooking: function(){
@@ -568,9 +581,9 @@ let property_detail_app = new Vue({
     },
     mounted(){
         this.loadCountryCodes();
-        this.get_overlooking();
+        //this.get_overlooking();
         this.getPropertyDetails();
-        this.loadOverlooking()
+
 
     },
     watch:{
