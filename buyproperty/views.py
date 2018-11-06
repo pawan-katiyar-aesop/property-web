@@ -127,6 +127,12 @@ class RetrieveUpdateDestroyPropertyAPIView(RetrieveUpdateDestroyAPIView):
         property = self.get_object()
         
         
+        # add/remove overlooking if requested
+        property.overlooking.clear()
+        if request.data.get("overlooking"):
+            for id in request.data.get("overlooking"):
+                property.overlooking.add(Overlooking.objects.get(pk=id))
+        
         if data.get("nearest"):
             property.nearest.clear()
             for key, value in data.get("nearest").items():

@@ -36,7 +36,10 @@ let property_detail_app = new Vue({
             title:''
         },
         countryCode : '',
-        selectedOverlooking:[]
+        selectedOverlooking:[],
+        jsonData:{
+            results:[]
+        }
     }
     ,
     methods:{
@@ -137,7 +140,7 @@ let property_detail_app = new Vue({
                 "lease_term": that.property.lease_term,
                 "carpet_area": that.property.carpet_area,
                 "landmark": that.property.landmark,
-                //"overlooking": that.property.overlooking,
+                "overlooking": that.selectedOverlooking,
                 "buildup_area":that.property.buildup_area,
                 "country_code":that.property.country_code,
                 "other_charges":that.otherCharges,
@@ -233,7 +236,7 @@ let property_detail_app = new Vue({
         populateCountryCode : function(){
           let that = this;
           that.property.country_code = that.countryCodes[_.indexOf(_.pluck(that.countryCodes,'name'),that.countryCode)]['id'];
-          console.log(that.property.country_code);
+          //console.log(that.property.country_code);
 
         },
         populateCharges :function(){
@@ -296,11 +299,22 @@ let property_detail_app = new Vue({
          },
         loadOverlooking: function () {
             let that = this;
-            debugger;
             axios.get("/api/overlooking/")
                 .then(function (response) {
                     that.overlookingOptions = response.data.results;
                     that.selectedOverlooking = _.pluck(that.property.overlooking,'id');
+                    for(let j=0;j< that.overlookingOptions.length;j++){
+                        let obj = that.overlookingOptions[j];
+                        obj["text"] = obj['name'];
+
+                        for (let i=0;i<that.selectedOverlooking.length;i++){
+                            if(obj['id']===that.selectedOverlooking[i]){
+                                obj['selected']=true;
+                            }
+
+                        }
+                        that.jsonData.results.push(obj);
+                    }
                 })
                 .catch(function (response) {
                     alert("Some error occurred fetching overlooking options");
@@ -319,10 +333,11 @@ let property_detail_app = new Vue({
                 //nothing
             }
              overlookingElement.select2({
-
+                placeholder:"Overlooking",
+                 allowClear:true,
+                 data: that.jsonData
              })
                  .on('select2:selecting select2:unselecting', function (e) {
-                debugger;
                 if (e.params.name === 'select') {
                     that.selectedOverlooking.push(parseInt(e.params.args.data.id));
                 }
