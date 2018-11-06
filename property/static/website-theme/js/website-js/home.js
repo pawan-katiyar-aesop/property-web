@@ -91,8 +91,7 @@ let website_home_app = new Vue({
             })
         },
         productDetails: function (property_id) {
-            Cookies.set("property-id-for-details", property_id);
-            window.location = '/property-details/';
+            window.location = '/property-details/?id='+property_id;
         }
     },
     watch: {
