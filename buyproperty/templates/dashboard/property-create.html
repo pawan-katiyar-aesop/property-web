@@ -5,13 +5,28 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/css/select2.min.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/js/select2.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.9.1/underscore-min.js"></script>
-
+<style>
+#loading {
+    position: absolute;
+    left:680px;
+    top:150px;
+    width: 100%;
+    height: 100vh;
+    z-index: 9999;
+}
+</style>
 {% endblock %}
 
 {% block content %}
     <div id="vue-property-create-app">
         <div class="container-fluid pt-10" style="background-color:#DFE4E7;height: 100%">
             <div class="row" style="margin-top: 100px"></div>
+
+            <div class="row">
+                <div id="loading" class="table-preloader" v-bind:class="{ hidden:processing }">
+                    <img src="{% static 'theme/images/preloader.gif' %}">
+                </div>
+            </div>
             <div class="row">
                 <div class="col-md-8 scroll-col">
                     <div class="card card-default">
@@ -576,7 +591,8 @@
                 </div>
             </div>
 
-            <button class="btn btn-success mt-20 mb-20" v-on:click="validateMandatoryFields">Create Property</button>
+
+            <button class="btn btn-success mt-20 mb-20" v-on:click="validateMandatoryFields" :disabled="clickedCreate">Create Property</button>
             <a href="/properties/" class="btn btn-primary ml-20 mt-30 mb-30" data-dismiss="modal">View Property List</a>
 
 

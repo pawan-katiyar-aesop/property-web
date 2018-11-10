@@ -98,7 +98,8 @@ let property_create_app = new Vue({
         floorPlanListOfImagesList:[[],[],[],[]],
         floorPlanListOfVideoURLs:[[],[],[],[]],
         currentEditingFloor:-1,
-        loaded:false
+        loaded:false,
+        clickedCreate:false
 
     },
     methods: {
@@ -125,14 +126,6 @@ let property_create_app = new Vue({
         createProperty: function(){
             let that = this;
 
-            //that.newProperty.nearestList = {};
-            //that.newProperty.otherCharges = {};
-            // for (let i = 0; i<that.nearestId; i++){
-            //     that.newProperty.nearestList[$("#nearestList-title-"+i).val()] = $("#nearestList-distance-"+i).val();
-            // }
-            // for (let i = 0; i<that.otherId; i++){
-            //     that.newProperty.otherCharges[$("#otherCharges-charge-"+i).val()] = $("#otherCharges-value-"+i).val();
-            // }
             let washroomDetails = {
                 "Urinals":that.newProperty.urinal,
                 "WC":that.newProperty.wC
@@ -147,7 +140,7 @@ let property_create_app = new Vue({
             that.newProperty.floorPlan.push(that.floorPlanListOfDescriptions);
             that.newProperty.floorPlan.push(that.floorPlanListOfImagesList);
             that.newProperty.floorPlan.push(that.floorPlanListOfVideoURLs);
-
+            that.processing = true;
 
             let newAddress = {
                 "name": that.newAddress.contactName,
@@ -209,11 +202,12 @@ let property_create_app = new Vue({
 
             };
 
-
+            that.clickedCreate = true;
 
             axios.post('/api/property/', property_body)
                 .then(function (response) {
                     // show_notification("success", "Property Successfully Created.");
+                    that.processing=false;
                     window.location.href =  "/control/dash/properties/";
                 })
                 .catch(function (response) {
