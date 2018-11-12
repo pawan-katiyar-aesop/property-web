@@ -203,6 +203,19 @@
                         <button type="button" class="btn btn-success" @click="updateAddress" data-dismiss="modal">Update Address</button>
                     </div>
                     </div>
+<!--
+                    <div class="card card-default mt-30">
+                        <div class="card-header">
+                            <b>Google Map</b>
+                        </div>
+                        <div class="card-body" v-if="property">
+                            <div id="map" style="width: 100%; height: 400px; "></div>
+                            Your Current Location:&nbsp;<input id="address" type="text" style="width:600px;" /><br/>
+                            Your Current Latitude:&nbsp;<input type="text" id="latitude"  />
+                            Your Current Longitude:&nbsp;<input type="text" id="longitude"  />
+                        </div>
+                    </div>
+-->
                     <div class="card card-default mt-30">
                         <div class="card-header">
                             <b>Charge Details</b>
@@ -330,7 +343,7 @@
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label for="nearest-distance">Nearest Distance(Km)</label>
+                                                <label for="nearest-distance">Description</label>
                                             </div>
                                         </div>
                                     </div>

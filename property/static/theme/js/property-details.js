@@ -228,7 +228,7 @@ let property_detail_app = new Vue({
                 '                                            </select>\n' +
                 '                                        </div>\n' +
                 '                                        <div class="col-md-4">\n' +
-                '                                            <input type="number" onKeyPress="if(this.value.length===2) return false;" id="nearestList-distance-'+that.nearestId+'" class="form-control mb-20" required/>\n' +
+                '                                            <input type="text" id="nearestList-distance-'+that.nearestId+'" class="form-control mb-20" required/>\n' +
                 '                                        </div>');
 
             that.nearestId += 1;
@@ -265,7 +265,7 @@ let property_detail_app = new Vue({
                 listOfKey.push(this.value);
             });
             element.children('input').each(function () {
-                listOfVal.push(parseFloat(this.value));
+                listOfVal.push(this.value);
             });
 
             for(let i=0; i<listOfKey.length;i++){
