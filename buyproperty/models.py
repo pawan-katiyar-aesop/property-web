@@ -239,6 +239,8 @@ class Property(models.Model):
     is_top = models.BooleanField(blank=True, default=False)
     videos = models.ManyToManyField(Video, blank=True)
     floor_plan = models.ManyToManyField(FloorPlan, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         if self.property_id and self.property_name:
@@ -305,6 +307,7 @@ class CustomerLead(models.Model):
     contact = models.CharField(max_length=10, blank=True, null=True, default=" ")
     country_code = models.CharField(choices=country_choices, max_length=5, null=True, blank=True)
     for_property = models.ForeignKey(Property, on_delete=models.CASCADE, blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return str(self.email) if self.email else None
@@ -316,6 +319,7 @@ class AgentLead(models.Model):
     contact = models.CharField(max_length=10, blank=True, null=True, default=" ")
     country_code = models.CharField(choices=country_choices, max_length=3, null=True, blank=True)
     message = models.TextField(blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return str(self.email) if self.email else None

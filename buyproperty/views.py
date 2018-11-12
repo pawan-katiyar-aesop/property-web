@@ -8,7 +8,7 @@ from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIV
 from serializers import CustomerLeadSerializer, AgentLeadSerializer, PropertySerializer, AddressSerializer,\
     OverlookingSerializer, TopPropertySerializer, RetrievePropertySerializer, FloorPlanSerializer
 from rest_framework.views import APIView
-import itertools
+import datetime
 from django.db.models import Q
 from django.http import HttpResponseForbidden, HttpResponse
 
@@ -332,8 +332,16 @@ class CountryCodeListView(APIView):
         return Response(self.format_country_code_data(), status=status.HTTP_200_OK)
 
 
-class DashboardView(TemplateView):
+class DashboardView(generic.ListView):
     template_name = "../templates/dashboard/dashboard.html"
+    context_object_name = 'counts'
+
+    def get_queryset(self):
+        date_from = datetime.datetime.now() - datetime.timedelta(days=1)
+        property_count = Property.objects.filter(updated_at__gte=(datetime.datetime.now() - datetime.timedelta(weeks=1))).count()
+        agent_lead_count = AgentLead.objects.filter(created_at__gte=date_from).count()
+        customer_lead_count = CustomerLead.objects.filter(created_at__gte=date_from).count()
+        return {'property_count': property_count, 'agent_lead_count': agent_lead_count, 'customer_lead_count': customer_lead_count}
 
     def active_tab(self):
         return "home"
