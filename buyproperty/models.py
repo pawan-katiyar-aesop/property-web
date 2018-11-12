@@ -241,6 +241,9 @@ class Property(models.Model):
     floor_plan = models.ManyToManyField(FloorPlan, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    latitude = models.CharField(max_length=100, blank=True, null=True)
+    longitude = models.CharField(max_length=100, blank=True, null=True)
+    map_address = models.CharField(max_length=350, blank=True, null=True)
 
     def __str__(self):
         if self.property_id and self.property_name:
@@ -250,7 +253,8 @@ class Property(models.Model):
 
     @classmethod
     def create_property(cls, data, address):
-
+        import pdb
+        pdb.set_trace()
         property = cls.objects.create(
             property_name=data.get("property_name"),
             furnishing_status=data.get("furnishing_status"),
@@ -292,7 +296,10 @@ class Property(models.Model):
             other_charges=data.get("other_charges"),
             lease_term=data.get("lease_term"),
             buildup_area=data.get("buildup_area"),
-            is_top=data.get("is_top")
+            is_top=data.get("is_top"),
+            latitude=data.get("lat"),
+            longitude=data.get("lng"),
+            map_address=data.get("mapAddress")
         )
         return property
 

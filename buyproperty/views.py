@@ -42,7 +42,7 @@ class ListCreatePropertyAPIView(ListCreateAPIView):
     from buyproperty.models import Property
 
     serializer_class = PropertySerializer
-    queryset = Property.objects.all()
+    queryset = Property.objects.all().order_by('-created_at')
 
     def create(self, request, *args, **kwargs):
         if (request.data.get("is_top") == 'true' or request.data.get("is_top") is True) and Property.count_top() == 6:

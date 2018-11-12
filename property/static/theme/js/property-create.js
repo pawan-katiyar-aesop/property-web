@@ -55,7 +55,10 @@ let property_create_app = new Vue({
             carpetArea: 0,
             buildupArea: 0,
             isTop:false,
-            floorPlan: []
+            floorPlan: [],
+            mapAddress: '',
+            lat:'',
+            lng:''
 
         },
         processing:true,
@@ -133,6 +136,8 @@ let property_create_app = new Vue({
 
             that.populateCharges();
             that.populateNearest();
+            that.populateLatLng();
+            debugger;
             let allVideoUrlList = [];
             if (that.newProperty.videoTourURL.url.length){
                 that.propertyVideos.push(that.newProperty.videoTourURL);
@@ -198,12 +203,15 @@ let property_create_app = new Vue({
                 "buildup_area": that.newProperty.buildupArea,
                 "is_top": that.newProperty.isTop,
                 "videos":that.propertyVideos,
-                "floor_plan": that.newProperty.floorPlan
+                "floor_plan": that.newProperty.floorPlan,
+                "lat":that.lat,
+                "lng":that.lng,
+                "mapAddress":that.mapAddress
 
             };
 
             that.clickedCreate = true;
-
+            debugger;
             axios.post('/api/property/', property_body)
                 .then(function (response) {
                     // show_notification("success", "Property Successfully Created.");
@@ -290,7 +298,7 @@ let property_create_app = new Vue({
                 listOfKey.push(this.value);
             });
             element.children('input').each(function () {
-                listOfVal.push(parseFloat(this.value));
+                listOfVal.push(this.value);
             });
 
             for(let i=0; i<listOfKey.length;i++){
@@ -316,7 +324,7 @@ let property_create_app = new Vue({
                 '                                            </select>\n' +
                 '                                        </div>\n' +
                 '                                        <div class="col-md-4">\n' +
-                '                                            <input type="number" onKeyPress="if(this.value.length===2) return false;" id="nearestList-distance-'+that.nearestId+'" class="form-control mb-20" required/>\n' +
+                '                                            <input type="text" id="nearestList-distance-'+that.nearestId+'" class="form-control mb-20" required/>\n' +
                 '                                        </div>');
 
             that.nearestId += 1;
@@ -537,6 +545,13 @@ let property_create_app = new Vue({
             that.floorPlanEdit.description = that.floorPlanListOfDescriptions[parseInt(that.currentEditingFloor)];
             that.floorPlanEdit.imageList = that.floorPlanListOfImagesList[parseInt(that.currentEditingFloor)];
             that.floorPlanEdit.videos = that.floorPlanListOfVideoURLs[parseInt(that.currentEditingFloor)];
+        },
+        populateLatLng:function () {
+            let that = this;
+            that.mapAddress = $("#address").val();
+            that.lat = $("#latitude").val();
+            that.lng = $("#longitude").val();
+            console.log(that.mapAddress, that.lat, that.lng);
         }
 
     },
