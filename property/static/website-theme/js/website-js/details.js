@@ -60,6 +60,7 @@ let website_details_app = new Vue({
             axios.get('/api/property/'+that.propertyId)
              .then(function (response) {
                  that.propertyDetails = response.data;
+                 // debugger;
                  that.processing = false;
              })
              .catch(function (response) {
