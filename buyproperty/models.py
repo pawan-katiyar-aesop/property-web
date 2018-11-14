@@ -253,8 +253,6 @@ class Property(models.Model):
 
     @classmethod
     def create_property(cls, data, address):
-        import pdb
-        pdb.set_trace()
         property = cls.objects.create(
             property_name=data.get("property_name"),
             furnishing_status=data.get("furnishing_status"),
@@ -297,9 +295,9 @@ class Property(models.Model):
             lease_term=data.get("lease_term"),
             buildup_area=data.get("buildup_area"),
             is_top=data.get("is_top"),
-            latitude=data.get("lat"),
-            longitude=data.get("lng"),
-            map_address=data.get("mapAddress")
+            latitude=data.get("latitude"),
+            longitude=data.get("longitude"),
+            map_address=data.get("map_address")
         )
         return property
 

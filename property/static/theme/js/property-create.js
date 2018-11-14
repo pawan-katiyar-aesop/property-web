@@ -137,7 +137,6 @@ let property_create_app = new Vue({
             that.populateCharges();
             that.populateNearest();
             that.populateLatLng();
-            debugger;
             let allVideoUrlList = [];
             if (that.newProperty.videoTourURL.url.length){
                 that.propertyVideos.push(that.newProperty.videoTourURL);
@@ -204,14 +203,13 @@ let property_create_app = new Vue({
                 "is_top": that.newProperty.isTop,
                 "videos":that.propertyVideos,
                 "floor_plan": that.newProperty.floorPlan,
-                "lat":that.lat,
-                "lng":that.lng,
-                "mapAddress":that.mapAddress
+                "latitude":that.lat,
+                "longitude":that.lng,
+                "map_address":that.mapAddress
 
             };
 
             that.clickedCreate = true;
-            debugger;
             axios.post('/api/property/', property_body)
                 .then(function (response) {
                     // show_notification("success", "Property Successfully Created.");
