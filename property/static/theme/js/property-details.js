@@ -39,7 +39,10 @@ let property_detail_app = new Vue({
         selectedOverlooking:[],
         jsonData:{
             results:[]
-        }
+        },
+        mapAddress: '',
+        lat:'',
+        lng:''
     }
     ,
     methods:{
@@ -103,6 +106,7 @@ let property_detail_app = new Vue({
             that.populateCharges();
             that.populateCountryCode();
             that.populateNearest();
+            that.populateLatLng();
             const data  = {
                 "property_name": that.property.property_name,
                 "description": that.property.description,
@@ -147,7 +151,10 @@ let property_detail_app = new Vue({
                 "is_top": that.property.is_top,
                 "images":that.property.images,
                 "nearest":that.nearest,
-                "videos":that.property.videos
+                "videos":that.property.videos,
+                "latitude":that.lat,
+                "longitude":that.lng,
+                "map_address":that.mapAddress
             };
             axios.put("/api/property/"+parseInt(that.pk)+"/" ,data)
             .then(function (response) {
@@ -592,6 +599,13 @@ let property_detail_app = new Vue({
                     alert("Error occured in saving new floor plan")
                 })
 
+        },
+        populateLatLng:function () {
+            let that = this;
+            that.mapAddress = $("#address").val();
+            that.lat = $("#latitude").val();
+            that.lng = $("#longitude").val();
+            console.log(that.mapAddress, that.lat, that.lng);
         }
     },
     mounted(){
