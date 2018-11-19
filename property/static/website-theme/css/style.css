@@ -173,7 +173,7 @@ textarea:focus {
 	background-color:transparent;
 }
 .rle_header_wrapper.style_2{
-	background-color:#0f1c2f;
+	background-color:#fff;
 }
 .rle_header_wrapper.style_4{
 	background-color:#ffffff;
@@ -483,7 +483,7 @@ textarea:focus {
 }
 .rle_header_wrapper .rle_main_menu ul li a{
     text-decoration: none;
-    color: #ffffff;
+    color: #313131;
     font-size: 14px;
     margin-right: 40px;
     text-transform: uppercase;
@@ -1604,6 +1604,9 @@ textarea:focus {
 .rle_property_details_box_2 .share_props ul li a.clr_linkedin{
 	background-color:#4c72b9;
 }
+.rle_property_details_box_2 .share_props ul li a.clr_whatsapp{
+	background-color:#25D366;
+}
 .rle_property_details_box .user_info{
 	float:left;
 	width:100%;
@@ -1961,7 +1964,7 @@ textarea:focus {
 .rle_footer_wrapper{
 	float:left;
 	width:100%;
-	background-image:url(../images/banner/ftr_bg.jpg);
+	background-image:url(../images/banner/footer-image.jpg);
 	background-position:center center;
 	background-repeat:no-repeat;
 	background-size:cover;

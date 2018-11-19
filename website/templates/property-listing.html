@@ -64,7 +64,7 @@
     {#                                            <li><a href="{% static '/404_pages.html' %}">404 error</a></li>#}
     {#                                        </ul>#}
     {#                                    </li>#}
-                                        <li><a href="/contact/">contact</a></li>
+                                        <li><a href="/contact/">Become Our Partner</a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -253,14 +253,15 @@
                                             <p v-if="item.address">{% verbatim %}{{ item.address.name }}, {{ item.address.line_2 }}, {{ item.address.city }}, {{ item.address.state }}, {{ item.address.country }}{% endverbatim %}</p>
                                             <span v-if="item.description" v-html="item.description"></span>
                                         </div>
-{#                                        <div class="rle_property_infobox_details_footer">#}
-{#                                            <p>Area : 3578 sqft </p>#}
+                                        <div class="rle_property_infobox_details_footer">
+                                            <p v-if="item.carpet_area && item.unit_of_area">Area : {% verbatim %}{{ item.carpet_area }} {{ item.unit_of_area }}{% endverbatim %} </p>
+                                            <p v-if="item.total_number_of_floors">Total Number of Floors : {% verbatim %}{{ item.total_number_of_floors }}{% endverbatim %} </p>
 {#                                            <ul>#}
 {#                                                <li><i class="fa fa-bed" aria-hidden="true"></i> 03</li>#}
 {#                                                <li><i class="fa fa-bath" aria-hidden="true"></i> 02</li>#}
 {#                                                <li><i class="fa fa-taxi" aria-hidden="true"></i> yes</li>#}
 {#                                            </ul>#}
-{#                                        </div>#}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -305,20 +306,20 @@
                 </div>
             </div>
         </div>
-        <!-- Partner Wrapper start -->
-        <div class="rle_partner_wrapper rle_toppadder60 rle_bottompadder60">
-            <div class="container">
-                <div class="row">
-                    <ul>
-                        <li><img src="http://placehold.it/117x47" alt="" title=""></li>
-                        <li><img src="http://placehold.it/117x47" alt="" title=""></li>
-                        <li><img src="http://placehold.it/117x47" alt="" title=""></li>
-                        <li><img src="http://placehold.it/117x47" alt="" title=""></li>
-                        <li><img src="http://placehold.it/117x47" alt="" title=""></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
+{#        <!-- Partner Wrapper start -->#}
+{#        <div class="rle_partner_wrapper rle_toppadder60 rle_bottompadder60">#}
+{#            <div class="container">#}
+{#                <div class="row">#}
+{#                    <ul>#}
+{#                        <li><img src="http://placehold.it/117x47" alt="" title=""></li>#}
+{#                        <li><img src="http://placehold.it/117x47" alt="" title=""></li>#}
+{#                        <li><img src="http://placehold.it/117x47" alt="" title=""></li>#}
+{#                        <li><img src="http://placehold.it/117x47" alt="" title=""></li>#}
+{#                        <li><img src="http://placehold.it/117x47" alt="" title=""></li>#}
+{#                    </ul>#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
     </div>
 {% endblock %}
 {% block page_level_scripts %}
