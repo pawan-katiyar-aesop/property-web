@@ -67,7 +67,7 @@
     {#                                            <li><a href="{% static '/404_pages.html' %}">404 error</a></li>#}
     {#                                        </ul>#}
     {#                                    </li>#}
-                                        <li><a href="/contact/">contact</a></li>
+                                        <li><a href="/contact/">Become Our Partner</a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -119,7 +119,9 @@
                 <div v-if="propertyDetails" class="row">
                     <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
                         <div class="rle_property_single_heading">
-                            <h2 v-if="propertyDetails.property_name">{% verbatim %}{{ propertyDetails.property_name }}{% endverbatim %} <sup>For rent</sup></h2>
+                            <h2 v-if="propertyDetails.property_name">{% verbatim %}{{ propertyDetails.property_name }}{% endverbatim %}
+{#                                <sup>For rent</sup>#}
+                            </h2>
                             <p v-if="propertyDetails.address">{% verbatim %}{{ propertyDetails.address.name }} {{ propertyDetails.address.locality }} {{ propertyDetails.address.city }} {{ propertyDetails.address.state }}{% endverbatim %}</p>
                         </div>
                         <div class="rle_property_details_box">
@@ -270,7 +272,7 @@
 {#                                    </ul>#}
                                     <div class="swiper-container slider_v2">
                                         <div v-if="items.images.length > 0 || items.videos.length > 0" class="swiper-wrapper">
-                                            <div v-for="item in items.images" class="swiper-slide"><img :src="item.file" alt="" /></div>
+                                            <div v-for="item in items.images" v-if="item.type === 'f'" class="swiper-slide"><img :src="item.file" alt="" /></div>
                                             <div v-for="item in items.videos" v-if="item.type === 'f'" class="swiper-slide"><iframe width="100%" height="100%" :src="item.url+'?rel=0&showinfo=0&autoplay=1'" allow="autoplay;"></iframe></div>
                                 {#            <div class="swiper-slide"><iframe width="100%" height="100%" src="https://www.youtube.com/embed/tgbNymZ7vqY?rel=0&showinfo=0&autoplay=1" allow="autoplay;"></iframe></div>#}
                             {#                <div class="swiper-slide"><img src="http://placehold.it/956x520" alt="" /></div>#}
@@ -373,10 +375,11 @@
                             <div class="share_props">
                                 <span>Share property</span>
                                 <ul>
-                                    <li><a href="#" class="clr_twitter"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
-                                    <li><a href="#" class="clr_facebook"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
-                                    <li><a href="#" class="clr_google"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
-                                    <li><a href="#" class="clr_linkedin"><i class="fa fa-linkedin" aria-hidden="true"></i></a></li>
+{#                                    <li><a href="#" class="clr_twitter"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>#}
+{#                                    <li><a href="#" class="clr_facebook"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>#}
+{#                                    <li><a href="#" class="clr_google"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>#}
+{#                                    <li><a href="#" class="clr_linkedin"><i class="fa fa-linkedin" aria-hidden="true"></i></a></li>#}
+                                    <li><a href="#" class="clr_whatsapp"><i class="fa fa-whatsapp" aria-hidden="true"></i></a></li>
                                 </ul>
                             </div>
                         </div>
@@ -392,8 +395,8 @@
 {#                                </ul>#}
 {#                            </div>#}
                             <div class="user_info_share style_2">
-                                <ul v-if="propertyDetails.contact">
-                                    <li><a href="#"><i class="fa fa-phone" aria-hidden="true"></i> {% verbatim %}{{ propertyDetails.country_code }} {{ propertyDetails.contact }}{% endverbatim %}</a></li>
+                                <ul>
+                                    <li><a href="#"><b>I’m interested</b></a></li>
 {#                                    <li><a href="#"><i class="fa fa-envelope" aria-hidden="true"></i> Jacobs@alphahousing.com</a></li>#}
 {#                                    <li><a href="#"><i class="fa fa-skype" aria-hidden="true"></i> NicholasJacobos.Agent</a></li>#}
                                 </ul>
@@ -586,20 +589,20 @@
 {#                </div>#}
 {#            </div>#}
 {#        </div>#}
-        <!-- Partner Wrapper start -->
-        <div class="rle_partner_wrapper rle_toppadder60 rle_bottompadder60">
-            <div class="container">
-                <div class="row">
-                    <ul>
-                        <li><img src="http://placehold.it/117x47" alt="" title=""></li>
-                        <li><img src="http://placehold.it/117x47" alt="" title=""></li>
-                        <li><img src="http://placehold.it/117x47" alt="" title=""></li>
-                        <li><img src="http://placehold.it/117x47" alt="" title=""></li>
-                        <li><img src="http://placehold.it/117x47" alt="" title=""></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
+{#        <!-- Partner Wrapper start -->#}
+{#        <div class="rle_partner_wrapper rle_toppadder60 rle_bottompadder60">#}
+{#            <div class="container">#}
+{#                <div class="row">#}
+{#                    <ul>#}
+{#                        <li><img src="http://placehold.it/117x47" alt="" title=""></li>#}
+{#                        <li><img src="http://placehold.it/117x47" alt="" title=""></li>#}
+{#                        <li><img src="http://placehold.it/117x47" alt="" title=""></li>#}
+{#                        <li><img src="http://placehold.it/117x47" alt="" title=""></li>#}
+{#                        <li><img src="http://placehold.it/117x47" alt="" title=""></li>#}
+{#                    </ul>#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
     </div>
 {% endblock %}
 {% block page_level_scripts %}
@@ -607,5 +610,24 @@
     <script src ="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.9.1/underscore-min.js"></script>
     <script src="{% static 'website-theme/js/website-js/details.js' %}"></script>
     <script>debugger;</script>
-    <script type="text/javascript" src="{% static 'website-theme/js/owl.carousel.js' %}"></script>
+    <script type="text/javascript" src="{% static 'website-theme/js/owl.carousel.js' %}" async></script>
+{#    <script>#}
+{#        $('.owl-carousel').owlCarousel({#}
+{#            loop:true,#}
+{#            margin:10,#}
+{#            nav:true,#}
+{#            responsive:{#}
+{#                0:{#}
+{#                    items:1#}
+{#                },#}
+{#                600:{#}
+{#                    items:3#}
+{#                },#}
+{#                1000:{#}
+{#                    items:5#}
+{#                }#}
+{#            }#}
+{#        })#}
+{#    </script>#}
+
 {% endblock page_level_scripts %}
