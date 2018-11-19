@@ -61,6 +61,7 @@ let website_details_app = new Vue({
              .then(function (response) {
                  that.propertyDetails = response.data;
                  that.processing = false;
+
              })
              .catch(function (response) {
                 alert("Failed fetching data for property details.");
