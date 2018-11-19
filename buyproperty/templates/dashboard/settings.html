@@ -1,0 +1,57 @@
+{% extends 'dashboard/base.html' %}
+{% load static from staticfiles %}
+
+{% block content %}
+    <div class="container-fluid" id="setting-app">
+        <div class="row" style="margin-top: 100px"></div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-default">
+                    <div class="card-body">
+                        <h3>Settings</h3>
+                        <p> Change website settings.</p>
+                    </div>
+                </div>
+            </div>
+        </div><br>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card card-default" style="width: 900px">
+                    <div class="card-header">
+                        Banner Title
+                    </div>
+                    <div class="card-body">
+                        <div class="col-md-6">
+                            <div class="row" v-for="banner, index in banner.fields">
+                                <label class="wc">Enter banner title:{% verbatim %} {{ index + 1 }} {% endverbatim %}</label><br>
+                                <input class="form-control" type="text" v-model="banner.title" style="width: 340px"/>&nbsp;&nbsp;
+                                <button @click="removeBannerFields(index)" type="button" class="btn btn-danger">
+                                    Remove
+                                </button>
+                                <br><label class="wc">Where to show:</label><br>
+                                <select class="form-control">
+                                    <option>home-page</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <button :hidden="banner.fields.length === 0" @click="addBannerFields()" class="btn btn-success" type="button">
+                         Add more
+                        </button>&nbsp;&nbsp;
+                        <button :hidden="banner.fields.length !== 0" @click="addBannerFields()" class="btn btn-success" type="button">
+                         Add
+                        </button>&nbsp;&nbsp;
+                        <button @click="postBannerInfo()" class="btn btn-success" type="button">
+                         Update & Save
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<script src="{% static 'theme/js/settings.js' %}"></script>
+<script src="{% static 'theme/js/shortcuts.js' %}"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js">
+</script>
+{% endblock %}

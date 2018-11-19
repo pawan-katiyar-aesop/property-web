@@ -1,12 +1,12 @@
 from __future__ import unicode_literals
 from rest_framework import status
 from django.views.generic import TemplateView
-from models import CustomerLead, AgentLead, Property, Address, Nearest, Overlooking, Video, FloorPlan, Media
+from models import CustomerLead, AgentLead, Property, Address, Nearest, Overlooking, Video, FloorPlan, Media, BannerSetting
 from django.views import generic
 from rest_framework.response import Response
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView, ListAPIView
 from serializers import CustomerLeadSerializer, AgentLeadSerializer, PropertySerializer, AddressSerializer,\
-    OverlookingSerializer, TopPropertySerializer, RetrievePropertySerializer, FloorPlanSerializer
+    OverlookingSerializer, TopPropertySerializer, RetrievePropertySerializer, FloorPlanSerializer, BannerTitleSerializer
 from rest_framework.views import APIView
 import datetime
 from django.db.models import Q
@@ -394,6 +394,13 @@ class PropertyDetailsView(TemplateView):
         return "properties"
 
 
+class SettingView(TemplateView):
+    template_name = "../templates/dashboard/settings.html"
+
+    def active_tab(self):
+        return "settings"
+
+
 class PropertyCreateView(TemplateView):
     template_name = "../templates/dashboard/property-create.html"
 
@@ -404,4 +411,23 @@ class PropertyCreateView(TemplateView):
 class UploadMediaView(ListCreateAPIView):
     serializer_class = PropertySerializer
     property = Property.objects.all()
+
+
+class SettingView(TemplateView):
+    template_name = "../templates/dashboard/settings.html"
+
+    def active_tab(self):
+        return "settings"
+
+
+class BannerSettingCreateListAPIView(ListCreateAPIView):
+    serializer_class = BannerTitleSerializer
+    queryset = BannerSetting.objects.all()
+
+    def post(self, request, *args, **kwargs):
+        requested_data = request.data
+        BannerSetting.objects.all().delete()
+        for banner_title in requested_data:
+            BannerSetting.objects.create(title=banner_title.get("title"), show_on=banner_title.get("show_on"))
+        return Response({"status": True})
 

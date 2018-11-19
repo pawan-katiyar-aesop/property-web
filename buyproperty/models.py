@@ -328,3 +328,12 @@ class AgentLead(models.Model):
 
     def __str__(self):
         return str(self.email) if self.email else None
+
+
+class BannerSetting(models.Model):
+    PAGE = [
+        ('home-page', 'home-page'),
+        ('page-1', 'page-1')
+    ]
+    show_on = models.CharField(choices=PAGE, blank=True, null=True, max_length=10)
+    title = models.CharField(max_length=250, null=True, blank=True)
