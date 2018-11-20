@@ -229,8 +229,8 @@
                     </div>
                     <div class="rle_people_saying_slider">
                         <div class="owl-carousel owl-theme">
-                            <div class="item" v-for="testmo in testimonials">
-                                <div class="rle_peoplesay_slider_details">
+                            <div class="item">
+                                <div class="rle_peoplesay_slider_details" v-for="testmo in testimonials">
                                     <div class="rle_peoplesay_slider_details_img">
                                         <img v-if="testmo.image" :src="testmo.image" alt="" title="">
                                         <img v-else src="http://placehold.it/100x100" alt="" title="">
