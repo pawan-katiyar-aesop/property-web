@@ -95,7 +95,8 @@ let property_create_app = new Vue({
         floorPlanEdit:{
             description:'',
             imageList:[],
-            videos:[]
+            videos:[],
+            no_of_floor: 0
         },
         floorPlanListOfDescriptions:['','','',''],
         floorPlanListOfImagesList:[[],[],[],[]],

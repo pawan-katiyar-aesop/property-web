@@ -1,12 +1,14 @@
 from __future__ import unicode_literals
 from rest_framework import status
 from django.views.generic import TemplateView
-from models import CustomerLead, AgentLead, Property, Address, Nearest, Overlooking, Video, FloorPlan, Media, BannerSetting
+from models import CustomerLead, AgentLead, Property, Address, Nearest, Overlooking, Video, FloorPlan, Media,\
+    BannerSetting, TestimonialSetting, TestimonialSetting
 from django.views import generic
 from rest_framework.response import Response
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView, ListAPIView
 from serializers import CustomerLeadSerializer, AgentLeadSerializer, PropertySerializer, AddressSerializer,\
-    OverlookingSerializer, TopPropertySerializer, RetrievePropertySerializer, FloorPlanSerializer, BannerTitleSerializer
+    OverlookingSerializer, TopPropertySerializer, RetrievePropertySerializer, FloorPlanSerializer,\
+    BannerTitleSerializer, TestimonialSettingSerializer
 from rest_framework.views import APIView
 import datetime
 from django.db.models import Q
@@ -222,17 +224,16 @@ class ListCreateFloorPlanAPIView(ListCreateAPIView):
         images = data.get("images")
         videos = data.get("videos")
         floor_number= data.get("floor_number")
+        floor= data.get("no_of_floor")
 
-        plan = FloorPlan.create_plan(floor_number, description)
+        plan = FloorPlan.create_plan(floor_number, description, floor)
         self.add_images_to_plan(images, plan)
-
         for video in videos:
             plan.videos.add(Video.create_video(video))
 
         if data.get("property"):
             property = Property.objects.get(pk=data.get("property"))
             property.floor_plan.add(plan)
-
         return Response(FloorPlanSerializer(plan).data, status=status.HTTP_201_CREATED)
 
     def add_images_to_plan(self, images, plan):
@@ -261,13 +262,13 @@ class RetrieveUpdateDestroyFloorPlanAPIView(RetrieveUpdateDestroyAPIView):
         description = request.data.get("description")
         images = request.data.get("images")
         videos = request.data.get("videos")
+        floor = request.data.get("no_of_floor")
         floor_plan = self.get_object()
 
         existing_image_ids = []
         posted_image_ids = []
         
-
-        
+        floor_plan.number_of_floor = floor
         #manage existing images, if removed
         floor_plan.images.clear()
         
@@ -431,3 +432,7 @@ class BannerSettingCreateListAPIView(ListCreateAPIView):
             BannerSetting.objects.create(title=banner_title.get("title"), show_on=banner_title.get("show_on"))
         return Response({"status": True})
 
+
+class TestimonialAPIView(ListCreateAPIView):
+    serializer_class = TestimonialSettingSerializer
+    queryset = TestimonialSetting.objects.all()

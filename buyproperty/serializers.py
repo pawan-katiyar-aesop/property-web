@@ -1,5 +1,6 @@
 from rest_framework import serializers
-from buyproperty.models import CustomerLead, AgentLead, Property, Address, Overlooking, FloorPlan, BannerSetting
+from buyproperty.models import CustomerLead, AgentLead, Property, Address, Overlooking, FloorPlan, BannerSetting, \
+    TestimonialSetting
 
 
 class CustomerLeadSerializer(serializers.ModelSerializer):
@@ -64,4 +65,11 @@ class FloorPlanSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = FloorPlan
+        fields = "__all__"
+
+
+class TestimonialSettingSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = TestimonialSetting
         fields = "__all__"
