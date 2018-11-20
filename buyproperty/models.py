@@ -119,22 +119,25 @@ class Media(models.Model):
 
 class FloorPlan(models.Model):
     FLOOR_CHOICES = [
-        (0, 'GROUND'),
-        (1, 'FIRST'),
-        (2, 'SECOND'),
-        (3, 'THIRD'),
+        (-1, 'No Plan'),
+        (0, 'Bareshell layout'),
+        (1, 'Design Option 1'),
+        (2, 'Design Option 2'),
+        (3, 'Design Option 3'),
     ]
-    floor_number = models.IntegerField(choices=FLOOR_CHOICES, blank=True, null=True)
+    floor_number = models.IntegerField(choices=FLOOR_CHOICES, blank=True, null=True, help_text="floor plan")
+    number_of_floor = models.IntegerField(help_text="floor number")
     description = models.TextField(blank=True, default="Floor description here")
     images = models.ManyToManyField(Media, blank=True)
     videos = models.ManyToManyField(Video, blank=True)
 
     @classmethod
-    def create_plan(cls, number, desc):
+    def create_plan(cls, number, desc, floor=0):
 
         plan = FloorPlan.objects.create(
             floor_number=number,
-            description=desc
+            description=desc,
+            number_of_floor=floor
         )
         return plan
 
@@ -205,7 +208,7 @@ class Property(models.Model):
     pantry = models.BooleanField(default=False)
     washroom = models.BooleanField(default=False)
     washroom_details = JSONField(null=True, blank=True)
-    number_of_floors = models.PositiveIntegerField(blank=True, null=True)
+    floor_number = models.PositiveIntegerField(blank=True, null=True)
     number_of_basements = models.PositiveIntegerField(blank=True, null=True)
     total_number_of_floors = models.IntegerField(blank=True, null=True)
     units_on_floor = models.PositiveIntegerField(blank=True, null=True)
@@ -337,3 +340,11 @@ class BannerSetting(models.Model):
     ]
     show_on = models.CharField(choices=PAGE, blank=True, null=True, max_length=10)
     title = models.CharField(max_length=250, null=True, blank=True)
+
+
+class TestimonialSetting(models.Model):
+    name = models.CharField(max_length=100, null=True, blank=True)
+    city = models.CharField(max_length=100, null=True, blank=True)
+    state = models.CharField(max_length=100, null=True, blank=True)
+    message = models.TextField()
+    is_active = models.BooleanField(default=True)
