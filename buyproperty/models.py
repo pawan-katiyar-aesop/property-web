@@ -310,6 +310,13 @@ class Property(models.Model):
 
 
 class CustomerLead(models.Model):
+    PARTNER_TYPE = [
+        ('owner', 'Owner'),
+        ('builder', 'Builder'),
+        ('broker', 'Broker'),
+        ('client', 'Client'),
+    ]
+    partner_type = models.CharField(choices=PARTNER_TYPE, max_length=10, null=True, blank=True)
     name = models.CharField(max_length=250, default=" ")
     email = models.EmailField(blank=True, null=True)
     contact = models.CharField(max_length=10, blank=True, null=True, default=" ")
@@ -356,5 +363,6 @@ class TestimonialSetting(models.Model):
     name = models.CharField(max_length=100, null=True, blank=True)
     city = models.CharField(max_length=100, null=True, blank=True)
     state = models.CharField(max_length=100, null=True, blank=True)
+    image = models.ImageField(null=True, blank=True)
     message = models.TextField()
     is_active = models.BooleanField(default=True)
