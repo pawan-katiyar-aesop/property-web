@@ -414,6 +414,7 @@ class UploadMediaView(ListCreateAPIView):
     property = Property.objects.all()
 
 
+
 class SettingView(TemplateView):
     template_name = "../templates/dashboard/settings.html"
 
@@ -436,3 +437,13 @@ class BannerSettingCreateListAPIView(ListCreateAPIView):
 class TestimonialAPIView(ListCreateAPIView):
     serializer_class = TestimonialSettingSerializer
     queryset = TestimonialSetting.objects.all()
+
+    def post(self, request, *args, **kwargs):
+        requested_data = request.data
+        TestimonialSetting.objects.all().delete()
+        for testmo in requested_data:
+            TestimonialSetting.objects.create(name=testmo.get("name"), city=testmo.get("city"), message=testmo.get("message"))
+
+        Response(self.serializer_class(self.get_queryset()).data)
+
+
