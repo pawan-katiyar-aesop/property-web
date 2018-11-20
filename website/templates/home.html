@@ -13,7 +13,7 @@
                 <div class="row">
                     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                         <div class="rle_logo">
-                            <a href="/"><img src="{% static 'website-theme/images/icon/logo.png' %}" alt="Logo" title="Logo"></a>
+                            <a href="/"><img src="{% static 'website-theme/images/icon/logo-dark.jpg' %}" alt="Logo" height="50px" title="Logo"></a>
                         </div>
                     </div>
                     <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
@@ -65,7 +65,7 @@
 {#                                            <li><a href="{% static '/404_pages.html' %}">404 error</a></li>#}
 {#                                        </ul>#}
 {#                                    </li>#}
-                                    <li><a href="#" data-toggle="modal" data-target="#client-query-modal">client query</a></li>
+{#                                    <li><a href="#" data-toggle="modal" data-target="#client-query-modal">client query</a></li>#}
                                     <li><a href="/contact/">Become Our Partner</a></li>
                                 </ul>
                             </div>
@@ -376,72 +376,72 @@
                 </div>
             </div>
         </div>
-        <!-- Newletters Wrapper start -->
-        <div class="rle_newletters_wrapper rle_toppadder80 rle_bottompadder80">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                        <div class="rle_center_heading rle_bottompadder30">
-                            <h1>Subscribe now for latest update</h1>
-                        </div>
-                    </div>
-                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 col-lg-offset-3 col-md-offset-3">
-                        <div class="rle_newletters_box">
-                            <input type="serch" placeholder="Enter Your Email">
-                            <button class="rle_btn">Subscribe</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+{#        <!-- Newletters Wrapper start -->#}
+{#        <div class="rle_newletters_wrapper rle_toppadder80 rle_bottompadder80">#}
+{#            <div class="container">#}
+{#                <div class="row">#}
+{#                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">#}
+{#                        <div class="rle_center_heading rle_bottompadder30">#}
+{#                            <h1>Subscribe now for latest update</h1>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 col-lg-offset-3 col-md-offset-3">#}
+{#                        <div class="rle_newletters_box">#}
+{#                            <input type="serch" placeholder="Enter Your Email">#}
+{#                            <button class="rle_btn">Subscribe</button>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
         <div class="dida-message-us" data-toggle="modal" data-target="#agent-query-modal">
             Agent Query
         </div>
-        <!-- Client Query modal -->
-        <div class="modal" tabindex="-1" role="dialog" id="client-query-modal">
-          <div class="modal-dialog" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-                <h5 class="modal-title">Client Query Form</h5>
-              </div>
-                <div class="modal-body">
-                <div class="card-body">
-                    <div class="form-group">
-                        <label for="address-name">Name<sup style="color: red;">*</sup></label>
-                        <input class="form-control" id="client-name" required type="text" v-model="clientName">
-                    </div>
-                    <div class="form-group">
-                        <label for="address-line1">Email<sup style="color: red;">*</sup></label>
-                        <input class="form-control" id="client-email" required type="email" v-model="clientEmail">
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="country-code">Country Code<sup style="color: red;">*</sup></label>
-                                <select name="country-code" id="select-country-code" class="form-control" v-model="clientCountryCode">
-
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="address-state">Contact<sup style="color: red;">*</sup></label>
-                                <input class="form-control" onKeyPress="if(this.value.length===10) return false;" id="client-contact" required type="number" v-model="clientContact">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                      <button type="button" class="btn btn-primary project-status" v-on:click="clientQuery">Submit</button>
-                  </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!--end Client Query modal -->
+{#        <!-- Client Query modal -->#}
+{#        <div class="modal" tabindex="-1" role="dialog" id="client-query-modal">#}
+{#          <div class="modal-dialog" role="document">#}
+{#            <div class="modal-content">#}
+{#              <div class="modal-header">#}
+{#                <button type="button" class="close" data-dismiss="modal" aria-label="Close">#}
+{#                    <span aria-hidden="true">&times;</span>#}
+{#                </button>#}
+{#                <h5 class="modal-title">Client Query Form</h5>#}
+{#              </div>#}
+{#                <div class="modal-body">#}
+{#                <div class="card-body">#}
+{#                    <div class="form-group">#}
+{#                        <label for="address-name">Name<sup style="color: red;">*</sup></label>#}
+{#                        <input class="form-control" id="client-name" required type="text" v-model="clientName">#}
+{#                    </div>#}
+{#                    <div class="form-group">#}
+{#                        <label for="address-line1">Email<sup style="color: red;">*</sup></label>#}
+{#                        <input class="form-control" id="client-email" required type="email" v-model="clientEmail">#}
+{#                    </div>#}
+{#                    <div class="row">#}
+{#                        <div class="col-md-6">#}
+{#                            <div class="form-group">#}
+{#                                <label for="country-code">Country Code<sup style="color: red;">*</sup></label>#}
+{#                                <select name="country-code" id="select-country-code" class="form-control" v-model="clientCountryCode">#}
+{##}
+{#                                </select>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                        <div class="col-md-6">#}
+{#                            <div class="form-group">#}
+{#                                <label for="address-state">Contact<sup style="color: red;">*</sup></label>#}
+{#                                <input class="form-control" onKeyPress="if(this.value.length===10) return false;" id="client-contact" required type="number" v-model="clientContact">#}
+{#                            </div>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div>#}
+{#                <div class="modal-footer">#}
+{#                      <button type="button" class="btn btn-primary project-status" v-on:click="clientQuery">Submit</button>#}
+{#                  </div>#}
+{#              </div>#}
+{#            </div>#}
+{#          </div>#}
+{#        </div>#}
+{#        <!--end Client Query modal -->#}
         <!-- Agent Query modal -->
         <div class="modal" tabindex="-1" role="dialog" id="agent-query-modal">
           <div class="modal-dialog" role="document">

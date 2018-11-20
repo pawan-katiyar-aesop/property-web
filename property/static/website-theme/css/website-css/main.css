@@ -7,9 +7,9 @@
   right: 12vh;
   position: fixed;
   z-index: 3;
-  background-color: #0f1c2f !important;
-  border: #2a2a2a !important;
-  color: #ffffff !important;
+  background-color: #ffffff;
+  border: 1px solid #c2c4c8;
+  color: #000;
   border-radius: 5px;
   padding: 7px 8px;
   font-size: 12px;
@@ -18,8 +18,9 @@
   align-items: center;
 }
 .dida-message-us:hover {
-  background-color: #00aeef !important;
-  border: blue;
+  background-color: #313131;
+  border: 1px solid #313131;
+  color: #ffffff;
 }
 .imp-padding-top20 {
   padding-top: 20px!important;
