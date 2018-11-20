@@ -12,7 +12,8 @@ let website_home_app = new Vue({
         agentName: '',
         agentEmail: '',
         agentContact: '',
-        agentCountryCode:''
+        agentCountryCode:'',
+        banner: undefined
         
     },
     methods: {
@@ -93,6 +94,29 @@ let website_home_app = new Vue({
         },
         productDetails: function (property_id) {
             window.location = '/property-details/?id='+property_id;
+        },
+        sliderData: function () {
+            let that = this;
+            axios.get('/api/settings/banner/')
+             .then(function (response) {
+                 that.banner = response.data.results;
+             })
+             .catch(function (response) {
+
+             });
+        },
+        initFeaturedSlider: function () {
+           let slider = $("#featured-slider");
+           slider.owlCarousel({
+                items:1,
+                loop:true,
+                autoplay:true,
+                autoplayTimeout:8000,
+                autoplayHoverPause:true,
+                dots:false,
+                smartSpeed:4000,
+                autoWidth:false
+            });
         }
     },
     watch: {
@@ -101,6 +125,8 @@ let website_home_app = new Vue({
     mounted() {
         this.get_topProperty();
         this.get_country_codes();
+        this.initFeaturedSlider();
+        this.sliderData();
     },
     computed: {
 

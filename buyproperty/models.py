@@ -341,6 +341,16 @@ class BannerSetting(models.Model):
     show_on = models.CharField(choices=PAGE, blank=True, null=True, max_length=10)
     title = models.CharField(max_length=250, null=True, blank=True)
 
+    def __str__(self):
+        if self.title and self.show_on:
+            return str(self.show_on) + ":" + str(self.title)
+        elif self.title:
+            return str(self.title)
+        elif self.show_on:
+            return str(self.show_on)
+        else:
+            return None
+          
 
 class TestimonialSetting(models.Model):
     name = models.CharField(max_length=100, null=True, blank=True)
