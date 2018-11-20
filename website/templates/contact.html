@@ -140,28 +140,28 @@
                                     <div class="col-md-12">
                                         <div class="col-md-3">
                                             <label class="containerCheckbox">Owner
-                                                <input name="our_partner" type="radio" checked="checked">
+                                                <input name="our_partner" type="radio" v-model="partnerType" value="owner" checked="checked">
                                                 <span class="checkmark"></span>
                                             </label>
 
                                         </div>
                                         <div class="col-md-3">
                                             <label class="containerCheckbox">Builder
-                                                <input name="our_partner" type="radio">
+                                                <input name="our_partner" type="radio" value="builder" v-model="partnerType">
                                                 <span class="checkmark"></span>
                                             </label>
 
                                         </div>
                                         <div class="col-md-3">
                                             <label class="containerCheckbox">Broker
-                                                <input name="our_partner" type="radio">
+                                                <input name="our_partner" type="radio" value="broker" v-model="partnerType">
                                                 <span class="checkmark"></span>
                                             </label>
 
                                         </div>
                                         <div class="col-md-3">
                                             <label class="containerCheckbox">Client
-                                                <input name="our_partner" type="radio">
+                                                <input name="our_partner" type="radio" value="client" v-model="partnerType">
                                                 <span class="checkmark"></span>
                                             </label>
 
@@ -178,7 +178,7 @@
                                         <textarea rows="8" placeholder="Message" v-model="contactMessage"></textarea>
                                     </div>
                                     <div class="col-lg-12">
-                                        <a href="#" class="rle_btn" on:click="sendEmail">Send message</a>
+                                        <a href="#" class="rle_btn" v-on:click="sendEmail">Send message</a>
                                     </div>
                                 </form>
                             </div>

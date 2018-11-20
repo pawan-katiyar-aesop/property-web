@@ -5,7 +5,7 @@
 
 {% endblock scoped_css %}
 {% block content %}
-    <div id="website-about-app">
+    <div id="about-app">
         <div class="style_2">
             <div class="rle_header_wrapper style_2">
                 <div class="container">
@@ -229,91 +229,16 @@
                     </div>
                     <div class="rle_people_saying_slider">
                         <div class="owl-carousel owl-theme">
-                            <div class="item">
+                            <div class="item" v-for="testmo in testimonials">
                                 <div class="rle_peoplesay_slider_details">
                                     <div class="rle_peoplesay_slider_details_img">
-                                        <img src="http://placehold.it/100x100" alt="" title="">
+                                        <img v-if="testmo.image" :src="testmo.image" alt="" title="">
+                                        <img v-else src="http://placehold.it/100x100" alt="" title="">
                                     </div>
                                     <div class="rle_peoplesay_slider_details_text">
                                         <img src="images/icon/quote.png" alt="" title="">
-                                        <p>We chose Alpha Housing to sell property after doing an internet search for real estate agents. They contacted me quickly and were friendly, helpful and honest. </p>
-                                        <h4>Jennifer Slaney, <span>New York</span></h4>
-                                    </div>
-                                </div>
-                                <div class="rle_peoplesay_slider_details">
-                                    <div class="rle_peoplesay_slider_details_img">
-                                        <img src="http://placehold.it/100x100" alt="" title="">
-                                    </div>
-                                    <div class="rle_peoplesay_slider_details_text">
-                                        <img src="images/icon/quote.png" alt="" title="">
-                                        <p>Thank you Alpha Housing for providing me with your wealth of knowledge in putting together a go-to-market strategy and selling the house in just two days! </p>
-                                        <h4>Vernon Cook, <span>San Francisco</span></h4>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="item">
-                                <div class="rle_peoplesay_slider_details">
-                                    <div class="rle_peoplesay_slider_details_img">
-                                        <img src="http://placehold.it/100x100" alt="" title="">
-                                    </div>
-                                    <div class="rle_peoplesay_slider_details_text">
-                                        <img src="images/icon/quote.png" alt="" title="">
-                                        <p>I just wanted to thank you for all the extras you to the "Alpha Housing" title. As far as we're concerned that title doesn't fit you at all, you're way more than that!!!  </p>
-                                        <h4>Virginia Burmeister, <span> Los Angeles</span></h4>
-                                    </div>
-                                </div>
-                                <div class="rle_peoplesay_slider_details">
-                                    <div class="rle_peoplesay_slider_details_img">
-                                        <img src="http://placehold.it/100x100" alt="" title="">
-                                    </div>
-                                    <div class="rle_peoplesay_slider_details_text">
-                                        <img src="images/icon/quote.png" alt="" title="">
-                                        <p>After having my home on the market for six months and not receiving any offers, I decided to switch my home sale over to Alpha Housing had done.</p>
-                                        <h4>Rachel Briggs, <span>San Diego</span></h4>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="item">
-                                <div class="rle_peoplesay_slider_details">
-                                    <div class="rle_peoplesay_slider_details_img">
-                                        <img src="http://placehold.it/100x100" alt="" title="">
-                                    </div>
-                                    <div class="rle_peoplesay_slider_details_text">
-                                        <img src="images/icon/quote.png" alt="" title="">
-                                        <p>We chose Alpha Housing to sell property after doing an internet search for real estate agents. They contacted me quickly and were friendly, helpful and honest. </p>
-                                        <h4>Jennifer Slaney, <span>New York</span></h4>
-                                    </div>
-                                </div>
-                                <div class="rle_peoplesay_slider_details">
-                                    <div class="rle_peoplesay_slider_details_img">
-                                        <img src="http://placehold.it/100x100" alt="" title="">
-                                    </div>
-                                    <div class="rle_peoplesay_slider_details_text">
-                                        <img src="images/icon/quote.png" alt="" title="">
-                                        <p>Thank you Alpha Housing for providing me with your wealth of knowledge in putting together a go-to-market strategy and selling the house in just two days! </p>
-                                        <h4>Vernon Cook, <span>San Francisco</span></h4>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="item">
-                                <div class="rle_peoplesay_slider_details">
-                                    <div class="rle_peoplesay_slider_details_img">
-                                        <img src="http://placehold.it/100x100" alt="" title="">
-                                    </div>
-                                    <div class="rle_peoplesay_slider_details_text">
-                                        <img src="images/icon/quote.png" alt="" title="">
-                                        <p>I just wanted to thank you for all the extras you to the "Alpha Housing" title. As far as we're concerned that title doesn't fit you at all, you're way more than that!!!  </p>
-                                        <h4>Virginia Burmeister, <span> Los Angeles</span></h4>
-                                    </div>
-                                </div>
-                                <div class="rle_peoplesay_slider_details">
-                                    <div class="rle_peoplesay_slider_details_img">
-                                        <img src="http://placehold.it/100x100" alt="" title="">
-                                    </div>
-                                    <div class="rle_peoplesay_slider_details_text">
-                                        <img src="images/icon/quote.png" alt="" title="">
-                                        <p>After having my home on the market for six months and not receiving any offers, I decided to switch my home sale over to Alpha Housing had done.</p>
-                                        <h4>Rachel Briggs, <span>San Diego</span></h4>
+                                        <p>{% verbatim %} {{ testmo.message }} {% endverbatim %}</p>
+                                        <h4>{% verbatim %} {{ testmo.name }} {% endverbatim %}, <span>{% verbatim %} {{ testmo.city }} {% endverbatim %}</span></h4>
                                     </div>
                                 </div>
                             </div>
@@ -339,6 +264,7 @@
     </div>
 {% endblock %}
 {% block page_level_scripts %}
+    <script src="{% static 'website-theme/js/website-js/about.js' %}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.2.0/js.cookie.min.js"></script>
     <script src ="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.9.1/underscore-min.js"></script>
 {% endblock page_level_scripts %}
