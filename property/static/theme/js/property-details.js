@@ -22,7 +22,8 @@ let property_detail_app = new Vue({
             description:'',
             images:[],
             videos:[],
-            id:undefined
+            id:undefined,
+            floor_number: 0
         },
         floorPlanListOfDescriptions:['','','',''],
         floorPlanListOfImagesList:[[],[],[],[]],
@@ -69,7 +70,6 @@ let property_detail_app = new Vue({
                 .then(function (response) {
                 that.property = response.data;
                 that.propertyImages.imageList = that.property.images;
-                console.log("--------This Page Property-------",that.property);
                 that.loadOtherCharges();
                 that.countryCode = that.countryCodes[_.indexOf(_.pluck(that.countryCodes,'id'),that.property.country_code)]['name'];
                 that.processing = false;
@@ -78,7 +78,6 @@ let property_detail_app = new Vue({
 
             })
             .catch(function (response) {
-                alert("Failed fetching data for id : "+that.pk);
                 that.processing = false;
             })
                 .finally(function (response) {
@@ -154,7 +153,8 @@ let property_detail_app = new Vue({
                 "videos":that.property.videos,
                 "latitude":that.lat,
                 "longitude":that.lng,
-                "map_address":that.mapAddress
+                "map_address":that.mapAddress,
+                "floor_number": that.floorPlanEdit.floor_number
             };
             axios.put("/api/property/"+parseInt(that.pk)+"/" ,data)
             .then(function (response) {
@@ -512,9 +512,6 @@ let property_detail_app = new Vue({
                 that.floorPlanEdit['videos'] = [];
                 that.floorPlanEdit['id'] = undefined;
             }
-
-
-
         },
         clearFloorPlan: function () {
             let that = this;
@@ -528,7 +525,8 @@ let property_detail_app = new Vue({
             let data = {
                 "description":that.floorPlanEdit['description'],
                 "images":that.floorPlanEdit['images'],
-                "videos":that.floorPlanEdit['videos']
+                "videos":that.floorPlanEdit['videos'],
+                "no_of_floor": that.floorPlanEdit["floor_number"]
             };
             axios.put("/api/floor_plan/"+parseInt(that.floorPlanEdit['id'])+"/", data)
                 .then(function (response) {
@@ -588,11 +586,12 @@ let property_detail_app = new Vue({
                 "description":that.floorPlanEdit['description'],
                 "images":that.floorPlanEdit['images'],
                 "videos":that.floorPlanEdit['videos'],
-                "property":that.pk
+                "property":that.pk,
+                "no_of_floor": that.floorPlanEdit["floor_number"]
             };
             axios.post("/api/floor_plan/",data)
                 .then(function (response) {
-                    alert("Saved new floor plan successfully")
+                    alert("Saved new floor plan successfully");
                     window.location.reload(true);
                 })
                 .catch(function (response) {

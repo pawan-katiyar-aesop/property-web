@@ -15,6 +15,7 @@ urlpatterns = [
     url(r'^property/media/$', views.UploadMediaView.as_view(), name="property-media"),
     url(r'^floor_plan/$', views.ListCreateFloorPlanAPIView.as_view(), name="floor-plan-list-create"),
     url(r'^floor_plan/(?P<pk>\d+)/$', views.RetrieveUpdateDestroyFloorPlanAPIView.as_view(), name="retrieve-update-floor-plan"),
-    url(r'^settings/banner/$', views.BannerSettingCreateListAPIView.as_view(), name="banner-settings")
+    url(r'^settings/banner/$', views.BannerSettingCreateListAPIView.as_view(), name="banner-settings"),
+    url(r'^settings/testimonial/$', views.TestimonialAPIView.as_view(), name="banner-settings"),
 
 ]
