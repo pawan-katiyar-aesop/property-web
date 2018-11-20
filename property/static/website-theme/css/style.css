@@ -510,7 +510,7 @@ textarea:focus {
 	transition: all 0.3s ease-out;
 }
 .rle_header_wrapper .rle_main_menu ul li a:after{
-	border-bottom: 2px solid #00aeef;
+	border-bottom: 2px solid #000000;
 }
 .rle_header_wrapper .rle_main_menu ul li a:hover:after{
     width: 100%;
@@ -982,7 +982,7 @@ textarea:focus {
 	left:0;
 	right:0;
 	margin:0px auto;
-	background-color:#00aeef;
+	background-color:#000000;
 	width:50px;
 	height:2px;
 }
@@ -1017,7 +1017,7 @@ textarea:focus {
 	position:absolute;
 	top:100%;
 	left:0;
-	background-color:#00aeef;
+	background-color:#000000;
 	width:50px;
 	height:2px;
 }
@@ -1039,9 +1039,9 @@ textarea:focus {
 	line-height:48px;
 	width:auto;
 	padding:0px 25px;
-	border:2px solid #00aeef;
+	border:2px solid #313131;
 	color:#ffffff;
-	background-color:#00aeef;
+	background-color:#313131;
 	border-radius:3px;
 	text-transform:uppercase;
 	text-decoration:none;
@@ -1078,9 +1078,9 @@ textarea:focus {
 	transition: all 0.3s ease-out;
 }
 .rle_btn:hover{
-	color:#00aeef;
+	color:#000000;
 	text-decoration:none;
-	border:2px solid #00aeef;
+	border:2px solid #c2c4c8;
 	-webkit-transition: all 0.3s ease-out;
 	-o-transition: all 0.3s ease-out;
 	-ms-transition: all 0.3s ease-out;
@@ -1250,7 +1250,7 @@ textarea:focus {
 	float:none;
 }
 .rle_property_infobox_details_header h3 a:hover{
-	color:#00aeef;
+	color:#000000;
 	text-decoration:none;
 	-webkit-transition: all 0.3s ease-out;
 	-o-transition: all 0.3s ease-out;
@@ -1335,7 +1335,7 @@ textarea:focus {
 	transition: all 0.3s ease-out;
 }
 .rle_property_infobox_details_pricefooter a:hover{
-	color:#00aeef;
+	color:#000000;
 	margin-right:0px;
 	-webkit-transition: all 0.3s ease-out;
 	-o-transition: all 0.3s ease-out;
@@ -1352,7 +1352,7 @@ textarea:focus {
 	transition: all 0.3s ease-out;
 }
 .rle_property_infobox_details_pricefooter a:hover i{
-	color:#00aeef;
+	color:#000000;
 	-webkit-transition: all 0.3s ease-out;
 	-o-transition: all 0.3s ease-out;
 	-ms-transition: all 0.3s ease-out;
@@ -2066,7 +2066,7 @@ textarea:focus {
 	color:#bdbfc2;
 }
 .rle_bottom_footer p a{
-	color:#00aeef;
+	color:#eab945;
 	text-decoration:none;
 }
 .rle_bottom_footer p span{
@@ -3236,11 +3236,11 @@ textarea:focus {
 	color:#ffffff;
 }
 .rle_pagetitle_wrapper ul.breadcrumb li a i{
-	color:#00aeef;
+	color:#000000;
 	padding-right:10px;
 }
 .rle_pagetitle_wrapper ul.breadcrumb li a:hover{
-	color:#00aeef;
+	color:#000000;
 	text-decoration:none;
 	-webkit-transition: all 0.3s ease-out;
 	-o-transition: all 0.3s ease-out;
@@ -3276,8 +3276,8 @@ textarea:focus {
 }
 .rle_pagination_wrapper ul.pagination > li > a:hover, .rle_pagination_wrapper ul.pagination > li > span:hover, .rle_pagination_wrapper ul.pagination > li > a:focus, .rle_pagination_wrapper ul.pagination > li > span:focus {
     color: #ffffff;
-    background-color: #00aeef;
-    border-color: #00aeef;
+    background-color: #313131;
+    border-color: #313131;
 	-webkit-transition: all 0.3s ease-out;
 	-o-transition: all 0.3s ease-out;
 	-ms-transition: all 0.3s ease-out;
@@ -3286,8 +3286,8 @@ textarea:focus {
 }
 .rle_pagination_wrapper ul.pagination > .active > a, .rle_pagination_wrapper ul.pagination > .active > span{
 	color:#ffffff;
-	background-color:#00aeef;
-	border-color: #00aeef;
+	background-color:#000000;
+	border-color: #000000;
 	-webkit-transition: all 0.3s ease-out;
 	-o-transition: all 0.3s ease-out;
 	-ms-transition: all 0.3s ease-out;
@@ -3295,8 +3295,8 @@ textarea:focus {
 	transition: all 0.3s ease-out;
 }
 .rle_pagination_wrapper ul.pagination > .active > a:hover, .rle_pagination_wrapper ul.pagination > .active > span:hover, .rle_pagination_wrapper ul.pagination > .active > a:focus, .rle_pagination_wrapper ul.pagination > .active > span:focus {
-    background-color: #00aeef;
-    border-color: #00aeef;
+    background-color: #000000;
+    border-color: #000000;
 	-webkit-transition: all 0.3s ease-out;
 	-o-transition: all 0.3s ease-out;
 	-ms-transition: all 0.3s ease-out;
