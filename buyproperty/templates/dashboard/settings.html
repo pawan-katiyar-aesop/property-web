@@ -22,6 +22,7 @@
                     </div>
                     <div class="card-body">
                         <div class="col-md-6">
+                            <label><h3>Website home page's titles</h3></label>
                             <div class="row" v-for="banner, index in banner.fields">
                                 <label class="wc">Enter banner title:{% verbatim %} {{ index + 1 }} {% endverbatim %}</label><br>
                                 <input class="form-control" type="text" v-model="banner.title" style="width: 340px"/>&nbsp;&nbsp;
@@ -45,6 +46,42 @@
                         <button @click="postBannerInfo()" class="btn btn-success" type="button">
                          Update & Save
                         </button>
+                    </div>
+                </div>
+            </div>
+        </div><br>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card card-default" style="width: 900px">
+                    <div class="card-header">
+                        Add testimonial for website.
+                    </div>
+                    <div class="card-body">
+                         <div class="col-md-6">
+                             <label><h3>Testimonials</h3></label>
+                            <div class="row" v-for="testmo, index in testimonials">
+                                <label class="wc"><br>Enter name of person {% verbatim %}{{ index + 1 }}{% endverbatim %}:</label><br>
+                                <input class="form-control" type="text" v-model="testmo.name" style="width: 340px"/>&nbsp;&nbsp;
+                                <br><label class="wc">Enter city of person {% verbatim %}{{ index + 1 }}{% endverbatim %}:</label>
+                                <input class="form-control" type="text" v-model="testmo.city" style="width: 340px"/>
+                                <label class="wc">Enter message for {% verbatim %}{{ index + 1 }}{% endverbatim %}:</label><br>
+                                <textarea class="form-control" v-model="testmo.message" style="width: 340px"></textarea>&nbsp;&nbsp;
+                                <button @click="removeTestinomialFields(index)" type="button" class="btn btn-danger">
+                                    Remove
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                        <button :hidden="testimonials.length === 0" @click="addTestimonialFields()" class="btn btn-success" type="button">
+                         Add more
+                        </button>&nbsp;&nbsp;
+                        <button :hidden="testimonials.length !== 0" @click="addTestimonialFields()" class="btn btn-success" type="button">
+                         Add
+                        </button>&nbsp;&nbsp;
+                        <button @click="postTestimonails()" class="btn btn-success" type="button">
+                         Update & Save
+                        </button>
+                    </div>
                     </div>
                 </div>
             </div>

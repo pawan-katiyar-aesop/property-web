@@ -224,31 +224,10 @@
                             </ul>
                         </div>
                         <div class="rle_property_details_box">
-                            <h3>More Features</h3>
-                            <div class="row">
-                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                    <div class="row">
-                                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" v-if="propertyDetails.furnishing_status"><i class="fa fa-circle" style="color: #00aeef"></i>&nbsp;&nbsp;Furnishing Status: <span v-html="furnishing_status[propertyDetails.furnishing_status]"></span></div>
-                                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" v-if="propertyDetails.age"><i class="fa fa-circle" style="color: #00aeef"></i>&nbsp;&nbsp;Property Age: {% verbatim %}{{ propertyDetails.age }}{% endverbatim %}</div>
-                                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" v-if="propertyDetails.rental_value"><i class="fa fa-circle" style="color: #00aeef"></i>&nbsp;&nbsp;Property Rent: Rs. {% verbatim %}{{ propertyDetails.rental_value }}{% endverbatim %}</div>
-                                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" v-if="propertyDetails.monthly_maintenance"><i class="fa fa-circle" style="color: #00aeef"></i>&nbsp;&nbsp;Monthly Maintenance: Rs. {% verbatim %}{{ propertyDetails.monthly_maintenance }}{% endverbatim %}</div>
-                                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" v-if="propertyDetails.security_deposit"><i class="fa fa-circle" style="color: #00aeef"></i>&nbsp;&nbsp;Security Deposit: Rs. {% verbatim %}{{ propertyDetails.security_deposit }}{% endverbatim %}</div>
-                                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" v-if="propertyDetails.other_charges !== null" v-for="key, value in propertyDetails.other_charges"><i class="fa fa-circle" style="color: #00aeef"></i>&nbsp;&nbsp;<span>{% verbatim %}{{ value }}: Rs. {{ key }}{% endverbatim %}</span></div>
-                                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" v-if="propertyDetails.parking"><i class="fa fa-circle" style="color: #00aeef"></i>&nbsp;&nbsp;Parking Type: <span v-html="parking_choice[propertyDetails.parking]"></span></div>
-                                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" v-if="propertyDetails.parking_area"><i class="fa fa-circle" style="color: #00aeef"></i>&nbsp;&nbsp;Parking Area: {% verbatim %}{{ propertyDetails.parking_area }}{% endverbatim %}</div>
-                                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" v-if="propertyDetails.facing"><i class="fa fa-circle" style="color: #00aeef"></i>&nbsp;&nbsp;Facing Direction: <span v-html="facing_options[propertyDetails.facing]"></span></div>
-                                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" v-if="propertyDetails.flooring"><i class="fa fa-circle" style="color: #00aeef"></i>&nbsp;&nbsp;Flooring Type: <span v-html="flooring_type[propertyDetails.flooring]"></span></div>
-                                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" v-if="propertyDetails.buildup_area"><i class="fa fa-circle" style="color: #00aeef"></i>&nbsp;&nbsp;Buildup Area: {% verbatim %}{{ propertyDetails.buildup_area }}{% endverbatim %}</div>
-                                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" v-if="propertyDetails.carpet_area"><i class="fa fa-circle" style="color: #00aeef"></i>&nbsp;&nbsp;Carpet Area: {% verbatim %}{{ propertyDetails.carpet_area }}{% endverbatim %}</div>
-                                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" v-if="propertyDetails.number_of_basements"><i class="fa fa-circle" style="color: #00aeef"></i>&nbsp;&nbsp;Number of Basements: {% verbatim %}{{ propertyDetails.number_of_basements }}{% endverbatim %}</div>
-                                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" v-if="propertyDetails.ceiling_height"><i class="fa fa-circle" style="color: #00aeef"></i>&nbsp;&nbsp;Ceiling Height: {% verbatim %}{{ propertyDetails.ceiling_height }}{% endverbatim %}</div>
-                                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" v-if="propertyDetails.beam_height"><i class="fa fa-circle" style="color: #00aeef"></i>&nbsp;&nbsp;Beam Height: {% verbatim %}{{ propertyDetails.beam_height }}{% endverbatim %}</div>
-                                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" v-if="propertyDetails.lease_term"><i class="fa fa-circle" style="color: #00aeef"></i>&nbsp;&nbsp;Lease Term: {% verbatim %}{{ propertyDetails.lease_term }}{% endverbatim %}</div>
-                                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" v-if="propertyDetails.flooring_details"><i class="fa fa-circle" style="color: #00aeef"></i>&nbsp;&nbsp;Flooring Details: <span v-html="propertyDetails.flooring_details"></span></div>
-                                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" v-if="propertyDetails.ceiling_details"><i class="fa fa-circle" style="color: #00aeef"></i>&nbsp;&nbsp;Ceiling Details: <span v-html="propertyDetails.ceiling_details"></span></div>
-                                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" v-if="propertyDetails.washroom_details"><i class="fa fa-circle" style="color: #00aeef"></i>&nbsp;&nbsp;Washroom Details: &nbsp; &nbsp; <span v-if="propertyDetails.washroom_details.WC">WC: {% verbatim %}{{ propertyDetails.washroom_details.WC }}{% endverbatim %}</span> &nbsp; &nbsp; <span v-if="propertyDetails.washroom_details.Urinals">Urinals: {% verbatim %}{{ propertyDetails.washroom_details.Urinals }}{% endverbatim %}</span></div>
-                                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" v-if="propertyDetails.landmark"><i class="fa fa-circle" style="color: #00aeef"></i>&nbsp;&nbsp;Landmark: {% verbatim %}{{ propertyDetails.landmark }}{% endverbatim %}</div>
-                                    </div>
+                            <h3>Video tour</h3>
+                            <div v-if="propertyDetails.videos.length > 0">
+                                <div v-for="item in propertyDetails.videos" v-if="item.type === 't'">
+                                    <iframe :src="item.url+'?rel=0&showinfo=0&autoplay=0'" width="100%" height="100%" frameborder="0" allowfullscreen></iframe>
                                 </div>
                             </div>
                         </div>
@@ -310,6 +289,35 @@
 {#                                </div>#}
                             </div>
                         </div>
+                        <div class="rle_property_details_box">
+                            <h3>More Features</h3>
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <div class="row">
+                                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" v-if="propertyDetails.furnishing_status"><i class="fa fa-circle" style="color: #00aeef"></i>&nbsp;&nbsp;Furnishing Status: <span v-html="furnishing_status[propertyDetails.furnishing_status]"></span></div>
+                                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" v-if="propertyDetails.age"><i class="fa fa-circle" style="color: #00aeef"></i>&nbsp;&nbsp;Property Age: {% verbatim %}{{ propertyDetails.age }}{% endverbatim %}</div>
+                                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" v-if="propertyDetails.rental_value"><i class="fa fa-circle" style="color: #00aeef"></i>&nbsp;&nbsp;Property Rent: Rs. {% verbatim %}{{ propertyDetails.rental_value }}{% endverbatim %}</div>
+                                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" v-if="propertyDetails.monthly_maintenance"><i class="fa fa-circle" style="color: #00aeef"></i>&nbsp;&nbsp;Monthly Maintenance: Rs. {% verbatim %}{{ propertyDetails.monthly_maintenance }}{% endverbatim %}</div>
+                                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" v-if="propertyDetails.security_deposit"><i class="fa fa-circle" style="color: #00aeef"></i>&nbsp;&nbsp;Security Deposit: Rs. {% verbatim %}{{ propertyDetails.security_deposit }}{% endverbatim %}</div>
+                                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" v-if="propertyDetails.other_charges !== null" v-for="key, value in propertyDetails.other_charges"><i class="fa fa-circle" style="color: #00aeef"></i>&nbsp;&nbsp;<span>{% verbatim %}{{ value }}: Rs. {{ key }}{% endverbatim %}</span></div>
+                                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" v-if="propertyDetails.parking"><i class="fa fa-circle" style="color: #00aeef"></i>&nbsp;&nbsp;Parking Type: <span v-html="parking_choice[propertyDetails.parking]"></span></div>
+                                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" v-if="propertyDetails.parking_area"><i class="fa fa-circle" style="color: #00aeef"></i>&nbsp;&nbsp;Parking Area: {% verbatim %}{{ propertyDetails.parking_area }}{% endverbatim %}</div>
+                                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" v-if="propertyDetails.facing"><i class="fa fa-circle" style="color: #00aeef"></i>&nbsp;&nbsp;Facing Direction: <span v-html="facing_options[propertyDetails.facing]"></span></div>
+                                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" v-if="propertyDetails.flooring"><i class="fa fa-circle" style="color: #00aeef"></i>&nbsp;&nbsp;Flooring Type: <span v-html="flooring_type[propertyDetails.flooring]"></span></div>
+                                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" v-if="propertyDetails.buildup_area"><i class="fa fa-circle" style="color: #00aeef"></i>&nbsp;&nbsp;Buildup Area: {% verbatim %}{{ propertyDetails.buildup_area }}{% endverbatim %}</div>
+                                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" v-if="propertyDetails.carpet_area"><i class="fa fa-circle" style="color: #00aeef"></i>&nbsp;&nbsp;Carpet Area: {% verbatim %}{{ propertyDetails.carpet_area }}{% endverbatim %}</div>
+                                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" v-if="propertyDetails.number_of_basements"><i class="fa fa-circle" style="color: #00aeef"></i>&nbsp;&nbsp;Number of Basements: {% verbatim %}{{ propertyDetails.number_of_basements }}{% endverbatim %}</div>
+                                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" v-if="propertyDetails.ceiling_height"><i class="fa fa-circle" style="color: #00aeef"></i>&nbsp;&nbsp;Ceiling Height: {% verbatim %}{{ propertyDetails.ceiling_height }}{% endverbatim %}</div>
+                                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" v-if="propertyDetails.beam_height"><i class="fa fa-circle" style="color: #00aeef"></i>&nbsp;&nbsp;Beam Height: {% verbatim %}{{ propertyDetails.beam_height }}{% endverbatim %}</div>
+                                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" v-if="propertyDetails.lease_term"><i class="fa fa-circle" style="color: #00aeef"></i>&nbsp;&nbsp;Lease Term: {% verbatim %}{{ propertyDetails.lease_term }}{% endverbatim %}</div>
+                                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" v-if="propertyDetails.flooring_details"><i class="fa fa-circle" style="color: #00aeef"></i>&nbsp;&nbsp;Flooring Details: <span v-html="propertyDetails.flooring_details"></span></div>
+                                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" v-if="propertyDetails.ceiling_details"><i class="fa fa-circle" style="color: #00aeef"></i>&nbsp;&nbsp;Ceiling Details: <span v-html="propertyDetails.ceiling_details"></span></div>
+                                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" v-if="propertyDetails.washroom_details"><i class="fa fa-circle" style="color: #00aeef"></i>&nbsp;&nbsp;Washroom Details: &nbsp; &nbsp; <span v-if="propertyDetails.washroom_details.WC">WC: {% verbatim %}{{ propertyDetails.washroom_details.WC }}{% endverbatim %}</span> &nbsp; &nbsp; <span v-if="propertyDetails.washroom_details.Urinals">Urinals: {% verbatim %}{{ propertyDetails.washroom_details.Urinals }}{% endverbatim %}</span></div>
+                                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" v-if="propertyDetails.landmark"><i class="fa fa-circle" style="color: #00aeef"></i>&nbsp;&nbsp;Landmark: {% verbatim %}{{ propertyDetails.landmark }}{% endverbatim %}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <div v-if="propertyDetails.nearest" class="rle_property_details_box">
                             <h3>Point of interest</h3>
                             <div class="panel-group" id="accordion">
@@ -325,16 +333,25 @@
                                     </div>
                                 </div>
                                 {% endverbatim %}
-{#                                <div class="panel panel-default">#}
-{#                                    <div class="panel-heading">#}
-{#                                        <h4 class="panel-title">#}
-{#                                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse2"><i class="fa fa-coffee" aria-hidden="true"></i> Restaurant</a>#}
-{#                                        </h4>#}
-{#                                    </div>#}
-{#                                    <div id="collapse2" class="panel-collapse collapse">#}
-{#                                        <div class="panel-body">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</div>#}
-{#                                    </div>#}
-{#                                </div>#}
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse2"><i class="fa fa-coffee" aria-hidden="true"></i> Restaurant</a>
+                                        </h4>
+                                    </div>
+                                    <div id="collapse2" class="panel-collapse collapse">
+                                        <div class="panel-body">
+                                            <div class="col-md-12">
+                                                <div class="col-md-10">
+                                                    Lorem ipsum dolor sit amet.
+                                                </div>
+                                                <div class="col-md-2">
+                                                    16 km
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
 {#                                <div class="panel panel-default">#}
 {#                                    <div class="panel-heading">#}
 {#                                        <h4 class="panel-title">#}
@@ -355,14 +372,6 @@
 {#                                        <div class="panel-body">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</div>#}
 {#                                    </div>#}
 {#                                </div>#}
-                            </div>
-                        </div>
-                        <div class="rle_property_details_box">
-                            <h3>Video tour</h3>
-                            <div v-if="propertyDetails.videos.length > 0">
-                                <div v-for="item in propertyDetails.videos" v-if="item.type === 't'">
-                                    <iframe :src="item.url+'?rel=0&showinfo=0&autoplay=0'" width="100%" height="100%" frameborder="0" allowfullscreen></iframe>
-                                </div>
                             </div>
                         </div>
 {#                        <div class="rle_property_details_box">#}
