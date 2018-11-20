@@ -1,12 +1,14 @@
 from __future__ import unicode_literals
 from rest_framework import status
 from django.views.generic import TemplateView
-from models import CustomerLead, AgentLead, Property, Address, Nearest, Overlooking, Video, FloorPlan, Media, BannerSetting
+from models import CustomerLead, AgentLead, Property, Address, Nearest, Overlooking, Video, FloorPlan, Media,\
+    BannerSetting, TestimonialSetting, TestimonialSetting
 from django.views import generic
 from rest_framework.response import Response
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView, ListAPIView
 from serializers import CustomerLeadSerializer, AgentLeadSerializer, PropertySerializer, AddressSerializer,\
-    OverlookingSerializer, TopPropertySerializer, RetrievePropertySerializer, FloorPlanSerializer, BannerTitleSerializer
+    OverlookingSerializer, TopPropertySerializer, RetrievePropertySerializer, FloorPlanSerializer,\
+    BannerTitleSerializer, TestimonialSettingSerializer
 from rest_framework.views import APIView
 import datetime
 from django.db.models import Q
@@ -430,3 +432,7 @@ class BannerSettingCreateListAPIView(ListCreateAPIView):
             BannerSetting.objects.create(title=banner_title.get("title"), show_on=banner_title.get("show_on"))
         return Response({"status": True})
 
+
+class TestimonialAPIView(ListCreateAPIView):
+    serializer_class = TestimonialSettingSerializer
+    queryset = TestimonialSetting.objects.all()
