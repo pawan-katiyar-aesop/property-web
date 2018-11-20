@@ -4899,7 +4899,7 @@ textarea:focus {
     padding-left: 35px;
     margin-bottom: 12px;
     cursor: pointer;
-    font-size: 22px;
+    font-size: 17px;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
@@ -4917,11 +4917,11 @@ textarea:focus {
 
 /* Create a custom checkbox */
 .checkmark {
-    position: absolute;
-	top: 7px;
-    left: 0;
-    height: 23px;
-    width: 23px;
+   position: absolute;
+   top: 7px;
+   left: 0;
+   height: 16px;
+   width: 17px;
     background-color: #eee;
 }
 
@@ -4949,12 +4949,12 @@ textarea:focus {
 
 /* Style the checkmark/indicator */
 .containerCheckbox .checkmark:after {
-	left: 8px;
-    top: 2px;
-    width: 8px;
-    height: 14px;
-    border: solid white;
-    border-width: 0 3px 3px 0;
+   left: 6px;
+   top: 1px;
+   width: 6px;
+   height: 11px;
+   border: solid white;
+   border-width: 0 3px 3px 0;
     -webkit-transform: rotate(45deg);
     -ms-transform: rotate(45deg);
     transform: rotate(45deg);
