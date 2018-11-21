@@ -1462,7 +1462,7 @@ textarea:focus {
 	transition: all 0.3s ease-out;
 }
 .rle_property_details_box ul.nav-tabs > li > a:hover, .rle_property_details_box ul.nav-tabs > li.active > a, .rle_property_details_box ul.nav-tabs > li.active > a:hover, .rle_property_details_box ul.nav-tabs > li.active > a:focus{
-	background-color:#333333;
+	background-color:#9502E7;
 	color:#ffffff;
 	-webkit-transition: all 0.3s ease-out;
 	-o-transition: all 0.3s ease-out;
