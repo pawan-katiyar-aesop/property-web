@@ -56,6 +56,7 @@ class Nearest(models.Model):
         ('pharmacy', 'Pharmacy')
     ]
     title = models.CharField(choices=LOCALITY_CHOICES, null=True, blank=True, max_length=20)
+    nearest_description = models.TextField(blank=True, default="Nearest Place Description here.")
     distance = models.TextField(null=True, blank=True)
 
     def __str__(self):

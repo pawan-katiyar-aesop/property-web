@@ -45,10 +45,23 @@ let website_details_app = new Vue({
             'bare': 'Bare'
         },
         floor_choice: {
-            0: 'GROUND FLOOR',
-            1: 'FIRST FLOOR',
-            2: 'SECOND FLOOR',
-            3: 'THIRD FLOOR'
+            "-1": 'No Plan',
+            0: 'Bareshell layout',
+            1: 'Design Option 1',
+            2: 'Design Option 2',
+            3: 'Design Option 3'
+        },
+        i_icon: {
+            'bus': 'fa fa-bus',
+            'school': 'fa fa-university',
+            'mall': 'fa fa-shopping-basket',
+            'hospital': 'fa fa-hospital-o',
+            'bank': 'fa fa-credit-card',
+            'atm': 'fa fa-money',
+            'restaurant': 'fa fa-cutlery',
+            'metro': 'fa fa-train',
+            'train': 'fa fa-train',
+            'pharmacy': 'fa fa-medkit'
         }
 
     },
