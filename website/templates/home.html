@@ -13,7 +13,7 @@
                 <div class="row">
                     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                         <div class="rle_logo">
-                            <a href="/"><img src="{% static 'website-theme/images/icon/logo-dark.jpg' %}" alt="Logo" height="50px" title="Logo"></a>
+                            <a href="/"><img src="{% static 'website-theme/images/icon/logo-dark.jpg' %}" alt="Logo" height="70px" title="Logo"></a>
                         </div>
                     </div>
                     <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
@@ -405,9 +405,9 @@
 {#                </div>#}
 {#            </div>#}
 {#        </div>#}
-        <div class="dida-message-us" data-toggle="modal" data-target="#agent-query-modal">
-            Agent Query
-        </div>
+{#        <div class="dida-message-us" data-toggle="modal" data-target="#agent-query-modal">#}
+{#            Agent Query#}
+{#        </div>#}
 {#        <!-- Client Query modal -->#}
 {#        <div class="modal" tabindex="-1" role="dialog" id="client-query-modal">#}
 {#          <div class="modal-dialog" role="document">#}
@@ -453,55 +453,55 @@
 {#          </div>#}
 {#        </div>#}
 {#        <!--end Client Query modal -->#}
-        <!-- Agent Query modal -->
-        <div class="modal" tabindex="-1" role="dialog" id="agent-query-modal">
-          <div class="modal-dialog" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-                <h5 class="modal-title">Agent Query From</h5>
-              </div>
-              <div class="modal-body">
-                <div class="card-body">
-                    <div class="form-group">
-                        <label for="address-name">Name<sup style="color: red;">*</sup></label>
-                        <input class="form-control" id="client-name" required type="text" v-model="agentName">
-                    </div>
-                    <div class="form-group">
-                        <label for="address-line1">Email<sup style="color: red;">*</sup></label>
-                        <input class="form-control" id="client-email" required type="email" v-model="agentEmail">
-                    </div>
-                    <div class="form-group">
-                        <label for="address-name">Message<sup style="color: red;">*</sup></label>
-                        <textarea class="form-control" id="client-name" required type="text" v-model="agentMessage"></textarea>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label>Country Code<sup style="color: red;">*</sup></label>
-                                <select id="agent-select-country-code" class="form-control" v-model="agentCountryCode">
-
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="address-state">Contact<sup style="color: red;">*</sup></label>
-                                <input class="form-control" onKeyPress="if(this.value.length===10) return false;" id="client-contact" required type="number" v-model="agentContact">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                      <button type="button" class="btn btn-primary project-status" v-on:click="agentQuery">Submit</button>
-                  </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!--end Agent Query modal -->
+{#        <!-- Agent Query modal -->#}
+{#        <div class="modal" tabindex="-1" role="dialog" id="agent-query-modal">#}
+{#          <div class="modal-dialog" role="document">#}
+{#            <div class="modal-content">#}
+{#              <div class="modal-header">#}
+{#                <button type="button" class="close" data-dismiss="modal" aria-label="Close">#}
+{#                    <span aria-hidden="true">&times;</span>#}
+{#                </button>#}
+{#                <h5 class="modal-title">Agent Query From</h5>#}
+{#              </div>#}
+{#              <div class="modal-body">#}
+{#                <div class="card-body">#}
+{#                    <div class="form-group">#}
+{#                        <label for="address-name">Name<sup style="color: red;">*</sup></label>#}
+{#                        <input class="form-control" id="client-name" required type="text" v-model="agentName">#}
+{#                    </div>#}
+{#                    <div class="form-group">#}
+{#                        <label for="address-line1">Email<sup style="color: red;">*</sup></label>#}
+{#                        <input class="form-control" id="client-email" required type="email" v-model="agentEmail">#}
+{#                    </div>#}
+{#                    <div class="form-group">#}
+{#                        <label for="address-name">Message<sup style="color: red;">*</sup></label>#}
+{#                        <textarea class="form-control" id="client-name" required type="text" v-model="agentMessage"></textarea>#}
+{#                    </div>#}
+{#                    <div class="row">#}
+{#                        <div class="col-md-6">#}
+{#                            <div class="form-group">#}
+{#                                <label>Country Code<sup style="color: red;">*</sup></label>#}
+{#                                <select id="agent-select-country-code" class="form-control" v-model="agentCountryCode">#}
+{##}
+{#                                </select>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                        <div class="col-md-6">#}
+{#                            <div class="form-group">#}
+{#                                <label for="address-state">Contact<sup style="color: red;">*</sup></label>#}
+{#                                <input class="form-control" onKeyPress="if(this.value.length===10) return false;" id="client-contact" required type="number" v-model="agentContact">#}
+{#                            </div>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div>#}
+{#                <div class="modal-footer">#}
+{#                      <button type="button" class="btn btn-primary project-status" v-on:click="agentQuery">Submit</button>#}
+{#                  </div>#}
+{#              </div>#}
+{#            </div>#}
+{#          </div>#}
+{#        </div>#}
+{#        <!--end Agent Query modal -->#}
 </div>
 {% endblock %}
 
