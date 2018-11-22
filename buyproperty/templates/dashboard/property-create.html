@@ -520,7 +520,7 @@
                             <div class="col-md-12">
                                 <div class="card-body">
                                     <div class="form-group">
-                                        <label for="number-of-floors">Number of Floors</label>
+                                        <label for="number-of-floors">Floor Number</label>
                                         <input type="number" onKeyPress="if(this.value.length===2) return false;" class="form-control mr-10" v-model="newProperty.noOfFloors" required/>
                                     </div>
                                     <div class="form-group">
@@ -593,7 +593,7 @@
 
 
             <button class="btn btn-success mt-20 mb-20" v-on:click="validateMandatoryFields" :disabled="clickedCreate">Create Property</button>
-            <a href="/properties/" class="btn btn-primary ml-20 mt-30 mb-30" data-dismiss="modal">View Property List</a>
+            <a href="/control/dash/properties/" class="btn btn-primary ml-20 mt-30 mb-30" data-dismiss="modal">View Property List</a>
 
 
         </div>

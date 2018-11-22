@@ -54,7 +54,6 @@ let property_create_app = new Vue({
             leaseTerm: 0,
             carpetArea: 0,
             buildupArea: 0,
-            isTop:false,
             floorPlan: [],
             mapAddress: '',
             lat:'',

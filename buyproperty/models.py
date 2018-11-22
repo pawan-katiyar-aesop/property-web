@@ -270,7 +270,7 @@ class Property(models.Model):
             pantry=data.get("pantry"),
             washroom=data.get("washroom"),
             washroom_details=data.get("washroom_details"),
-            number_of_floors=data.get("number_of_floors"),
+            floor_number=data.get("number_of_floors"),
             number_of_basements=data.get("number_of_basements"),
             total_number_of_floors=data.get("total_number_of_floors"),
             units_on_floor=data.get("units_on_floor"),

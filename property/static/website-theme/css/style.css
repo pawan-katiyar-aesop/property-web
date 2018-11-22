@@ -173,7 +173,7 @@ textarea:focus {
 	background-color:transparent;
 }
 .rle_header_wrapper.style_2{
-	background-color:#fff;
+	background-color:#333333;
 }
 .rle_header_wrapper.style_4{
 	background-color:#ffffff;
@@ -483,7 +483,7 @@ textarea:focus {
 }
 .rle_header_wrapper .rle_main_menu ul li a{
     text-decoration: none;
-    color: #313131;
+    color: #ffffff;
     font-size: 14px;
     margin-right: 40px;
     text-transform: uppercase;
