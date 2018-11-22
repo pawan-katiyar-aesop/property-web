@@ -62,7 +62,10 @@ let website_details_app = new Vue({
             'metro': 'fa fa-train',
             'train': 'fa fa-train',
             'pharmacy': 'fa fa-medkit'
-        }
+        },
+        longitude: '',
+        latitude: '',
+        mapAddress: ''
 
     },
     methods: {
@@ -73,6 +76,9 @@ let website_details_app = new Vue({
             axios.get('/api/property/'+that.propertyId)
              .then(function (response) {
                  that.propertyDetails = response.data;
+                 that.latitude = response.data.latitude;
+                 that.longitude = response.data.longitude;
+                 that.mapAddress = response.data.map_address;
                  that.processing = false;
 
              })
