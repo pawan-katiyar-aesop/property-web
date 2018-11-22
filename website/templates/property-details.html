@@ -10,7 +10,7 @@
 {% block content %}
     <div id="website-details-app">
         <div class="style_2">
-            <div class="rle_header_wrapper style_2">
+            <div class="rle_header_wrapper style_2" style="position: fixed;z-index: 9999;">
                 <div class="container">
                     <div class="row">
                         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
@@ -97,7 +97,7 @@
         </div>
         <!-- Property Single Wrapper start -->
         <div v-if="propertyDetails" class="swiper-container slider_v2">
-            <div v-if="propertyDetails.images.length > 0 || propertyDetails.videos.length > 0" class="swiper-wrapper">
+            <div v-if="propertyDetails.images.length > 0 || propertyDetails.videos.length > 0" class="swiper-wrapper" style="margin-top: 70px;">
                 <div v-for="item in propertyDetails.images" v-if="item.type === 'b'" class="swiper-slide"><img :src="item.file" alt="" /></div>
                 <div v-for="item in propertyDetails.videos" v-if="item.type === 'b'" class="swiper-slide"><iframe width="100%" height="100%" :src="item.url+'?rel=0&showinfo=0&autoplay=1'" allow="autoplay;"></iframe></div>
 {#                <div class="swiper-slide"><img src="http://placehold.it/956x520" alt="" /></div>#}
@@ -370,7 +370,7 @@
 {#                        </div>#}
                     </div>
                     <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                        <div class="rle_property_details_box_2">
+                        <div class="rle_property_details_box_2" style="margin-top: 105px;">
                             <div class="share_props">
                                 <span>Share property</span>
                                 <ul>

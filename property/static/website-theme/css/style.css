@@ -1659,7 +1659,7 @@ textarea:focus {
 	float:left;
 	width:100%;
 	margin-bottom:30px;
-	padding-bottom:30px;
+	padding-bottom:15px;
 	border-bottom:1px solid #e1e1e1;
 }
 .rle_property_details_box.style_2 .user_info_share{
@@ -1670,7 +1670,7 @@ textarea:focus {
 	float:left;
 	width:100%;
 	margin:0px;
-	margin-top:20px;
+	/*margin-top:20px;*/
 	padding:0px;
 }
 .rle_property_details_box .user_info_share ul li{
@@ -1681,7 +1681,7 @@ textarea:focus {
 }
 .rle_property_details_box .user_info_share.style_2 ul li{
 	width:100%;
-	margin-bottom:5px;
+	/*margin-bottom:5px;*/
 }
 .rle_property_details_box .user_info_share ul li a{
 	-webkit-transition: all 0.3s ease-out;
@@ -2514,8 +2514,8 @@ textarea:focus {
 	margin-bottom:30px;
 }
 .rle_peoplesay_slider_details_img{
-	float:left;
-	width:100px;
+	/*float:left;*/
+	width:100%;
 }
 .rle_peoplesay_slider_details_img img{
 	display:inline-block;
@@ -2525,9 +2525,11 @@ textarea:focus {
 }
 .rle_peoplesay_slider_details_text{
 	float:left;
-	width:calc(100% - 100px);
+	width:100%;
 	position:relative;
-	padding-left:100px;
+	margin-top: 20px;
+	margin-bottom: 30px;
+	/*padding-left:100px;*/
 }
 .rle_peoplesay_slider_details_text img{
 	position:absolute;
@@ -2543,7 +2545,7 @@ textarea:focus {
 .rle_peoplesay_slider_details_text h4{
 	float:left;
 	width:100%;
-	margin-bottom:0px;
+	/*margin-bottom:0px;*/
 	font-weight:600;
 }
 .rle_peoplesay_slider_details_text h4 span{
@@ -3322,7 +3324,7 @@ textarea:focus {
 .rle_shorting_wrapper ul.rle_short_by li{
 	list-style:none;
 	float:left;
-	width:auto;
+	width:170px;
 	margin-right:15px;
 	position:relative;
 }
@@ -3348,7 +3350,7 @@ textarea:focus {
 .rle_shorting_wrapper ul.rle_short_by li select{
 	float:left;
     width: calc(100% - 78px);
-	height:45px;
+	height:40px;
 	margin-left:10px;
 	padding:0px 10px;
 	border-radius:3px;
