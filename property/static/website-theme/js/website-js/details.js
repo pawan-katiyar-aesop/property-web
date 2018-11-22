@@ -2,12 +2,12 @@ let website_details_app = new Vue({
     el: "#website-details-app",
     data: {
         propertyId: 0,
-        propertyDetails: '',
+        propertyDetails: undefined,
         clientName: '',
         clientEmail: '',
         clientContact: '',
         clientCountryCode: '+91',
-        processing: false,
+        processing: true,
         nearest_code: {
             'bus': 'Bus Stop',
             'school': 'School',
@@ -62,44 +62,71 @@ let website_details_app = new Vue({
             'metro': 'fa fa-train',
             'train': 'fa fa-train',
             'pharmacy': 'fa fa-medkit'
-        }
+        },
+        statusValue: undefined,
+        longitude: '',
+        latitude: '',
+        mapAddress: ''
 
     },
     methods: {
         get_product_details: function () {
-            let that = this;
-            that.processing = true;
-            that.propertyId = this.getUrlParameter('id');
-            axios.get('/api/property/'+that.propertyId)
-             .then(function (response) {
-                 that.propertyDetails = response.data;
-                 that.processing = false;
+            console.log("Processing now,: ", this.processing);
 
-             })
-             .catch(function (response) {
-                alert("Failed fetching data for property details.");
-                that.processing = false;
-             });
-        },
-        clientQuery: function () {
-            let that = this;
-            let body = {
-                "name": that.clientName,
-                "email": that.clientEmail,
-                "contact": that.clientContact,
-                "country_code": that.clientCountryCode,
-                "for_property": that.propertyId
-            };
-            axios.post('/api/customer_leads/', body)
-            .then(function (response) {
-                // show_notification("success", "Property Successfully Created.");
+            let self = this;
+            let propertyID = self.getUrlParameter('id');
 
-            })
-            .catch(function (response) {
-                alert("error occured.");
-                // show_notification("danger", "A fatal error occurred, and this page might not function correctly.")
-            })
+            axios({
+                method:'get',
+                url: '/api/property/'+ propertyID,
+                timeout: 5000
+            }).then((res)=>{
+                console.log("response: ", res);
+                self.propertyDetails = res.data;
+                self.latitude = res.data.latitude;
+                 self.longitude = res.data.longitude;
+                 self.mapAddress = res.data.map_address;
+                 self.statusValue = res.status;
+                 self.processing = false;
+
+            }).catch((e)=>{
+                alert('api didnt hit');
+            });
+
+
+            // axios.get('/api/property/'+this.propertyId)
+            //  .then((response)=>{
+            //      this.propertyDetails = response.data;
+            //      this.latitude = response.data.latitude;
+            //      this.longitude = response.data.longitude;
+            //      this.mapAddress = response.data.map_address;
+            //      this.statusValue = response.status;
+            //      this.processing = false;
+            //  })
+            //  .catch(function (response) {
+            //     alert("Failed fetching data for property details.");
+            //     this.processing = false;
+            //  });
         },
+        // clientQuery: function () {
+        //     let that = this;
+        //     let body = {
+        //         "name": that.clientName,
+        //         "email": that.clientEmail,
+        //         "contact": that.clientContact,
+        //         "country_code": that.clientCountryCode,
+        //         "for_property": that.propertyId
+        //     };
+        //     axios.post('/api/customer_leads/', body)
+        //     .then(function (response) {
+        //         // show_notification("success", "Property Successfully Created.");
+        //
+        //     })
+        //     .catch(function (response) {
+        //         alert("error occured.");
+        //         // show_notification("danger", "A fatal error occurred, and this page might not function correctly.")
+        //     })
+        // },
         getUrlParameter : function (sParam) {
             var sPageURL = decodeURIComponent(window.location.search.substring(1)),
                 sURLVariables = sPageURL.split('&'),
@@ -113,16 +140,26 @@ let website_details_app = new Vue({
                     return sParameterName[1] === undefined ? true : sParameterName[1];
                 }
             }
+        },
+        loaded: function () {
+            alert("loaded");
         }
     },
     watch: {
 
     },
-    mounted() {
+    created() {
+        console.log('before mounted');
+        this.processing = true;
         this.get_product_details();
 
     },
-    computed: {
+    mounted() {
+        console.log("after mounted");
+      console.log("data in response: ", this.propertyDetails.images);
 
-  }
+    }
+  //   computed: {
+  //
+  // }
 });
