@@ -403,9 +403,9 @@ let property_detail_app = new Vue({
                         i++;
                     }
                     let actualSize = (Math.round(size * 100) / 100);
-                    if (i>0 && actualSize > 500) {
+                    if (i>1 && actualSize > 2) {
 
-                        alert("File size must be less than 500 KB, this file is too big " + actualSize + " " + unitArray[i]);
+                        alert("File size must be less than 2 MB, this file is too big " + actualSize + " " + unitArray[i]);
 
                         return
                     }
@@ -448,8 +448,8 @@ let property_detail_app = new Vue({
                         i++;
                     }
                     let actualSize = (Math.round(size * 100) / 100);
-                    if (i>0 && actualSize > 500) {
-                        alert("File size must be less than 500 kb, this file is too big " + actualSize + " " + unitArray[i]);
+                    if (i>1 && actualSize > 2) {
+                        alert("File size must be less than 2 MB, this file is too big " + actualSize + " " + unitArray[i]);
                         return
                     }
                     // Generate unique ID for all images

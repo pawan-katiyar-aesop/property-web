@@ -8,7 +8,7 @@
 {% block homeBanner %}
     <div id="website-home-app">
     <div class="rle_banner_wrapper style_2">
-        <div class="rle_header_wrapper style_2">
+        <div class="rle_header_wrapper style_2" style="position: fixed;z-index: 9999;">
             <div class="container">
                 <div class="row">
                     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
@@ -93,7 +93,7 @@
                 </div>
             </div>
         </div>
-        <div class="container">
+        <div class="container" style="margin-top: 70px;">
             <div class="row">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="rle_banner_text style_2">
@@ -151,7 +151,7 @@
                         </div>
                     </div>
                     <div v-if="property" v-for="item in property" class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                        <div class="rle_property_infobox">
+                        <div class="rle_property_infobox" v-on:click="productDetails(item.id)">
                             <div class="rle_property_infobox_img" style="height: 36.6vh">
                                 <img v-if="item.images.length > 0" :src="item.images[0].file" alt="" title="" style="height: 100%">
                                 <img v-else src="http://placehold.it/370x300" alt="" title="">
@@ -166,6 +166,7 @@
                                     <p>{% verbatim %}{{ item.address.name }}, {{ item.address.line_2 }}, {{ item.address.city }}, {{ item.address.state }}, {{ item.address.country }}{% endverbatim %}</p>
                                 </div>
                                 <div class="rle_property_infobox_details_pricefooter">
+                                    <span v-if="item.carpet_area && item.unit_of_area" style="color: #695b5b;font-size: 15px;line-height: 1.5;margin-top: 5px;">Area : {% verbatim %}{{ item.carpet_area }} {{ item.unit_of_area }}{% endverbatim %} </span>
                                     <a href="#" v-on:click="productDetails(item.id)">View detail <i class="fa fa-long-arrow-right" aria-hidden="true"></i></a>
                                 </div>
                             </div>
