@@ -132,3 +132,4 @@ let website_details_app = new Vue({
 
   }
 });
+
