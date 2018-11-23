@@ -4874,7 +4874,7 @@ textarea:focus {
 	-webkit-align-items: center;
 	align-items: center;
 	position: relative;
-	height: 90vh;
+	height: 75vh;
 }
 .slider_v2 .swiper-slide:after{
 	content: "";

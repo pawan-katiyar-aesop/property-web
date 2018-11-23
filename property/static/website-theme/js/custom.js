@@ -6,12 +6,14 @@ Copyright (c) 2017
 -------------------------------------------------------------------*/
 
 (function ($) {
+	console.log("ini");
 	"use strict";
 	var Realestate = {
 		initialised: false,
 		version: 1.0,
 		mobile: false,
 		init: function () {
+			console.log("initialixing")
 			if(!this.initialised) {
 				this.initialised = true;
 			} else {
@@ -21,7 +23,7 @@ Copyright (c) 2017
 			this.owl_sliders();
 			//this.Chart();			
 			this.Slider1();			
-			this.Slider2();			
+			// this.Slider2();
 		},
     // Menu show Hide	
     menu_toggle_and_dropdown: function () {
@@ -244,6 +246,7 @@ Copyright (c) 2017
 		galleryThumbs.params.control = galleryTop;
 	},
 	Slider2: function(){
+			console.log("initialized slider");
 		var mySwiper = new Swiper('.slider_v2', {
 			nextButton: '.swiper-button-next',
 			prevButton: '.swiper-button-prev',
@@ -251,7 +254,7 @@ Copyright (c) 2017
 			spaceBetween: 0,
 			centeredSlides: true,
 			slidesPerView: 'auto',
-			loop: true
+			// loop: true
 		});   
 	}
 		
@@ -269,7 +272,7 @@ Copyright (c) 2017
    });
    
    
-   //Rang Slider
+   // Rang Slider
 	$( "#slider-range" ).slider({
       range: true,
       min: 0,
@@ -281,7 +284,7 @@ Copyright (c) 2017
     });
     $( "#amount" ).val( "$" + $( "#slider-range" ).slider( "values", 0 ) +
       " - $" + $( "#slider-range" ).slider( "values", 1 ) );
-	  
+
 	$( "#slider-area" ).slider({
       range: true,
       min: 0,

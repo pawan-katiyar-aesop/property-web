@@ -96,19 +96,15 @@
             </div>
         </div>
         <!-- Property Single Wrapper start -->
-        <div v-if="propertyDetails" class="swiper-container slider_v2">
-            <div v-if="propertyDetails.images.length > 0 || propertyDetails.videos.length > 0" class="swiper-wrapper" style="margin-top: 70px;">
-                <div v-for="item in propertyDetails.images" v-if="item.type === 'b'" class="swiper-slide"><img :src="item.file" alt="" /></div>
-                <div v-for="item in propertyDetails.videos" v-if="item.type === 'b'" class="swiper-slide"><iframe width="100%" height="100%" :src="item.url+'?rel=0&showinfo=0&autoplay=1'" allow="autoplay;"></iframe></div>
+        <div class="swiper-container slider_v2">
+{#            <div v-if="propertyDetails.images.length > 0 || propertyDetails.videos.length > 0" class="swiper-wrapper" style="margin-top: 70px;">#}
+{#                <div v-for="item in propertyDetails.images" v-if="item.type === 'b'" class="swiper-slide"><img :src="item.file" alt="" /></div>#}
+{#                <div v-for="item in propertyDetails.videos" v-if="item.type === 'b'" class="swiper-slide"><iframe width="100%" height="100%" :src="item.url+'?rel=0&showinfo=0&autoplay=0'" allow="autoplay;"></iframe></div>#}
+{#            </div>#}
+            <div class="swiper-wrapper" id="media-slider">
 {#                <div class="swiper-slide"><img src="http://placehold.it/956x520" alt="" /></div>#}
-{#                <div class="swiper-slide"><iframe width="100%" height="100%" src="https://www.youtube.com/embed/tgbNymZ7vqY?rel=0&showinfo=0&autoplay=1" allow="autoplay;"></iframe></div>#}
 {#                <div class="swiper-slide"><img src="http://placehold.it/956x520" alt="" /></div>#}
 {#                <div class="swiper-slide"><img src="http://placehold.it/956x520" alt="" /></div>#}
-            </div>
-            <div v-else class="swiper-wrapper">
-                <div class="swiper-slide"><img src="http://placehold.it/956x520" alt="" /></div>
-                <div class="swiper-slide"><img src="http://placehold.it/956x520" alt="" /></div>
-                <div class="swiper-slide"><img src="http://placehold.it/956x520" alt="" /></div>
             </div>
             <div class="swiper-button-next swiper-button-white"></div>
             <div class="swiper-button-prev swiper-button-white"></div>
@@ -249,15 +245,15 @@
 {#                                        <li><span>02</span> bathroom</li>#}
 {#                                        <li><span>$2800</span> per month</li>#}
 {#                                    </ul>#}
-                                    <div class="swiper-container slider_v2">
-                                        <div v-if="items.images.length > 0 || items.videos.length > 0" class="swiper-wrapper">
-                                            <div v-for="item in items.images" v-if="item.type === 'f'" class="swiper-slide"><img :src="item.file" alt="" /></div>
-                                            <div v-for="item in items.videos" v-if="item.type === 'f'" class="swiper-slide"><iframe width="100%" height="100%" :src="item.url+'?rel=0&showinfo=0&autoplay=1'" allow="autoplay;"></iframe></div>
+                                    <div class="swiper-container slider_v1">
+{#                                        <div v-if="items.images.length > 0 || items.videos.length > 0" class="swiper-wrapper">#}
+{#                                            <div v-for="item in items.images" v-if="item.type === 'f'" class="swiper-slide"><img :src="item.file" alt="" /></div>#}
+{#                                            <div v-for="item in items.videos" v-if="item.type === 'f'" class="swiper-slide"><iframe width="100%" height="100%" :src="item.url+'?rel=0&showinfo=0&autoplay=0'" allow="autoplay;"></iframe></div>#}
                                 {#            <div class="swiper-slide"><iframe width="100%" height="100%" src="https://www.youtube.com/embed/tgbNymZ7vqY?rel=0&showinfo=0&autoplay=1" allow="autoplay;"></iframe></div>#}
                             {#                <div class="swiper-slide"><img src="http://placehold.it/956x520" alt="" /></div>#}
-                                        </div>
-                                        <div v-else class="swiper-wrapper">
-                                            <div class="swiper-slide"><img src="http://placehold.it/956x520" alt="" /></div>
+{#                                        </div>#}
+                                        <div class="swiper-wrapper" id="floorplanslider">
+
                                         </div>
                                         <div class="swiper-button-next swiper-button-white"></div>
                                         <div class="swiper-button-prev swiper-button-white"></div>
@@ -612,9 +608,8 @@
 {% block page_level_scripts %}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.2.0/js.cookie.min.js"></script>
     <script src ="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.9.1/underscore-min.js"></script>
-    <script src="{% static 'website-theme/js/website-js/details.js' %}"></script>
-    <script>debugger;</script>
-    <script type="text/javascript" src="{% static 'website-theme/js/owl.carousel.js' %}" async></script>
+{#    <script type="text/javascript" src="{% static 'website-theme/js/owl.carousel.js' %}" async></script>#}
+    <script src="{% static 'website-theme/js/website-js/details.js' %}" async></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBh0aXPGPniL1FXYAc4HNKDxXYcjOqMHeU">
     </script>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js">
@@ -665,7 +660,89 @@
              }
             google.maps.event.addDomListener(window, 'load', initialize);
     </script>
+    <script>
 
+$(document).ready(function() {
+
+        var paramValue;
+
+        var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+        sURLVariables = sPageURL.split('&'),
+        sParameterName,
+        i;
+
+        for (i = 0; i < sURLVariables.length; i++) {
+            sParameterName = sURLVariables[i].split('=');
+
+            if (sParameterName[0] === 'id') {
+                paramValue = sParameterName[1] === undefined ? true : sParameterName[1];
+            }
+        }
+
+
+
+    var settings = {
+        "url": "/api/property/"+paramValue,
+        "method": "GET",
+        "success": function (response) {
+
+            $.map(response.images, function (image, index1) {
+                if(image.type === 'b'){
+                    $("#media-slider").append('<div class="swiper-slide"><img src="'+ image.file +'" alt="" /></div>');
+                }
+            });
+            $.map(response.videos, function (video, index1) {
+                if(video.type === 'b'){
+                    $("#media-slider").append('<div class="swiper-slide"><iframe width="100%" height="100%" :src="' + video.url +'?rel=0&showinfo=0&autoplay=0" allow="autoplay;"></iframe></div>');
+                }
+            });
+            $.map(response.images, function (image, index1) {
+                if(image.type === 'f'){
+                    $("#floorplanslider").append('<div class="swiper-slide" style="height: 80vh;"><img src="'+ image.file +'" width="100%" height="100%" alt="" /></div>');
+                }
+            });
+            $.map(response.videos, function (video, index1) {
+                if(video.type === 'f'){
+                    $("#floorplanslider").append('<div class="swiper-slide" style="height: 80vh;"><iframe width="100%" height="100%" :src="' + video.url +'?rel=0&showinfo=0&autoplay=0" allow="autoplay;"></iframe></div>');
+                }
+            });
+
+
+            function slider2(){
+			console.log("initialized slider");
+                var mySwiper = new Swiper('.slider_v2', {
+                    nextButton: '.swiper-button-next',
+                    prevButton: '.swiper-button-prev',
+                    speed: 400,
+                    spaceBetween: 0,
+                    centeredSlides: true,
+                    slidesPerView: 'auto',
+                    loop: true
+                });
+            }
+            slider2();
+            function slider1(){
+			console.log("initialized slider");
+                var mySwiper = new Swiper('.slider_v1', {
+                    nextButton: '.swiper-button-next',
+                    prevButton: '.swiper-button-prev',
+                    speed: 400,
+                    spaceBetween: 0,
+                    centeredSlides: true,
+                    slidesPerView: 'auto',
+                    loop: true
+                });
+            }
+            slider1();
+        }
+    };
+    $.ajax(settings);
+    console.log("ajax executed");
+
+});
+
+
+    </script>
 
 
 {% endblock page_level_scripts %}
