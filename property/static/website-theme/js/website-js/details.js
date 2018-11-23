@@ -133,22 +133,3 @@ let website_details_app = new Vue({
   }
 });
 
-// $( document ).ready(function() {
-//     let pId = website_details_app.getUrlParameter('id');
-//     var settings = {
-//         "url": "/api/property/"+pId,
-//         "method": "GET",
-//         "success": function (response) {
-//             for (let i=0; i< response.images.length; i++){
-//                 $("#media-slider").append('<div class="swiper-slide"><img src="http://placehold.it/956x520" alt="" /></div>');
-//                 $("#media-slider").append('<div class="swiper-slide"><img src="http://placehold.it/956x520" alt="" /></div>');
-//                 break;
-//             }
-//         }
-//     };
-//     $.ajax(settings);
-//     console.log("media slider data appended");
-// });
-
-
-

@@ -6,7 +6,6 @@ Copyright (c) 2017
 -------------------------------------------------------------------*/
 
 (function ($) {
-	console.log("ini");
 	"use strict";
 	var Realestate = {
 		initialised: false,
@@ -254,7 +253,7 @@ Copyright (c) 2017
 			spaceBetween: 0,
 			centeredSlides: true,
 			slidesPerView: 'auto',
-			// loop: true
+			loop: true
 		});   
 	}
 		
