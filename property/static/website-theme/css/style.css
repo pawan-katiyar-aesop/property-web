@@ -151,7 +151,7 @@ textarea:focus {
 }
 .rle_banner_wrapper.style_2{
 	height:800px;
-	background-image:url(../images/banner/Discover.jpg);
+	background-image:url(../images/banner/Opt1.jpg);
 }
 .rle_banner_wrapper.style_3{
 	height:950px;
@@ -736,7 +736,7 @@ textarea:focus {
 	height:45px;
 	border-radius:3px;
 	border:1px solid #e1e1e1;
-	margin-bottom: 30px;
+	margin-bottom: 20px;
 }
 .rle_searchform_tabs.style_2 .rle_searchform_box input{
 	width:calc(100% - 124px);
@@ -1977,7 +1977,7 @@ textarea:focus {
 .widget.text-widget{
     float: left;
     width: 100%;
-	margin-bottom: 50px;
+	margin-bottom: 15px;
 }
 .widget.text-widget p.rle_footertext{
 	float:left;
@@ -2056,7 +2056,7 @@ textarea:focus {
 .rle_bottom_footer{
 	float:left;
 	width:100%;
-	padding:30px;
+	padding:15px;
 	text-align:center;
 	border-top:1px solid#bdbfc2;
 }
@@ -2297,7 +2297,7 @@ textarea:focus {
     margin: 0px;
     font-size: 17px;
     letter-spacing: 1px;
-    font-weight: 300;
+    /*font-weight: 300;*/
     color: #666666;
 }
 .rle_clientsay_slider_details_text:after{
@@ -3310,10 +3310,10 @@ textarea:focus {
 .rle_shorting_wrapper{
 	float:left;
 	width:100%;
-	padding:20px;
+	padding:10px;
 	background-color:#ffffff;
 	border:1px solid #e1e1e1;
-	margin-bottom:40px;
+	margin-bottom:25px;
 }
 .rle_shorting_wrapper ul.rle_short_by{
 	float:left;
@@ -3350,7 +3350,7 @@ textarea:focus {
 .rle_shorting_wrapper ul.rle_short_by li select{
 	float:left;
     width: calc(100% - 78px);
-	height:40px;
+	height:35px;
 	margin-left:10px;
 	padding:0px 10px;
 	border-radius:3px;
