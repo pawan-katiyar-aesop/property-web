@@ -122,9 +122,9 @@ class FloorPlan(models.Model):
     FLOOR_CHOICES = [
         (-1, 'No Plan'),
         (0, 'Bareshell layout'),
-        (1, 'Design Option 1'),
-        (2, 'Design Option 2'),
-        (3, 'Design Option 3'),
+        (1, 'Office Plan'),
+        (2, 'Design Renders'),
+        (3, 'Site Photos'),
     ]
     floor_number = models.IntegerField(choices=FLOOR_CHOICES, blank=True, null=True, help_text="floor plan")
     number_of_floor = models.IntegerField(help_text="floor number")

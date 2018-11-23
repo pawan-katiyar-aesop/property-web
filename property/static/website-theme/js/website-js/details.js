@@ -47,9 +47,9 @@ let website_details_app = new Vue({
         floor_choice: {
             "-1": 'No Plan',
             0: 'Bareshell layout',
-            1: 'Design Option 1',
-            2: 'Design Option 2',
-            3: 'Design Option 3'
+            1: 'Office Plan',
+            2: 'Design Renders',
+            3: 'Site Photos'
         },
         i_icon: {
             'bus': 'fa fa-bus',
