@@ -183,13 +183,15 @@ Copyright (c) 2017
 			nav:true,
 			responsive:{
 				0:{
+					autoplay:true,
 					items:1
 				},
 				600:{
+					autoplay:true,
 					items:2
 				},
 				1000:{
-					items:2
+					items:3
 				}
 			}
 		});
