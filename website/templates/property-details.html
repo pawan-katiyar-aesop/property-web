@@ -225,13 +225,13 @@
                             <h3>Floor plan</h3>
                             <!-- Nav tabs -->
                             <ul class="nav nav-tabs" role="tablist">
-                                <li v-if="propertyDetails.floor_plan.length > 0" v-for="item in propertyDetails.floor_plan" role="presentation" class="active"><a :href="'#floor'+item.floor_number" :aria-controls="'floor'+item.floor_number" role="tab" data-toggle="tab" v-html="floor_choice[item.floor_number]"></a></li>
+                                <li v-if="propertyDetails.floor_plan.length > 0" v-for="item in propertyDetails.floor_plan" role="presentation" v-on:click="floorPlanDesign = item.id" v-bind:class="{ 'active': floorPlanDesign === item.id }" v-on:load="floorPlanDesign = item.id"><a :href="'#floor'+item.floor_number" :aria-controls="'floor'+item.floor_number" role="tab" data-toggle="tab" v-html="floor_choice[item.floor_number]"></a></li>
 {#                                <li role="presentation"><a href="#first" aria-controls="first" role="tab" data-toggle="tab">first floor</a></li>#}
 {#                                <li role="presentation"><a href="#second" aria-controls="second" role="tab" data-toggle="tab">second floor</a></li>#}
                             </ul>
                             <!-- Tab panes -->
                             <div class="tab-content">
-                                <div v-for="items in propertyDetails.floor_plan" role="tabpanel" class="tab-pane active" :id="'floor'+items.floor_number">
+                                <div v-for="items in propertyDetails.floor_plan" v-bind:class="{ active: floorPlanDesign === item.id }" role="tabpanel" class="tab-pane" :id="'floor'+items.floor_number">
                                     <p>{% verbatim %}{{ items.description }}{% endverbatim %}</p>
 {#                                    <ul>#}
 {#                                        <li><span>1458</span> sqft</li>#}
