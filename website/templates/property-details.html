@@ -685,18 +685,18 @@ $(document).ready(function() {
                 }
             });
             $.map(response.floor_plan, function (floor, index1) {
-                var id = floor.id;
+                var fid = floor.id;
                 $.map(floor.images, function (image, index2) {
                     if(image.type === 'f'){
-                        $("#floorplanslider-"+id).append('<div class="swiper-slide" style="height: 80vh;"><img src="'+ image.file +'" width="100%" height="100%" alt="" /></div>');
+                        $("#floorplanslider-"+fid).append('<div class="swiper-slide" style="height: 80vh;"><img src="'+ image.file +'" width="100%" height="100%" alt="" /></div>');
                     }
                 });
             });
             $.map(response.floor_plan, function (floor, index1) {
-                var id = floor.id;
+                var fid = floor.id;
                 $.map(floor.videos, function (video, index2) {
                     if (video.type === 'f') {
-                        $("#floorplanslider-"+id).append('<div class="swiper-slide" style="height: 80vh;"><iframe width="100%" height="100%" :src="' + video.url + '?rel=0&showinfo=0&autoplay=0" allow="autoplay;"></iframe></div>');
+                        $("#floorplanslider-"+fid).append('<div class="swiper-slide" style="height: 80vh;"><iframe width="100%" height="100%" :src="' + video.url + '?rel=0&showinfo=0&autoplay=0" allow="autoplay;"></iframe></div>');
                     }
                 });
             });
