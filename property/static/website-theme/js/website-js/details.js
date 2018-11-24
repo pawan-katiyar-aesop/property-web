@@ -99,12 +99,12 @@ let website_details_app = new Vue({
             };
             axios.post('/api/customer_leads/', body)
             .then(function (response) {
-                // show_notification("success", "Property Successfully Created.");
+                show_notification("success", "Your Query Submitted.");
 
             })
             .catch(function (response) {
                 alert("error occured.");
-                // show_notification("danger", "A fatal error occurred, and this page might not function correctly.")
+                show_notification("danger", "A fatal error occurred, and this form might not function correctly.")
             })
         },
         getUrlParameter : function (sParam) {
