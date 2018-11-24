@@ -66,7 +66,7 @@ let website_details_app = new Vue({
         longitude: '',
         latitude: '',
         mapAddress: '',
-        floorPlanDesign: -1
+        floorPlanDesign: 0
 
     },
     methods: {
