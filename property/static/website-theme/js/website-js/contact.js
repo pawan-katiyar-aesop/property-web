@@ -21,14 +21,14 @@ let website_contact_app = new Vue({
             };
             axios.post('/api/customer_leads/', body)
             .then(function (response) {
-                alert("Your request has been received.")
+                // alert("Your request has been received.");
 
-                // show_notification("success", "Property Successfully Created.");
+                show_notification("success", "Thank you for your message. We will connect with you shortly.");
 
             })
             .catch(function (response) {
-                alert("Invalid Email!");
-                // show_notification("danger", "A fatal error occurred, and this page might not function correctly.")
+                // alert("Invalid Email!");
+                show_notification("danger", "A fatal error occurred, and this page might not function correctly.")
             })
         }
     },
