@@ -121,7 +121,7 @@ class Media(models.Model):
 class FloorPlan(models.Model):
     FLOOR_CHOICES = [
         (-1, 'No Plan'),
-        (0, 'Bareshell layout'),
+        (0, 'Bareshell'),
         (1, 'Office Plan'),
         (2, 'Design Renders'),
         (3, 'Site Photos'),

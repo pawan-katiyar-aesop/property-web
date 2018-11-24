@@ -46,7 +46,7 @@ let website_details_app = new Vue({
         },
         floor_choice: {
             "-1": 'No Plan',
-            0: 'Bareshell layout',
+            0: 'Bareshell',
             1: 'Office Plan',
             2: 'Design Renders',
             3: 'Site Photos'
