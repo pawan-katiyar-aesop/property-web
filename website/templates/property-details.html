@@ -231,7 +231,7 @@
                             </ul>
                             <!-- Tab panes -->
                             <div class="tab-content">
-                                <div v-for="items in propertyDetails.floor_plan" v-bind:class="{ active: floorPlanDesign === item.id }" role="tabpanel" class="tab-pane" :id="'floor'+items.floor_number">
+                                <div v-for="items in propertyDetails.floor_plan" v-bind:class="{ active: floorPlanDesign === items.id }" role="tabpanel" class="tab-pane" :id="'floor'+items.floor_number">
                                     <p>{% verbatim %}{{ items.description }}{% endverbatim %}</p>
 {#                                    <ul>#}
 {#                                        <li><span>1458</span> sqft</li>#}
