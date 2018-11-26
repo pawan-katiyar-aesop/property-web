@@ -181,24 +181,24 @@
                                         <label for="10">Electrical Connection</label>
                                     </div>
                                 </li>
-{#                                <li>#}
-{#                                    <div class="rle_checkbox">#}
-{#                                        <input type="checkbox" id="11" checked />#}
-{#                                        <label for="11">Bedding</label>#}
-{#                                    </div>#}
-{#                                </li>#}
-{#                                <li>#}
-{#                                    <div class="rle_checkbox">#}
-{#                                        <input type="checkbox" id="12" checked />#}
-{#                                        <label for="12">Laundry</label>#}
-{#                                    </div>#}
-{#                                </li>#}
-{#                                <li>#}
-{#                                    <div class="rle_checkbox">#}
-{#                                        <input type="checkbox" id="13" checked />#}
-{#                                        <label for="13">Tv cable</label>#}
-{#                                    </div>#}
-{#                                </li>#}
+                                <li v-if="propertyDetails.common_reception">
+                                    <div class="rle_checkbox">
+                                        <input type="checkbox" id="11" checked />
+                                        <label for="11">Common Reception</label>
+                                    </div>
+                                </li>
+                                <li v-if="propertyDetails.security">
+                                    <div class="rle_checkbox">
+                                        <input type="checkbox" id="12" checked />
+                                        <label for="12">Security</label>
+                                    </div>
+                                </li>
+                                <li v-if="propertyDetails.visitor_parking">
+                                    <div class="rle_checkbox">
+                                        <input type="checkbox" id="13" checked />
+                                        <label for="13">Visitor Parking</label>
+                                    </div>
+                                </li>
 {#                                <li>#}
 {#                                    <div class="rle_checkbox">#}
 {#                                        <input type="checkbox" id="14" checked />#}

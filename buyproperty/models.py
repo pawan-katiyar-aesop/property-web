@@ -248,6 +248,9 @@ class Property(models.Model):
     latitude = models.CharField(max_length=100, blank=True, null=True)
     longitude = models.CharField(max_length=100, blank=True, null=True)
     map_address = models.CharField(max_length=350, blank=True, null=True)
+    common_reception = models.BooleanField(default=False)
+    security = models.BooleanField(default=False)
+    visitor_parking = models.BooleanField(default=False)
 
     def __str__(self):
         if self.property_id and self.property_name:
@@ -301,7 +304,10 @@ class Property(models.Model):
             is_top=data.get("is_top"),
             latitude=data.get("latitude"),
             longitude=data.get("longitude"),
-            map_address=data.get("map_address")
+            map_address=data.get("map_address"),
+            common_reception=data.get("common_reception"),
+            security=data.get("security"),
+            visitor_parking=data.get("visitor_parking")
         )
         return property
 

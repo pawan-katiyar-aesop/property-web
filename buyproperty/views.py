@@ -1,6 +1,6 @@
 from __future__ import unicode_literals
 from rest_framework import status
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, View
 from models import CustomerLead, AgentLead, Property, Address, Nearest, Overlooking, Video, FloorPlan, Media,\
     BannerSetting, TestimonialSetting, TestimonialSetting
 from django.views import generic
@@ -14,6 +14,8 @@ from rest_framework.views import APIView
 import datetime
 from django.db.models import Q
 from django.http import HttpResponseForbidden, HttpResponse
+from rest_framework.permissions import IsAuthenticated
+from django.contrib.auth import logout
 
 
 class CustomerLeadsAPIView(ListCreateAPIView):
@@ -337,6 +339,11 @@ class CountryCodeListView(APIView):
 class DashboardView(generic.ListView):
     template_name = "../templates/dashboard/dashboard.html"
     context_object_name = 'counts'
+    permission_classes = (IsAuthenticated,)
+
+    def is_authenticated(self):
+        if self.request.user.is_anonymous:
+            return HttpResponseRedirect("/control/dash/login/")
 
     def get_queryset(self):
         date_from = datetime.datetime.now() - datetime.timedelta(days=1)
@@ -352,6 +359,7 @@ class DashboardView(generic.ListView):
 class CustomerLeadView(generic.ListView):
     template_name = "../templates/dashboard/customer-leads.html"
     context_object_name = 'leads'
+    permission_classes = (IsAuthenticated,)
 
     def get_queryset(self):
         return CustomerLead.objects.all()
@@ -363,6 +371,7 @@ class CustomerLeadView(generic.ListView):
 class AgentLeadView(generic.ListView):
     template_name = "../templates/dashboard/agent-leads.html"
     context_object_name = 'agent_leads'
+    permission_classes = (IsAuthenticated,)
 
     def get_queryset(self):
         return AgentLead.objects.all()
@@ -390,6 +399,7 @@ class LoginView(TemplateView):
 class PropertyListView(generic.ListView):
     template_name = "../templates/dashboard/property-list.html"
     context_object_name = 'property_list'
+    permission_classes = (IsAuthenticated,)
 
     def get_queryset(self):
         return Property.objects.all()
@@ -400,6 +410,7 @@ class PropertyListView(generic.ListView):
 
 class PropertyDetailsView(TemplateView):
     template_name = "../templates/dashboard/property-details.html"
+    permission_classes = (IsAuthenticated,)
 
     def active_tab(self):
         return "properties"
@@ -407,6 +418,7 @@ class PropertyDetailsView(TemplateView):
 
 class SettingView(TemplateView):
     template_name = "../templates/dashboard/settings.html"
+    permission_classes = (IsAuthenticated,)
 
     def active_tab(self):
         return "settings"
@@ -414,6 +426,7 @@ class SettingView(TemplateView):
 
 class PropertyCreateView(TemplateView):
     template_name = "../templates/dashboard/property-create.html"
+    permission_classes = (IsAuthenticated,)
 
     def active_tab(self):
         return "property-create"
@@ -422,14 +435,6 @@ class PropertyCreateView(TemplateView):
 class UploadMediaView(ListCreateAPIView):
     serializer_class = PropertySerializer
     property = Property.objects.all()
-
-
-
-class SettingView(TemplateView):
-    template_name = "../templates/dashboard/settings.html"
-
-    def active_tab(self):
-        return "settings"
 
 
 class BannerSettingCreateListAPIView(ListCreateAPIView):
@@ -457,3 +462,7 @@ class TestimonialAPIView(ListCreateAPIView):
         Response(self.serializer_class(self.get_queryset()).data)
 
 
+class LogoutFlip(View):
+    def get(self, request, *args, **kwargs):
+        logout(self.request)
+        return HttpResponseRedirect("/control/dash/login/")
