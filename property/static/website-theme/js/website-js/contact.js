@@ -11,7 +11,7 @@ let website_contact_app = new Vue({
         sendEmail: function () {
             let that = this;
             if (!that.contactName && !that.contactEmail && !that.contactMessage){
-                alert("Please fill all information!")
+                show_notification("danger", "Please fill all information!");
             }
             let body = {
                 "name": that.contactName,
@@ -28,7 +28,7 @@ let website_contact_app = new Vue({
             })
             .catch(function (response) {
                 // alert("Invalid Email!");
-                show_notification("danger", "A fatal error occurred, and this page might not function correctly.")
+                show_notification("danger", "A fatal error occurred, and this page might not function correctly.");
             })
         }
     },
