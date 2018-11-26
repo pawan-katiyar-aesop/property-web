@@ -133,7 +133,7 @@ let property_detail_app = new Vue({
                 "facing": that.property.facing,
                 "flooring": that.property.flooring,
                 "unit_of_area": that.property.unit_of_area,
-                "number_of_floors": that.property.number_of_floors,
+                "floor_num": that.property.floor_num,
                 "total_number_of_floors": that.property.total_number_of_floors,
                 "number_of_basements": that.property.number_of_basements,
                 "units_on_floor": that.property.units_on_floor,

@@ -209,7 +209,7 @@ class Property(models.Model):
     pantry = models.BooleanField(default=False)
     washroom = models.BooleanField(default=False)
     washroom_details = JSONField(null=True, blank=True)
-    floor_number = models.PositiveIntegerField(blank=True, null=True)
+    floor_num = models.PositiveIntegerField(blank=True, null=True)
     number_of_basements = models.PositiveIntegerField(blank=True, null=True)
     total_number_of_floors = models.IntegerField(blank=True, null=True)
     units_on_floor = models.PositiveIntegerField(blank=True, null=True)
@@ -273,7 +273,7 @@ class Property(models.Model):
             pantry=data.get("pantry"),
             washroom=data.get("washroom"),
             washroom_details=data.get("washroom_details"),
-            floor_number=data.get("number_of_floors"),
+            floor_number=data.get("floor_num"),
             number_of_basements=data.get("number_of_basements"),
             total_number_of_floors=data.get("total_number_of_floors"),
             units_on_floor=data.get("units_on_floor"),

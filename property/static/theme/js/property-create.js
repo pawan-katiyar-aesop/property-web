@@ -193,7 +193,7 @@ let property_create_app = new Vue({
                 "facing": that.newProperty.facing,
                 "flooring": that.newProperty.flooring,
                 "unit_of_area": that.newProperty.unitOfArea,
-                "number_of_floors": that.newProperty.noOfFloors,
+                "floor_num": that.newProperty.noOfFloors,
                 "total_number_of_floors": that.newProperty.totalNoOfFloors,
                 "number_of_basements": that.newProperty.numberOfBasements,
                 "units_on_floor": that.newProperty.unitsOnFloors,
