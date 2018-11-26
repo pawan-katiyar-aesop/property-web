@@ -49,7 +49,7 @@ class TopPropertySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Property
-        fields = ('id', 'property_name', 'carpet_area', 'unit_of_area', 'floor_number', 'address', 'images', 'videos')
+        fields = ('id', 'property_name', 'buildup_area', 'unit_of_area', 'floor_num', 'address', 'images', 'videos')
         depth = 1
 
 
