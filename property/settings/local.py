@@ -41,6 +41,8 @@ MEDIA_ROOT = os.path.join(PROJECT_ROOT, "media")
 
 BASE_URL = "http://localhost:8000"
 
+LOGIN_URL = "/control/dash/login/"
+
 # Application definition
 
 INSTALLED_APPS = [

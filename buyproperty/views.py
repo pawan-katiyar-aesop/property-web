@@ -14,6 +14,7 @@ from rest_framework.views import APIView
 import datetime
 from django.db.models import Q
 from django.http import HttpResponseForbidden, HttpResponse
+from django.contrib.auth.mixins import LoginRequiredMixin
 from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth import logout
 
@@ -336,14 +337,9 @@ class CountryCodeListView(APIView):
         return Response(self.format_country_code_data(), status=status.HTTP_200_OK)
 
 
-class DashboardView(generic.ListView):
+class DashboardView(LoginRequiredMixin, generic.ListView):
     template_name = "../templates/dashboard/dashboard.html"
     context_object_name = 'counts'
-    permission_classes = (IsAuthenticated,)
-
-    def is_authenticated(self):
-        if self.request.user.is_anonymous:
-            return HttpResponseRedirect("/control/dash/login/")
 
     def get_queryset(self):
         date_from = datetime.datetime.now() - datetime.timedelta(days=1)
@@ -356,10 +352,9 @@ class DashboardView(generic.ListView):
         return "home"
 
 
-class CustomerLeadView(generic.ListView):
+class CustomerLeadView(LoginRequiredMixin, generic.ListView):
     template_name = "../templates/dashboard/customer-leads.html"
     context_object_name = 'leads'
-    permission_classes = (IsAuthenticated,)
 
     def get_queryset(self):
         return CustomerLead.objects.all()
@@ -368,10 +363,9 @@ class CustomerLeadView(generic.ListView):
         return "customer-leads"
 
 
-class AgentLeadView(generic.ListView):
+class AgentLeadView(LoginRequiredMixin, generic.ListView):
     template_name = "../templates/dashboard/agent-leads.html"
     context_object_name = 'agent_leads'
-    permission_classes = (IsAuthenticated,)
 
     def get_queryset(self):
         return AgentLead.objects.all()
@@ -396,10 +390,9 @@ class LoginView(TemplateView):
         return JsonResponse({"status": False, "message": "Invalid email/password."})
 
 
-class PropertyListView(generic.ListView):
+class PropertyListView(LoginRequiredMixin, generic.ListView):
     template_name = "../templates/dashboard/property-list.html"
     context_object_name = 'property_list'
-    permission_classes = (IsAuthenticated,)
 
     def get_queryset(self):
         return Property.objects.all()
@@ -408,25 +401,22 @@ class PropertyListView(generic.ListView):
         return "properties"
 
 
-class PropertyDetailsView(TemplateView):
+class PropertyDetailsView(LoginRequiredMixin, TemplateView):
     template_name = "../templates/dashboard/property-details.html"
-    permission_classes = (IsAuthenticated,)
 
     def active_tab(self):
         return "properties"
 
 
-class SettingView(TemplateView):
+class SettingView(LoginRequiredMixin, TemplateView):
     template_name = "../templates/dashboard/settings.html"
-    permission_classes = (IsAuthenticated,)
 
     def active_tab(self):
         return "settings"
 
 
-class PropertyCreateView(TemplateView):
+class PropertyCreateView(LoginRequiredMixin, TemplateView):
     template_name = "../templates/dashboard/property-create.html"
-    permission_classes = (IsAuthenticated,)
 
     def active_tab(self):
         return "property-create"
