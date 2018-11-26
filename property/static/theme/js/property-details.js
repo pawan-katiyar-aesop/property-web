@@ -156,7 +156,6 @@ let property_detail_app = new Vue({
                 "map_address":that.mapAddress,
                 "floor_number": that.floorPlanEdit.floor_number
             };
-            debugger;
             axios.put("/api/property/"+parseInt(that.pk)+"/" ,data)
             .then(function (response) {
                 alert( "Property has been successfully updated");
