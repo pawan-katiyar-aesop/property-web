@@ -4,6 +4,7 @@ from django.views.generic import TemplateView
 from models import CustomerLead, AgentLead, Property, Address, Nearest, Overlooking, Video, FloorPlan, Media,\
     BannerSetting, TestimonialSetting, TestimonialSetting
 from django.views import generic
+from django.http import HttpResponseRedirect, JsonResponse
 from rest_framework.response import Response
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView, ListAPIView
 from serializers import CustomerLeadSerializer, AgentLeadSerializer, PropertySerializer, AddressSerializer,\
@@ -375,6 +376,15 @@ class LoginView(TemplateView):
 
     def active_tab(self):
         return "login"
+
+    def post(self, request):
+        from django.contrib.auth import authenticate, login
+        user = authenticate(username=request.POST.get("username"), password=request.POST.get("password"))
+        if user is not None:
+            login(self.request, user, backend='django.contrib.auth.backends.ModelBackend')
+            return HttpResponseRedirect("/control/dash/home/")
+
+        return JsonResponse({"status": False, "message": "Invalid email/password."})
 
 
 class PropertyListView(generic.ListView):
