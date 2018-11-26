@@ -96,7 +96,8 @@ let website_details_app = new Vue({
                 "email": that.clientEmail,
                 "contact": that.clientContact,
                 "country_code": that.clientCountryCode,
-                "for_property": that.propertyId
+                "for_property": that.propertyId,
+                "partner_type": "client"
             };
             axios.post('/api/customer_leads/', body)
             .then(function (response) {

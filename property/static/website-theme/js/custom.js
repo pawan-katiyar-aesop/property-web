@@ -136,6 +136,7 @@ Copyright (c) 2017
 			loop:true,
 			margin:30,
 			nav:true,
+			autoplay: true,
 			navText: [
 			"<i class='fa fa-long-arrow-up' aria-hidden='true'></i>",
 			"<i class='fa fa-long-arrow-down' aria-hidden='true'></i>"],

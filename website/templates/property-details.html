@@ -112,7 +112,7 @@
                             <h2 v-if="propertyDetails.property_name">{% verbatim %}{{ propertyDetails.property_name }}{% endverbatim %}
 {#                                <sup>For rent</sup>#}
                             </h2>
-                            <p v-if="propertyDetails.address">{% verbatim %}{{ propertyDetails.address.name }} {{ propertyDetails.address.locality }} {{ propertyDetails.address.city }} {{ propertyDetails.address.state }}{% endverbatim %}</p>
+                            <p v-if="propertyDetails.address">{% verbatim %}{{ propertyDetails.address.name }} {{ propertyDetails.address.line_1 }} {{ propertyDetails.address.line_2 }} {{ propertyDetails.address.locality }} {{ propertyDetails.address.city }} {{ propertyDetails.address.state }}{% endverbatim %}</p>
                         </div>
                         <div class="rle_property_details_box">
                             <h3>Property description</h3>
@@ -596,6 +596,7 @@
 {% block page_level_scripts %}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.2.0/js.cookie.min.js"></script>
     <script src ="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.9.1/underscore-min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-growl/1.0.0/jquery.bootstrap-growl.min.js" async></script>
     <script src="{% static 'theme/js/shortcuts.js' %}"></script>
     <script src="{% static 'website-theme/js/website-js/details.js' %}" async></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBh0aXPGPniL1FXYAc4HNKDxXYcjOqMHeU">
