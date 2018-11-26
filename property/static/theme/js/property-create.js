@@ -55,6 +55,9 @@ let property_create_app = new Vue({
             carpetArea: 0,
             buildupArea: 0,
             floorPlan: [],
+            commonReception: false,
+            security: false,
+            visitorParking: false,
             mapAddress: '',
             lat:'',
             lng:''
@@ -205,7 +208,10 @@ let property_create_app = new Vue({
                 "floor_plan": that.newProperty.floorPlan,
                 "latitude":that.lat,
                 "longitude":that.lng,
-                "map_address":that.mapAddress
+                "map_address":that.mapAddress,
+                "common_reception": that.commonReception,
+                "security": that.security,
+                "visitor_parking": that.visitorParking
 
             };
 
