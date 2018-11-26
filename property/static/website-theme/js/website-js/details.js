@@ -66,7 +66,8 @@ let website_details_app = new Vue({
         longitude: '',
         latitude: '',
         mapAddress: '',
-        floorPlanDesign: 6
+        floorPlanDesign: 6,
+        fullUrl: ''
 
     },
     methods: {
@@ -127,7 +128,7 @@ let website_details_app = new Vue({
     },
     mounted() {
         this.get_product_details();
-
+        this.fullUrl = window.location.href;
     },
     computed: {
 
