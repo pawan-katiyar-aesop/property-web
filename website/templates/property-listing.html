@@ -233,7 +233,7 @@
                         </div>
                     </div>
                     <div v-if="searchResults" v-for="item in searchResults" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                        <div class="rle_property_infobox" v-on:click="productDetails(item.id)" style="height: 36.6vh!important">
+                        <div class="rle_property_infobox vhHeight" v-on:click="productDetails(item.id)">
                             <div class="row" style="height: 100%!important;">
                                 <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12" style="height: 100%!important;">
                                     <div class="rle_property_infobox_img" style="height: 100%!important;">
@@ -254,7 +254,7 @@
                                             <span v-if="item.description" v-html="item.description" style="height: 15vh!important;overflow-y: auto;"></span>
                                         </div>
                                         <div class="rle_property_infobox_details_footer">
-                                            <p v-if="item.carpet_area && item.unit_of_area">Area : {% verbatim %}{{ item.carpet_area }} {{ item.unit_of_area }}{% endverbatim %} </p>
+                                            <p v-if="item.buildup_area && item.unit_of_area">Buildup area : {% verbatim %}{{ item.buildup_area }} {{ item.unit_of_area }}{% endverbatim %} </p>
                                             <p v-if="item.floor_number">Floor : {% verbatim %}{{ item.floor_number }}{% endverbatim %} </p>
 {#                                            <ul>#}
 {#                                                <li><i class="fa fa-bed" aria-hidden="true"></i> 03</li>#}

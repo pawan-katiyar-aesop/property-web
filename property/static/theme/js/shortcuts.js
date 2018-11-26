@@ -20,10 +20,10 @@ function show_notification(type, message){
         offset: {from: 'bottom', amount: 40},
         align: 'right',
         width: 250,
-        delay: 500,
+        delay: 5000,
         allow_dismiss: true,
         stackup_spacing: 10
-      });``
+      });
 }
 
 // This is method is used for generate unique number.
@@ -64,3 +64,30 @@ function checkLength(len, ele) {
     ele.value = str;
   }
 }
+
+$.fn.extend({
+  animateCss: function(animationName, callback) {
+    var animationEnd = (function(el) {
+      var animations = {
+        animation: 'animationend',
+        OAnimation: 'oAnimationEnd',
+        MozAnimation: 'mozAnimationEnd',
+        WebkitAnimation: 'webkitAnimationEnd',
+      };
+
+      for (var t in animations) {
+        if (el.style[t] !== undefined) {
+          return animations[t];
+        }
+      }
+    })(document.createElement('div'));
+
+    this.addClass('animated ' + animationName).one(animationEnd, function() {
+      $(this).removeClass('animated ' + animationName);
+
+      if (typeof callback === 'function') callback();
+    });
+
+    return this;
+  }
+});

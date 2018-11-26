@@ -100,3 +100,38 @@
 .alert-danger .alert-link {
   color: #e6e6e6;
 }
+@media (max-width: 567px) {
+    .rle_header_wrapper.style_2 .rle_menu_btn{
+        top:-54px !important;
+    }
+    .rle_pagetitle_wrapper{
+        margin-top: 100px !important;
+    }
+    .containerCheckbox > input{
+        display: none !important;
+    }
+    .rle_main_menu_wrapper{
+        z-index: 2;
+        position:fixed;
+        left: 0px;
+        top: 0px;
+        bottom:0px;
+        width:80%;
+        background-color:#ffffff;
+        -webkit-box-shadow: 0px 3px 15px -5px #000000;
+        -moz-box-shadow: 0px 3px 15px -5px #000000;
+        -o-box-shadow: 0px 3px 15px -5px #000000;
+        -ms-box-shadow: 0px 3px 15px -5px #000000;
+        box-shadow: 0px 3px 15px -5px #000000;
+        -webkit-transform: translateX(-100%);
+        -moz-transform: translateX(-100%);
+        -ms-transform: translateX(-100%);
+        -o-transform: translateX(-100%);
+        transform: translateX(-100%);
+        -webkit-transition: all 0.3s;
+        -moz-transition: all 0.3s;
+        -ms-transition: all 0.3s;
+        -o-transition: all 0.3s;
+        transition: all 0.3s;
+    }
+}
