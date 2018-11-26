@@ -250,7 +250,7 @@
 {#                                                <li class="rle_black_clr">hot offer</li>#}
 {#                                            </ul>#}
                                             <h3><a href="#">{% verbatim %}{{ item.property_name }}{% endverbatim %}</a></h3>
-                                            <p v-if="item.address">{% verbatim %}{{ propertyDetails.address.name }} {{ propertyDetails.address.locality }} {{ propertyDetails.address.city }} {{ propertyDetails.address.state }}{% endverbatim %}</p>
+                                            <p v-if="item.address">{% verbatim %}{{ item.address.name }} {{ item.address.locality }} {{ item.address.city }} {{ item.address.state }}{% endverbatim %}</p>
                                             <span v-if="item.description" v-html="item.description" style="height: 15vh!important;overflow-y: auto;"></span>
                                         </div>
                                         <div class="rle_property_infobox_details_footer">
