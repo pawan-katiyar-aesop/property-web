@@ -96,7 +96,7 @@
             </div>
         </div>
         <!-- Property Single Wrapper start -->
-        <div class="swiper-container slider_v2">
+        <div class="swiper-container slider_v2" id="slider_v2">
             <div class="swiper-wrapper" id="media-slider">
 
             </div>
@@ -239,7 +239,7 @@
 {#                                        <li><span>02</span> bathroom</li>#}
 {#                                        <li><span>$2800</span> per month</li>#}
 {#                                    </ul>#}
-                                    <div class="swiper-container slider_v1">
+                                    <div class="swiper-container slider_v2" id="slider_v3">
                                         <div class="swiper-wrapper" :id="'floorplanslider-'+items.id">
                                             
                                         </div>
@@ -390,7 +390,7 @@
                                     <input type="text" maxlength="250" placeholder="Name" v-model="clientName">
                                     <input type="email" placeholder="Email" v-model="clientEmail">
                                     <input type="number" placeholder="Mobile" onKeyPress="if(this.value.length===10) return false;" v-model="clientContact">
-                                    <a href="#" class="rle_btn" v-on:click="clientQuery">get contact detail</a>
+                                    <a href="#" class="rle_btn" v-on:click="clientQuery">contact us</a>
                                 </form>
                             </div>
                         </div>
@@ -709,7 +709,7 @@ $(document).ready(function() {
 
             function slider2(){
 			console.log("initialized slider");
-                var mySwiper = new Swiper('.slider_v2', {
+                var mySwiper = new Swiper('#slider_v2', {
                     nextButton: '.swiper-button-next',
                     prevButton: '.swiper-button-prev',
                     speed: 400,
@@ -722,7 +722,7 @@ $(document).ready(function() {
             slider2();
             function slider1(){
 			console.log("initialized slider");
-                var mySwiper = new Swiper('.slider_v1', {
+                var mySwiper = new Swiper('#slider_v3', {
                     nextButton: '.swiper-button-next',
                     prevButton: '.swiper-button-prev',
                     speed: 400,

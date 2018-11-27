@@ -209,9 +209,9 @@ let property_create_app = new Vue({
                 "latitude":that.lat,
                 "longitude":that.lng,
                 "map_address":that.mapAddress,
-                "common_reception": that.commonReception,
-                "security": that.security,
-                "visitor_parking": that.visitorParking
+                "common_reception": that.newProperty.commonReception,
+                "security": that.newProperty.security,
+                "visitor_parking": that.newProperty.visitorParking
 
             };
 

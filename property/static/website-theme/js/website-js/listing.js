@@ -35,7 +35,6 @@ let website_listing_app = new Vue({
                  });
             } else {
                 let url = '/api/property/?page_size=20&page='+that.pageNum;
-                debugger;
                 axios.get(url)
                  .then(function (response) {
                      that.searchResults = response.data.results;
