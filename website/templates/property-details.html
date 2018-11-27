@@ -288,8 +288,9 @@
                                         <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" v-if="propertyDetails.parking_area"><i class="fa fa-circle" style="color: #00aeef"></i>&nbsp;&nbsp;Parking Area: {% verbatim %}{{ propertyDetails.parking_area }}{% endverbatim %}</div>
                                         <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" v-if="propertyDetails.facing"><i class="fa fa-circle" style="color: #00aeef"></i>&nbsp;&nbsp;Facing Direction: <span v-html="facing_options[propertyDetails.facing]"></span></div>
                                         <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" v-if="propertyDetails.flooring"><i class="fa fa-circle" style="color: #00aeef"></i>&nbsp;&nbsp;Flooring Type: <span v-html="flooring_type[propertyDetails.flooring]"></span></div>
-                                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" v-if="propertyDetails.buildup_area"><i class="fa fa-circle" style="color: #00aeef"></i>&nbsp;&nbsp;Buildup Area: {% verbatim %}{{ propertyDetails.buildup_area }}{% endverbatim %}</div>
+                                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" v-if="propertyDetails.buildup_area"><i class="fa fa-circle" style="color: #00aeef"></i>&nbsp;&nbsp;Builtup Area: upto {% verbatim %}{{ propertyDetails.buildup_area }}{% endverbatim %}</div>
                                         <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" v-if="propertyDetails.carpet_area"><i class="fa fa-circle" style="color: #00aeef"></i>&nbsp;&nbsp;Carpet Area: {% verbatim %}{{ propertyDetails.carpet_area }}{% endverbatim %}</div>
+                                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" v-if="propertyDetails.units_on_floor"><i class="fa fa-circle" style="color: #00aeef"></i>&nbsp;&nbsp;Seating Space : upto {% verbatim %}{{ propertyDetails.units_on_floor }}{% endverbatim %}</div>
                                         <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" v-if="propertyDetails.number_of_basements"><i class="fa fa-circle" style="color: #00aeef"></i>&nbsp;&nbsp;Number of Basements: {% verbatim %}{{ propertyDetails.number_of_basements }}{% endverbatim %}</div>
                                         <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" v-if="propertyDetails.ceiling_height"><i class="fa fa-circle" style="color: #00aeef"></i>&nbsp;&nbsp;Ceiling Height: {% verbatim %}{{ propertyDetails.ceiling_height }}{% endverbatim %}</div>
                                         <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" v-if="propertyDetails.beam_height"><i class="fa fa-circle" style="color: #00aeef"></i>&nbsp;&nbsp;Beam Height: {% verbatim %}{{ propertyDetails.beam_height }}{% endverbatim %}</div>
@@ -402,6 +403,9 @@
                             </div>
                         </div>
                     </div>
+                </div>
+                <div>
+                    <img src="{% static 'theme/images/preloader.gif' %}">
                 </div>
             </div>
         </div>
