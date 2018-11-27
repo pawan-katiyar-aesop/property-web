@@ -73,8 +73,8 @@ let website_details_app = new Vue({
     methods: {
         get_product_details: function () {
             let that = this;
-            that.processing = true;
             that.propertyId = this.getUrlParameter('id');
+            that.processing = true;
             axios.get('/api/property/'+that.propertyId)
              .then(function (response) {
                  that.propertyDetails = response.data;
