@@ -181,7 +181,7 @@
                                     <p>{% verbatim %}{{ item.address.name }}, {{ item.address.line_2 }}, {{ item.address.city }}, {{ item.address.state }}, {{ item.address.country }}{% endverbatim %}</p>
                                 </div>
                                 <div class="rle_property_infobox_details_pricefooter">
-                                    <span v-if="item.buildup_area && item.unit_of_area" style="color: #695b5b;font-size: 15px;line-height: 1.5;margin-top: 5px;"> Builtup Area upto {% verbatim %}{{ item.buildup_area }} {{ item.unit_of_area }}{% endverbatim %} </span>
+                                    <span v-if="item.buildup_area && item.unit_of_area" style="color: #695b5b;font-size: 15px;line-height: 1.5;margin-top: 5px;"> Builtup Area: upto {% verbatim %}{{ item.buildup_area }} {{ item.unit_of_area }}{% endverbatim %} </span>
                                     <span v-if="item.floor_num" style="color: #695b5b;font-size: 15px;line-height: 1.5;margin-top: 5px;float: right;">Floor Number : {% verbatim %}{{ item.floor_num }}{% endverbatim %} </span>
 {#                                    <a href="#" v-on:click="productDetails(item.id)">View detail <i class="fa fa-long-arrow-right" aria-hidden="true"></i></a>#}
                                 </div>
