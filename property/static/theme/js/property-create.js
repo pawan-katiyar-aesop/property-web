@@ -111,14 +111,14 @@ let property_create_app = new Vue({
     methods: {
         validateMandatoryFields:function(){
           let that = this;
-          if(!that.newProperty.propertyName.length || !that.newProperty.contactNumber.length || !that.newAddress.contactName.length || !that.newAddress.streetLine1.length || !that.newProperty.propertyID.length || !that.newProperty.countryCode.length){
-              alert("Please fill up fields marked as mandatory")
+          if(!that.newProperty.propertyName.length || !that.newProperty.contactNumber.length || !that.newAddress.contactName.length || !that.newAddress.streetLine1.length || !that.newProperty.propertyID.length || !that.newProperty.countryCode.length || !that.newProperty.propertyAge){
+              alert("Please fill up fields marked as mandatory");
               return
           }
           else{
 
             if(!that.floorPlanListOfDescriptions[0].length && !that.floorPlanListOfDescriptions[1].length && !that.floorPlanListOfDescriptions[2].length && !that.floorPlanListOfDescriptions[3].length){
-                alert("Create atleast one floor plan to proceed to save");
+                alert("Create at least one floor plan to proceed to save");
                 return
             }
             else{

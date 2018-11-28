@@ -239,12 +239,8 @@
 {#                                        <li><span>02</span> bathroom</li>#}
 {#                                        <li><span>$2800</span> per month</li>#}
 {#                                    </ul>#}
-                                    <div class="swiper-container slider_v2" id="slider_v3">
-                                        <div class="swiper-wrapper" :id="'floorplanslider-'+items.id">
-                                            
-                                        </div>
-                                        <div class="swiper-button-next swiper-button-white"></div>
-                                        <div class="swiper-button-prev swiper-button-white"></div>
+                                    <div id="slider-container">
+
                                     </div>
                                 </div>
 {#                                <div role="tabpanel" class="tab-pane" id="first">#}
@@ -627,12 +623,10 @@ $(document).ready(function() {
         }
 
 
-
     var settings = {
         "url": "/api/property/"+paramValue,
         "method": "GET",
         "success": function (response) {
-            debugger;
             console.log("building slider2");
             $.map(response.images, function (image, index1) {
                 if(image.type === 'b'){
@@ -662,23 +656,32 @@ $(document).ready(function() {
             console.log("building slider3");
             $.map(response.floor_plan, function (floor, index1) {
                 var fid = floor.id;
+                html = "";
+                html+= "<div class='swiper-container slider_v2' id='slider_v3'>\n" +
+                "<div class='swiper-wrapper' id='floorplanslider-"+fid+"'>\n" +
+                "</div>\n" +
+                "<div class='swiper-button-next swiper-button-white'></div>\n" +
+                "<div class='swiper-button-prev swiper-button-white'></div>\n" +
+                "</div>";
+                console.log('html', html);
+                $("#slider-container").html(html);
                 $.map(floor.images, function (image, index2) {
                     if(image.type === 'f'){
+                        console.log('***********image.file********', image.file);
                         $("#floorplanslider-"+fid).append('<div class="swiper-slide" style="height: 80vh;"><img src="'+ image.file +'" width="100%" height="100%" alt="" /></div>');
                     }
                 });
-            });
-            $.map(response.floor_plan, function (floor, index1) {
-                var fid = floor.id;
                 $.map(floor.videos, function (video, index2) {
                     if (video.type === 'f') {
+                        console.log(video.url);
                         $("#floorplanslider-"+fid).append('<div class="swiper-slide" style="height: 80vh;"><iframe width="100%" height="100%" :src="' + video.url + '?rel=0&showinfo=0&autoplay=0" allow="autoplay;"></iframe></div>');
                     }
                 });
+                console.log("floor plan made");
             });
 
-            function slider3(){
-			console.log("initialized slider3");
+            function slider10() {
+                console.log("initialized slider3");
                 var mySwiper = new Swiper('#slider_v3', {
                     nextButton: '.swiper-button-next',
                     prevButton: '.swiper-button-prev',
@@ -689,7 +692,8 @@ $(document).ready(function() {
                     loop: true
                 });
             }
-            slider3();
+
+            slider10();
         }
     };
     $.ajax(settings);
@@ -721,9 +725,9 @@ $(document).ready(function() {
             if (status === google.maps.GeocoderStatus.OK) {
             if (results[0]) {
             $('#latitude,#longitude').show();
-            $('#address').val(results[0].formatted_address);
-            $('#latitude').val(marker.getPosition().lat());
-            $('#longitude').val(marker.getPosition().lng());
+            $('#address').text(results[0].formatted_address);
+            $('#latitude').text(marker.getPosition().lat());
+            $('#longitude').text(marker.getPosition().lng());
             infowindow.setContent(results[0].formatted_address);
             infowindow.open(map, marker);
             }
@@ -733,9 +737,9 @@ $(document).ready(function() {
              geocoder.geocode({'latLng': marker.getPosition()}, function(results, status) {
             if (status === google.maps.GeocoderStatus.OK) {
             if (results[0]) {
-            $('#address').val(results[0].formatted_address);
-            $('#latitude').val(marker.getPosition().lat());
-            $('#longitude').val(marker.getPosition().lng());
+            $('#address').text(results[0].formatted_address);
+            $('#latitude').text(marker.getPosition().lat());
+            $('#longitude').text(marker.getPosition().lng());
             infowindow.setContent(results[0].formatted_address);
             infowindow.open(map, marker);
             }

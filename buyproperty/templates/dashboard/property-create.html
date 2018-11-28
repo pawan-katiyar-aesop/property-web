@@ -51,7 +51,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="property-age">Property Age</label>
+                                        <label for="property-age">Property Age<sup  style="color: red;">*</sup></label>
                                         <input class="form-control" onKeyPress="if(this.value.length===2) return false;" type="number" v-model="newProperty.propertyAge">
                                     </div>
                                 </div>
@@ -598,7 +598,7 @@
                     </div>
                     <div class="card card-default mt-30">
                         <div class="card-header">
-                            <b>Floor Plan</b>
+                            <b>Floor Plan<sup  style="color: red;">*</sup></b>
                         </div>
                         <div class="card-body">
                             <div><button class="btn btn-primary" data-toggle="modal" data-target="#floor-plan-modal">Create/Edit Floor Plans</button></div>
@@ -621,7 +621,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <div class="modal-title">
-                            <h4>Floor plate section</h4>
+                            <h4>Floor plate section<sup  style="color: red;">*</sup></h4>
                             <select class="form-control"  id="floor"  v-model="currentEditingFloor" >
                                 <option value="-1" >No Plan Selected</option>
                                 <option value="0" >Bareshell</option>
@@ -641,7 +641,7 @@
                         </div>
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label for="wc"><b>Floor Description</b></label>
+                                <label for="wc"><b>Floor Description<sup  style="color: red;">*</sup></b></label>
                                 <textarea class="form-control" type="number" v-model="floorPlanEdit.description" ></textarea>
                             </div>
                         </div>
