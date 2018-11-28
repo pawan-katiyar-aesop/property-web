@@ -63,7 +63,7 @@ let website_details_app = new Vue({
             'train': 'fa fa-train',
             'pharmacy': 'fa fa-medkit'
         },
-        floorPlanDesign: 6,
+        floorPlanDesign: 3,
         fullUrl: ''
 
     },

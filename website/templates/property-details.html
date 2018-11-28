@@ -623,7 +623,6 @@ $(document).ready(function() {
         }
 
 
-
     var settings = {
         "url": "/api/property/"+paramValue,
         "method": "GET",
@@ -655,15 +654,6 @@ $(document).ready(function() {
             slider2();
 
             console.log("building slider3");
-            {#html = "";#}
-            {#html+= "<div class='swiper-container slider_v2' id='slider_v3'>\n" +#}
-            {#    "<div class='swiper-wrapper' :id='\'floorplanslider-\'+items.id'>\n" +#}
-            {#    "</div>\n" +#}
-            {#    "<div class='swiper-button-next swiper-button-white'></div>\n" +#}
-            {#    "<div class='swiper-button-prev swiper-button-white'></div>\n" +#}
-            {#    "</div>";#}
-            {#console.log('html', html);#}
-            {#$("#slider-container").html(html);#}
             $.map(response.floor_plan, function (floor, index1) {
                 var fid = floor.id;
                 html = "";
@@ -735,9 +725,9 @@ $(document).ready(function() {
             if (status === google.maps.GeocoderStatus.OK) {
             if (results[0]) {
             $('#latitude,#longitude').show();
-            $('#address').val(results[0].formatted_address);
-            $('#latitude').val(marker.getPosition().lat());
-            $('#longitude').val(marker.getPosition().lng());
+            $('#address').text(results[0].formatted_address);
+            $('#latitude').text(marker.getPosition().lat());
+            $('#longitude').text(marker.getPosition().lng());
             infowindow.setContent(results[0].formatted_address);
             infowindow.open(map, marker);
             }
@@ -747,9 +737,9 @@ $(document).ready(function() {
              geocoder.geocode({'latLng': marker.getPosition()}, function(results, status) {
             if (status === google.maps.GeocoderStatus.OK) {
             if (results[0]) {
-            $('#address').val(results[0].formatted_address);
-            $('#latitude').val(marker.getPosition().lat());
-            $('#longitude').val(marker.getPosition().lng());
+            $('#address').text(results[0].formatted_address);
+            $('#latitude').text(marker.getPosition().lat());
+            $('#longitude').text(marker.getPosition().lng());
             infowindow.setContent(results[0].formatted_address);
             infowindow.open(map, marker);
             }
