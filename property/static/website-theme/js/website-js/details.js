@@ -75,6 +75,9 @@ let website_details_app = new Vue({
             axios.get('/api/property/'+that.propertyId)
              .then(function (response) {
                  that.propertyDetails = response.data;
+                 $("#longitude").text(that.propertyDetails.longitude);
+                 $("#latitude").text(that.propertyDetails.latitude);
+                 $("#address").text(that.propertyDetails.map_address);
                  that.processing = false;
 
              })

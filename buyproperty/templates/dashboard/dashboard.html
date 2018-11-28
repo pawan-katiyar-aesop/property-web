@@ -3,7 +3,7 @@
 
 {% block content %}
     <div class="container-fluid">
-        <div class="row" style="margin-top: 100px"></div>
+        <div class="row" style="margin-top: 120px"></div>
         <div class="row">
             <div class="col-md-12">
                 <div class="card card-default">
@@ -14,9 +14,9 @@
                 </div>
             </div>
         </div>
-        <div class="row" style="margin-top: 10px"></div>
+        <div class="row" style="margin-top: 30px"></div>
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-6">
                 <div class="card card-default">
                     <div class="card-header">
                         Properties Statistics
@@ -31,22 +31,22 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-4">
-                <div class="card card-default">
-                    <div class="card-header">
-                        Agent Leads Statistics
-                    </div>
-                    <div class="card-body">
-                        {% if counts %}
-                            <h4>You have received {{ counts.agent_lead_count }} leads in the last 24 hours.</h4>
-                        {% else %}
-                            <h4>You have received {{ counts }} leads in the last 24 hours.</h4>
-                        {% endif %}
-
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
+{#            <div class="col-md-4">#}
+{#                <div class="card card-default">#}
+{#                    <div class="card-header">#}
+{#                        Agent Leads Statistics#}
+{#                    </div>#}
+{#                    <div class="card-body">#}
+{#                        {% if counts %}#}
+{#                            <h4>You have received {{ counts.agent_lead_count }} leads in the last 24 hours.</h4>#}
+{#                        {% else %}#}
+{#                            <h4>You have received {{ counts }} leads in the last 24 hours.</h4>#}
+{#                        {% endif %}#}
+{##}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+            <div class="col-md-6">
                 <div class="card card-default">
                     <div class="card-header">
                         Customer Leads Statistics
@@ -61,15 +61,26 @@
                 </div>
             </div>
         </div>
-        <div class="row" style="margin-top: 10px"></div>
+        <div class="row" style="margin-top: 30px"></div>
         <div class="row">
             <div class="col-md-6">
                 <div class="card card-default">
                     <div class="card-body">
                         <h4>Need help?</h4>
                         <p>
-                            <b>Email</b>: # TODO<br>
-                            <b>Phone</b>: # TODO
+                            <b>Email</b>: Flipoffice@Flipspacesvr.Com<br>
+                            <b>Phone</b>: 9029049471/2
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card card-default">
+                    <div class="card-body">
+                        <h4>Other Resources</h4>
+                        <p>
+                            <b>Documentation</b>: TODO?<br>
+                            <b>BigDrop</b>: https://www.bigdrop.io/
                         </p>
                     </div>
                 </div>

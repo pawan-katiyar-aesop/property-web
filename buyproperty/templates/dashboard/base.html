@@ -18,6 +18,8 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"></script>
+        <!-- favicon links -->
+        <link rel="shortcut icon" type="image/png" href="{% static 'website-theme/images/header/favicon.png' %}" />
         {%  block scoped_css %}
         {% endblock %}
     </head>
@@ -32,11 +34,11 @@
 						<a class="nav-link" href="/control/dash/home/">Home</a>
 					</li>
                     <li class="nav-item {% if view.active_tab == "customer-leads" %}active{% endif %}">
-						<a class="nav-link" href="/control/dash/customer-leads/">Leads</a>
+						<a class="nav-link" href="/control/dash/leads/">Leads</a>
 					</li>
-                    <li class="nav-item {% if view.active_tab == "agent-leads" %}active{% endif %}">
-						<a class="nav-link" href="/control/dash/agent-leads/">Agent Leads</a>
-					</li>
+{#                    <li class="nav-item {% if view.active_tab == "agent-leads" %}active{% endif %}">#}
+{#						<a class="nav-link" href="/control/dash/agent-leads/">Agent Leads</a>#}
+{#					</li>#}
                     <li class="nav-item {% if view.active_tab == "properties" %}active{% endif %}">
 						<a class="nav-link" href="/control/dash/properties/">Properties</a>
 					</li>
