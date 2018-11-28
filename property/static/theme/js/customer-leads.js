@@ -3,21 +3,22 @@ let list_customer_leads_app = new Vue({
     el:"#customer-leads-app",
     data:{
         leads:[],
-        processing: true
+        processing: false
     },
     methods:{
         get_data:function () {
-            this.processing = true;
+            let that = this;
+            that.processing = true;
             let url = "/api/customer_leads/";
             axios.get(url)
                 .then(function (response){
-                this.leads = response.data;
-                console.log(this.leads);
-                this.processing = false;
+                that.leads = response.data;
+                console.log(that.leads);
+                that.processing = false;
             })
             .catch(function (response) {
                 console.log("Failed");
-                this.processing = false;
+                that.processing = false;
 
             });
         }
