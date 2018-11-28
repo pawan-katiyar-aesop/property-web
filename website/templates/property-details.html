@@ -655,60 +655,60 @@
     </script>
     <script>
 
-$(document).ready(function() {
+        $(document).ready(function() {
 
-        var paramValue;
+                var paramValue;
 
-        var sPageURL = decodeURIComponent(window.location.search.substring(1)),
-        sURLVariables = sPageURL.split('&'),
-        sParameterName,
-        i;
+                var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+                sURLVariables = sPageURL.split('&'),
+                sParameterName,
+                i;
 
-        for (i = 0; i < sURLVariables.length; i++) {
-            sParameterName = sURLVariables[i].split('=');
+                for (i = 0; i < sURLVariables.length; i++) {
+                    sParameterName = sURLVariables[i].split('=');
 
-            if (sParameterName[0] === 'id') {
-                paramValue = sParameterName[1] === undefined ? true : sParameterName[1];
-            }
-        }
-
-
-
-    var settings = {
-        "url": "/api/property/"+paramValue,
-        "method": "GET",
-        "success": function (response) {
-
-            $.map(response.images, function (image, index1) {
-                if(image.type === 'b'){
-                    $("#media-slider").append('<div class="swiper-slide"><img src="'+ image.file +'" alt="" /></div>');
-                }
-            });
-            $.map(response.videos, function (video, index1) {
-                if(video.type === 'b'){
-                    $("#media-slider").append('<div class="swiper-slide"><iframe width="100%" height="100%" :src="' + video.url +'?rel=0&showinfo=0&autoplay=0" allow="autoplay;"></iframe></div>');
-                }
-            });
-            $.map(response.floor_plan, function (floor, index1) {
-                var fid = floor.id;
-                $.map(floor.images, function (image, index2) {
-                    if(image.type === 'f'){
-                        $("#floorplanslider-"+fid).append('<div class="swiper-slide" style="height: 80vh;"><img src="'+ image.file +'" width="100%" height="100%" alt="" /></div>');
+                    if (sParameterName[0] === 'id') {
+                        paramValue = sParameterName[1] === undefined ? true : sParameterName[1];
                     }
-                });
-            });
-            $.map(response.floor_plan, function (floor, index1) {
-                var fid = floor.id;
-                $.map(floor.videos, function (video, index2) {
-                    if (video.type === 'f') {
-                        $("#floorplanslider-"+fid).append('<div class="swiper-slide" style="height: 80vh;"><iframe width="100%" height="100%" :src="' + video.url + '?rel=0&showinfo=0&autoplay=0" allow="autoplay;"></iframe></div>');
-                    }
-                });
-            });
+                }
 
-
+            var settings = {
+                "url": "/api/property/"+paramValue,
+                "method": "GET",
+                "success": function (response) {
+                    console.log("slider start creating");
+                    $.map(response.images, function (image, index1) {
+                        if(image.type === 'b'){
+                            $("#media-slider").append('<div class="swiper-slide"><img src="'+ image.file +'" alt="" /></div>');
+                        }
+                    });
+                    $.map(response.videos, function (video, index1) {
+                        if(video.type === 'b'){
+                            $("#media-slider").append('<div class="swiper-slide"><iframe width="100%" height="100%" :src="' + video.url +'?rel=0&showinfo=0&autoplay=0" allow="autoplay;"></iframe></div>');
+                        }
+                    });
+                    $.map(response.floor_plan, function (floor, index1) {
+                        var fid = floor.id;
+                        $.map(floor.images, function (image, index2) {
+                            if(image.type === 'f'){
+                                $("#floorplanslider-"+fid).append('<div class="swiper-slide" style="height: 80vh;"><img src="'+ image.file +'" width="100%" height="100%" alt="" /></div>');
+                            }
+                        });
+                    });
+                    $.map(response.floor_plan, function (floor, index1) {
+                        var fid = floor.id;
+                        $.map(floor.videos, function (video, index2) {
+                            if (video.type === 'f') {
+                                $("#floorplanslider-"+fid).append('<div class="swiper-slide" style="height: 80vh;"><iframe width="100%" height="100%" :src="' + video.url + '?rel=0&showinfo=0&autoplay=0" allow="autoplay;"></iframe></div>');
+                            }
+                        });
+                    });
+                }
+            };
+            $.ajax(settings);
+            console.log("ajax executed");
             function slider2(){
-			console.log("initialized slider");
+            console.log("initialized slider2");
                 var mySwiper = new Swiper('#slider_v2', {
                     nextButton: '.swiper-button-next',
                     prevButton: '.swiper-button-prev',
@@ -721,7 +721,7 @@ $(document).ready(function() {
             }
             slider2();
             function slider1(){
-			console.log("initialized slider");
+            console.log("initialized slider3");
                 var mySwiper = new Swiper('#slider_v3', {
                     nextButton: '.swiper-button-next',
                     prevButton: '.swiper-button-prev',
@@ -733,14 +733,8 @@ $(document).ready(function() {
                 });
             }
             slider1();
-        }
-    };
-    $.ajax(settings);
-    console.log("ajax executed");
-
-});
-
-
+        });
+        
     </script>
 
 
