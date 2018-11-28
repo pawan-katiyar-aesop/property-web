@@ -112,7 +112,7 @@ let property_detail_app = new Vue({
                 "property_id": that.property.property_id,
                 "age": that.property.age,
                 "contact": that.property.contact,
-                "rental_charge": that.property.rental_charge,
+                "rental_value": that.property.rental_value,
                 "monthly_maintenance": that.property.monthly_maintenance,
                 "security_deposit": that.property.security_deposit,
                 "flooring_details": that.property.flooring_details,
