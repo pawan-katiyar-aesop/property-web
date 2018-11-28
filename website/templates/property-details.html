@@ -632,7 +632,6 @@ $(document).ready(function() {
         "url": "/api/property/"+paramValue,
         "method": "GET",
         "success": function (response) {
-            debugger;
             console.log("building slider2");
             $.map(response.images, function (image, index1) {
                 if(image.type === 'b'){
