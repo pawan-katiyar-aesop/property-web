@@ -633,6 +633,7 @@ $(document).ready(function() {
         "method": "GET",
         "success": function (response) {
 
+            console.log("building slider2");
             $.map(response.images, function (image, index1) {
                 if(image.type === 'b'){
                     $("#media-slider").append('<div class="swiper-slide"><img src="'+ image.file +'" alt="" /></div>');
@@ -643,6 +644,7 @@ $(document).ready(function() {
                     $("#media-slider").append('<div class="swiper-slide"><iframe width="100%" height="100%" :src="' + video.url +'?rel=0&showinfo=0&autoplay=0" allow="autoplay;"></iframe></div>');
                 }
             });
+            console.log("building slider3");
             $.map(response.floor_plan, function (floor, index1) {
                 var fid = floor.id;
                 $.map(floor.images, function (image, index2) {
@@ -662,7 +664,7 @@ $(document).ready(function() {
 
 
             function slider2(){
-			console.log("initialized slider");
+			console.log("initialized slider2");
                 var mySwiper = new Swiper('#slider_v2', {
                     nextButton: '.swiper-button-next',
                     prevButton: '.swiper-button-prev',
@@ -675,7 +677,7 @@ $(document).ready(function() {
             }
             slider2();
             function slider1(){
-			console.log("initialized slider");
+			console.log("initialized slider3");
                 var mySwiper = new Swiper('#slider_v3', {
                     nextButton: '.swiper-button-next',
                     prevButton: '.swiper-button-prev',
