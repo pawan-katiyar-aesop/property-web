@@ -12,7 +12,7 @@ Copyright (c) 2017
 		version: 1.0,
 		mobile: false,
 		init: function () {
-			console.log("initialixing")
+			console.log("initialixing");
 			if(!this.initialised) {
 				this.initialised = true;
 			} else {
@@ -29,7 +29,7 @@ Copyright (c) 2017
 		var counter = 0;
 		var rle_menu_btn = $('.rle_menu_btn');
 		rle_menu_btn.on('click', function(){
-			if( counter == '0') {
+			if( counter === '0') {
 				$('.rle_main_menu_wrapper').addClass('rle_main_menu_hide');
 				$(this).children().removeAttr('class');
 				$(this).children().attr('class','fa fa-close');
