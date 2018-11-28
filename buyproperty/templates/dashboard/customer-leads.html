@@ -1,9 +1,9 @@
 {% extends 'dashboard/base.html' %}
 {% load static from staticfiles %}
 {% block content %}
-        <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
 
-    <div class="container-fluid" id="customer-leads-app">
+    <div class="container-fluid">
         <div class="row" style="margin-top: 100px"></div>
         <div class="row">
             <div class="col-md-12">
@@ -15,17 +15,19 @@
                             <th>Name</th>
                             <th>Email</th>
                             <th>Mobile</th>
-                            <th>Property</th>
+                            <th>Property ID</th>
+                            <th>Partner Type</th>
                         </tr>
                     </thead>
                     <tbody>
                         {% for lead in leads %}
                             <tr class="table-info odd">
-                                <td><a>#{{ lead.id }}</a> </td>
+                                <td><a>#{{ lead.id }}</a></td>
                                 <td>{{ lead.name }}</td>
                                 <td><a href="mailto:{{ lead.email }}">{{ lead.email }}</a> </td>
-                                <td>{{ lead.contact }}</td>
-                                <td>{{ lead.for_property.property_id }}</td>
+                                <td>{{ lead.country_code }}{{ lead.contact }}</td>
+                                <td><a href="../property-details/?p={{ lead.for_property.id }}">{{ lead.for_property.property_id }}</a></td>
+                                <td>{{ lead.partner_type }}</td>
                             </tr>
                         {% endfor %}
                     </tbody>
@@ -36,14 +38,14 @@
                     <div class="alert alert-info">
                         There are currently no leads available.
                     </div>
-                    <!--
-                    <div class="row" style="margin-top: 30px">
-                        <div class="col-md-12">
-                            <button class="btn btn-xs btn-info is-line-height {% if view.get_lead_from == "0" %}disabled{% endif %}" onclick="previousRecord()" id="previous-customer-lead" {% if view.get_lead_from == "0" %}disabled{% endif %}>Previous</button>
-                            <button class="btn btn-xs btn-info is-line-height disabled" style="margin-left: 20px" id="next-customer-lead" disabled>Next</button>
-                        </div>
-                    </div>
-                    -->
+
+{#                    <div class="row" style="margin-top: 30px">#}
+{#                        <div class="col-md-12">#}
+{#                            <button class="btn btn-xs btn-info is-line-height {% if view.get_lead_from == "0" %}disabled{% endif %}" onclick="previousRecord()" id="previous-customer-lead" {% if view.get_lead_from == "0" %}disabled{% endif %}>Previous</button>#}
+{#                            <button class="btn btn-xs btn-info is-line-height disabled" style="margin-left: 20px" id="next-customer-lead" disabled>Next</button>#}
+{#                        </div>#}
+{#                    </div>#}
+
                 {% endif %}
             </div>
         </div>
@@ -72,7 +74,7 @@
 
     <script>
         $(".leads").DataTable({
-            "order": [[ 0, "asc" ]]
+            "order": []
         });
     </script>
 

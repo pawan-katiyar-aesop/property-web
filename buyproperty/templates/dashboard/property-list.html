@@ -16,7 +16,7 @@
                             <th>Address</th>
                             <th>Landmark</th>
                             <th>Buildup Area</th>
-                            <th>No. Of FLoors | Total Floors</th>
+                            <th>Floor Number | Total Floors</th>
                             <th>Contact</th>
                         </tr>
                     </thead>
@@ -36,8 +36,8 @@
                                     <td>--------</td>
                                 {% endif %}
                                 <td>{{ property.buildup_area}} {{ property.unit_of_area }}</td>
-                                <td>{{ property.number_of_floors }} | {{ property.total_number_of_floors }} </td>
-                                <td>{{ property.country_code }} &nbsp;{{ property.contact }}</td>
+                                <td>{{ property.floor_num }} | {{ property.total_number_of_floors }} </td>
+                                <td>{{ property.country_code }} {{ property.contact }}</td>
                             </tr>
                         {% endfor %}
                     </tbody>
@@ -80,7 +80,7 @@
     <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
     <script>
         $(".leads").DataTable({
-            "order": [[ 0, "asc" ]]
+            "order": []
         });
     </script>
     <script src="{%  static 'theme/js/property-list.js'   %}"></script>
