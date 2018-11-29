@@ -341,22 +341,38 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-md-12">
+                                <div class="col-md-12"><br>
                                     <label for="nearest-building"><b>Nearest Buildings</b></label>
                                     <div class="row">
-                                        <div class="col-md-8">
-                                            <div class="form-group">
-                                                <label for="select-title">Nearest Title</label>
-                                            </div>
+                                        <div class="col-md-4">
                                         </div>
                                         <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label for="nearest-distance">Description</label>
-                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
                                         </div>
                                     </div>
-                                    <div class="row" id="nearest-building">
-
+                                    <div class="row" id="nearest-building" v-for="nrst in property.nearest">
+                                        <div class="col-md-4">
+                                            <select name="parking" v-model="nrst.title" class="form-control mb-20" id="nearestList-title-'+that.nearestId+'" required>
+                                                <option disabled selected>Choose Any Option</option>
+                                                <option value="bus">Bus Stop</option>
+                                                <option value="school">School</option>
+                                                <option value="mall">Shopping Mall</option>
+                                                <option value="hospital">Hospital</option>
+                                                <option value="bank">Bank</option>
+                                                <option value="atm">ATM</option>
+                                                <option value="restaurant">Restaurant</option>
+                                                <option value="metro">Metro Station</option>
+                                                <option value="train">Train Station</option>
+                                                <option value="pharmacy">Pharmacy</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <input type="text" v-model="nrst.nearest_description" placeholder="Description" id="nearestList-description-'+that.nearestId+'" class="form-control mb-20" required/>
+                                        </div>
+                                        <div class="col-md-3">
+                                           <input type="number" v-model="nrst.distance" placeholder="Distance" oninput="validate_input(this)" id="nearestList-distance-'+that.nearestId+'" class="form-control mb-20" required/>
+                                        </div>
                                     </div>
                                     <a href="#" class="mt-15 d-block" v-on:click="addNearest">Add New Nearest Buildings</a>
                                 </div>
@@ -576,7 +592,11 @@
                             <b>Floor Plan</b>
                         </div>
                         <div class="card-body" v-if="property">
-                            <div><button class="btn btn-primary" data-toggle="modal" data-target="#floor-plan-modal">Edit Floor Plans</button></div>
+                            <div>
+                                <button class="btn btn-primary" data-toggle="modal" data-target="#floor-plan-modal">Edit Floor Plans</button>
+                                ( <span v-for="(plan, index) in property.floor_plan" v-if="floorDetails[plan.floor_number]"><a href="#" data-toggle="modal" data-target="#floor-plan-modal" style="text-decoration: none;">{% verbatim %}{{ floorDetails[plan.floor_number] }} {% endverbatim %}</a><span v-if="index+1 < property.floor_plan.length">,</span></span>
+                                <span v-else>No Plan Selected</span>)
+                            </div>
 
                         </div>
 
