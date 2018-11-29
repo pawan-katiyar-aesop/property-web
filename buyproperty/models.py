@@ -329,6 +329,7 @@ class CustomerLead(models.Model):
     contact = models.CharField(max_length=10, blank=True, null=True, default=" ")
     country_code = models.CharField(choices=country_choices, max_length=5, null=True, blank=True)
     for_property = models.ForeignKey(Property, on_delete=models.CASCADE, blank=True, null=True)
+    message = models.TextField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

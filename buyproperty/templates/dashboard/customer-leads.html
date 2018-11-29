@@ -16,6 +16,7 @@
                             <th>Email</th>
                             <th>Mobile</th>
                             <th>Property ID</th>
+                            <th>Message</th>
                             <th>Partner Type</th>
                         </tr>
                     </thead>
@@ -27,6 +28,7 @@
                                 <td><a href="mailto:{{ lead.email }}">{{ lead.email }}</a> </td>
                                 <td>{{ lead.country_code }}{{ lead.contact }}</td>
                                 <td><a href="../property-details/?p={{ lead.for_property.id }}">{{ lead.for_property.property_id }}</a></td>
+                                <td>{{ lead.message }}</td>
                                 <td>{{ lead.partner_type }}</td>
                             </tr>
                         {% endfor %}
