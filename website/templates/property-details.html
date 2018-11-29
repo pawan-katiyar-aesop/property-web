@@ -398,6 +398,9 @@ $(document).ready(function() {
         "url": "/api/property/"+paramValue,
         "method": "GET",
         "success": function (response) {
+            response.floor_plan = _.sortBy(response.floor_plan, function (item) {
+                return item.floor_number;
+            });
             $.map(response.images, function (image, index1) {
                 if(image.type === 'b'){
                     $("#media-slider").append('<div class="swiper-slide"><img src="'+ image.file +'" alt="" /></div>');
@@ -431,7 +434,7 @@ $(document).ready(function() {
             };
             $.map(response.floor_plan, function (floor, index1) {
 
-                if(index1 === 0) {
+                if(floor.floor_number === 0) {
                     $("#floor-plan-tab").append('<li role="presentation" data-target="'+index1+'" class="active"><a href="#floor'+index1+'" aria-controls="floor'+index1+'" role="tab" data-toggle="tab">'+floor_choice[floor.floor_number]+'</a></li>');
                 }
                 else {
@@ -442,7 +445,7 @@ $(document).ready(function() {
             $.map(response.floor_plan, function (floor, index1) {
                 var fid = floor.id;
 
-                if (index1 === 0) {
+                if (floor.floor_number === 0) {
                     $("#slider-container").append('<div role="tabpanel" class="tab-pane active" id="floor'+index1+'">\n' +
                     '                                    <p>'+floor.description+'</p>\n' +
                     '                                    <div class="swiper-container slider_v2 slider_v3v">\n' +
