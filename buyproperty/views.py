@@ -141,8 +141,8 @@ class RetrieveUpdateDestroyPropertyAPIView(RetrieveUpdateDestroyAPIView):
         
         if data.get("nearest"):
             property.nearest.clear()
-            for key, value in data.get("nearest").items():
-                property.nearest.add(Nearest.create_nearest(key, value))
+            for nrst_obj in data.get("nearest"):
+                property.nearest.add(Nearest.create_nearest(nrst_obj))
         
         if data.get("images"):
             import base64

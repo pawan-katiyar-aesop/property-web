@@ -23,7 +23,7 @@ let property_detail_app = new Vue({
             currentIndex: 0,
             listLength: 0,
         },
-        nearest:{},
+        nearest:[],
         floorPlanEdit:{
             description:'',
             images:[],
@@ -110,7 +110,7 @@ let property_detail_app = new Vue({
             // }
             that.populateCharges();
             that.populateCountryCode();
-            that.populateNearest();
+            // that.populateNearest();
             that.populateLatLng();
             const data  = {
                 "property_name": that.property.property_name,
@@ -155,7 +155,7 @@ let property_detail_app = new Vue({
                 "other_charges":that.otherCharges,
                 "is_top": that.property.is_top,
                 "images":that.property.images,
-                "nearest":that.nearest,
+                "nearest":that.property.nearest,
                 "videos":that.property.videos,
                 "latitude":that.lat,
                 "longitude":that.lng,
@@ -166,7 +166,7 @@ let property_detail_app = new Vue({
             axios.put("/api/property/"+parseInt(that.pk)+"/" ,data)
             .then(function (response) {
                 alert( "Property has been successfully updated");
-                // window.location.reload(true);
+                window.location.reload(true);
 
             })
             .catch(function (response) {
@@ -227,29 +227,12 @@ let property_detail_app = new Vue({
         },
         addNearest: function () {
             let that = this;
-            $("#nearest-building").append('<div class="col-md-4">\n' +
-                '                                            <select name="parking" class="form-control mb-20" id="nearestList-title-'+that.nearestId+'" required>\n' +
-                '                                                <option disabled selected>Choose Any Option</option>\n' +
-                '                                                <option value="bus">Bus Stop</option>\n' +
-                '                                                <option value="school">School</option>\n' +
-                '                                                <option value="mall">Shopping Mall</option>\n' +
-                '                                                <option value="hospital">Hospital</option>\n' +
-                '                                                <option value="bank">Bank</option>\n' +
-                '                                                <option value="atm">ATM</option>\n' +
-                '                                                <option value="restaurant">Restaurant</option>\n' +
-                '                                                <option value="metro">Metro Station</option>\n' +
-                '                                                <option value="train">Train Station</option>\n' +
-                '                                                <option value="pharmacy">Pharmacy</option>\n' +
-                '                                            </select>\n' +
-                '                                        </div>\n' +
-                '                                        <div class="col-md-5">\n' +
-                '                                            <input type="text" placeholder="Description" id="nearestList-description-'+that.nearestId+'" class="form-control mb-20" required/>\n' +
-                '                                        </div>\n' +
-                '                                        <div class="col-md-3">\n' +
-                '                                           <input type="number" placeholder="Distance" oninput="validate_input(this)" id="nearestList-distance-'+that.nearestId+'" class="form-control mb-20" required/>\n' +
-                '                                        </div>');
-
-            that.nearestId += 1;
+            let body = {
+                "title": "bus",
+                "nearest_description": "",
+                "distance":1
+            };
+            that.property.nearest.push(body);
         },
         populateCountryCode : function(){
           let that = this;
