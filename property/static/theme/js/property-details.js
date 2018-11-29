@@ -3,6 +3,12 @@ let property_detail_app = new Vue({
     data: {
         property: undefined,
         processing:true,
+        floorDetails:{
+            0: "Bareshell",
+            1: "Office Plan",
+            2: "Design Renders",
+            3: "Site Photos"
+        },
         otherCharges:{},
         pk:'',
         otherId :-1,
@@ -98,10 +104,10 @@ let property_detail_app = new Vue({
                 "Urinals": that.property.washroom_details.Urinals,
                 "WC": that.property.washroom_details.WC,
             };
-            if (!that.validateMandatoryFields()){
-                alert("Please fill fields marked mandatory with a red asterisk");
-                return
-            }
+            // if (!that.validateMandatoryFields()){
+            //     alert("Please fill fields marked mandatory with a red asterisk");
+            //     return
+            // }
             that.populateCharges();
             that.populateCountryCode();
             that.populateNearest();
@@ -156,10 +162,11 @@ let property_detail_app = new Vue({
                 "map_address":that.mapAddress,
                 "floor_number": that.floorPlanEdit.floor_number
             };
+
             axios.put("/api/property/"+parseInt(that.pk)+"/" ,data)
             .then(function (response) {
                 alert( "Property has been successfully updated");
-                window.location.reload(true);
+                // window.location.reload(true);
 
             })
             .catch(function (response) {
@@ -184,6 +191,7 @@ let property_detail_app = new Vue({
             let that = this;
             that.property.videos.splice(index, 1)
         },
+
         updateAddress:function(){
           let that = this;
 
@@ -219,7 +227,7 @@ let property_detail_app = new Vue({
         },
         addNearest: function () {
             let that = this;
-            $("#nearest-building").append('<div class="col-md-8">\n' +
+            $("#nearest-building").append('<div class="col-md-4">\n' +
                 '                                            <select name="parking" class="form-control mb-20" id="nearestList-title-'+that.nearestId+'" required>\n' +
                 '                                                <option disabled selected>Choose Any Option</option>\n' +
                 '                                                <option value="bus">Bus Stop</option>\n' +
@@ -234,8 +242,11 @@ let property_detail_app = new Vue({
                 '                                                <option value="pharmacy">Pharmacy</option>\n' +
                 '                                            </select>\n' +
                 '                                        </div>\n' +
-                '                                        <div class="col-md-4">\n' +
-                '                                            <input type="text" id="nearestList-distance-'+that.nearestId+'" class="form-control mb-20" required/>\n' +
+                '                                        <div class="col-md-5">\n' +
+                '                                            <input type="text" placeholder="Description" id="nearestList-description-'+that.nearestId+'" class="form-control mb-20" required/>\n' +
+                '                                        </div>\n' +
+                '                                        <div class="col-md-3">\n' +
+                '                                           <input type="number" placeholder="Distance" oninput="validate_input(this)" id="nearestList-distance-'+that.nearestId+'" class="form-control mb-20" required/>\n' +
                 '                                        </div>');
 
             that.nearestId += 1;
@@ -620,3 +631,17 @@ let property_detail_app = new Vue({
         }
     }
 });
+
+function validate_input(event) {
+    if (0.0 < parseFloat(event.value) && parseFloat(event.value) <= 0.1){
+
+        $("#"+event.id).val("");
+        show_notification("success", "Distance should not be less then 0.1 KM.");
+        return false;
+    }
+    else if (parseInt(event.value) < 0){
+        $("#"+event.id).val("");
+        show_notification("success", "Distance should not be less then 0.1 KM.");
+        return false;
+    }
+}

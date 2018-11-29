@@ -66,6 +66,7 @@ class Nearest(models.Model):
     def create_nearest(cls, key, value):
         nearest = Nearest.objects.create(
             title=key,
+            nearest_description="Straight forward",
             distance=value
         )
         return nearest
