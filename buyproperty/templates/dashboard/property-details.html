@@ -345,10 +345,19 @@
                                     <label for="nearest-building"><b>Nearest Buildings</b></label>
                                     <div class="row">
                                         <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="select-title">Nearest Title</label>
+                                            </div>
                                         </div>
-                                        <div class="col-md-4">
+                                        <div class="col-md-5">
+                                            <div class="form-group">
+                                                <label for="select-title">Name</label>
+                                            </div>
                                         </div>
-                                        <div class="col-md-4">
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label for="select-title">Distance</label>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="row" id="nearest-building" v-for="nrst in property.nearest">
@@ -368,7 +377,7 @@
                                             </select>
                                         </div>
                                         <div class="col-md-5">
-                                            <input type="text" v-model="nrst.nearest_description" placeholder="Description" id="nearestList-description-'+that.nearestId+'" class="form-control mb-20" required/>
+                                            <input type="text" v-model="nrst.nearest_description" placeholder="Name" id="nearestList-description-'+that.nearestId+'" class="form-control mb-20" required/>
                                         </div>
                                         <div class="col-md-3">
                                            <input type="number" v-model="nrst.distance" placeholder="Distance" oninput="validate_input(this)" id="nearestList-distance-'+that.nearestId+'" class="form-control mb-20" required/>
