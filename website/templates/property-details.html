@@ -388,14 +388,7 @@ $(document).ready(function() {
                 paramValue = sParameterName[1] === undefined ? true : sParameterName[1];
             }
         }
-
-        function initMap() {
-          var uluru = {lat: parseFloat($("#latitude").val()), lng: parseFloat($("#longitude").val())};
-          var map = new google.maps.Map(
-              document.getElementById('map'), {zoom: 15, center: uluru});
-          var marker = new google.maps.Marker({position: uluru, map: map});
-        }
-        initMap();
+    
 
     var settings = {
         "url": "/api/property/"+paramValue,
