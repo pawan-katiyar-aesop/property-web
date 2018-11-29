@@ -63,11 +63,11 @@ class Nearest(models.Model):
         return str(self.title) if self.title else "No title"
 
     @classmethod
-    def create_nearest(cls, key, value):
+    def create_nearest(cls, nearest_obj):
         nearest = Nearest.objects.create(
-            title=key,
-            nearest_description="Straight forward",
-            distance=value
+            title=nearest_obj.get("title"),
+            nearest_description=nearest_obj.get("nearest_description"),
+            distance=nearest_obj.get("distance")
         )
         return nearest
 
