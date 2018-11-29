@@ -75,9 +75,10 @@ let website_details_app = new Vue({
             axios.get('/api/property/'+that.propertyId)
              .then(function (response) {
                  that.propertyDetails = response.data;
-                 $("#longitude").text(that.propertyDetails.longitude);
-                 $("#latitude").text(that.propertyDetails.latitude);
-                 $("#address").text(that.propertyDetails.map_address);
+                  var uluru = {lat: parseFloat(that.propertyDetails.latitude), lng: parseFloat(that.propertyDetails.longitude)};
+                  var map = new google.maps.Map(
+                      document.getElementById('map'), {zoom: 15, center: uluru});
+                  var marker = new google.maps.Marker({position: uluru, map: map});
                  that.processing = false;
 
              })
@@ -120,6 +121,7 @@ let website_details_app = new Vue({
                 }
             }
         }
+
     },
     watch: {
 

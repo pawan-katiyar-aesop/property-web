@@ -349,11 +349,7 @@
                         </div>
                         <div class="rle_property_details_box">
 {#                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2862.946176260837!2d-94.00080714881642!3d44.14635442831629!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x87f4398360b0ffe3%3A0xc8e0f38bc3920a41!2sMinnesota+State+University%2C+Mankato!5e0!3m2!1sen!2sin!4v1490446318407" width="600" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>#}
-                            <div id="map" style="width: 100%; height: 400px; ">
-                                <span id="longitude" hidden>{% verbatim %}{{ propertyDetails.longitude }}{% endverbatim %}</span>
-                                <span id="latitude" hidden>{% verbatim %}{{ propertyDetails.latitude }}{% endverbatim %}</span>
-                                <span id="address" hidden>{% verbatim %}{{ propertyDetails.map_address }}{% endverbatim %}</span>
-                            </div>
+                            <div id="map" style="width: 100%; height: 400px; position: relative; overflow: hidden;"></div>
                         </div>
                     </div>
                 </div>
@@ -393,6 +389,13 @@ $(document).ready(function() {
             }
         }
 
+        function initMap() {
+          var uluru = {lat: parseFloat($("#latitude").val()), lng: parseFloat($("#longitude").val())};
+          var map = new google.maps.Map(
+              document.getElementById('map'), {zoom: 15, center: uluru});
+          var marker = new google.maps.Marker({position: uluru, map: map});
+        }
+        initMap();
 
     var settings = {
         "url": "/api/property/"+paramValue,
@@ -502,52 +505,7 @@ $(document).ready(function() {
 
 
     </script>
-    <script>
-    let map;
-            let marker;
-            let myLatlng = new google.maps.LatLng(28.608700,77.014090);
-            let geocoder = new google.maps.Geocoder();
-            let infowindow = new google.maps.InfoWindow();
-            function initialize(){
-            let mapOptions = {
-            zoom: 18,
-            center: myLatlng,
-            mapTypeId: google.maps.MapTypeId.ROADMAP
-            };
-             map = new google.maps.Map(document.getElementById("map"), mapOptions);
-             marker = new google.maps.Marker({
-            map: map,
-            position: myLatlng,
-            draggable: true
-            });
-             geocoder.geocode({'latLng': myLatlng }, function(results, status) {
-            if (status === google.maps.GeocoderStatus.OK) {
-            if (results[0]) {
-            $('#latitude,#longitude').show();
-            $('#address').text(results[0].formatted_address);
-            $('#latitude').text(marker.getPosition().lat());
-            $('#longitude').text(marker.getPosition().lng());
-            infowindow.setContent(results[0].formatted_address);
-            infowindow.open(map, marker);
-            }
-            }
-            });
-             google.maps.event.addListener(marker, 'dragend', function() {
-             geocoder.geocode({'latLng': marker.getPosition()}, function(results, status) {
-            if (status === google.maps.GeocoderStatus.OK) {
-            if (results[0]) {
-            $('#address').text(results[0].formatted_address);
-            $('#latitude').text(marker.getPosition().lat());
-            $('#longitude').text(marker.getPosition().lng());
-            infowindow.setContent(results[0].formatted_address);
-            infowindow.open(map, marker);
-            }
-            }
-            });
-            });
-             }
-            google.maps.event.addDomListener(window, 'load', initialize);
-    </script>
+
 
 
 {% endblock page_level_scripts %}
