@@ -107,6 +107,30 @@
         <script type="text/javascript" src="{% static 'website-theme/js/owl.carousel.js' %}"></script>
                 <script type="text/javascript" src="{% static 'website-theme/js/swiper.min.js' %}"></script>
                 <script type="text/javascript" src="{% static 'website-theme/js/custom.js' %}"></script>
+        <script>
+        $(document).ready(function () {
+
+            var navCounter = true;
+
+            $('.rle_menu_btn').on('click', function () {
+
+                if (navCounter === true) {
+                    $('.rle_main_menu_wrapper').addClass('rle_main_menu_hide');
+                    $(this).children().removeAttr('class');
+                    $(this).children().attr('class','fa fa-close');
+                    navCounter = false;
+                }
+                else {
+                    $('.rle_main_menu_wrapper').removeClass('rle_main_menu_hide');
+                    $(this).children().removeAttr('class');
+                    $(this).children().attr('class','fa fa-bars');
+                    navCounter = true;
+                }
+
+            })
+
+        });
+    </script>
 
         <!--main js file end-->
 
