@@ -4,8 +4,7 @@ let website_contact_app = new Vue({
         contactName: '',
         contactEmail: '',
         contactMessage: '',
-        partnerType: 'owner',
-        togg: false
+        partnerType: 'owner'
 
     },
     methods: {
