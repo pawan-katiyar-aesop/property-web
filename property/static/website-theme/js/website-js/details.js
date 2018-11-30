@@ -97,15 +97,21 @@ let website_details_app = new Vue({
                 "for_property": that.propertyId,
                 "partner_type": "client"
             };
-            axios.post('/api/customer_leads/', body)
-            .then(function (response) {
-                show_notification("success", "Your Query Submitted.");
+            if(!that.clientName || !that.clientEmail || !that.clientContact){
+                  show_notification("danger", "Please fill all information!.");
+                  return
+              }
+            else{
+                axios.post('/api/customer_leads/', body)
+                .then(function (response) {
+                    show_notification("success", "Your Query Submitted.");
 
-            })
-            .catch(function (response) {
-                alert("error occured.");
-                show_notification("danger", "A fatal error occurred, and this form might not function correctly.")
-            })
+                })
+                .catch(function (response) {
+                    alert("Invalid Email!");
+                    show_notification("danger", "A fatal error occurred, and this form might not function correctly.")
+                })
+            }
         },
         getUrlParameter : function (sParam) {
             var sPageURL = decodeURIComponent(window.location.search.substring(1)),

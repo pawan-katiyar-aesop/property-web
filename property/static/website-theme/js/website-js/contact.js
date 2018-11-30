@@ -10,33 +10,32 @@ let website_contact_app = new Vue({
     methods: {
         sendEmail: function () {
             let that = this;
-            if (!that.contactName && !that.contactEmail && !that.contactMessage){
+            if (!that.contactName || !that.contactEmail || !that.contactMessage){
                 show_notification("danger", "Please fill all information!");
             }
-            let body = {
-                "name": that.contactName,
-                "email": that.contactEmail,
-                "message": that.contactMessage,
-                "partner_type": that.partnerType
-            };
-            axios.post('/api/customer_leads/', body)
-            .then(function (response) {
-                // alert("Your request has been received.");
+            else{
+                let body = {
+                    "name": that.contactName,
+                    "email": that.contactEmail,
+                    "message": that.contactMessage,
+                    "partner_type": that.partnerType
+                };
+                axios.post('/api/customer_leads/', body)
+                .then(function (response) {
 
-                show_notification("success", "Thank you for your message. We will connect with you shortly.");
+                    show_notification("success", "Thank you for your message. We will connect with you shortly.");
 
-            })
-            .catch(function (response) {
-                // alert("Invalid Email!");
-                show_notification("danger", "A fatal error occurred, and this page might not function correctly.");
-            })
+                })
+                .catch(function (response) {
+                    show_notification("danger", "Invalid Email!");
+                })
+            }
         }
     },
     watch: {
 
     },
     mounted() {
-
 
     },
     computed: {

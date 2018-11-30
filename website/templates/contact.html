@@ -179,7 +179,8 @@
                                         <textarea rows="8" placeholder="Message" v-model="contactMessage"></textarea>
                                     </div>
                                     <div class="col-lg-12">
-                                        <a href="#" class="rle_btn" v-on:click="sendEmail">Send message</a>
+                                        <a href="#" class="rle_btn" v-if="contactName && contactEmail && contactMessage" v-on:click="sendEmail">Send message</a>
+                                        <a class="rle_btn" v-else disabled="disabled">Send message</a>
                                     </div>
                                 </form>
                             </div>
