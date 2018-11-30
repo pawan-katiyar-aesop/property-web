@@ -157,9 +157,9 @@ let property_detail_app = new Vue({
                 "images":that.property.images,
                 "nearest":that.property.nearest,
                 "videos":that.property.videos,
-                "latitude":that.lat,
-                "longitude":that.lng,
-                "map_address":that.mapAddress,
+                "latitude":that.property.latitude,
+                "longitude":that.property.longitude,
+                "map_address":that.property.map_address,
                 "floor_number": that.floorPlanEdit.floor_number
             };
 
