@@ -343,7 +343,8 @@
                                     <input type="text" maxlength="250" placeholder="Name" v-model="clientName">
                                     <input type="email" placeholder="Email" v-model="clientEmail">
                                     <input type="number" placeholder="Mobile" onKeyPress="if(this.value.length===10) return false;" v-model="clientContact">
-                                    <a href="#" class="rle_btn" v-on:click="clientQuery">contact us</a>
+                                    <a href="#" class="rle_btn" v-if="clientName && clientEmail && clientContact" v-on:click="clientQuery">contact us</a>
+                                    <a class="rle_btn" v-else>contact us</a>
                                 </form>
                             </div>
                         </div>
