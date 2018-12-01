@@ -206,7 +206,7 @@ class Property(models.Model):
     carpet_area = models.FloatField(null=True, blank=True)
     rental_value = models.DecimalField(max_digits=12, decimal_places=2, null=True)
     monthly_maintenance = models.DecimalField(max_digits=12, decimal_places=2, null=True)
-    security_deposit = models.DecimalField(max_digits=12, decimal_places=2, blank=True, null=True)
+    security_deposit = models.IntegerField(blank=True, null=True)
     pantry = models.BooleanField(default=False)
     washroom = models.BooleanField(default=False)
     washroom_details = JSONField(null=True, blank=True)
