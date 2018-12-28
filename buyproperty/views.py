@@ -51,7 +51,7 @@ class ListCreatePropertyAPIView(ListCreateAPIView):
     queryset = Property.objects.all().order_by('-created_at')
 
     def create(self, request, *args, **kwargs):
-        if (request.data.get("is_top") == 'true' or request.data.get("is_top") is True) and Property.count_top() == 6:
+        if (request.data.get("is_top") == 'true' or request.data.get("is_top") is True) and Property.count_top() > 6:
             return Response({"status": False, "message": ""}, status=400)
         # create address object if requested
         new_address = Address.create_address(request.data.get("address"))
@@ -125,8 +125,7 @@ class RetrieveUpdateDestroyPropertyAPIView(RetrieveUpdateDestroyAPIView):
     serializer_class = RetrievePropertySerializer
 
     def update(self, request, *args, **kwargs):
-
-        if (request.data.get("is_top") == 'true' or request.data.get("is_top") is True) and Property.count_top() < 7:
+        if (request.data.get("is_top") == 'true' or request.data.get("is_top") is True) and Property.count_top() > 6:
             return Response({"status": False, "message": "Top cannot be more than 6"}, status=400)
 
         data = request.data
