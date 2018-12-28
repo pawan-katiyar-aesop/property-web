@@ -126,7 +126,7 @@ class RetrieveUpdateDestroyPropertyAPIView(RetrieveUpdateDestroyAPIView):
 
     def update(self, request, *args, **kwargs):
 
-        if (request.data.get("is_top") == 'true' or request.data.get("is_top") is True) and Property.count_top() == 6:
+        if (request.data.get("is_top") == 'true' or request.data.get("is_top") is True) and Property.count_top() < 7:
             return Response({"status": False, "message": "Top cannot be more than 6"}, status=400)
 
         data = request.data

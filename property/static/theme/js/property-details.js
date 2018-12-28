@@ -170,7 +170,7 @@ let property_detail_app = new Vue({
 
             })
             .catch(function (response) {
-                alert("A fatal error occurred, and this page might not function correctly.")
+                alert("A fatal error occurred, and this page might not function correctly.");
                 console.log(response);
                 //window.location.href = "http://localhost:8000/control/dash/properties/";
             });
