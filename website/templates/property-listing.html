@@ -232,7 +232,7 @@
                             </div>
                         </div>
                     </div>
-                    <div v-if="searchResults" v-for="item in searchResults" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div v-if="searchResults" v-for="item in searchResults" class="col-lg-12 col-md-12 col-sm-12 col-xs-12 searching-data hidden">
                         <div class="rle_property_infobox vhHeight" v-on:click="productDetails(item.id)">
                             <div class="row" style="height: 100%!important;">
                                 <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12" style="height: 100%!important;">
@@ -271,7 +271,7 @@
                     <div v-else class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="text-align: center;">
                         <img src="{% static 'theme/images/preloader.gif' %}">
                     </div>
-                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 pagination-data hidden">
                         <div class="rle_pagination_wrapper">
                             <nav>
                                 <ul class="pagination">
@@ -330,4 +330,12 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.2.0/js.cookie.min.js"></script>
     <script src ="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.9.1/underscore-min.js"></script>
     <script src="{% static 'website-theme/js/website-js/listing.js' %}"></script>
+    <script>
+        /*
+        $(document).ready(function () {
+
+            $(".searching-data").removeClass('hidden');
+        });
+         */
+    </script>
 {% endblock page_level_scripts %}
