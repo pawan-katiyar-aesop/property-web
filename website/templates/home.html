@@ -118,8 +118,8 @@
                                 <div class="tab-content">
                                     <div role="tabpanel" class="tab-pane active" id="buy">
                                         <div class="rle_searchform_box">
-                                            <input type="search" placeholder="City or Locality" v-model="searchInput">
-                                            <button v-on:click="get_searchResults" class="rle_btn"><i class="fa fa-search" aria-hidden="true"></i> search</button>
+                                            <input id="search-input" type="search" placeholder="City or Locality" v-model="searchInput" @keyup.enter="get_searchResults">
+                                            <button id="search-button" v-on:click="get_searchResults" class="rle_btn"><i class="fa fa-search" aria-hidden="true"></i> search</button>
                                         </div>
                                     </div>
 {#                                    <div role="tabpanel" class="tab-pane " id="rent">#}

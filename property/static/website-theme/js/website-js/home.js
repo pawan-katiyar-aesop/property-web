@@ -30,7 +30,6 @@ let website_home_app = new Vue({
         get_searchResults: function () {
             let that = this;
             that.searchInput = encodeURIComponent(that.searchInput);
-            // debugger;
             window.location = '/property-listing/?search='+that.searchInput;
         },
         get_country_codes: function(){
