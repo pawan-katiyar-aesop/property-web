@@ -118,7 +118,7 @@
                                 <div class="tab-content">
                                     <div role="tabpanel" class="tab-pane active" id="buy">
                                         <div class="rle_searchform_box">
-                                            <input type="search" placeholder="City or landmark" v-model="searchInput">
+                                            <input type="search" placeholder="City or Locality" v-model="searchInput">
                                             <button v-on:click="get_searchResults" class="rle_btn"><i class="fa fa-search" aria-hidden="true"></i> search</button>
                                         </div>
                                     </div>
@@ -178,7 +178,7 @@
                             <div class="rle_property_infobox_details style_2">
                                 <div class="rle_property_infobox_details_header style_2">
                                     <h3><a href="#">{% verbatim %}{{ item.property_name }}{% endverbatim %}</a></h3>
-                                    <p>{% verbatim %}{{ item.address.name }}, {{ item.address.line_2 }}, {{ item.address.city }}, {{ item.address.state }}, {{ item.address.country }}{% endverbatim %}</p>
+                                    <p>{% verbatim %}{{ item.address.locality }}, {{ item.address.city }}{% endverbatim %}</p>
                                 </div>
                                 <div class="rle_property_infobox_details_pricefooter">
                                     <span v-if="item.buildup_area && item.unit_of_area" style="color: #695b5b;font-size: 15px;line-height: 1.5;margin-top: 5px;"> Builtup Area: upto {% verbatim %}{{ item.buildup_area }} {{ item.unit_of_area }}{% endverbatim %} </span>
