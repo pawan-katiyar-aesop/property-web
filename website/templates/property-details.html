@@ -110,7 +110,7 @@
                     <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
                         <div v-if="propertyDetails" class="rle_property_single_heading">
                             <h2 v-if="propertyDetails.property_name">{% verbatim %}{{ propertyDetails.property_name }}{% endverbatim %}</h2>
-                            <p v-if="propertyDetails.address">{% verbatim %}{{ propertyDetails.address.name }} {{ propertyDetails.address.line_1 }} {{ propertyDetails.address.line_2 }} {{ propertyDetails.address.locality }} {{ propertyDetails.address.city }} {{ propertyDetails.address.state }}{% endverbatim %}</p>
+                            <p v-if="propertyDetails.address">{% verbatim %}{{ propertyDetails.address.name }}, {{ propertyDetails.address.line_1 }}, {{ propertyDetails.address.line_2 }}, {{ propertyDetails.address.locality }}, {{ propertyDetails.address.city }}, {{ propertyDetails.address.state }}, {{ propertyDetails.address.country }}, {{ propertyDetails.address.zip }}{% endverbatim %}</p>
                         </div>
                         <div v-if="propertyDetails" class="rle_property_details_box">
                             <h3>Property description</h3>
@@ -247,7 +247,7 @@
                                         <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" v-if="propertyDetails.flooring"><i class="fa fa-circle" style="color: #00aeef"></i>&nbsp;&nbsp;Flooring Type: <span v-html="flooring_type[propertyDetails.flooring]"></span></div>
                                         <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" v-if="propertyDetails.buildup_area"><i class="fa fa-circle" style="color: #00aeef"></i>&nbsp;&nbsp;Builtup Area: upto {% verbatim %}{{ propertyDetails.buildup_area }} {{ propertyDetails.unit_of_area }}{% endverbatim %}</div>
                                         <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" v-if="propertyDetails.carpet_area"><i class="fa fa-circle" style="color: #00aeef"></i>&nbsp;&nbsp;Carpet Area: {% verbatim %}{{ propertyDetails.carpet_area }} {{ propertyDetails.unit_of_area }}{% endverbatim %}</div>
-                                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" v-if="propertyDetails.units_on_floor"><i class="fa fa-circle" style="color: #00aeef"></i>&nbsp;&nbsp;Seating Space : upto {% verbatim %}{{ propertyDetails.units_on_floor }} {{ propertyDetails.unit_of_area }}{% endverbatim %}</div>
+                                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" v-if="propertyDetails.units_on_floor"><i class="fa fa-circle" style="color: #00aeef"></i>&nbsp;&nbsp;Seating Space : upto {% verbatim %}{{ propertyDetails.units_on_floor }}{% endverbatim %}</div>
                                         <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" v-if="propertyDetails.number_of_basements"><i class="fa fa-circle" style="color: #00aeef"></i>&nbsp;&nbsp;Number of Basements: {% verbatim %}{{ propertyDetails.number_of_basements }}{% endverbatim %}</div>
                                         <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" v-if="propertyDetails.ceiling_height"><i class="fa fa-circle" style="color: #00aeef"></i>&nbsp;&nbsp;Ceiling Height: {% verbatim %}{{ propertyDetails.ceiling_height }}{% endverbatim %}</div>
                                         <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" v-if="propertyDetails.beam_height"><i class="fa fa-circle" style="color: #00aeef"></i>&nbsp;&nbsp;Beam Height: {% verbatim %}{{ propertyDetails.beam_height }}{% endverbatim %}</div>

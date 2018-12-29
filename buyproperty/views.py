@@ -130,7 +130,7 @@ class RetrieveUpdateDestroyPropertyAPIView(RetrieveUpdateDestroyAPIView):
 
         data = request.data
         property = self.get_object()
-        
+
         
         # add/remove overlooking if requested
         property.overlooking.clear()
@@ -211,9 +211,19 @@ class SearchResultApiView(ListAPIView):
     serializer_class = PropertySerializer
 
     def get_queryset(self):
-        results = Property.objects.filter(Q(address__city__icontains=self.kwargs['key']) |
-                                          Q(landmark__icontains=self.kwargs['key']))
+        results = Property.objects.filter(Q(address__city__icontains=self.request.GET.get('search')) |
+                                          Q(address__locality__icontains=self.request.GET.get('search')))
         return results
+
+
+class SearchSuggestionsApiView(ListAPIView):
+    queryset = Address.objects.all()
+    serializer_class = AddressSerializer
+
+    def get_queryset(self):
+        address = Address.objects.filter(Q(city__startwith=self.request.GET.get('search')) |
+                                         Q(locality__startwith=self.request.GET.get('search')))
+        return address
 
 
 class ListCreateFloorPlanAPIView(ListCreateAPIView):

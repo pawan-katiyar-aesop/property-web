@@ -16,7 +16,7 @@ let website_listing_app = new Vue({
             that.searchInput = this.getUrlParameter('search');
             that.processing = true;
             if(that.searchInput){
-                let url = '/api/real_estate/property/'+that.searchInput+'/?page_size=20&page='+that.pageNum;
+                let url = '/api/real_estate/property/search/?search='+that.searchInput+'&page_size=20&page='+that.pageNum;
                 axios.get(url)
                  .then(function (response) {
                      that.searchResults = response.data.results;
