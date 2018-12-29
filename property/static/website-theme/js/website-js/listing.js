@@ -48,6 +48,10 @@ let website_listing_app = new Vue({
                      that.searchResults = _.sortBy(that.searchResults, function (item) {
                          return -item.id;
                      });
+                     $(document).ready(function () {
+                         $(".searching-data").removeClass('hidden');
+                         $(".pagination-data").removeClass('hidden');
+                     });
                      that.processing = false;
 
                  })
