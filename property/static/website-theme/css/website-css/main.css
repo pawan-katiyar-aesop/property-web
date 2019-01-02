@@ -134,4 +134,13 @@
         -o-transition: all 0.3s;
         transition: all 0.3s;
     }
+    .web-step{
+        display: none;
+    }
+    .mobile-step{
+    display: block!important;
+}
+}
+.mobile-step{
+    display: none;
 }
