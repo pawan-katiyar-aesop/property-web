@@ -632,7 +632,7 @@
         </div>
     <!-- modal for floor plan -->
         <div class="modal mt-100 fade" data-backdrop="false" id="floor-plan-modal" role="dialog" tabindex="-1">
-            <div class="modal-dialog" role="document">
+            <div class="modal-dialog" role="document" style="height: 88vh;overflow-y: auto;">
                 <div class="modal-content">
                     <div class="modal-header">
                         <div class="modal-title">
@@ -775,7 +775,14 @@
 
     <script src="{% static 'theme/js/property-details.js' %}"></script>
     <script src="{% static 'theme/js/shortcuts.js' %}"></script>
-
+    <style>
+        @media (min-width: 576px) {
+            .modal-dialog {
+                max-width: 500px;
+                margin: 0 auto!important;
+            }
+        }
+    </style>
 
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBh0aXPGPniL1FXYAc4HNKDxXYcjOqMHeU">
     </script>
