@@ -93,7 +93,7 @@ let property_create_app = new Vue({
             list: [],
         },
         otherCharges:{},
-        nearest:{},
+        nearest:[],
         floorPlanEdit:{
             description:'',
             imageList:[],
@@ -296,23 +296,32 @@ let property_create_app = new Vue({
         populateNearest :function(){
             let that=this;
             let listOfKey = [];
-            let listOfVal = [];
+            let listOfName = [];
+            let listOfDistance = [];
             let element = $('#nearest-building > div');
             element.children('select').each(function () {
                 listOfKey.push(this.value);
             });
-            element.children('input').each(function () {
-                listOfVal.push(this.value);
+            element.children('input.name').each(function () {
+                listOfName.push(this.value);
+            });
+            element.children('input.distance').each(function () {
+                listOfDistance.push(this.value);
             });
 
             for(let i=0; i<listOfKey.length;i++){
-
-                that.nearest[listOfKey[i]+""] = listOfVal[i];
+                let body = {
+                    "title": listOfKey[i]+"",
+                    "nearest_description": listOfName[i]+"",
+                    "distance":listOfDistance[i]+""
+                };
+                that.nearest.push(body);
+                // that.nearest[listOfKey[i]+""] = listOfVal[i];
             }
         },
         addNearest: function () {
             let that = this;
-            $("#nearest-building").append('<div class="col-md-8">\n' +
+            $("#nearest-building").append('<div class="col-md-4">\n' +
                 '                                            <select name="parking" class="form-control mb-20" id="nearestList-title-'+that.nearestId+'" required>\n' +
                 '                                                <option disabled selected>Choose Any Option</option>\n' +
                 '                                                <option value="bus">Bus Stop</option>\n' +
@@ -327,8 +336,11 @@ let property_create_app = new Vue({
                 '                                                <option value="pharmacy">Pharmacy</option>\n' +
                 '                                            </select>\n' +
                 '                                        </div>\n' +
-                '                                        <div class="col-md-4">\n' +
-                '                                            <input type="text" id="nearestList-distance-'+that.nearestId+'" class="form-control mb-20" required/>\n' +
+                '                                        <div class="col-md-5">\n' +
+                '                                            <input type="text" id="nearestList-name-'+that.nearestId+'" class="form-control mb-20 name" required/>\n' +
+                '                                        </div>\n' +
+                '                                        <div class="col-md-3">\n' +
+                '                                            <input type="number" id="nearestList-distance-'+that.nearestId+'" class="form-control mb-20 distance" required/>\n' +
                 '                                        </div>');
 
             that.nearestId += 1;

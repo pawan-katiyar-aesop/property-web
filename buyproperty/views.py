@@ -59,8 +59,8 @@ class ListCreatePropertyAPIView(ListCreateAPIView):
         property = Property.create_property(request.data, new_address)
         #create nearest list if requested
         if request.data.get("nearest"):
-            for key, value in request.data.get("nearest").items():
-                property.nearest.add(Nearest.create_nearest(key, value))
+            for nrst_obj in request.data.get("nearest"):
+                property.nearest.add(Nearest.create_nearest(nrst_obj))
         ""
         #create overlooking if requested
         if request.data.get("overlooking"):

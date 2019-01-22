@@ -31,6 +31,7 @@ class PropertySerializer(serializers.ModelSerializer):
         fields = "__all__"
         depth = 1
 
+
 class BannerTitleSerializer(serializers.ModelSerializer):
 
     class Meta:
