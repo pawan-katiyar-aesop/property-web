@@ -83,9 +83,9 @@ let website_details_app = new Vue({
 
              })
              .catch(function (response) {
-                // that.get_product_details();
-                alert("Failed fetching data for property details.");
-                that.processing = false;
+                that.get_product_details();
+                // alert("Failed fetching data for property details.");
+                // that.processing = false;
              });
         },
         clientQuery: function () {
