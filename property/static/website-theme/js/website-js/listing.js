@@ -99,12 +99,12 @@ let website_listing_app = new Vue({
             }
             else if (filter === "city") {
                 that.searchResults = _.filter(that.allProperties, function (item) {
-                    return item.address.city === that.filterInput;
+                    return item.address.city.toLowerCase() === that.filterInput.toLowerCase();
                 });
             }
             else if (filter === "locality") {
                 that.searchResults = _.filter(that.allProperties, function (item) {
-                    return item.address.locality === that.filterInput;
+                    return item.address.locality.toLowerCase() === that.filterInput.toLowerCase();
                 });
             }
         },
