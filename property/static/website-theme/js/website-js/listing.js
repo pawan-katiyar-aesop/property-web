@@ -99,11 +99,13 @@ let website_listing_app = new Vue({
             }
             else if (filter === "city") {
                 that.searchResults = _.filter(that.allProperties, function (item) {
+                    console.log("lowercase", item.address.city.toLowerCase(), that.filterInput.toLowerCase());
                     return item.address.city.toLowerCase() === that.filterInput.toLowerCase();
                 });
             }
             else if (filter === "locality") {
                 that.searchResults = _.filter(that.allProperties, function (item) {
+                    console.log("lowercase", item.address.locality.toLowerCase(), that.filterInput.toLowerCase());
                     return item.address.locality.toLowerCase() === that.filterInput.toLowerCase();
                 });
             }
